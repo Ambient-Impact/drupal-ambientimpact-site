@@ -1,0 +1,6 @@
+name: Ambient.Impact - Site theme
+description: The theme used for ambientimpact.com.
+type: theme
+base theme: ambientimpact_base
+package: Ambient.Impact
+core: 8.x
