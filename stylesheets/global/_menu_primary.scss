@@ -1,0 +1,153 @@
+// -----------------------------------------------------------------------------
+//   Primary site menu
+// -----------------------------------------------------------------------------
+
+///
+/// Primary menu item font size when large font size breakpoint doesn't match.
+///
+$menu-primary-font-size-small:  100%;
+
+///
+/// Primary menu item font size when large font size breakpoint matches.
+///
+$menu-primary-font-size-large:  110%;
+
+///
+/// Primary menu item horizontal padding.
+///
+$menu-primary-item-padding-x:   $layout-gutter;
+
+///
+/// Primary menu item vertical padding.
+///
+$menu-primary-item-padding-y:   $layout-gutter * 0.8;
+
+// 4 + 1 for the Chrome rounding error fix
+
+///
+/// Primary menu item underline height, used to indicate active menu item.
+///
+/// Note that this is 4px + 1px for the Chrome rounding error fix.
+///
+$menu-primary-item-underline-height:  5px;
+
+@include add-breakpoints((
+  // At which height to start using $menu-primary-font-size-large.
+  'menu-primary-font-size-large': get-breakpoint-value('height-small')
+));
+
+.region-primary-menu {
+  ///
+  /// The local stacking order of elements; later in the list is higher.
+  ///
+  $local-stacking-order: background, content;
+
+  margin-top:     0;
+  margin-bottom:  3em;
+
+  @include horizontal-bleed-background(
+    $colour:  $ambientimpact-orange,
+    $z-index: index($local-stacking-order, background),
+    // Don't use the topmost shadow, as that would show on top of the site
+    // title. See _site_branding.scss for the topmost shadow.
+    $shadow:  (false, true, true)
+  );
+
+  &.headroom {
+    // Make sure we're sticky if Headroom is active, as the horizontal-
+    // bleed-background overrides it.
+    position: sticky;
+  }
+
+  .menu {
+    position:   relative;
+
+    display:    flex;
+
+    // Override base, as this cuts off the right side of the menu. D:
+    max-width:  none;
+
+    margin:     0 (-$menu-primary-item-padding-x);
+
+    z-index:    index($local-stacking-order, content);
+
+    // This allows the nav items to scroll horizontally.
+    overflow-x: auto;
+
+    // Clip any rounding error fixes below so they don't overflow.
+    overflow-y: hidden;
+
+    // Space items evenly.
+    // IMPORTANT: space-around causes some odd overflow hiding.
+    justify-content: space-between;
+
+    font-size: $menu-primary-font-size-small;
+
+    @include media('>=menu-primary-font-size-large') {
+      font-size: $menu-primary-font-size-large;
+    }
+
+    .menu-item {
+      // Override Classy.
+      padding-top: 0;
+    }
+
+    a {
+      position: relative;
+
+      display:  block;
+
+      padding:  $menu-primary-item-padding-y $menu-primary-item-padding-x;
+
+      @mixin item-colour {
+        &,
+        &.is-active {
+          color:  $foreground-colour-on-dark;
+        }
+      }
+
+      @include item-colour;
+
+      @include link-hover {
+        @include item-colour;
+      }
+
+      // Remove fancy link underlines.
+      @include remove-fancy-link-underlines;
+
+      // This pseudo-element is used to create the underline for current and
+      // hovered/focussed menu item links.
+      &::after {
+        content:  '';
+
+        position: absolute;
+
+        left:     $menu-primary-item-padding-x;
+        right:    $menu-primary-item-padding-x;
+        // This ensures Chrome on Android hides its 1px rounding error.
+        bottom:   -1px;
+
+        height:   0;
+
+        background-color: $foreground-colour-on-dark;
+
+        transition: height 0.2s;
+      }
+
+      @include link-hover {
+        &::after {
+          height: $menu-primary-item-underline-height;
+        }
+      }
+    }
+
+    &:not(.menu--has-active-item) {
+      a.is-active,
+      a.active-trail {
+        &::after {
+          height: $menu-primary-item-underline-height;
+        }
+      }
+    }
+  }
+}
