@@ -1,0 +1,14 @@
+// -----------------------------------------------------------------------------
+//	Variables - General
+// -----------------------------------------------------------------------------
+
+
+// Overall font size.
+$font-size:				110%;
+// Heading font sizes when not using responsive type. These are h1-h6 in order.
+$heading-font-sizes:	1.5em, 1.35em, 1.2em, 1em, 1em, 1em;
+
+
+$image-link-normal-filters:	contrast(100%)	brightness(100%);
+$image-link-hover-filters:	contrast(75%)	brightness(150%);
+$image-link-active-filters:	contrast(100%)	brightness(100%);
