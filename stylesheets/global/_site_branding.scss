@@ -9,6 +9,20 @@
 
   margin-bottom: -1px;
 
+  // Site name pop-up animation.
+  @keyframes site-name-pop-up {
+    0% {
+      transform:  translateY(40%);
+    }
+
+    100% {
+      transform:  none;
+    }
+  }
+  animation-name:             site-name-pop-up;
+  animation-duration:         0.3s;
+  transition-timing-function: $easing-decelerate;
+
   // Since the title is an SVG, we have to use CSS filters to get a drop drop
   // shadow that matches the title lettering outlines.
 
