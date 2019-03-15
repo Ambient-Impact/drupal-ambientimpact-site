@@ -1,0 +1,26 @@
+// -----------------------------------------------------------------------------
+//   Site layout
+// -----------------------------------------------------------------------------
+
+html {
+  // This prevents any of our full width bleed effects causing horizontal scroll
+  // bars or scrolling/panning.
+  overflow-x: hidden;
+}
+
+.region-primary-menu {
+  @include z-index(page-floating);
+
+  // When Headroom is not at the top, increase the z-index. We don't do this
+  // when we're at the top as that will cause the menu bar to be on top of full
+  // viewport stuff but offset downwards because of the site title. Note that we
+  // have to use the :not() selector as Headroom can be slow to add the
+  // .headroom--not-top class and this may cause content to show on top of the
+  // menu bar, especially on mobile where the connection may be slower.
+  &:not(.headroom--top) {
+    @include z-index(floating-above);
+  }
+}
+.region-content {
+  @include z-index(page-main);
+}

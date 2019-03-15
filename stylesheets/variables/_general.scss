@@ -8,6 +8,15 @@ $font-size:				110%;
 // Heading font sizes when not using responsive type. These are h1-h6 in order.
 $heading-font-sizes:	1.5em, 1.35em, 1.2em, 1em, 1em, 1em;
 
+// Fancy heading shadow depth on narrower screens. Currency used for the site
+// title and project node titles when they're using <canvas> elements.
+$fancy-heading-shadow-depth-small:	1;
+// Fancy heading shadow depth on wider screens. Currency used for the site title
+// and project node titles when they're using <canvas> elements.
+$fancy-heading-shadow-depth-large:	2;
+
+// The shadow depth for full bleed panels/bars.
+$full-bleed-panel-shadow-depth:		2;
 
 $image-link-normal-filters:	contrast(100%)	brightness(100%);
 $image-link-hover-filters:	contrast(75%)	brightness(150%);

@@ -1,24 +1,67 @@
 // -----------------------------------------------------------------------------
-//	Site branding
+//   Site branding
 // -----------------------------------------------------------------------------
 
 .site-name {
-	a {
-		display: block;
-	}
+  position: relative;
 
-	&__svg {
-		// This prevents the browser from showing the title attribute on the
-		// <svg>, or the <title> tag within the <svg> as the tooltip, and forces
-		// it to use the one on the parent link instead, which is what we want
-		// for users not using a screen reader (which can and will see the
-		// descriptive text).
-		pointer-events: none;
+  z-index: index($header-stacking-order, site-name);
 
-		// This causes the SVG paths to use the link colours, including the
-		// hover/focus colours.
-		path {
-			fill:	currentColor;
-		}
-	}
+  margin-bottom: -1px;
+
+  // Since the title is an SVG, we have to use CSS filters to get a drop drop
+  // shadow that matches the title lettering outlines.
+
+  // IMPORTANT: we use a smaller depth on narrower screens because a depth that
+  // looks good on wider screens is overkill when the title is smaller, making
+  // the shadow look heavy handed.
+
+  // Drop shadow, extends downwards.
+  @include material-shadow-filter-downward(
+    $depth: $fancy-heading-shadow-depth-small
+  );
+
+  a {
+    // Drop shadow, centered to give ambient shadow effect.
+    @include material-shadow-filter-ambient(
+      $depth: $fancy-heading-shadow-depth-small
+    );
+
+    // Remove fancy link underlines.
+    @include remove-fancy-link-underlines;
+  }
+
+  @include media('>=fancy-heading-shadow-depth') {
+    // Drop shadow, extends downwards.
+    @include material-shadow-filter-downward(
+      $depth: $fancy-heading-shadow-depth-large
+    );
+
+    a {
+      // Drop shadow, centered to give ambient shadow effect.
+      @include material-shadow-filter-ambient(
+        $depth: $fancy-heading-shadow-depth-large
+      );
+    }
+  }
+
+  a {
+    display:  block;
+  }
+
+  &__svg {
+    display:  block;
+
+    // This prevents the browser from showing the title attribute from the <svg>
+    // or the <title> tag within the <svg> as the tooltip, and forces it to use
+    // the one on the parent link instead, which is what we want for users not
+    // using a screen reader (which can and will see the descriptive text).
+    pointer-events: none;
+
+    // This causes the SVG paths to use the link colours, including the
+    // hover/focus colours.
+    path {
+      fill: currentColor;
+    }
+  }
 }

@@ -1,0 +1,10 @@
+// -----------------------------------------------------------------------------
+//	Variables - Breakpoints
+// -----------------------------------------------------------------------------
+
+
+@include add-breakpoints((
+	// This is the viewport width where we switch from the small shadow depth to
+	// the large one.
+	'fancy-heading-shadow-depth'	: 35em
+));

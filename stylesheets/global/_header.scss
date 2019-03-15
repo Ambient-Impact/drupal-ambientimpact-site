@@ -1,0 +1,24 @@
+// -----------------------------------------------------------------------------
+//   Site header
+// -----------------------------------------------------------------------------
+
+///
+/// Header stacking order. Later in the list means a higher z-index.
+///
+$header-stacking-order: header-top-shadow, site-name;
+
+.region-header {
+  position: relative;
+
+  // This adds a shadow behind the top edge of the navigation bar. See
+  // _navigation.scss for the bottom half of the shadow. This is done to
+  // allow the top shadow to not overlap the site name, but appear underneath
+  // it, so that it appears the site name is part of the same sheet as the
+  // navigation bar.
+  &::after {
+    @include horizontal-bleed-background-top-peek-shadow(
+      $z-index: index($header-stacking-order, header-top-shadow),
+      $depth:   $full-bleed-panel-shadow-depth
+    );
+  }
+}
