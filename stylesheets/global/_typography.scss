@@ -1,0 +1,92 @@
+// -----------------------------------------------------------------------------
+//  Typography partial
+// -----------------------------------------------------------------------------
+
+// This attempts to mimic the Furore font spacing, weight, and size using the
+// default system font stack, to minimize the amount of shifting that occurs
+// if/when Furore loads and is applied. Note that this is based on Roboto, but
+// should work similarly with the other fonts in the system font stack.
+#{$h1to6}, .region-primary-menu .menu {
+  // Furore only has uppercase, so use that.
+  text-transform: uppercase;
+
+  // Set letter spacing to try and match the line length of Furore, before it
+  // has loaded. This is done so avoid as much layout shifting as
+  // possible.This assumes Roboto is the fallback font. Not sure how well it
+  // works with other fonts.
+  letter-spacing: 0.166em;
+
+  // Increase the weight to better match Furore, if/when it loads.
+  font-weight: 700;
+
+  .font-loaded-furore & {
+    font-family: Furore, sans-serif;
+
+    letter-spacing: 0.1em;
+
+    // Reset the font-weight back to normal.
+    font-weight: $font-weight-normal;
+
+    // Remove the underline crop as Furore has no descenders but the
+    // underline occasionally gets cropped a bit regardless, depending on
+    // the font size.
+    :link, :visited {
+      @include text-underline-crop(transparent);
+    }
+    @include abbr {
+      @include text-underline-crop(transparent);
+    }
+  }
+}
+#{$h1to6} {
+  //hyphens:    auto;
+  line-height:  1.4;
+
+  * + & {
+    margin-top: $general-spacing * 3;
+  }
+
+  .nbsp {
+    // Furore displays odd characters instead of a non-breaking space, so
+    // use the default font stack for these instead.
+    font-family:  $font-stack;
+  }
+
+  .font-loaded-furore & {
+    :link, :visited {
+      @include custom-property(
+        'fancy-link-underline-distance', 100%
+      );
+    }
+    @include abbr {
+      @include custom-property(
+        'text-underline-position', 100%
+      );
+    }
+  }
+}
+
+h1, h2 {
+  :link, :visited {
+    .font-loaded-furore & {
+      // Make fancy link underlines thicker for these as they have a large
+      // font size. Setting this as pixels avoids blurry rounding that
+      // we'd often get with ems, etc.
+      @include custom-property(
+        'fancy-link-underline-thickness', 3px
+      );
+    }
+  }
+}
+
+// Furore doesn't deal well with the &nbsp; that Drupal appends to the field
+// label, showing some odd characters instead of a space, so reset to the
+// defaults.
+.field-label {
+  &, .font-loaded-furore & {
+    font-family:  $font-stack;
+    font-weight:  $font-weight-strong;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+}

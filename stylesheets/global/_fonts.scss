@@ -1,0 +1,21 @@
+// -----------------------------------------------------------------------------
+//  Font definitions partial
+// -----------------------------------------------------------------------------
+
+$fonts-path: '../fonts';
+
+@font-face {
+  font-family:  'Furore';
+  font-weight:  normal;
+  font-style:   normal;
+
+  src:  url('#{$fonts-path}/furore/furore.eot');
+  src:  url('#{$fonts-path}/furore/furore.eot?#iefix')
+          format('embedded-opentype'),
+        url('#{$fonts-path}/furore/furore.woff')
+          format('woff'),
+        url('#{$fonts-path}/furore/furore.ttf')
+          format('truetype'),
+        url('#{$fonts-path}/furore/furore.svg#furoreregular')
+          format('svg');
+}
