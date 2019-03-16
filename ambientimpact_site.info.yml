@@ -9,3 +9,4 @@ core: 8.x
 # https://www.drupal.org/docs/8/theming/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-theme#attach-library-all-pages
 libraries:
   - ambientimpact_site/global-styling
+  - ambientimpact_site/global-scripts
