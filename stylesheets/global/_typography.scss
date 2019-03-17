@@ -42,7 +42,10 @@
   //hyphens:    auto;
   line-height:  1.4;
 
-  * + & {
+  // This adds a significant top margin to headings preceded by another element,
+  // excluding contextual link placeholders or full contextual links.
+  *:not([data-contextual-id]) + &,
+  * + [data-contextual-id] + & {
     margin-top: $general-spacing * 3;
   }
 
