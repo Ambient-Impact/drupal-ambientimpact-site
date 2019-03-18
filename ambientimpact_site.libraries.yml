@@ -7,6 +7,8 @@ global-styling:
 global-scripts:
   js:
     javascript/fonts.js: {}
+    javascript/menu_primary.js: {}
   dependencies:
     - ambientimpact_core/framework
     - ambientimpact_core/component.font
+    - ambientimpact_core/component.headroom
