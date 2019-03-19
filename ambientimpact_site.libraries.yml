@@ -11,4 +11,5 @@ global-scripts:
   dependencies:
     - ambientimpact_core/framework
     - ambientimpact_core/component.font
+    - ambientimpact_core/component.menu_has_active_item
     - ambientimpact_core/component.headroom
