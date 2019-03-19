@@ -32,12 +32,40 @@ $menu-primary-item-underline-height:  5px;
 ///
 /// Primary menu item current indicator transition duration.
 ///
-$menu-primary-item-indicator-transition-duration: 0.2s;
+$menu-primary-menu-primary-item-indicator-transition-duration: 0.2s;
 
 @include add-breakpoints((
   // At which height to start using $menu-primary-font-size-large.
   'menu-primary-font-size-large': get-breakpoint-value('height-small')
 ));
+
+@mixin menu-primary-item-colour {
+  &,
+  &.is-active {
+    color:  $foreground-colour-on-dark;
+  }
+}
+
+@mixin menu-primary-item-indicator-transition {
+  // This needs to be set here or the default hover/focus transition duration
+  // will cause this to be instant.
+  transition-duration: $menu-primary-menu-primary-item-indicator-transition-duration;
+
+  transition-property: height;
+}
+
+@mixin menu-primary-item-indicator-active {
+  height: $menu-primary-item-underline-height;
+
+  @include menu-primary-item-indicator-transition;
+}
+
+@mixin menu-primary-item-is-active {
+  &.is-active,
+  &.active-trail {
+    @content
+  }
+}
 
 .region-primary-menu {
   ///
@@ -102,17 +130,10 @@ $menu-primary-item-indicator-transition-duration: 0.2s;
 
       padding:  $menu-primary-item-padding-y $menu-primary-item-padding-x;
 
-      @mixin item-colour {
-        &,
-        &.is-active {
-          color:  $foreground-colour-on-dark;
-        }
-      }
-
-      @include item-colour;
+      @include menu-primary-item-colour;
 
       @include link-hover {
-        @include item-colour;
+        @include menu-primary-item-colour;
       }
 
       // Remove fancy link underlines.
@@ -134,25 +155,28 @@ $menu-primary-item-indicator-transition-duration: 0.2s;
 
         background-color: $foreground-colour-on-dark;
 
-        transition: height $menu-primary-item-indicator-transition-duration;
+        @include menu-primary-item-indicator-transition;
+      }
+
+      // This is required to have higher specificity than the default link
+      // transition properties.
+      @include menu-primary-item-is-active {
+        &::after {
+          @include menu-primary-item-indicator-transition;
+        }
       }
 
       @include link-hover {
         &::after {
-          height: $menu-primary-item-underline-height;
-
-          // This needs to be set here or the default hover/focus transition
-          // duration will cause this to be instant.
-          transition-duration: $menu-primary-item-indicator-transition-duration;
+          @include menu-primary-item-indicator-active;
         }
       }
     }
 
-    &:not(.menu--has-active-item) {
-      a.is-active,
-      a.active-trail {
+    &:not(.menu--has-active-item) a {
+      @include menu-primary-item-is-active {
         &::after {
-          height: $menu-primary-item-underline-height;
+          @include menu-primary-item-indicator-active;
         }
       }
     }
