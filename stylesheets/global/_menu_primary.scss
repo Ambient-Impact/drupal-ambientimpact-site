@@ -29,6 +29,11 @@ $menu-primary-item-padding-y:   $layout-gutter * 0.8;
 ///
 $menu-primary-item-underline-height:  5px;
 
+///
+/// Primary menu item current indicator transition duration.
+///
+$menu-primary-item-indicator-transition-duration: 0.2s;
+
 @include add-breakpoints((
   // At which height to start using $menu-primary-font-size-large.
   'menu-primary-font-size-large': get-breakpoint-value('height-small')
@@ -129,12 +134,16 @@ $menu-primary-item-underline-height:  5px;
 
         background-color: $foreground-colour-on-dark;
 
-        transition: height 0.2s;
+        transition: height $menu-primary-item-indicator-transition-duration;
       }
 
       @include link-hover {
         &::after {
           height: $menu-primary-item-underline-height;
+
+          // This needs to be set here or the default hover/focus transition
+          // duration will cause this to be instant.
+          transition-duration: $menu-primary-item-indicator-transition-duration;
         }
       }
     }
