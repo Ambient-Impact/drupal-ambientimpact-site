@@ -25,9 +25,7 @@ $menu-primary-item-padding-y:   $layout-gutter * 0.8;
 ///
 /// Primary menu item underline height, used to indicate active menu item.
 ///
-/// Note that this is 4px + 1px for the Chrome rounding error fix.
-///
-$menu-primary-item-underline-height:  5px;
+$menu-primary-item-underline-height:  4px;
 
 @include add-breakpoints((
   // At which height to start using $menu-primary-font-size-large.
@@ -49,16 +47,16 @@ $menu-primary-item-underline-height:  5px;
 /// Set primary menu item indicator transition properties.
 ///
 @mixin menu-primary-item-indicator-transition {
-  transition-duration: 0.2s;
+  transition-duration: 0.1s;
 
-  transition-property: height;
+  transition-property: transform;
 }
 
 ///
 /// Set primary menu item indicator as active, i.e. current/hovered/focussed.
 ///
 @mixin menu-primary-item-indicator-active {
-  height: $menu-primary-item-underline-height;
+  transform: translateY(0);
 
   // This is necessary to override the default instant transition in on links,
   // so we transition in and out at the same rate, which looks better for this.
@@ -103,7 +101,7 @@ $menu-primary-item-underline-height:  5px;
     // This allows the nav items to scroll horizontally.
     overflow-x: auto;
 
-    // Clip rounding error fixes below so they don't overflow.
+    // This ensures the indicators that are translated down are hidden.
     overflow-y: hidden;
 
     // Space items evenly.
@@ -117,7 +115,7 @@ $menu-primary-item-underline-height:  5px;
     }
 
     .menu-item {
-      // Override Classy.
+      // Remove padding added by Classy.
       padding-top: 0;
     }
 
@@ -146,12 +144,15 @@ $menu-primary-item-underline-height:  5px;
 
         left:     $menu-primary-item-padding-x;
         right:    $menu-primary-item-padding-x;
-        // This ensures Chrome on Android hides its 1px rounding error.
-        bottom:   -1px;
+        bottom:   0;
 
-        height:   0;
+        height:   $menu-primary-item-underline-height;
 
         background-color: $foreground-colour-on-dark;
+
+        // Hidden by default by being outside of overflow.
+        transform:    translateY(100%);
+        will-change:  transform;
 
         // Set the transition for the indicator when interaction has ceased. The
         // menu-primary-item-indicator-active mixin sets the transition in.
