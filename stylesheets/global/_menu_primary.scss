@@ -76,7 +76,7 @@ $menu-primary-item-underline-height:  4px;
     $colour:  $ambientimpact-orange,
     $z-index: index($local-stacking-order, background),
     // Don't use the topmost shadow, as that would show on top of the site
-    // title. See _site_branding.scss for the topmost shadow.
+    // title. See _header.scss for the topmost shadow.
     $shadow:  (false, true, true)
   );
 
