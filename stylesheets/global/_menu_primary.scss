@@ -35,25 +35,12 @@ $menu-primary-item-underline-height:  5px;
 ));
 
 ///
-/// Target primary menu items when they're the active menu item.
-///
-/// @content
-///   The content to wrap in selectors.
-///
-@mixin menu-primary-item-is-active {
-  &.is-active,
-  &.active-trail {
-    @content
-  }
-}
-
-///
 /// Set primary menu item colour.
 ///
 @mixin menu-primary-item-colour {
   color:  $foreground-colour-on-dark;
 
-  @include menu-primary-item-is-active {
+  @include menu-item-is-active-path {
     color:  $foreground-colour-on-dark;
   }
 }
@@ -185,7 +172,7 @@ $menu-primary-item-underline-height:  5px;
     // above will ensure this item still has the indicator when it's being
     // interacted with.
     &:not(.menu--has-active-item) a {
-      @include menu-primary-item-is-active {
+      @include menu-item-is-active-path {
         &::after {
           @include menu-primary-item-indicator-active;
         }
