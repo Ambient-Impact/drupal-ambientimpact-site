@@ -7,7 +7,7 @@
 ///
 $header-stacking-order: header-top-shadow, site-name;
 
-.region-header {
+header[role='banner'] {
   position: relative;
 
   // This adds a shadow behind the top edge of the navigation bar. See
