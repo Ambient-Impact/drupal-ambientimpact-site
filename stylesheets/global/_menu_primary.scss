@@ -29,42 +29,53 @@ $menu-primary-item-padding-y:   $layout-gutter * 0.8;
 ///
 $menu-primary-item-underline-height:  5px;
 
-///
-/// Primary menu item current indicator transition duration.
-///
-$menu-primary-menu-primary-item-indicator-transition-duration: 0.2s;
-
 @include add-breakpoints((
   // At which height to start using $menu-primary-font-size-large.
   'menu-primary-font-size-large': get-breakpoint-value('height-small')
 ));
 
-@mixin menu-primary-item-colour {
-  &,
-  &.is-active {
-    color:  $foreground-colour-on-dark;
-  }
-}
-
-@mixin menu-primary-item-indicator-transition {
-  // This needs to be set here or the default hover/focus transition duration
-  // will cause this to be instant.
-  transition-duration: $menu-primary-menu-primary-item-indicator-transition-duration;
-
-  transition-property: height;
-}
-
-@mixin menu-primary-item-indicator-active {
-  height: $menu-primary-item-underline-height;
-
-  @include menu-primary-item-indicator-transition;
-}
-
+///
+/// Target primary menu items when they're the active menu item.
+///
+/// @content
+///   The content to wrap in selectors.
+///
 @mixin menu-primary-item-is-active {
   &.is-active,
   &.active-trail {
     @content
   }
+}
+
+///
+/// Set primary menu item colour.
+///
+@mixin menu-primary-item-colour {
+  color:  $foreground-colour-on-dark;
+
+  @include menu-primary-item-is-active {
+    color:  $foreground-colour-on-dark;
+  }
+}
+
+///
+/// Set primary menu item indicator transition properties.
+///
+@mixin menu-primary-item-indicator-transition {
+  transition-duration: 0.2s;
+
+  transition-property: height;
+}
+
+///
+/// Set primary menu item indicator as active, i.e. current/hovered/focussed.
+///
+@mixin menu-primary-item-indicator-active {
+  height: $menu-primary-item-underline-height;
+
+  // This is necessary to override the default instant transition in on links,
+  // so we transition in and out at the same rate, which looks better for this.
+  @include menu-primary-item-indicator-transition;
 }
 
 .region-primary-menu {
@@ -105,7 +116,7 @@ $menu-primary-menu-primary-item-indicator-transition-duration: 0.2s;
     // This allows the nav items to scroll horizontally.
     overflow-x: auto;
 
-    // Clip any rounding error fixes below so they don't overflow.
+    // Clip rounding error fixes below so they don't overflow.
     overflow-y: hidden;
 
     // Space items evenly.
@@ -155,17 +166,13 @@ $menu-primary-menu-primary-item-indicator-transition-duration: 0.2s;
 
         background-color: $foreground-colour-on-dark;
 
+        // Set the transition for the indicator when interaction has ceased. The
+        // menu-primary-item-indicator-active mixin sets the transition in.
         @include menu-primary-item-indicator-transition;
       }
 
-      // This is required to have higher specificity than the default link
-      // transition properties.
-      @include menu-primary-item-is-active {
-        &::after {
-          @include menu-primary-item-indicator-transition;
-        }
-      }
-
+      // This make the indicator visible on an item when it's being interacted
+      // with.
       @include link-hover {
         &::after {
           @include menu-primary-item-indicator-active;
@@ -173,6 +180,10 @@ $menu-primary-menu-primary-item-indicator-transition-duration: 0.2s;
       }
     }
 
+    // This makes the indicator visible on the current active path when the menu
+    // isn't marked as having an item interacted with. Note that the hover/focus
+    // above will ensure this item still has the indicator when it's being
+    // interacted with.
     &:not(.menu--has-active-item) a {
       @include menu-primary-item-is-active {
         &::after {
