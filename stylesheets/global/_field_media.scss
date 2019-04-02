@@ -1,0 +1,232 @@
+// -----------------------------------------------------------------------------
+//   Media field partial
+// -----------------------------------------------------------------------------
+
+///
+/// Media field background colour.
+///
+$media-field-background-colour: black !default;
+
+///
+/// Media field spacing.
+///
+/// This is used as the overall field padding and spacing between field items.
+/// Defaults to $layout-gutter to look consistent with the page layout spacing.
+///
+$media-field-spacing: $layout-gutter !default;
+
+///
+/// Media field play icon background colour.
+///
+$media-play-icon-background-colour: rgba(0, 0, 0, 0.75) !default;
+
+// Image and video embed fields. Form wrappers are excluded as the same classes
+// are used on those as well but this is purely output styling.
+.field--type-image:not(.form-wrapper),
+.field--type-video-embed-field:not(.form-wrapper) {
+  $local-stacking-order:  background, content;
+
+  margin:   $general-spacing      0;
+  padding:  $media-field-spacing  0;
+
+  @include set-colours(
+    $background:  $media-field-background-colour
+  );
+
+  :link, :visited {
+    @include link-colours($media-field-background-colour);
+  }
+
+  // Anything that isn't the project images field.
+  &:not(.field--name-field-project-images) {
+    @include horizontal-bleed-background(
+      $colour:  $media-field-background-colour,
+      $z-index: index($local-stacking-order, background),
+      $shadow:  true
+    );
+  }
+  // Project images field.
+  &.field--name-field-project-images {
+    @include horizontal-bleed-background(
+      $colour:  $media-field-background-colour,
+      $z-index: index($local-stacking-order, background),
+      // Don't use the topmost shadow, as that would show on top of the node
+      // title. See node.scss for the topmost shadow.
+      $shadow:  (false, true, true)
+    );
+  }
+
+  .field__item {
+    position: relative;
+
+    z-index: index($local-stacking-order, content);
+  }
+
+  // The play element overlay.
+  .field__item-play {
+    position:   absolute;
+
+    top:      0;
+    left:     0;
+    right:    0;
+    bottom:   0;
+
+    // Even if the browser doesn't support this, it's preferable to have it
+    // overlay the field rather than not, as the design looks odd. Users of
+    // modern browsers can right click/long press to view the image, while older
+    // browsers won't be able to.
+    pointer-events: none;
+
+    display:          flex;
+    justify-content:  center;
+    align-items:      center;
+
+    transition-property:        opacity;
+    transition-duration:        0.2s;
+    transition-timing-function: linear;
+
+    text-decoration:  none;
+
+    // Make invisible when a field is playing.
+    &--playing {
+      opacity: 0;
+    }
+  }
+
+  .field__item-play-icon {
+    padding:      0.5em 0.8em;
+
+    @include set-colours(
+      $background:  $media-play-icon-background-colour
+    );
+
+    border-radius:  $material-border-radius;
+
+    font-size:      150%;
+    line-height:    1;
+
+    // Don't indent the icon, as this messes with the background.
+    @include set-icon-text-indent(0);
+
+    // Center this vertically, as we don't have the underline to offset the
+    // vertical alignment.
+    @include set-icon-vertical-alignment(centre);
+  }
+
+  // Spacing between field items and any preceding element (usually another
+  // field item).
+  * + .field__item {
+    margin-top: $media-field-spacing;
+  }
+
+  .intrinsic-ratio, :link {
+    margin-left:  auto;
+    margin-right: auto;
+  }
+
+  :link/*:not(.contextual-links__link)*/, img {
+    display: block;
+  }
+}
+
+// // Image field-only styles.
+// .field-type-image:not(.form-wrapper) {
+//   figcaption {
+//     // Why does AdaptiveTheme set an inline width?
+//     width: auto !important;
+
+//     text-align: center;
+
+//     // Set a bottom margin in case this is a multi-item field, to make it
+//     // easier to tell which item this caption applies to.
+//     margin-bottom: $general-spacing * 2;
+
+//     // AdaptiveTheme captions. Set caption links back to inline. The class
+//     // is for specificity.
+//     &.caption a {
+//       display: inline;
+//     }
+//   }
+
+//   .field-item:last-child {
+//     figcaption {
+//       // Remove the bottom margin on the last item's caption.
+//       margin-bottom: 0;
+//     }
+//   }
+
+//   * + figcaption {
+//     margin-top: $media-field-spacing;
+//   }
+
+//   figure > :not(figcaption) a,
+//   figure > a {
+//     // Remove fancy link underlines.
+//     @include remove-fancy-link-underlines;
+//   }
+
+//   img, picture {
+//     // This is in case a transparent image is used, which normally assumes a
+//     // light background colour.
+//     @include set-colours(
+//       $background:  white
+//     );
+//   }
+// }
+
+// // Project image field styles. The form element is excluded so as to only apply
+// // to the output.
+// .field-name-field-project-images:not(.form-wrapper) {
+//   margin-top: 0;
+//   padding:  ($media-field-spacing / 2) 0;
+
+//   .field-items {
+//     @include contain-floats;
+//   }
+
+//   // Remove field item spacing, since we use a different method below.
+//   * + .field-item {
+//     margin-top: 0;
+//   }
+
+//   .field-item {
+//     float:  left;
+
+//     width: 50%;
+//     width: calc(50% - (#{$media-field-spacing / 2}));
+
+//     &:nth-child(odd) {
+//       // Use calc() to ensure we only apply the margin if calc() is
+//       // supported, using the second width above.
+//       margin-right: calc(#{$media-field-spacing});
+
+//       // If this odd item is the last child, make it span the whole row.
+//       &:last-child {
+//         width:      100%;
+//         margin-right: 0;
+//       }
+//     }
+
+//     padding:  ($media-field-spacing / 2) 0;
+//   }
+// }
+
+// .field-name-field-remote-video:not(.form-wrapper) .content a {
+//   // Remove fancy link underlines.
+//   @include remove-fancy-link-underlines;
+// }
+
+// .field-type-link-field {
+//   // Link fields have a habit of leaking to the right of the layout if a URL
+//   // is displayed (without any text that would normally have spaces).
+//   // @see https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
+//   // @see https://developer.mozilla.org/en/docs/Web/CSS/overflow-wrap
+//   &__link:not(&__link--has-title) {
+//     &, & * {
+//       // Most browsers.
+//       word-break: break-all;
+//       // IE/Edge.
+//       word-wrap: break-word;
+//     }
+//   }
+// }
