@@ -15,11 +15,6 @@ $media-field-background-colour: black !default;
 ///
 $media-field-spacing: $layout-gutter !default;
 
-///
-/// Media field play icon background colour.
-///
-$media-play-icon-background-colour: rgba(0, 0, 0, 0.75) !default;
-
 // Image and video embed fields. Form wrappers are excluded as the same classes
 // are used on those as well but this is purely output styling.
 .field--type-image:not(.form-wrapper),
@@ -60,57 +55,6 @@ $media-play-icon-background-colour: rgba(0, 0, 0, 0.75) !default;
     position: relative;
 
     z-index: index($local-stacking-order, content);
-  }
-
-  // The play element overlay.
-  .field__item-play {
-    position:   absolute;
-
-    top:      0;
-    left:     0;
-    right:    0;
-    bottom:   0;
-
-    // Even if the browser doesn't support this, it's preferable to have it
-    // overlay the field rather than not, as the design looks odd. Users of
-    // modern browsers can right click/long press to view the image, while older
-    // browsers won't be able to.
-    pointer-events: none;
-
-    display:          flex;
-    justify-content:  center;
-    align-items:      center;
-
-    transition-property:        opacity;
-    transition-duration:        0.2s;
-    transition-timing-function: linear;
-
-    text-decoration:  none;
-
-    // Make invisible when a field is playing.
-    &--playing {
-      opacity: 0;
-    }
-  }
-
-  .field__item-play-icon {
-    padding:      0.5em 0.8em;
-
-    @include set-colours(
-      $background:  $media-play-icon-background-colour
-    );
-
-    border-radius:  $material-border-radius;
-
-    font-size:      150%;
-    line-height:    1;
-
-    // Don't indent the icon, as this messes with the background.
-    @include set-icon-text-indent(0);
-
-    // Center this vertically, as we don't have the underline to offset the
-    // vertical alignment.
-    @include set-icon-vertical-alignment(centre);
   }
 
   // Spacing between field items and any preceding element (usually another
