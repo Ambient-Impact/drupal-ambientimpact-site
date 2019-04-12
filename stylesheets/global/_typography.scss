@@ -26,7 +26,9 @@
 
     // Reset the font-weight back to normal.
     font-weight: $font-weight-normal;
+  }
 
+  .font-loaded-furore .layout-container & {
     // Remove the underline crop as Furore has no descenders but the
     // underline occasionally gets cropped a bit regardless, depending on
     // the font size.
@@ -55,7 +57,7 @@
     font-family:  $font-stack;
   }
 
-  .font-loaded-furore & {
+  .font-loaded-furore .layout-container & {
     :link, :visited {
       @include custom-property(
         'fancy-link-underline-distance', 100%
@@ -71,7 +73,7 @@
 
 h1, h2 {
   :link, :visited {
-    .font-loaded-furore & {
+    .font-loaded-furore .layout-container & {
       // Make fancy link underlines thicker for these as they have a large
       // font size. Setting this as pixels avoids blurry rounding that
       // we'd often get with ems, etc.
