@@ -32,6 +32,11 @@ $media-field-spacing: $layout-gutter !default;
     @include link-colours($media-field-background-colour);
   }
 
+  img {
+    // Ensure images are always the full width of the field item.
+    width:  100%;
+  }
+
   // Anything that isn't the project images field.
   &:not(.field--name-field-project-images) {
     @include horizontal-bleed-background(
@@ -73,92 +78,87 @@ $media-field-spacing: $layout-gutter !default;
   }
 }
 
-// // Image field-only styles.
-// .field-type-image:not(.form-wrapper) {
-//   figcaption {
-//     // Why does AdaptiveTheme set an inline width?
-//     width: auto !important;
+// Image field-only styles.
+.field--type-image:not(.form-wrapper) {
+  figcaption {
+    text-align: center;
 
-//     text-align: center;
+    // Set a bottom margin in case this is a multi-item field, to make it
+    // easier to tell which item this caption applies to.
+    margin-bottom: $general-spacing * 2;
 
-//     // Set a bottom margin in case this is a multi-item field, to make it
-//     // easier to tell which item this caption applies to.
-//     margin-bottom: $general-spacing * 2;
+    // AdaptiveTheme captions. Set caption links back to inline. The class
+    // is for specificity.
+    // &.caption a {
+    //   display: inline;
+    // }
+  }
 
-//     // AdaptiveTheme captions. Set caption links back to inline. The class
-//     // is for specificity.
-//     &.caption a {
-//       display: inline;
-//     }
-//   }
+  .field__item:last-child {
+    figcaption {
+      // Remove the bottom margin on the last item's caption.
+      margin-bottom: 0;
+    }
+  }
 
-//   .field-item:last-child {
-//     figcaption {
-//       // Remove the bottom margin on the last item's caption.
-//       margin-bottom: 0;
-//     }
-//   }
+  * + figcaption {
+    margin-top: $media-field-spacing;
+  }
 
-//   * + figcaption {
-//     margin-top: $media-field-spacing;
-//   }
+  figure > :not(figcaption) a,
+  figure > a {
+    // Remove fancy link underlines.
+    @include remove-fancy-link-underlines;
+  }
 
-//   figure > :not(figcaption) a,
-//   figure > a {
-//     // Remove fancy link underlines.
-//     @include remove-fancy-link-underlines;
-//   }
+  img, picture {
+    // This is in case a transparent image is used, which normally assumes a
+    // light background colour.
+    @include set-colours(
+      $background:  white
+    );
+  }
+}
 
-//   img, picture {
-//     // This is in case a transparent image is used, which normally assumes a
-//     // light background colour.
-//     @include set-colours(
-//       $background:  white
-//     );
-//   }
-// }
+// Project image field styles. The form element is excluded so as to only apply
+// to the output.
+.field--name-field-project-images:not(.form-wrapper) {
+  margin-top: 0;
+  padding:  ($media-field-spacing / 2) 0;
 
-// // Project image field styles. The form element is excluded so as to only apply
-// // to the output.
-// .field-name-field-project-images:not(.form-wrapper) {
-//   margin-top: 0;
-//   padding:  ($media-field-spacing / 2) 0;
+  @include contain-floats;
 
-//   .field-items {
-//     @include contain-floats;
-//   }
+  // Remove field item spacing, since we use a different method below.
+  * + .field__item {
+    margin-top: 0;
+  }
 
-//   // Remove field item spacing, since we use a different method below.
-//   * + .field-item {
-//     margin-top: 0;
-//   }
+  .field__item {
+    float:  left;
 
-//   .field-item {
-//     float:  left;
+    width: 50%;
+    width: calc(50% - (#{$media-field-spacing / 2}));
 
-//     width: 50%;
-//     width: calc(50% - (#{$media-field-spacing / 2}));
+    &:nth-child(odd) {
+      // Use calc() to ensure we only apply the margin if calc() is
+      // supported, using the second width above.
+      margin-right: calc(#{$media-field-spacing});
 
-//     &:nth-child(odd) {
-//       // Use calc() to ensure we only apply the margin if calc() is
-//       // supported, using the second width above.
-//       margin-right: calc(#{$media-field-spacing});
+      // If this odd item is the last child, make it span the whole row.
+      &:last-child {
+        width:      100%;
+        margin-right: 0;
+      }
+    }
 
-//       // If this odd item is the last child, make it span the whole row.
-//       &:last-child {
-//         width:      100%;
-//         margin-right: 0;
-//       }
-//     }
+    padding:  ($media-field-spacing / 2) 0;
+  }
+}
 
-//     padding:  ($media-field-spacing / 2) 0;
-//   }
-// }
-
-// .field-name-field-remote-video:not(.form-wrapper) .content a {
-//   // Remove fancy link underlines.
-//   @include remove-fancy-link-underlines;
-// }
+.field--name-field-remote-video:not(.form-wrapper) .content a {
+  // Remove fancy link underlines.
+  @include remove-fancy-link-underlines;
+}
 
 // .field-type-link-field {
 //   // Link fields have a habit of leaking to the right of the layout if a URL
