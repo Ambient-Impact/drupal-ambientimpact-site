@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Prepares variables for field_project_link templates.
+ *
+ * This sets the link text to contain the title of the parent node if the link
+ * title has not been set and wraps the text in an icon.
+ */
+function ambientimpact_site_preprocess_field__field_project_link(
+  &$variables, $hook
+) {
+  foreach ($variables['element']['#items'] as $key => $item) {
+    // Determine if a title has been set for this link, using it if so but
+    // falling back to the parent node's title.
+    if ($item->title !== '') {
+      $title = $item->title;
+    } else {
+      $title = $variables['element']['#object']->getTitle();
+    }
+
+    $text = t(
+      'Visit <strong>@title</strong>',
+      [
+        '@title'  => $title,
+      ]
+    );
+
+    $variables['items'][$key]['content']['#title'] = [
+      '#type'     => 'ambientimpact_icon',
+      '#icon'     => 'link',
+      '#bundle'   => 'core',
+      '#text'     => $text,
+    ];
+  }
+}
