@@ -33,3 +33,51 @@ function ambientimpact_site_preprocess_field__field_project_link(
     ];
   }
 }
+
+/**
+ * Prepares variables for field_source_link templates.
+ *
+ * This wraps the text in an icon.
+ */
+function ambientimpact_site_preprocess_field__field_source_link(
+  &$variables, $hook
+) {
+  foreach ($variables['items'] as $key => &$item) {
+    // Don't do anything to an item if the #title is not a string, which could
+    // indicate modification by a module that we're not expecting.
+    if (gettype($item['content']['#title']) !== 'string') {
+      continue;
+    }
+
+    $item['content']['#title'] = [
+      '#type'     => 'ambientimpact_icon',
+      '#icon'     => 'link',
+      '#bundle'   => 'core',
+      '#text'     => $item['content']['#title'],
+    ];
+  }
+}
+
+/**
+ * Prepares variables for field_web_tags templates.
+ *
+ * This wraps the text in an icon.
+ */
+function ambientimpact_site_preprocess_field__field_web_tags(
+  &$variables, $hook
+) {
+  foreach ($variables['items'] as $key => &$item) {
+    // Don't do anything to an item if the #title is not a string, which could
+    // indicate modification by a module that we're not expecting.
+    if (gettype($item['content']['#title']) !== 'string') {
+      continue;
+    }
+
+    $item['content']['#title'] = [
+      '#type'     => 'ambientimpact_icon',
+      '#icon'     => 'bookmark_outline',
+      '#bundle'   => 'core',
+      '#text'     => $item['content']['#title'],
+    ];
+  }
+}
