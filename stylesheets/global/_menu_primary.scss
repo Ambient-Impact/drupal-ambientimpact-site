@@ -118,7 +118,20 @@ $menu-primary-item-underline-height:  4px;
     // Override base, as this cuts off the right side of the menu. D:
     max-width:  none;
 
-    margin:     0 (-$menu-primary-item-padding-x);
+    margin-top:     0;
+    margin-bottom:  0;
+
+    @include root-conditions(('[dir=ltr]'), 'html') {
+      margin-left:  -$menu-primary-item-padding-x;
+      margin-right: -$menu-primary-item-padding-x;
+    }
+
+    // We have to specify the RTL selector so that we override Classy's menu
+    // margins.
+    @include root-conditions(('[dir=rtl]'), 'html') {
+      margin-left:  -$menu-primary-item-padding-x;
+      margin-right: -$menu-primary-item-padding-x;
+    }
 
     z-index:    index($local-stacking-order, content);
 
