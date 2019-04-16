@@ -83,15 +83,3 @@ h1, h2 {
     }
   }
 }
-
-// Furore doesn't deal well with the &nbsp; that Drupal appends to the field
-// label, showing some odd characters instead of a space, so reset to the
-// defaults.
-.field-label {
-  &, .font-loaded-furore & {
-    font-family:  $font-stack;
-    font-weight:  $font-weight-strong;
-    text-transform: none;
-    letter-spacing: normal;
-  }
-}
