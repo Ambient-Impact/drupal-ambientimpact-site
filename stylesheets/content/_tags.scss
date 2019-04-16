@@ -4,6 +4,10 @@
 
 // Tags fields.
 .field--name-field-web-tags {
+  // If Grid is not supported, we have to contain the floated label and items or
+  // they'll cause all sorts of float-based mayhem.
+  @include contain-floats;
+
   // We have to use Grid to lay out the label + field content because if we
   // leave this as floats, it'll shrink-wrap the tag grid container and force it
   // to single-column.
