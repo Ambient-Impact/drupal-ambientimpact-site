@@ -81,3 +81,42 @@ function ambientimpact_site_preprocess_field__field_web_tags(
     ];
   }
 }
+
+/**
+ * Prepares variables for 'title' field templates.
+ *
+ * This transliterates titles from various entities (primarily intended for
+ * nodes, but others work too) to ASCII-only to avoid characters with accents,
+ * as the Furore font does not support those and the browser would fall back to
+ * another font, which would look out of place.
+ *
+ * @see https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Language%21language.api.php/group/transliteration
+ *   Documentation and example of how to transliterate.
+ *
+ * @todo Can this be moved to a preprocess function targetted only at this
+ * field? E.g. ambientimpact_site_preprocess_field__title? This variation
+ * doesn't seem to register.
+ */
+function ambientimpact_site_preprocess_field(&$variables, $hook) {
+  if ($variables['field_name'] === 'title') {
+    // Get the current language code.
+    $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+    // Instantiate the transliteration class.
+    $transliteration = \Drupal::transliteration();
+
+    foreach ($variables['items'] as $key => &$item) {
+      // Don't do anything to an item if the item structure is not what we're
+      // expecting, as that could indicate modification by a module that we
+      // don't know about.
+      if (!isset($item['content']['#context']['value'])) {
+        continue;
+      }
+
+      $item['content']['#context']['value'] =
+        $transliteration->transliterate(
+          $item['content']['#context']['value'], $langCode
+        );
+    }
+  }
+}
