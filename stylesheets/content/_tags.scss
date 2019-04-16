@@ -1,0 +1,47 @@
+// -----------------------------------------------------------------------------
+//   Taxonomy tags
+// -----------------------------------------------------------------------------
+
+// Tags fields.
+.field--name-field-web-tags {
+  // We have to use Grid to lay out the label + field content because if we
+  // leave this as floats, it'll shrink-wrap the tag grid container and force it
+  // to single-column.
+  @include use-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
+
+  // Match the label with the tag list top padding and add horizontal padding to
+  // also match.
+  .field__label {
+    @supports (columns: 1 1em) {
+      padding-top:    $tags-list-gap;
+
+      @include root-conditions(('[dir=ltr]'), 'html') {
+        padding-right:  $tags-list-gap;
+      }
+
+      @include root-conditions(('[dir=rtl]'), 'html') {
+        padding-left:   $tags-list-gap;
+      }
+    }
+  }
+
+  .field__items {
+    @extend %tags-list;
+
+    .field__item {
+      @extend %tags-list__item;
+    }
+  }
+}
+
+// Tags view.
+.view-tags .view-content {
+  @extend %tags-list;
+
+  .views-field {
+    @extend %tags-list__item;
+  }
+}
