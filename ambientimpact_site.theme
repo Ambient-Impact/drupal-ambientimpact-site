@@ -97,7 +97,7 @@ function ambientimpact_site_preprocess_field__field_web_tags(
  *   Documentation and example of how to transliterate.
  *
  * @todo Can this be moved to a preprocess function targetted only at this
- * field? E.g. ambientimpact_site_preprocess_field__title? This variation
+ * field? E.g. ambientimpact_site_preprocess_field__title? That variation
  * doesn't seem to register.
  */
 function ambientimpact_site_preprocess_field(&$variables, $hook) {
