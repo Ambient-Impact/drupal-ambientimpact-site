@@ -125,6 +125,66 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
 }
 
 /**
+ * Preprocess variables for the 'web_snippets' view.
+ *
+ * This adds links to view all web development tags and to the web snippets RSS
+ * feed.
+ *
+ * @todo Can this grab the URLs set in the respective views so that we don't
+ * have to hard-code them here?
+ */
+function ambientimpact_site_preprocess_views_view__web_snippets(&$variables) {
+  // The base class to use for BEM-style classes.
+  $viewBaseClass = 'view-web-snippets';
+
+  $variables['header']['web_snippets_links'] = [
+    '#theme'      => 'links',
+    '#links'      => [],
+    '#attributes' => ['class' => [$viewBaseClass . '__links']],
+    // Give this increased weight so that it's more likely to be at the end of
+    // the header.
+    '#weight'     => 100,
+  ];
+
+  $links = &$variables['header']['web_snippets_links'];
+
+  // Generate the links.
+  foreach ([
+    // View all tags link.
+    'view-all-tags' => [
+      'url'  => 'base:web/tags',
+      'icon'  => 'bookmark_outline',
+      'text'  => t('View all tags'),
+    ],
+    // RSS feed link.
+    'feed' => [
+      'url'        => 'base:web/snippets/feed',
+      'icon'        => 'rss',
+      'text'        => t('Subscribe<span class="visually-hidden"> to the Web snippets RSS feed</span>'),
+      'titleAttr'   => t('View the Web snippets RSS feed.'),
+    ],
+  ] as $key => $data) {
+    // $links['#links'][$key] = [
+    // $links['#links'][
+      // $viewBaseClass . '__link ' .
+      // $viewBaseClass . '__link--' . $key
+    // ] = [
+    $links['#links'][$viewBaseClass . '__link--' . $key] = [
+      'url'     => \Drupal\Core\Url::fromUri($data['url']),
+      'title'   => [
+        '#type'   => 'ambientimpact_icon',
+        '#icon'   => $data['icon'],
+        '#bundle' => 'core',
+        '#text'   => $data['text'],
+      ],
+      'attributes'  => [
+        'title'     => !empty($data['titleAttr']) ? $data['titleAttr'] : '',
+      ],
+    ];
+  }
+}
+
+/**
  * Prepares variables for views field templates.
  *
  * Default template: views-view-field.html.twig.
