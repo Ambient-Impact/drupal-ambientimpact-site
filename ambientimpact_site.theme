@@ -162,3 +162,34 @@ function ambientimpact_site_preprocess_views_view_field(&$variables) {
     ));
   }
 }
+
+/**
+ * Prepares variables for page title templates.
+ *
+ * This wraps the title in a bookmark icon render array if the current path is
+ * a taxonomy term with 'tag' in the vocabulary ID.
+ *
+ * @todo Can we get this data without having to check the current route? For
+ * example, can a variable be added for context when the page title is set
+ * before it gets to the block?
+ *
+ * @todo Can this be generalized to wrap in an icon if certain variables are
+ * present?
+ */
+function ambientimpact_site_preprocess_page_title(&$variables) {
+  if (
+    \Drupal::routeMatch()->getRouteName() ===
+      'entity.taxonomy_term.canonical' &&
+    !is_null($term = \Drupal\taxonomy\Entity\Term::load(
+      \Drupal::routeMatch()->getRawParameter('taxonomy_term')
+    )) &&
+    strpos($term->getVocabularyId(), 'tag') !== false
+  ) {
+    $variables['title'] = [
+      '#type'     => 'ambientimpact_icon',
+      '#icon'     => 'bookmark_outline',
+      '#bundle'   => 'core',
+      '#text'     => $variables['title'],
+    ];
+  }
+}
