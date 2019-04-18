@@ -1,7 +1,27 @@
 <?php
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Url;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Template\Attribute;
+
+/**
+ * Implements hook_theme().
+ *
+ * This defines the 'web_snippets_links' render element.
+ *
+ * @see ambientimpact_site_preprocess_views_view__web_snippets()
+ *   'web_snippets_links' is used here.
+ */
+function ambientimpact_site_theme($existing, $type, $theme, $path) {
+  return [
+    'web_snippets_links'  => [
+      'variables' => [
+        'items' => [],
+      ],
+    ],
+  ];
+}
 
 /**
  * Prepares variables for field_project_link templates.
@@ -129,59 +149,63 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
  *
  * This adds links to view all web development tags and to the web snippets RSS
  * feed.
+ *
+ * Note that we could use '#theme' => 'links', but that doesn't provide a simple
+ * way to define attributes for the <li> elements other than a single class via
+ * the #items key - multiple classes separated by spaces in the key will be
+ * joined together by Drupal with the '-' character, so that hack from Drupal 7
+ * no longer works.
+ *
+ * @see ambientimpact_site_theme()
+ *   Defines the 'web_snippets_links' render element.
  */
 function ambientimpact_site_preprocess_views_view__web_snippets(&$variables) {
-  // The base class to use for BEM-style classes.
-  $viewBaseClass = 'view-web-snippets';
-
   $variables['header']['web_snippets_links'] = [
-    '#theme'      => 'links',
-    '#heading'    => [
-      'text'        => t('Web snippet links'),
-      'attributes'  => ['class' => ['visually-hidden']]
-    ],
-    '#links'      => [],
-    '#attributes' => ['class' => [$viewBaseClass . '__links']],
-    // Give this increased weight so that it's more likely to be at the end of
-    // the header.
+    '#theme'      => 'web_snippets_links',
+    '#items'      => [],
     '#weight'     => 100,
   ];
 
-  $links = &$variables['header']['web_snippets_links'];
+  $items = &$variables['header']['web_snippets_links']['#items'];
 
-  // Generate the links.
+  // Generate the items.
   foreach ([
-    // View all tags link.
+    // View all tags.
     'view-all-tags' => [
-      'route'  => 'view.tags.page_web_tags',
+      'route' => 'view.tags.page_web_tags',
       'icon'  => 'bookmark_outline',
       'text'  => t('View all tags'),
     ],
-    // RSS feed link.
+    // RSS feed.
     'feed' => [
-      'route'        => 'view.web_snippets.feed',
-      'icon'        => 'rss',
-      'text'        => t('Subscribe<span class="visually-hidden"> to the Web snippets RSS feed</span>'),
-      'titleAttr'   => t('View the Web snippets RSS feed.'),
+      'route'     => 'view.web_snippets.feed',
+      'icon'      => 'rss',
+      'text'      => t('Subscribe<span class="visually-hidden"> to the Web snippets RSS feed</span>'),
+      'titleAttr' => t('View the Web snippets RSS feed.'),
     ],
   ] as $key => $data) {
-    // $links['#links'][$key] = [
-    // $links['#links'][
-      // $viewBaseClass . '__link ' .
-      // $viewBaseClass . '__link--' . $key
-    // ] = [
-    $links['#links'][$viewBaseClass . '__link--' . $key] = [
-      'url'     => \Drupal\Core\Url::fromRoute($data['route']),
-      'title'   => [
-        '#type'   => 'ambientimpact_icon',
-        '#icon'   => $data['icon'],
-        '#bundle' => 'core',
-        '#text'   => $data['text'],
-      ],
-      'attributes'  => [
-        'title'     => !empty($data['titleAttr']) ? $data['titleAttr'] : '',
+    $items[$key] = [
+      'linkAttributes'  => new Attribute(),
+      // Define the icon here rather than using {{ ambientimpact_icon() }} in
+      // the template to ensure any HTML in the text doesn't get escaped. This
+      // is probably better for render caching as well.
+      'content'         => [
+        '#type'           => 'ambientimpact_icon',
+        '#bundle'         => 'core',
+        '#icon'           => $data['icon'],
+        '#text'           => $data['text'],
       ],
     ];
+
+    // Convert the Url object into a string 'href' attribute.
+    $items[$key]['linkAttributes']->setAttribute(
+      'href', Url::fromRoute($data['route'])->toString()
+    );
+
+    // Add a 'title' attribute to the link, if one is available.
+    if (!empty($data['titleAttr'])) {
+      $items[$key]['linkAttributes']->setAttribute('title', $data['titleAttr']);
+    }
   }
 }
 
