@@ -129,9 +129,6 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
  *
  * This adds links to view all web development tags and to the web snippets RSS
  * feed.
- *
- * @todo Can this grab the URLs set in the respective views so that we don't
- * have to hard-code them here?
  */
 function ambientimpact_site_preprocess_views_view__web_snippets(&$variables) {
   // The base class to use for BEM-style classes.
@@ -156,13 +153,13 @@ function ambientimpact_site_preprocess_views_view__web_snippets(&$variables) {
   foreach ([
     // View all tags link.
     'view-all-tags' => [
-      'url'  => 'base:web/tags',
+      'route'  => 'view.tags.page_web_tags',
       'icon'  => 'bookmark_outline',
       'text'  => t('View all tags'),
     ],
     // RSS feed link.
     'feed' => [
-      'url'        => 'base:web/snippets/feed',
+      'route'        => 'view.web_snippets.feed',
       'icon'        => 'rss',
       'text'        => t('Subscribe<span class="visually-hidden"> to the Web snippets RSS feed</span>'),
       'titleAttr'   => t('View the Web snippets RSS feed.'),
@@ -174,7 +171,7 @@ function ambientimpact_site_preprocess_views_view__web_snippets(&$variables) {
       // $viewBaseClass . '__link--' . $key
     // ] = [
     $links['#links'][$viewBaseClass . '__link--' . $key] = [
-      'url'     => \Drupal\Core\Url::fromUri($data['url']),
+      'url'     => \Drupal\Core\Url::fromRoute($data['route']),
       'title'   => [
         '#type'   => 'ambientimpact_icon',
         '#icon'   => $data['icon'],
