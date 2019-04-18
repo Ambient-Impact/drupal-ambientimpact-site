@@ -139,6 +139,10 @@ function ambientimpact_site_preprocess_views_view__web_snippets(&$variables) {
 
   $variables['header']['web_snippets_links'] = [
     '#theme'      => 'links',
+    '#heading'    => [
+      'text'        => t('Web snippet links'),
+      'attributes'  => ['class' => ['visually-hidden']]
+    ],
     '#links'      => [],
     '#attributes' => ['class' => [$viewBaseClass . '__links']],
     // Give this increased weight so that it's more likely to be at the end of
