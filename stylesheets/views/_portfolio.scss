@@ -1,0 +1,27 @@
+// -----------------------------------------------------------------------------
+//   View - Portfolio
+// -----------------------------------------------------------------------------
+
+.view-portfolio {
+  .node__title {
+    // These links don't need to be easily discoverable by users, as they're
+    // mostly useful in this view for search engines or assistive software, so
+    // give them some styles to match unlinked headings.
+    :link, :visited {
+      text-decoration: none;
+
+      color: inherit;
+
+      @include link-hover {
+        color: inherit;
+      }
+      @include link-active {
+        color: inherit !important;
+      }
+
+      @if $use-fancy-link-underlines == true {
+        @include remove-fancy-link-underlines;
+      }
+    }
+  }
+}
