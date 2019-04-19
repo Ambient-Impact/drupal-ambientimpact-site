@@ -1,0 +1,25 @@
+// -----------------------------------------------------------------------------
+//   View - Web snippets
+// -----------------------------------------------------------------------------
+
+.view-web-snippets {
+  &__links {
+    text-align: center;
+
+    // Add a bottom margin equal to that of the spacing between nodes.
+    margin-bottom: $node-spacing;
+
+    &-list {
+      // Remove the inline links negative margins as they interfere with the
+      // centre alignment and aren't really needed.
+      @include root-conditions(('[dir=ltr]'), 'html') {
+        margin-left:  0;
+      }
+      @include root-conditions(('[dir=rtl]'), 'html') {
+        margin-right: 0;
+      }
+
+      &-item {}
+    }
+  }
+}
