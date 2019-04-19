@@ -6,9 +6,6 @@
   &__links {
     text-align: center;
 
-    // Add a bottom margin equal to that of the spacing between nodes.
-    margin-bottom: $node-spacing;
-
     &-list {
       // Remove the inline links negative margins as they interfere with the
       // centre alignment and aren't really needed.
