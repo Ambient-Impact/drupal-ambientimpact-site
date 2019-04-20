@@ -13,7 +13,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryHeadroom', function(
     'ambientimpact-site-theme-menu-primary-headroom',
     '.layout-container',
     function(context, settings) {
-      var $header   = $('.region-header', context),
+      var $header       = $('header[role=banner]', context),
           $primaryMenu  = $('.region-primary-menu', context);
 
       aiHeadroom.init($primaryMenu);
@@ -35,7 +35,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryHeadroom', function(
       });
     },
     function(context, settings, trigger) {
-      var $header   = $('.region-header', context),
+      var $header       = $('header[role=banner]', context),
           $primaryMenu  = $('.region-primary-menu', context),
           primaryMenu   = $primaryMenu[0];
 
