@@ -2,7 +2,25 @@
 //   Site branding
 // -----------------------------------------------------------------------------
 
+///
+/// The site name <svg> width, in pixels.
+///
+/// This must be synced with the value in
+/// block--system-branding-block.html.twig to work correctly.
+///
+$site-name-width: 1028.623;
+
+///
+/// The site name <svg> height, in pixels.
+///
+/// This must be synced with the value in
+/// block--system-branding-block.html.twig to work correctly.
+///
+$site-name-height: 83.997;
+
 .site-name {
+  $self: &;
+
   position: relative;
 
   z-index: index($header-stacking-order, site-name);
@@ -35,7 +53,7 @@
     $depth: $fancy-heading-shadow-depth-small
   );
 
-  a {
+  &__link {
     // Drop shadow, centered to give ambient shadow effect.
     @include material-shadow-filter-ambient(
       $depth: $fancy-heading-shadow-depth-small
@@ -51,7 +69,7 @@
       $depth: $fancy-heading-shadow-depth-large
     );
 
-    a {
+    &__link {
       // Drop shadow, centered to give ambient shadow effect.
       @include material-shadow-filter-ambient(
         $depth: $fancy-heading-shadow-depth-large
@@ -59,8 +77,32 @@
     }
   }
 
-  a {
+  &__link {
     display:  block;
+
+    // This uses the padding-bottom technique to give the link the intrinsic
+    // ratio of the <svg>, while allowing it scale correctly and without any
+    // extra space above it on small screens.
+    // @todo Can the intrinsic ratio component handle this for us?
+    #{$self}--has-svg & {
+      display:  block;
+
+      position: relative;
+
+      height:   0;
+
+      padding-bottom: ($site-name-height / $site-name-width) * 100%;
+
+      & #{$self}__svg {
+        position: absolute;
+
+        bottom:   0;
+        left:     0;
+
+        width:    100%;
+        height:   100%;
+      }
+    }
   }
 
   &__svg {
