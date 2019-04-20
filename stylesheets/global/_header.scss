@@ -21,4 +21,17 @@ header[role='banner'] {
       $depth:   $full-bleed-panel-shadow-depth
     );
   }
+
+  // This syncs up the site header with the menu bar Headroom behaviour, so
+  // quick scrolling near the top won't show them failing to overlap.
+  &.header--menu-bar-sticky {
+    @include headroom-base;
+    // Sass will place this above the @include above, so we have to use the
+    // nuclear option to make sure this is relative.
+    position: relative  !important;
+  }
+
+  &.header--unpinned {
+    @include headroom-unpinned;
+  }
 }
