@@ -1,0 +1,113 @@
+// -----------------------------------------------------------------------------
+//   Project nodes
+// -----------------------------------------------------------------------------
+
+///
+/// Project node header stacking order.
+///
+/// Later in the list means a higher z-index.
+///
+$node-project-header-stacking-order: header-top-shadow, node-title;
+
+///
+/// Target project node titles on their own page and in views, etc.
+///
+/// @param {String} $append-class ['']
+///   An optional string to append to the node class, usually a BEM-style
+///   modifier, e.g. '--has-sparkles'. Defaults to an empty string.
+///
+/// @content
+///   The content to wrap in the selectors.
+///
+@mixin node-project-title($append-class: '') {
+  // This targets nodes when displayed on their own node/# page.
+  .page-node-type-project#{$append-class}:not(.page-node-edit)
+    .block-page-title-block,
+  // This targets nodes displayed in views and other places, outside of their
+  // own node/# page.
+  .node--type-project.node#{$append-class} .node__title {
+    @content;
+  }
+}
+
+///
+/// @supports wrapper for vertical flex re-ordering for node projects.
+///
+@mixin node-project-supports-flex-ordering {
+  @supports (flex-direction: column) {
+    @supports (order: 1) {
+      @content;
+    }
+  }
+}
+
+@include node-project-title {
+  @include node-project-supports-flex-ordering {
+    // Ensure link and any other children are flush with the bottom of this,
+    // i.e. no gap between it and the black box below.
+    display:          flex;
+    flex-direction:   column;
+    justify-content:  flex-end;
+
+    // This brings up the top of the project images box flush with the bottom of
+    // the title.
+    position: relative;
+    bottom:   -0.32em;
+    // bottom:   -0.4em;
+  }
+
+  color: $media-field-background-colour;
+
+  // This doubles as the minimum font size the <canvas> element will scale text
+  // down to.
+  font-size: 1.3em;
+
+  // Setting a min-height allows us to avoid layout jumps under most
+  // circumstances, both during font loading, and also during enhancement to a
+  // <canvas> title.
+  min-height: 2.8em;
+}
+
+.page-node-type-project:not(.page-node-edit) .block-page-title-block
+  .page-title,
+.node--type-project .node__title {
+  // Reset the font size so that it's consistent between the node page title and
+  // the node title in views, etc.
+  font-size: 100%;
+
+  // Remove the bottom margins on node titles.
+  @include node-project-supports-flex-ordering {
+    margin-bottom: 0;
+  }
+}
+// Remove the top margin on node content.
+.node--type-project .node__content {
+  @include node-project-supports-flex-ordering {
+    margin-top: 0;
+  }
+}
+
+// This re-orders the content region to place the local tasks block above the
+// title, so the title is sitting directly above the top of the node.
+.page-node-type-project {
+  @include node-project-supports-flex-ordering {
+    .region-content {
+      display:        flex;
+      flex-direction: column;
+
+      .block-local-tasks-block {
+        order: 1;
+      }
+      .block-page-title-block {
+        order: 2;
+      }
+      .node {
+        order: 3;
+
+        &__content {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
