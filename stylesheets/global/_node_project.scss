@@ -33,6 +33,9 @@ $node-project-header-stacking-order: header-top-shadow, node-title;
 ///
 /// @supports wrapper for vertical flex re-ordering for node projects.
 ///
+/// We need to double nest this because using an 'and' doesn't seem to result in
+/// output that actually matches. Could be an Autoprefixer or Sass issue.
+///
 @mixin node-project-supports-flex-ordering {
   @supports (flex-direction: column) {
     @supports (order: 1) {
