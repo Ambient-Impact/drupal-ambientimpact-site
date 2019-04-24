@@ -112,9 +112,6 @@ $node-project-header-stacking-order: top-shadow, title;
   &::after {
     $shadow-element-height: 1rem;
 
-    // Place this after the title.
-    // order:      3;
-
     @include horizontal-bleed-background-top-peek-shadow(
       $z-index: index($node-project-header-stacking-order, top-shadow),
       $depth:   $full-bleed-panel-shadow-depth,
@@ -209,18 +206,6 @@ $node-project-header-stacking-order: top-shadow, title;
   }
 }
 
-.page-node-type-project:not(.page-node-edit) .block-page-title-block
-  .page-title,
-.node--type-project .node__title {
-  // // Reset the font size so that it's consistent between the node page title and
-  // // the node title in views, etc.
-  // font-size: 100%;
-
-  // // Remove the bottom margins on node titles.
-  // @include node-project-supports-flex-ordering {
-  //   margin-bottom: 0;
-  // }
-}
 // Remove the top margin on node content.
 .node--type-project .node__content {
   @include node-project-supports-flex-ordering {
