@@ -2,9 +2,8 @@
 //   Variables - Breakpoints
 // -----------------------------------------------------------------------------
 
-
 @include add-breakpoints((
   // This is the viewport width where we switch from the small shadow depth to
-  // the large one.
+  // the large one; used for the site title and project titles.
   'fancy-heading-shadow-depth'  : 35em
 ));
