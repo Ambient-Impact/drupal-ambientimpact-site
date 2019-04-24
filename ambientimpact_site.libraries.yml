@@ -15,3 +15,12 @@ global-scripts:
     - ambientimpact_core/framework
     - ambientimpact_core/component.font
     - ambientimpact_core/component.headroom
+
+# This is the node type project title library, attached only to those nodes.
+project-title:
+  js:
+    javascript/project_title.js: {}
+  dependencies:
+    - ambientimpact_core/framework
+    - ambientimpact_core/component.font
+    - core/modernizr

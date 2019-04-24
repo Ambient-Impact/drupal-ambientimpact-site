@@ -51,7 +51,7 @@ $media-field-spacing: $layout-gutter !default;
       $colour:  $media-field-background-colour,
       $z-index: index($local-stacking-order, background),
       // Don't use the topmost shadow, as that would show on top of the node
-      // title. See node.scss for the topmost shadow.
+      // title. See _node_project.scss for the topmost shadow.
       $shadow:  (false, true, true)
     );
   }

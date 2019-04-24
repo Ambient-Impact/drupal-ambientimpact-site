@@ -7,7 +7,7 @@
 ///
 /// Later in the list means a higher z-index.
 ///
-$node-project-header-stacking-order: header-top-shadow, node-title;
+$node-project-header-stacking-order: top-shadow, title;
 
 ///
 /// Target project node titles on their own page and in views, etc.
@@ -16,16 +16,29 @@ $node-project-header-stacking-order: header-top-shadow, node-title;
 ///   An optional string to append to the node class, usually a BEM-style
 ///   modifier, e.g. '--has-sparkles'. Defaults to an empty string.
 ///
+/// @param {Boolean} $container-only [true]
+///   If true, will target the unique container of the title. If false, will
+///   target the deepest child element containing the heading text, i.e. the
+///   .field--name-title element.
+///
 /// @content
 ///   The content to wrap in the selectors.
 ///
-@mixin node-project-title($append-class: '') {
+@mixin node-project-title($append-class: '', $container-only: true) {
+  $page-title-selector: '';
+  $node-title-selector: '';
+
+  @if ($container-only == false) {
+    $page-title-selector: ' .page-title .field--name-title';
+    $node-title-selector: ' .field--name-title';
+  }
+
   // This targets nodes when displayed on their own node/# page.
   .page-node-type-project#{$append-class}:not(.page-node-edit)
-    .block-page-title-block,
+    .block-page-title-block#{$page-title-selector},
   // This targets nodes displayed in views and other places, outside of their
   // own node/# page.
-  .node--type-project.node#{$append-class} .node__title {
+  .node--type-project.node#{$append-class} .node__title#{$node-title-selector} {
     @content;
   }
 }
@@ -44,6 +57,7 @@ $node-project-header-stacking-order: header-top-shadow, node-title;
   }
 }
 
+// Styles applied at all times, whether or not <canvas>-based titles are active.
 @include node-project-title {
   @include node-project-supports-flex-ordering {
     // Ensure link and any other children are flush with the bottom of this,
@@ -57,6 +71,12 @@ $node-project-header-stacking-order: header-top-shadow, node-title;
     position: relative;
     bottom:   -0.32em;
     // bottom:   -0.4em;
+
+    // Remove any vertical margins on the heading elements.
+    &, .page-title {
+      margin-top:     0;
+      margin-bottom:  0;
+    }
   }
 
   color: $media-field-background-colour;
@@ -70,18 +90,136 @@ $node-project-header-stacking-order: header-top-shadow, node-title;
   // <canvas> title.
   min-height: 2.8em;
 }
+@include node-project-title($container-only: false) {
+  // Reset the font size so that it's consistent between the node page title and
+  // the node title in views, etc.
+  font-size: 100%;
+}
+
+// Styles applied when a node has a <canvas> title.
+@include node-project-title('--has-canvas-title') {
+  @include node-project-supports-flex-ordering {
+    // This overrides the non-<canvas> title and guards against rounding errors,
+    // i.e. showing a gap below text.
+    bottom: -0.5px;
+  }
+
+  // This adds a shadow behind the top edge of the project images field. See
+  // _field_media.scss for the bottom half of the shadow. This is done to allow
+  // the top shadow to not overlap the node title but appear underneath it, so
+  // that it appears the site name is part of the same material as the project
+  // images field bar.
+  &::after {
+    $shadow-element-height: 1rem;
+
+    // Place this after the title.
+    // order:      3;
+
+    @include horizontal-bleed-background-top-peek-shadow(
+      $z-index: index($node-project-header-stacking-order, top-shadow),
+      $depth:   $full-bleed-panel-shadow-depth,
+      $height:  $shadow-element-height
+    );
+
+    bottom: -$shadow-element-height;
+  }
+
+  :link,
+  canvas {
+    display:    block;
+    max-width:  100%;
+  }
+
+  :link {
+    @include link-hover {
+      opacity: 0.7;
+    }
+    @include link-active {
+      opacity: 1;
+    }
+  }
+}
+@include node-project-title('--has-canvas-title', false) {
+  // Since the title is a <canvas>, we have to use CSS filters to get a drop
+  // shadow that matches the title lettering outlines.
+
+  // Drop shadow, extends downwards.
+  @include material-shadow-filter-downward(
+    $depth: $fancy-heading-shadow-depth-small
+  );
+
+  canvas {
+    // Drop shadow, centered to give ambient shadow effect.
+    @include material-shadow-filter-ambient(
+      $depth: $fancy-heading-shadow-depth-small
+    );
+  }
+
+  @include media('>=fancy-heading-shadow-depth') {
+    // Drop shadow, extends downwards.
+    @include material-shadow-filter-downward(
+      $depth: $fancy-heading-shadow-depth-large
+    );
+
+    canvas {
+      // Drop shadow, centered to give ambient shadow effect.
+      @include material-shadow-filter-ambient(
+        $depth: $fancy-heading-shadow-depth-large
+      );
+    }
+  }
+}
+
+// Styles applied when a node has a <canvas> title with text that can't fit in
+// the given space.
+@include node-project-title('--has-overflow-canvas-title', false) {
+  $fade-out-width: 1.5rem;
+
+  // If text is longer than what we can fit in the canvas, add a gradient
+  // overlay to fade out the text on the right side of the title.
+  @supports (pointer-events: none) {
+    &::after {
+      content:  '';
+
+      position: absolute;
+
+      top:    0;
+      bottom: 0;
+      left:   0;
+      right:  0;
+
+      background-image: linear-gradient(
+        to left, $background-colour, transparent $fade-out-width
+      );
+
+      // Allow users to click/tap the title below.
+      pointer-events:   none;
+    }
+  }
+
+  // If mask-image with a gradient is supported, use that instead.
+  $mask-gradient: linear-gradient(to left, transparent, black $fade-out-width);
+  @supports (mask-image: $mask-gradient) {
+    mask-image: $mask-gradient;
+
+    // Hide the background-image gradient element.
+    &::after {
+      display: none;
+    }
+  }
+}
 
 .page-node-type-project:not(.page-node-edit) .block-page-title-block
   .page-title,
 .node--type-project .node__title {
-  // Reset the font size so that it's consistent between the node page title and
-  // the node title in views, etc.
-  font-size: 100%;
+  // // Reset the font size so that it's consistent between the node page title and
+  // // the node title in views, etc.
+  // font-size: 100%;
 
-  // Remove the bottom margins on node titles.
-  @include node-project-supports-flex-ordering {
-    margin-bottom: 0;
-  }
+  // // Remove the bottom margins on node titles.
+  // @include node-project-supports-flex-ordering {
+  //   margin-bottom: 0;
+  // }
 }
 // Remove the top margin on node content.
 .node--type-project .node__content {
