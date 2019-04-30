@@ -68,7 +68,7 @@ $media-field-spacing: $layout-gutter !default;
     margin-top: $media-field-spacing;
   }
 
-  .intrinsic-ratio, :link {
+  .field__item, .intrinsic-ratio, :link {
     margin-left:  auto;
     margin-right: auto;
   }
@@ -146,8 +146,9 @@ $media-field-spacing: $layout-gutter !default;
 
       // If this odd item is the last child, make it span the whole row.
       &:last-child {
-        width:      100%;
-        margin-right: 0;
+        float:        none;
+        width:        100%;
+        margin-right: auto;
       }
     }
 
