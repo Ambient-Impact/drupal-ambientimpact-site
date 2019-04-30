@@ -13,6 +13,20 @@ $menu-primary-font-size-small:  100%;
 $menu-primary-font-size-large:  110%;
 
 ///
+/// Primary menu background colour.
+///
+$menu-primary-background-colour: $ambientimpact-orange;
+
+///
+/// Primary menu item foreground colour.
+///
+$menu-primary-item-foreground-colour: get-contrasting-colour(
+    $background:          $menu-primary-background-colour,
+    $foreground-on-light: $foreground-colour-on-light,
+    $foreground-on-dark:  $foreground-colour-on-dark
+  );
+
+///
 /// Primary menu item horizontal padding.
 ///
 $menu-primary-item-padding-x:   $layout-gutter;
@@ -33,14 +47,14 @@ $menu-primary-item-underline-height:  4px;
 ));
 
 ///
-/// Set primary menu item colour.
+/// Set primary menu item colours.
 ///
-@mixin menu-primary-item-colour {
-  color:  $foreground-colour-on-dark;
-
-  @include menu-item-is-active-path {
-    color:  $foreground-colour-on-dark;
-  }
+@mixin menu-primary-item-colours {
+  @include link-colours(
+    $background:      $menu-primary-background-colour,
+    $normal-on-dark:  $menu-primary-item-foreground-colour,
+    $hover-on-dark:   $menu-primary-item-foreground-colour
+  );
 }
 
 ///
@@ -97,7 +111,7 @@ $menu-primary-item-underline-height:  4px;
   margin-bottom:  3em;
 
   @include horizontal-bleed-background(
-    $colour:  $ambientimpact-orange,
+    $colour:  $menu-primary-background-colour,
     $z-index: index($local-stacking-order, background),
     // Don't use the topmost shadow, as that would show on top of the site
     // title. See _header.scss for the topmost shadow.
@@ -163,10 +177,10 @@ $menu-primary-item-underline-height:  4px;
 
       padding:  $menu-primary-item-padding-y $menu-primary-item-padding-x;
 
-      @include menu-primary-item-colour;
+      @include menu-primary-item-colours;
 
-      @include link-hover {
-        @include menu-primary-item-colour;
+      @include menu-item-is-active-path {
+        @include menu-primary-item-colours;
       }
 
       // Remove fancy link underlines.
