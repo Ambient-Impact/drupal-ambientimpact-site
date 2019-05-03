@@ -186,6 +186,8 @@ $menu-primary-item-underline-height:  4px;
       // Remove fancy link underlines.
       @include remove-fancy-link-underlines;
 
+      @include material-ripple;
+
       // Don't wrap to new lines since the container scrolls.
       white-space: nowrap;
 
