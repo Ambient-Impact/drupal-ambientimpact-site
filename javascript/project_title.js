@@ -11,9 +11,13 @@
 // localStorage, for example, they could be stored there, if we have the storage
 // space for them.
 
-// Requires window.matchMedia and <canvas> support.
-AmbientImpact.onGlobals(['matchMedia', 'Modernizr.canvas'], function() {
+// Requires window.matchMedia and <canvas> text support.
+AmbientImpact.onGlobals(['matchMedia', 'Modernizr.canvastext'], function() {
 AmbientImpact.on('font', function(aiFont, $) {
+
+if (Modernizr.canvastext === false) {
+  return;
+}
 
 // This is wrapped in a function as we need to wait for the Furore font to load
 // if it isn't loaded yet; see after this function wrapper for invocation.
