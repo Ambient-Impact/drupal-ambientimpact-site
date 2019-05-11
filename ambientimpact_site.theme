@@ -215,6 +215,13 @@ function ambientimpact_site_preprocess_views_view__web_snippets(&$variables) {
 
   // Generate the items.
   foreach ([
+    // Search.
+    'search' => [
+      'route'     => 'view.web_snippets_search.page_results',
+      'icon'      => 'search',
+      'text'      => t('Search<span class="visually-hidden"> Web snippets</span>'),
+      'titleAttr' => t('Search Web snippets.'),
+    ],
     // View all tags.
     'view-all-tags' => [
       'route' => 'view.tags.page_web_tags',
