@@ -219,21 +219,22 @@ function ambientimpact_site_preprocess_views_view__web_snippets(&$variables) {
     'search' => [
       'route'     => 'view.web_snippets_search.page_results',
       'icon'      => 'search',
-      'text'      => t('Search<span class="visually-hidden"> Web snippets</span>'),
-      'titleAttr' => t('Search Web snippets.'),
+      'text'      => t('Search<span class="visually-hidden"> web snippets</span>'),
+      'titleAttr' => t('Search web snippets.'),
     ],
     // View all tags.
     'view-all-tags' => [
-      'route' => 'view.tags.page_web_tags',
-      'icon'  => 'bookmark_outline',
-      'text'  => t('View all tags'),
+      'route'     => 'view.tags.page_web_tags',
+      'icon'      => 'bookmark_outline',
+      'text'      => t('Tags<span class="visually-hidden"> (view all web development tags)</span>'),
+      'titleAttr' => t('View all web development tags.'),
     ],
     // RSS feed.
     'feed' => [
       'route'     => 'view.web_snippets.feed',
       'icon'      => 'rss',
-      'text'      => t('Subscribe<span class="visually-hidden"> to the Web snippets RSS feed</span>'),
-      'titleAttr' => t('View the Web snippets RSS feed.'),
+      'text'      => t('Subscribe<span class="visually-hidden"> to the web snippets RSS feed</span>'),
+      'titleAttr' => t('View the web snippets RSS feed.'),
     ],
   ] as $key => $data) {
     $items[$key] = [
