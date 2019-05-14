@@ -6,24 +6,6 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Template\Attribute;
 
 /**
- * Implements hook_theme().
- *
- * This defines the 'web_snippets_links' render element.
- *
- * @see ambientimpact_site_preprocess_views_view__web_snippets()
- *   'web_snippets_links' is used here.
- */
-function ambientimpact_site_theme($existing, $type, $theme, $path) {
-  return [
-    'web_snippets_links'  => [
-      'variables' => [
-        'items' => [],
-      ],
-    ],
-  ];
-}
-
-/**
  * Prepares variables for field_project_images templates.
  *
  * This replaces the image style on odd numbered last items from
