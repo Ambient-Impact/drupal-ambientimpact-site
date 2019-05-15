@@ -41,11 +41,14 @@
   }
 }
 
-// Tags view.
-.view-tags .view-content {
-  @extend %tags-list;
+// Tags views.
+.view-tags,
+.view-web-tags {
+  .view-content {
+    @extend %tags-list;
 
-  .views-field {
-    @extend %tags-list__item;
+    .views-field {
+      @extend %tags-list__item;
+    }
   }
 }

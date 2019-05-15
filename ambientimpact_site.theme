@@ -177,16 +177,19 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
  * Default template: views-view-field.html.twig.
  *
  * This inserts an icon into the row output for taxonomy term names in the
- * 'tags' view. Note that this uses preg_replace() to avoid inserting HTML into
- * a link attribute such as 'title', which is a bit slower than just doing a
- * str_replace().
+ * 'tags' and 'web_tags' views. Note that this uses preg_replace() to avoid
+ * inserting HTML into a link attribute such as 'title', which is a bit slower
+ * than just doing a str_replace().
  *
  * @todo Can this be done in a cleaner fashion elsewhere? E.g. a custom Views
  * plugin?
  */
 function ambientimpact_site_preprocess_views_view_field(&$variables) {
   if (
-    $variables['view']->id() === 'tags' &&
+    (
+      $variables['view']->id() === 'tags' ||
+      $variables['view']->id() === 'web_tags'
+    ) &&
     !empty($variables['row']->taxonomy_term_field_data_name)
   ) {
     $termName = Html::escape($variables['row']->taxonomy_term_field_data_name);
