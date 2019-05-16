@@ -168,6 +168,17 @@ $menu-primary-item-underline-height:  4px;
     .menu-item {
       // Remove padding added by Classy.
       padding-top: 0;
+
+      @include menu-item-is-active-path {
+        @include menu-primary-item-colours;
+
+        // Active path item indicators are visible by default. This is necessary
+        // in case the browser doesn't support :focus-within and our polyfill
+        // doesn't get applied.
+        &::after {
+          @include menu-primary-item-indicator-active;
+        }
+      }
     }
 
     a {
@@ -178,10 +189,6 @@ $menu-primary-item-underline-height:  4px;
       padding:  $menu-primary-item-padding-y $menu-primary-item-padding-x;
 
       @include menu-primary-item-colours;
-
-      @include menu-item-is-active-path {
-        @include menu-primary-item-colours;
-      }
 
       // Remove fancy link underlines.
       @include remove-fancy-link-underlines;
@@ -222,28 +229,21 @@ $menu-primary-item-underline-height:  4px;
           @include menu-primary-item-indicator-active;
         }
       }
-
-      // Active path item indicators are visible by default. This is necessary
-      // in case the browser doesn't support :focus-within and our polyfill
-      // doesn't get applied.
-      @include menu-item-is-active-path {
-        &::after {
-          @include menu-primary-item-indicator-active;
-        }
-      }
     }
 
     // Hide the indicator when the menu matches :focus-within. Note that this
     // has to be a separate rule from the rest so that a browser that doesn't
     // support the selector doesn't ignore the other selectors, which it should
     // understand.
-    &:focus-within a {
+    &:focus-within .menu-item {
       @include menu-primary-item-active-path-indicator-hover-focus-within;
     }
     // Hover and polyfilled :focus-within.
-    &:hover a,
-    &.ally-focus-within a {
-      @include menu-primary-item-active-path-indicator-hover-focus-within;
+    &:hover,
+    &.ally-focus-within {
+      .menu-item {
+        @include menu-primary-item-active-path-indicator-hover-focus-within;
+      }
     }
   }
 }
