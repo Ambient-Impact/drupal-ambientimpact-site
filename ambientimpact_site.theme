@@ -6,51 +6,6 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Template\Attribute;
 
 /**
- * Prepares variables for field_project_images templates.
- *
- * This replaces the image style on odd numbered last items from
- * 'project_image_small' to 'project_image_large' so that the image is high
- * resolution enough to look good when spanning the full width of the field.
- *
- * @see Drupal\ambientimpact_core\Plugin\AmbientImpact\Component\Image::preprocessFieldSetImageFieldMaxWidth()
- *   This adds a max-width on each field item.
- */
-function ambientimpact_site_preprocess_field__field_project_images(
-  &$variables, $hook
-) {
-  if (
-    empty($variables['items']) ||
-    count($variables['items']) % 2 === 0
-  ) {
-    return;
-  }
-
-  end($variables['items']);
-
-  $lastItem = &$variables['items'][key($variables['items'])];
-
-  if (
-    empty($lastItem['content']['#image_style']) ||
-    $lastItem['content']['#image_style'] !== 'project_image_small'
-  ) {
-    return;
-  }
-
-  $lastItem['content']['#image_style'] = 'project_image_large';
-
-  // Now we just need to get the 'image' component to set the field max-width
-  // with the new value.
-  $componentManager = \Drupal::service(
-    'plugin.manager.ambientimpact_component'
-  );
-  $imageComponent = $componentManager->getComponentInstance('image');
-
-  $items = [&$lastItem];
-
-  $imageComponent->preprocessFieldSetImageFieldMaxWidth($items);
-}
-
-/**
  * Prepares variables for field_project_link templates.
  *
  * This sets the link text to contain the title of the parent node if the link
