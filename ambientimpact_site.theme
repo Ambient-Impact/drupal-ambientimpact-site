@@ -17,7 +17,7 @@ function ambientimpact_site_preprocess_field__field_project_link(
   foreach ($variables['element']['#items'] as $key => $item) {
     // Determine if a title has been set for this link, using it if so but
     // falling back to the parent node's title.
-    if ($item->title !== '') {
+    if (!empty($item->title)) {
       $title = $item->title;
     } else {
       $title = $variables['element']['#object']->getTitle();
