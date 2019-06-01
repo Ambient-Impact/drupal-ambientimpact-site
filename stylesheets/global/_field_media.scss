@@ -141,8 +141,10 @@ $media-field-spacing: $layout-gutter !default;
 
     &:nth-child(odd) {
       // Use calc() to ensure we only apply the margin if calc() is
-      // supported, using the second width above.
-      margin-right: calc(#{$media-field-spacing});
+      // supported, using the second width above. We also multiply it by 0.99 to
+      // fix a rounding error observed in Firefox Developer Edition 68.0b5
+      // (64-bit) as of 2019-05-31.
+      margin-right: calc(#{$media-field-spacing} * 0.99);
 
       // If this odd item is the last child, make it span the whole row.
       &:last-child {
