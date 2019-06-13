@@ -30,6 +30,9 @@ $media-field-spacing: $layout-gutter !default;
 
   :link, :visited {
     @include link-colours($media-field-background-colour);
+
+    // Remove fancy link underlines.
+    @include remove-fancy-link-underlines;
   }
 
   img {
@@ -156,11 +159,6 @@ $media-field-spacing: $layout-gutter !default;
 
     padding:  ($media-field-spacing / 2) 0;
   }
-}
-
-.field--name-field-remote-video:not(.form-wrapper) .content a {
-  // Remove fancy link underlines.
-  @include remove-fancy-link-underlines;
 }
 
 // .field-type-link-field {
