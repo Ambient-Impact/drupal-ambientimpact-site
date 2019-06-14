@@ -135,7 +135,7 @@ $media-field-spacing: $layout-gutter !default;
   @include contain-floats;
 
   // Remove field item spacing, since we use a different method below.
-  * + .field__item {
+  *:not(.visually-hidden):not(.hidden) + .field__item {
     margin-top: 0;
   }
 
