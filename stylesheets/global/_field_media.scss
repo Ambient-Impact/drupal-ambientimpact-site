@@ -163,18 +163,3 @@ $media-field-spacing: $layout-gutter !default;
     padding:  ($media-field-spacing / 2) 0;
   }
 }
-
-// .field-type-link-field {
-//   // Link fields have a habit of leaking to the right of the layout if a URL
-//   // is displayed (without any text that would normally have spaces).
-//   // @see https://css-tricks.com/snippets/css/prevent-long-urls-from-breaking-out-of-container/
-//   // @see https://developer.mozilla.org/en/docs/Web/CSS/overflow-wrap
-//   &__link:not(&__link--has-title) {
-//     &, & * {
-//       // Most browsers.
-//       word-break: break-all;
-//       // IE/Edge.
-//       word-wrap: break-word;
-//     }
-//   }
-// }
