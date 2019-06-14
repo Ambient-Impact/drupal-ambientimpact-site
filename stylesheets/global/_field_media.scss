@@ -15,17 +15,32 @@ $media-field-background-colour: black !default;
 ///
 $media-field-spacing: $layout-gutter !default;
 
-// Image and video embed fields. Form wrappers are excluded as the same classes
-// are used on those as well but this is purely output styling.
-.field--type-image:not(.form-wrapper),
-.field--type-video-embed-field:not(.form-wrapper) {
+///
+/// Common style for media fields.
+///
+/// @param {Bool} $use-top-shadow
+///   Whether to include the top shadow when using mixin
+///   horizontal-bleed-background.
+///
+@mixin media-field($use-top-shadow: true) {
   $local-stacking-order:  background, content;
+  $shadow-settings:       true;
+
+  @if $use-top-shadow == false {
+    $shadow-settings: (false, true, true);
+  }
 
   margin:   $general-spacing      0;
   padding:  $media-field-spacing  0;
 
   @include set-colours(
     $background:  $media-field-background-colour
+  );
+
+  @include horizontal-bleed-background(
+    $colour:  $media-field-background-colour,
+    $z-index: index($local-stacking-order, background),
+    $shadow:  $shadow-settings
   );
 
   :link, :visited {
@@ -38,25 +53,6 @@ $media-field-spacing: $layout-gutter !default;
   img {
     // Ensure images are always the full width of the field item.
     width:  100%;
-  }
-
-  // Anything that isn't the project images field.
-  &:not(.field--name-field-project-images) {
-    @include horizontal-bleed-background(
-      $colour:  $media-field-background-colour,
-      $z-index: index($local-stacking-order, background),
-      $shadow:  true
-    );
-  }
-  // Project images field.
-  &.field--name-field-project-images {
-    @include horizontal-bleed-background(
-      $colour:  $media-field-background-colour,
-      $z-index: index($local-stacking-order, background),
-      // Don't use the topmost shadow, as that would show on top of the node
-      // title. See _node_project.scss for the topmost shadow.
-      $shadow:  (false, true, true)
-    );
   }
 
   .field__item {
@@ -74,18 +70,40 @@ $media-field-spacing: $layout-gutter !default;
     );
   }
 
+  // These are centred using horizontal margins.
   .field__item, .intrinsic-ratio, :link {
     margin-left:  auto;
     margin-right: auto;
   }
 
-  :link/*:not(.contextual-links__link)*/, img {
+  // Links and images need to be displayed as block to avoid weird inline space
+  // appearing.
+  :link, img {
     display: block;
   }
 }
 
-// Image field-only styles.
+// Image fields.
 .field--type-image:not(.form-wrapper) {
+  // Anything that isn't the project images field.
+  &:not(.field--name-field-project-images) {
+    @include media-field;
+  }
+  // Project images field.
+  &.field--name-field-project-images {
+    // Don't use the topmost shadow, as that would show on top of the node
+    // title. See _node_project.scss for the topmost shadow.
+    @include media-field($use-top-shadow: false);
+  }
+
+  img, picture {
+    // This is in case a transparent image is used, which normally assumes a
+    // light background colour.
+    @include set-colours(
+      $background:  white
+    );
+  }
+
   figcaption {
     text-align: center;
 
@@ -116,21 +134,12 @@ $media-field-spacing: $layout-gutter !default;
     // Remove fancy link underlines.
     @include remove-fancy-link-underlines;
   }
-
-  img, picture {
-    // This is in case a transparent image is used, which normally assumes a
-    // light background colour.
-    @include set-colours(
-      $background:  white
-    );
-  }
 }
 
-// Project image field styles. The form element is excluded so as to only apply
-// to the output.
-.field--name-field-project-images:not(.form-wrapper) {
+// Project image field styles. Note the extra '.field' for specificity.
+.field--name-field-project-images.field:not(.form-wrapper) {
   margin-top: 0;
-  padding:  ($media-field-spacing / 2) 0;
+  padding:    ($media-field-spacing / 2) 0;
 
   @include contain-floats;
 
@@ -162,4 +171,9 @@ $media-field-spacing: $layout-gutter !default;
 
     padding:  ($media-field-spacing / 2) 0;
   }
+}
+
+// Video fields.
+.field--type-video-embed-field:not(.form-wrapper) {
+  @include media-field;
 }
