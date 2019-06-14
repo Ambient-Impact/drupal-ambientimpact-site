@@ -67,8 +67,11 @@ $media-field-spacing: $layout-gutter !default;
 
   // Spacing between field items and any preceding element (usually another
   // field item).
-  * + .field__item {
-    margin-top: $media-field-spacing;
+  *:not(.visually-hidden):not(.hidden) + .field__item {
+    @include vertical-spacing(
+      $spacing-small: $media-field-spacing,
+      $spacing-large: $media-field-spacing,
+    );
   }
 
   .field__item, .intrinsic-ratio, :link {
