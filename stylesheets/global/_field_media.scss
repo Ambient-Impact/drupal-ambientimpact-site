@@ -47,7 +47,9 @@ $media-field-spacing: $layout-gutter !default;
     @include link-colours($media-field-background-colour);
 
     // Remove fancy link underlines.
-    @include remove-fancy-link-underlines;
+    @if $use-fancy-link-underlines == true {
+      @include remove-fancy-link-underlines;
+    }
   }
 
   img {
@@ -83,27 +85,10 @@ $media-field-spacing: $layout-gutter !default;
   }
 }
 
-// Image fields.
-.field--type-image:not(.form-wrapper) {
-  // Anything that isn't the project images field.
-  &:not(.field--name-field-project-images) {
-    @include media-field;
-  }
-  // Project images field.
-  &.field--name-field-project-images {
-    // Don't use the topmost shadow, as that would show on top of the node
-    // title. See _node_project.scss for the topmost shadow.
-    @include media-field($use-top-shadow: false);
-  }
-
-  img, picture {
-    // This is in case a transparent image is used, which normally assumes a
-    // light background colour.
-    @include set-colours(
-      $background:  white
-    );
-  }
-
+///
+/// Common style for media field captions.
+///
+@mixin media-field-caption {
   figcaption {
     text-align: center;
 
@@ -129,11 +114,37 @@ $media-field-spacing: $layout-gutter !default;
     margin-top: $media-field-spacing;
   }
 
-  figure > :not(figcaption) a,
-  figure > a {
-    // Remove fancy link underlines.
-    @include remove-fancy-link-underlines;
+  // Remove fancy link underlines.
+  @if $use-fancy-link-underlines == true {
+    figure > :not(figcaption) a,
+    figure > a {
+      @include remove-fancy-link-underlines;
+    }
   }
+}
+
+// Image fields.
+.field--type-image:not(.form-wrapper) {
+  // Anything that isn't the project images field.
+  &:not(.field--name-field-project-images) {
+    @include media-field;
+  }
+  // Project images field.
+  &.field--name-field-project-images {
+    // Don't use the topmost shadow, as that would show on top of the node
+    // title. See _node_project.scss for the topmost shadow.
+    @include media-field($use-top-shadow: false);
+  }
+
+  img, picture {
+    // This is in case a transparent image is used, which normally assumes a
+    // light background colour.
+    @include set-colours(
+      $background:  white
+    );
+  }
+
+  @include media-field-caption;
 }
 
 // Project image field styles. Note the extra '.field' for specificity.
