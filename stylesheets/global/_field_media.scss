@@ -121,12 +121,15 @@ $media-field-spacing: $layout-gutter !default;
   }
 
   // Remove the bottom margin on the last item's caption. Note the direct child
-  // selector so that we only consider the containing entity reference field's
+  // selectors so that we only consider the containing entity reference field's
   // items; without the selector, this would apply to every media entity,
   // because they all technically have a last .field__item as they contain their
   // own fields.
-  > .field__item:last-child figcaption {
-    margin-bottom: 0;
+  > .field__item,
+  > .field__items > .field__item {
+    &:last-child figcaption {
+      margin-bottom: 0;
+    }
   }
 
   // Remove fancy link underlines.
