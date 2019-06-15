@@ -83,6 +83,15 @@ $media-field-spacing: $layout-gutter !default;
   :link, img {
     display: block;
   }
+
+  img, picture {
+    // This is in case a transparent image is used, which normally assumes a
+    // light background colour.
+    @include set-colours(
+      $background:  white
+    );
+  }
+
 }
 
 ///
@@ -129,14 +138,11 @@ $media-field-spacing: $layout-gutter !default;
   }
 }
 
-// Image fields. The first selector targets image fields that are not on a media
-// entity inside of an entity reference field, while the second and third target
-// entity reference fields that reference media entities. This ensures that
-// fields containing multiple media entities have one full bleed background,
-// rather than one for each media entity.
-*:not(.field--type-entity-reference) > * > *:not(.media) > .field--type-image:not(.form-wrapper),
-.field--name-field-animated-gifs,
-.field--name-field-images {
+// Image fields. The selector targets image fields that are not on a media
+// entity inside of an entity reference field. This ensures that fields
+// containing multiple media entities have one full bleed background, rather
+// than one for each media entity.
+*:not(.field--type-entity-reference) > * > *:not(.media) > .field--type-image:not(.form-wrapper) {
   // Anything that isn't the project images field.
   &:not(.field--name-field-project-images) {
     @include media-field;
@@ -182,14 +188,13 @@ $media-field-spacing: $layout-gutter !default;
     }
   }
 
-  img, picture {
-    // This is in case a transparent image is used, which normally assumes a
-    // light background colour.
-    @include set-colours(
-      $background:  white
-    );
-  }
+  @include media-field-caption;
+}
 
+// Entity reference fields that contain media entities.
+.field--name-field-animated-gifs,
+.field--name-field-images {
+  @include media-field;
   @include media-field-caption;
 }
 
