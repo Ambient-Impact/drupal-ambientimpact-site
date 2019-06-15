@@ -123,8 +123,14 @@ $media-field-spacing: $layout-gutter !default;
   }
 }
 
-// Image fields.
-.field--type-image:not(.form-wrapper) {
+// Image fields. The first selector targets image fields that are not on a media
+// entity inside of an entity reference field, while the second and third target
+// entity reference fields that reference media entities. This ensures that
+// fields containing multiple media entities have one full bleed background,
+// rather than one for each media entity.
+*:not(.field--type-entity-reference) > * > *:not(.media) > .field--type-image:not(.form-wrapper),
+.field--name-field-animated-gifs,
+.field--name-field-images {
   // Anything that isn't the project images field.
   &:not(.field--name-field-project-images) {
     @include media-field;
@@ -134,6 +140,40 @@ $media-field-spacing: $layout-gutter !default;
     // Don't use the topmost shadow, as that would show on top of the node
     // title. See _node_project.scss for the topmost shadow.
     @include media-field($use-top-shadow: false);
+
+    margin-top: 0;
+    padding:    ($media-field-spacing / 2) 0;
+
+    @include contain-floats;
+
+    // Remove field item spacing, since we use a different method below.
+    *:not(.visually-hidden):not(.hidden) + .field__item {
+      margin-top: 0;
+    }
+
+    .field__item {
+      float:  left;
+
+      width: 50%;
+      width: calc(50% - (#{$media-field-spacing / 2}));
+
+      &:nth-child(odd) {
+        // Use calc() to ensure we only apply the margin if calc() is
+        // supported, using the second width above. We also multiply it by 0.99 to
+        // fix a rounding error observed in Firefox Developer Edition 68.0b5
+        // (64-bit) as of 2019-05-31.
+        margin-right: calc(#{$media-field-spacing} * 0.99);
+
+        // If this odd item is the last child, make it span the whole row.
+        &:last-child {
+          float:        none;
+          width:        100%;
+          margin-right: auto;
+        }
+      }
+
+      padding:  ($media-field-spacing / 2) 0;
+    }
   }
 
   img, picture {
@@ -145,43 +185,6 @@ $media-field-spacing: $layout-gutter !default;
   }
 
   @include media-field-caption;
-}
-
-// Project image field styles. Note the extra '.field' for specificity.
-.field--name-field-project-images.field:not(.form-wrapper) {
-  margin-top: 0;
-  padding:    ($media-field-spacing / 2) 0;
-
-  @include contain-floats;
-
-  // Remove field item spacing, since we use a different method below.
-  *:not(.visually-hidden):not(.hidden) + .field__item {
-    margin-top: 0;
-  }
-
-  .field__item {
-    float:  left;
-
-    width: 50%;
-    width: calc(50% - (#{$media-field-spacing / 2}));
-
-    &:nth-child(odd) {
-      // Use calc() to ensure we only apply the margin if calc() is
-      // supported, using the second width above. We also multiply it by 0.99 to
-      // fix a rounding error observed in Firefox Developer Edition 68.0b5
-      // (64-bit) as of 2019-05-31.
-      margin-right: calc(#{$media-field-spacing} * 0.99);
-
-      // If this odd item is the last child, make it span the whole row.
-      &:last-child {
-        float:        none;
-        width:        100%;
-        margin-right: auto;
-      }
-    }
-
-    padding:  ($media-field-spacing / 2) 0;
-  }
 }
 
 // Video fields.
