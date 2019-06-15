@@ -89,29 +89,35 @@ $media-field-spacing: $layout-gutter !default;
 /// Common style for media field captions.
 ///
 @mixin media-field-caption {
-  figcaption {
-    text-align: center;
-
-    // Set a bottom margin in case this is a multi-item field, to make it
-    // easier to tell which item this caption applies to.
-    margin-bottom: $general-spacing * 2;
-
-    // AdaptiveTheme captions. Set caption links back to inline. The class
-    // is for specificity.
-    // &.caption a {
-    //   display: inline;
-    // }
+  figure {
+    // Remove the margins added by normalize.css.
+    margin: 0;
   }
 
-  .field__item:last-child {
-    figcaption {
-      // Remove the bottom margin on the last item's caption.
+  figcaption {
+    margin-top:     $media-field-spacing;
+
+    // This is in case we're in a multiple item field, to distinguish this
+    // caption from any <figure> that may follow it.
+    margin-bottom:  $media-field-spacing * 2;
+
+    text-align: center;
+
+    :first-child {
+      margin-top: 0;
+    }
+    :last-child {
       margin-bottom: 0;
     }
   }
 
-  * + figcaption {
-    margin-top: $media-field-spacing;
+  // Remove the bottom margin on the last item's caption. Note the direct child
+  // selector so that we only consider the containing entity reference field's
+  // items; without the selector, this would apply to every media entity,
+  // because they all technically have a last .field__item as they contain their
+  // own fields.
+  > .field__item:last-child figcaption {
+    margin-bottom: 0;
   }
 
   // Remove fancy link underlines.
