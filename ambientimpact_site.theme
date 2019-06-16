@@ -210,3 +210,20 @@ function ambientimpact_site_preprocess_node(&$variables) {
     $variables['#attached']['library'][] = 'ambientimpact_site/project-title';
   }
 }
+
+/**
+ * Prepares variables for image caption formatter templates.
+ *
+ * This moves the 'title' attribute to the image caption if the caption is empty
+ * but the title attribute is set. This is for backwards compatibility with the
+ * migrated content from Drupal 7.
+ *
+ * @todo Remove this when title -> caption migration is working.
+ */
+function ambientimpact_site_preprocess_image_caption_formatter(&$variables) {
+  if (empty($variables['caption']) && !empty($variables['image']['#title'])) {
+    $variables['caption'] = $variables['image']['#title'];
+
+    $variables['image']['#title'] = '';
+  }
+}
