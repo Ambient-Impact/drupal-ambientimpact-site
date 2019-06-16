@@ -118,6 +118,12 @@ $media-field-spacing: $layout-gutter !default;
     :last-child {
       margin-bottom: 0;
     }
+
+    // Reset the display: block; set in mixin media-field back to the default of
+    // inline to links in the caption.
+    :link {
+      display: inline;
+    }
   }
 
   // Remove the bottom margin on the last item's caption. Note the direct child
