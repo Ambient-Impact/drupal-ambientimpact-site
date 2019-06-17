@@ -45,9 +45,13 @@ $media-field-spacing: $layout-gutter !default;
 
   :link, :visited {
     @include link-colours($media-field-background-colour);
+  }
 
-    // Remove fancy link underlines.
-    @if $use-fancy-link-underlines == true {
+  // Remove fancy link underlines on links not inside a <figcaption>.
+  @if $use-fancy-link-underlines == true {
+    .field__item > :link,
+    figure > :link,
+    figure > :not(figcaption) :link {
       @include remove-fancy-link-underlines;
     }
   }
@@ -135,14 +139,6 @@ $media-field-spacing: $layout-gutter !default;
   > .field__items > .field__item {
     &:last-child figcaption {
       margin-bottom: 0;
-    }
-  }
-
-  // Remove fancy link underlines.
-  @if $use-fancy-link-underlines == true {
-    figure > :not(figcaption) a,
-    figure > a {
-      @include remove-fancy-link-underlines;
     }
   }
 }
