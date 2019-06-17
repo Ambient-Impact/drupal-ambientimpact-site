@@ -196,6 +196,12 @@ $media-field-spacing: $layout-gutter !default;
   @include media-field-caption;
 }
 
+// Stand-alone media entity image fields.
+*:not(.field--type-entity-reference) > * > .media > .field--type-image:not(.form-wrapper) {
+  @include media-field;
+  @include media-field-caption;
+}
+
 // Entity reference fields that contain media entities.
 .field--name-field-animated-gifs,
 .field--name-field-images {
