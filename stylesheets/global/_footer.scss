@@ -2,6 +2,6 @@
 //   Site footer
 // -----------------------------------------------------------------------------
 
-footer[role=contentinfo] {
-  @include vertical-spacing;
+@at-root {
+  @include vertical-spacing-against-previous('footer[role=contentinfo]');
 }

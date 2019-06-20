@@ -69,12 +69,11 @@ $media-field-spacing: $layout-gutter !default;
 
   // Spacing between field items and any preceding element (usually another
   // field item).
-  *:not(.visually-hidden):not(.hidden) + .field__item {
-    @include vertical-spacing(
-      $spacing-small: $media-field-spacing,
-      $spacing-large: $media-field-spacing,
-    );
-  }
+  @include vertical-spacing-against-previous(
+    '.field__item',
+    $spacing-small: $media-field-spacing,
+    $spacing-large: $media-field-spacing
+  );
 
   // These are centred using horizontal margins.
   .field__item, .intrinsic-ratio, :link {
@@ -164,9 +163,11 @@ $media-field-spacing: $layout-gutter !default;
     @include contain-floats;
 
     // Remove field item spacing, since we use a different method below.
-    *:not(.visually-hidden):not(.hidden) + .field__item {
-      margin-top: 0;
-    }
+    @include vertical-spacing-against-previous(
+      '.field__item',
+      $spacing-small: 0,
+      $spacing-large: 0
+    );
 
     .field__item {
       float:  left;
