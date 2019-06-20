@@ -47,6 +47,13 @@
     .field__item {
       @extend %tags-list__item;
     }
+
+    // Remove the top margins that the default .field__item rules set.
+    @include vertical-spacing-against-previous(
+      '.field__item',
+      $spacing-small: 0,
+      $spacing-large: 0
+    );
   }
 }
 
