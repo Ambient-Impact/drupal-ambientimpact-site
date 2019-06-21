@@ -110,8 +110,13 @@ $media-field-spacing: $layout-gutter !default;
     margin-top:     $media-field-spacing;
 
     // This is in case we're in a multiple item field, to distinguish this
-    // caption from any <figure> that may follow it.
-    margin-bottom:  $media-field-spacing * 2;
+    // caption from any <figure> that may follow it. Note that in this case,
+    // we're using $general-spacing and not $media-field-spacing as the latter
+    // is specifically meant to match the layout gutter. Also note that it's
+    // impractical to use the vertical-spacing-against-previous mixin here as
+    // no major browser yet supports the :has() pseudo-class as of 2019-06-20.
+    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/:has
+    margin-bottom:  $general-spacing * 2.5;
 
     text-align: center;
 
