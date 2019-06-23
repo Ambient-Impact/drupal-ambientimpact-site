@@ -18,7 +18,7 @@ global-scripts:
     - ambientimpact_core/ally.js
     - ambientimpact_core/framework
     - ambientimpact_core/component.font
-    - ambientimpact_core/component.headroom
+    - ambientimpact_ux/component.headroom
 
 # This is the node type project title library, attached only to those nodes.
 project-title:
