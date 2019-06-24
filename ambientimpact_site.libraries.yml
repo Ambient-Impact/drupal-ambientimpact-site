@@ -6,7 +6,7 @@ global-styling:
     theme:
       stylesheets/theme.css: {}
   dependencies:
-    - ambientimpact_core/component.material.ripple
+    - ambientimpact_ux/component.material.ripple
 
 global-scripts:
   js:
