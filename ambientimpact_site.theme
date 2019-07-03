@@ -33,7 +33,7 @@ function ambientimpact_site_preprocess_field__field_project_link(
     $variables['items'][$key]['content']['#title'] = [
       '#type'     => 'ambientimpact_icon',
       '#icon'     => 'link',
-      '#bundle'   => 'core',
+      '#bundle'   => 'material',
       '#text'     => $text,
     ];
   }
@@ -57,7 +57,7 @@ function ambientimpact_site_preprocess_field__field_source_link(
     $item['content']['#title'] = [
       '#type'     => 'ambientimpact_icon',
       '#icon'     => 'link',
-      '#bundle'   => 'core',
+      '#bundle'   => 'material',
       '#text'     => $item['content']['#title'],
     ];
   }
@@ -81,7 +81,7 @@ function ambientimpact_site_preprocess_field__field_web_tags(
     $item['content']['#title'] = [
       '#type'     => 'ambientimpact_icon',
       '#icon'     => 'bookmark_outline',
-      '#bundle'   => 'core',
+      '#bundle'   => 'material',
       '#text'     => $item['content']['#title'],
     ];
   }
@@ -152,7 +152,7 @@ function ambientimpact_site_preprocess_views_view_field(&$variables) {
     $renderArray = [
       '#type'     => 'ambientimpact_icon',
       '#icon'     => 'bookmark_outline',
-      '#bundle'   => 'core',
+      '#bundle'   => 'material',
       '#text'     => $termName,
     ];
 
@@ -193,7 +193,7 @@ function ambientimpact_site_preprocess_page_title(&$variables) {
     $variables['title'] = [
       '#type'     => 'ambientimpact_icon',
       '#icon'     => 'bookmark_outline',
-      '#bundle'   => 'core',
+      '#bundle'   => 'material',
       '#text'     => $variables['title'],
     ];
   }
