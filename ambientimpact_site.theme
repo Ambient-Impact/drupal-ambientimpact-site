@@ -147,7 +147,7 @@ function ambientimpact_site_preprocess_views_view_field(&$variables) {
     ) &&
     !empty($variables['row']->taxonomy_term_field_data_name)
   ) {
-    $termName = Html::escape($variables['row']->taxonomy_term_field_data_name);
+    $termName = $variables['row']->taxonomy_term_field_data_name;
 
     $renderArray = [
       '#type'     => 'ambientimpact_icon',
@@ -156,12 +156,14 @@ function ambientimpact_site_preprocess_views_view_field(&$variables) {
       '#text'     => $termName,
     ];
 
+    // dpm(preg_quote(Html::escape($termName)));
+
     // Replace the term name with an icon + text. The icon is rendered by the
     // renderer service without attaching libraries or cache metadata. We must
     // use Markup here so that it gets output as HTML, as a string would be
     // escaped by Drupal's renderer.
     $variables['output'] = Markup::create(preg_replace(
-      '/^(<[^>]+>)*(' . preg_quote($termName) . ')/',
+      '/^(<[^>]+>)*(' . preg_quote(Html::escape($termName), '/') . ')/',
       '$1' . \Drupal::service('renderer')->renderPlain($renderArray),
       $variables['output']
     ));
