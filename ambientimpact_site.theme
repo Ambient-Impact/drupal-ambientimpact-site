@@ -161,7 +161,7 @@ function ambientimpact_site_preprocess_views_view_field(&$variables) {
     // use Markup here so that it gets output as HTML, as a string would be
     // escaped by Drupal's renderer.
     $variables['output'] = Markup::create(preg_replace(
-      '/^(<[^>]+>)*(' . $termName . ')/',
+      '/^(<[^>]+>)*(' . preg_quote($termName) . ')/',
       '$1' . \Drupal::service('renderer')->renderPlain($renderArray),
       $variables['output']
     ));
