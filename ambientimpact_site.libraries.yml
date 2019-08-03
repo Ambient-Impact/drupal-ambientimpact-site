@@ -1,4 +1,4 @@
-# This are the global libraries, named so to match Drupal's naming convention:
+# Theses are the global libraries, named so to match Drupal's naming convention:
 # https://www.drupal.org/docs/8/theming/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-theme#attach-library-all-pages
 
 global-styling:
@@ -19,6 +19,7 @@ global-scripts:
     - ambientimpact_core/framework
     - ambientimpact_core/component.font
     - ambientimpact_ux/component.headroom
+    - ambientimpact_ux/component.menu_horizontal_peek
 
 # This is the node type project title library, attached only to those nodes.
 project-title:

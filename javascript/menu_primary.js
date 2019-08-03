@@ -65,3 +65,23 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryHeadroom', function(
   );
 });
 });
+
+AmbientImpact.on('menuHorizontalPeek', function(aiMenuHorizontalPeek, $) {
+AmbientImpact.addComponent('siteThemeMenuPrimaryPeek', function(
+  siteThemeMenuPrimaryPeek, $
+) {
+  'use strict';
+
+  this.addBehaviour(
+    'AmbientImpactSiteThemeMenuPrimaryPeek',
+    'ambientimpact-site-theme-menu-primary-peek',
+    '.layout-container',
+    function(context, settings) {
+      $('.region-primary-menu .block-menu > .menu', context)
+        .once('ambientimpact-site-theme-menu-primary-peek').each(function() {
+          aiMenuHorizontalPeek.peek(this);
+        });
+    }
+  );
+});
+});
