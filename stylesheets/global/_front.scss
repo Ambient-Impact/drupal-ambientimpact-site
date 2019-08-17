@@ -1,0 +1,208 @@
+// -----------------------------------------------------------------------------
+//   Site front page
+// -----------------------------------------------------------------------------
+
+// This animates all the page elements in on the front page, to make it stand
+// out from other pages and provide a flashy intro. Steps:
+//
+// 1. The primary menu bar is the only visible element, at twice its normal
+//    height, placed roughly in the middle of the page, and without any children
+//    visible.
+//
+// 2. The primary menu bar transitions to its normal location and scales to its
+//    normal size.
+//
+// 3. The site name fades in and then plays its pop-up animation as it does on
+//    other pages, albeit delayed until this point.
+//
+// 4. The primary menu contents fade in and move horizontally into their normal
+//    positions.
+//
+// 5. Regions other than the primary menu and header now fade in and move up
+//    slightly into their normal positions, having been hidden until now.
+//
+// Additional notes:
+//
+// - Note the use of animation-fill-mode: backwards; which causes the start
+//   state to be applied to elements before the animation has actually started,
+//   i.e. for delayed animations.
+//
+// - All the animations start out with visibility: hidden; on the first frame
+//   and then set visibility: visible; on the subsequent frame. This is done so
+//   that the element cannot be interacted with, either with pointers, keyboard,
+//   or other means. This primarly avoids the issue of clicks registering on
+//   invisible elements.
+
+.path-frontpage {
+  ///
+  /// Primary menu transform when starting animation.
+  ///
+  /// Note that we're using scaleY() rather than scale() as the latter produces
+  /// issues in Edge where the transform-origin seems to be completely off.
+  ///
+  $primary-menu-start-transform: scaleY(2) translateY(15vh);
+
+  ///
+  /// Primary menu reveal animation duration.
+  ///
+  $primary-menu-reveal-duration: 2s;
+
+  ///
+  /// Primary menu block reveal animation duration.
+  ///
+  $primary-menu-block-reveal-duration: 0.5s;
+
+  ///
+  /// Header reveal animation duration.
+  ///
+  $header-reveal-duration: 0.5s;
+
+  ///
+  /// Content reveal animation duration.
+  ///
+  $content-reveal-duration: 0.5s;
+
+  ///
+  /// Primary menu reveal animation keyframes.
+  ///
+  @keyframes front-page-primary-menu-reveal {
+    0% {
+      visibility: hidden;
+    }
+    1% {
+      opacity:    0;
+      transform:  $primary-menu-start-transform;
+      visibility: visible;
+    }
+    50% {
+      transform:  $primary-menu-start-transform;
+    }
+    60% {
+      opacity:    1;
+    }
+    100% {
+      transform:  scaleY(1) translateY(0);
+    }
+  }
+
+  ///
+  /// Header reveal animation keyframes.
+  ///
+  @keyframes front-page-header-reveal {
+    0% {
+      visibility: hidden;
+    }
+    1% {
+      visibility: visible;
+      opacity:    0;
+    }
+    100% {
+      opacity:    1;
+    }
+  }
+
+  ///
+  /// Primary menu block reveal animation keyframes.
+  ///
+  @keyframes front-page-primary-menu-block-reveal {
+    0% {
+      visibility: hidden;
+    }
+    1% {
+      opacity:    0;
+      transform:  translateX(10%);
+      visibility: visible;
+    }
+    100% {
+      opacity:    1;
+      transform:  translateX(0);
+    }
+  }
+
+  ///
+  /// Content reveal animation keyframes.
+  ///
+  @keyframes front-page-content-reveal {
+    0% {
+      visibility: hidden;
+    }
+    1% {
+      opacity:    0;
+      transform:  translateY(20%);
+      visibility: visible;
+    }
+    100% {
+      opacity:    1;
+      transform:  translateY(0);
+    }
+  }
+
+  // Site header element contains the top shadow for the primary menu bar, so
+  // they need to be animated together.
+  header[role='banner'],
+  .region-primary-menu {
+    animation-name:             front-page-primary-menu-reveal;
+    animation-duration:         $primary-menu-reveal-duration;
+    animation-timing-function:  $easing-standard;
+    animation-fill-mode:        backwards;
+  }
+
+  // This ensures the scale transform keeps the top shadow with the top of the
+  // primary menu bar below it.
+  header[role='banner'] {
+    transform-origin: center bottom;
+  }
+
+  .region-header {
+    animation-name:             front-page-header-reveal;
+    animation-duration:         $header-reveal-duration;
+    animation-timing-function:  linear;
+    animation-delay:            $primary-menu-reveal-duration;
+    animation-fill-mode:        backwards;
+  }
+
+  // Delay the site name pop-up animation until the primary menu reveal has
+  // completed.
+  .site-name {
+    animation-delay: $primary-menu-reveal-duration;
+  }
+
+  .region-primary-menu {
+    // This ensures the scale transform keeps the top edge in the right location
+    // with the top shadow.
+    transform-origin: center top;
+
+    .block {
+      animation-name:             front-page-primary-menu-block-reveal;
+      animation-duration:         $primary-menu-block-reveal-duration;
+      animation-timing-function:  $easing-standard;
+      animation-delay:
+        $primary-menu-reveal-duration + $header-reveal-duration;
+      animation-fill-mode:        backwards;
+    }
+  }
+
+  // All other regions are considered content and are animated in after the rest
+  // of the animations have completed.
+  .region:not(.region-header):not(.region-primary-menu) {
+    animation-name:             front-page-content-reveal;
+    animation-duration:         $content-reveal-duration;
+    animation-timing-function:  $easing-standard;
+    animation-delay:
+      $primary-menu-reveal-duration + $primary-menu-block-reveal-duration +
+      $header-reveal-duration;
+    animation-fill-mode:        backwards;
+  }
+
+  // Don't animate if the user indicates they prefer reduced motion.
+  // @see https://ambientimpact.com/web/snippets/the-reduced-motion-media-query
+  @media (prefers-reduced-motion: reduce) {
+    header[role='banner'],
+    .region-header,
+    .region-primary-menu,
+    .region-primary-menu .block,
+    .region:not(.region-header):not(.region-primary-menu) {
+      animation: none;
+    }
+  }
+}

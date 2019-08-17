@@ -5,7 +5,7 @@
 ///
 /// Header stacking order. Later in the list means a higher z-index.
 ///
-$header-stacking-order: header-top-shadow, site-name;
+$header-stacking-order: header-top-shadow, region-header, site-name;
 
 header[role='banner'] {
   position: relative;
@@ -33,5 +33,12 @@ header[role='banner'] {
 
   &.header--unpinned {
     @include headroom-unpinned;
+  }
+
+  // This is required so that the front page animation doesn't mess up the
+  // ordering of the top shadow, putting it on top of the site name.
+  .region-header {
+    position: relative;
+    z-index:  index($header-stacking-order, region-header);
   }
 }
