@@ -39,7 +39,7 @@ $site-name-height: 83.997;
   }
   animation-name:             site-name-pop-up;
   animation-duration:         0.3s;
-  transition-timing-function: $easing-decelerate;
+  animation-timing-function:  $easing-decelerate;
 
   // Since the title is an SVG, we have to use CSS filters to get a drop drop
   // shadow that matches the title lettering outlines.
