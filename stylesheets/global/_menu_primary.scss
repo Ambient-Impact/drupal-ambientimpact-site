@@ -70,7 +70,10 @@ $menu-primary-item-underline-height:  4px;
 /// Set primary menu item indicator as active, i.e. current/hovered/focussed.
 ///
 @mixin menu-primary-item-indicator-active {
-  transform: translateY(0);
+  // Using scale rather than translate as that has less of a chance of
+  // accidentally being shown if the browser has issues rendering, e.g. Firefox
+  // during and after the front page animations.
+  transform: scaleY(1);
 
   // This is necessary to override the default instant transition in on links,
   // so we transition in and out at the same rate, which looks better for this.
@@ -81,7 +84,7 @@ $menu-primary-item-underline-height:  4px;
 /// Set primary menu item indicator as inactive.
 ///
 @mixin menu-primary-item-indicator-inactive {
-  transform:    translateY(100%);
+  transform: scaleY(0);
 }
 
 ///
@@ -212,6 +215,8 @@ $menu-primary-item-underline-height:  4px;
         height:   $menu-primary-item-underline-height;
 
         background-color: $foreground-colour-on-dark;
+
+        transform-origin: bottom center;
 
         // Hidden by default by being outside of overflow.
         @include menu-primary-item-indicator-inactive;
