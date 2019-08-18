@@ -53,11 +53,6 @@
   $primary-menu-block-reveal-duration: 0.5s;
 
   ///
-  /// Header reveal animation duration.
-  ///
-  $header-reveal-duration: 0.5s;
-
-  ///
   /// Content reveal animation duration.
   ///
   $content-reveal-duration: 0.5s;
@@ -100,22 +95,6 @@
     }
     100% {
       transform:  scaleY(1) translateY(0);
-    }
-  }
-
-  ///
-  /// Header reveal animation keyframes.
-  ///
-  @keyframes front-page-header-reveal {
-    0% {
-      visibility: hidden;
-    }
-    1% {
-      visibility: visible;
-      opacity:    0;
-    }
-    100% {
-      opacity:    1;
     }
   }
 
@@ -163,7 +142,7 @@
   animation-duration:   0.1s;
   animation-delay:
     $primary-menu-reveal-duration + $primary-menu-block-reveal-duration +
-    $header-reveal-duration + $content-reveal-duration;
+    $site-name-reveal-animation-duration + $content-reveal-duration;
   animation-fill-mode:  backwards;
 
   // Site header element contains the top shadow for the primary menu bar, so
@@ -182,15 +161,7 @@
     transform-origin: center bottom;
   }
 
-  .region-header {
-    animation-name:             front-page-header-reveal;
-    animation-duration:         $header-reveal-duration;
-    animation-timing-function:  linear;
-    animation-delay:            $primary-menu-reveal-duration;
-    animation-fill-mode:        backwards;
-  }
-
-  // Delay the site name pop-up animation until the primary menu reveal has
+  // Delay the site name reveal animation until the primary menu reveal has
   // completed.
   .site-name {
     animation-delay: $primary-menu-reveal-duration;
@@ -206,7 +177,7 @@
       animation-duration:         $primary-menu-block-reveal-duration;
       animation-timing-function:  $easing-standard;
       animation-delay:
-        $primary-menu-reveal-duration + $header-reveal-duration;
+        $primary-menu-reveal-duration + $site-name-reveal-animation-duration;
       animation-fill-mode:        backwards;
     }
   }
@@ -219,7 +190,7 @@
     animation-timing-function:  $easing-standard;
     animation-delay:
       $primary-menu-reveal-duration + $primary-menu-block-reveal-duration +
-      $header-reveal-duration;
+      $site-name-reveal-animation-duration;
     animation-fill-mode:        backwards;
   }
 
