@@ -18,6 +18,41 @@ $site-name-width: 1028.623;
 ///
 $site-name-height: 83.997;
 
+///
+/// Site name reveal animation delay.
+///
+/// This should be just long enough that most browsers will have already done
+/// most of their layout rendering and most DOMContentLoaded JavaScript has
+/// (hopefully) finished executing so the reveal animation has a better chance
+/// of playing smoothly and without too many frames dropped.
+///
+$site-name-reveal-animation-delay: 0.5s;
+
+///
+/// Site name reveal animation duration.
+///
+$site-name-reveal-animation-duration: 0.8s;
+
+.block-system-branding-block {
+  // This allows us to clip the bottom of the branding block so that the site
+  // name can translate as far down as we need without it peeking out from the
+  // bottom of the primary menu bar. The padding and negative margins are so
+  // that the lateral and top drop shadows on the site name are not clipped.
+  @supports (animation-fill-mode: backwards) {
+    margin-top:     -$layout-gutter;
+    margin-left:    -$layout-gutter;
+    margin-right:   -$layout-gutter;
+    margin-bottom:  0;
+
+    padding-top:    $layout-gutter;
+    padding-left:   $layout-gutter;
+    padding-right:  $layout-gutter;
+    padding-bottom: 0;
+
+    overflow:       hidden;
+  }
+}
+
 .site-name {
   $self: &;
 
@@ -27,20 +62,26 @@ $site-name-height: 83.997;
 
   margin-bottom: -1px;
 
-  // Site name pop-up animation.
-  @keyframes site-name-pop-up {
+  ///
+  /// Site name reveal animation keyframes.
+  ///
+  @keyframes site-name-reveal {
     0% {
-      transform:  translateY(40%);
+      // 105% rather than 100% to account for the drop shadow around the site
+      // name.
+      transform:  translateY(105%);
     }
 
     100% {
       transform:  none;
     }
   }
-  animation-name:             site-name-pop-up;
-  animation-duration:         0.3s;
+
+  animation-name:             site-name-reveal;
+  animation-duration:         $site-name-reveal-animation-duration;
   animation-timing-function:  $easing-decelerate;
   animation-fill-mode:        backwards;
+  animation-delay:            $site-name-reveal-animation-delay;
 
   // Since the title is an SVG, we have to use CSS filters to get a drop drop
   // shadow that matches the title lettering outlines.
