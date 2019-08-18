@@ -169,8 +169,10 @@
 
   .region-primary-menu {
     // This ensures the scale transform keeps the top edge in the right location
-    // with the top shadow.
-    transform-origin: center top;
+    // with the top shadow. Note the 1px offset - this helps prevent a slight
+    // space between the top of the menu bar and the top shadow, which is placed
+    // in the site header.
+    transform-origin: center calc(0% + 1px);
 
     .block {
       animation-name:             front-page-primary-menu-block-reveal;
