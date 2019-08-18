@@ -63,6 +63,24 @@
   $content-reveal-duration: 0.5s;
 
   ///
+  /// <body> scroll prevention keyframes.
+  ///
+  /// This is applied before and until all other animations have completed
+  /// running to temporarily disable scrolling, which can mess up the animation.
+  ///
+  @keyframes front-page-body-scroll-prevention {
+    0% {
+      box-sizing: border-box;
+      height: 100vh;
+      overflow: hidden;
+    }
+    100% {
+      height: auto;
+      overflow: visible;
+    }
+  }
+
+  ///
   /// Primary menu reveal animation keyframes.
   ///
   @keyframes front-page-primary-menu-reveal {
@@ -136,6 +154,17 @@
       transform:  translateY(0);
     }
   }
+
+  // Apply the scroll prevention animation with a delay equal to the durations
+  // of all other animations. This works fine in Firefox (both Windows and
+  // Android) and Chrome (Windows), but Edge and Chrome on Android refuse to
+  // apply this for some reason.
+  animation-name:       front-page-body-scroll-prevention;
+  animation-duration:   0.1s;
+  animation-delay:
+    $primary-menu-reveal-duration + $primary-menu-block-reveal-duration +
+    $header-reveal-duration + $content-reveal-duration;
+  animation-fill-mode:  backwards;
 
   // Site header element contains the top shadow for the primary menu bar, so
   // they need to be animated together.
