@@ -127,7 +127,7 @@ $menu-primary-item-underline-height:  4px;
     position: sticky;
   }
 
-  .menu {
+  .block > .menu {
     position:   relative;
 
     display:    flex;
@@ -152,11 +152,17 @@ $menu-primary-item-underline-height:  4px;
 
     z-index:    index($local-stacking-order, content);
 
-    // This allows the nav items to scroll horizontally.
+    // This allows the menu items to scroll horizontally when the menu has not
+    // been enhanced with the overflow functionality or that fails to correctly
+    // execute for any reason.
     overflow-x: auto;
 
-    // This ensures the indicators that are translated down are hidden.
-    overflow-y: hidden;
+    // When overflow is available, switch to visible so that the vertical
+    // overflow is shown, which is not the case when the horizontal is clipped
+    // because reasons.
+    &--overflow-enhanced {
+      overflow-x: visible;
+    }
 
     // Space items evenly.
     // IMPORTANT: space-around causes some odd overflow hiding.
@@ -168,9 +174,86 @@ $menu-primary-item-underline-height:  4px;
       font-size: $menu-primary-font-size-large;
     }
 
+    .menu {
+      margin-left:  0;
+      margin-right: 0;
+    }
+
+    // Don't display sub-menus until overflow functionality is attached because
+    // they get clipped entirely because of overflow-x: auto;
+    > .menu-item > .menu {
+      display: none;
+    }
+    &--overflow-enhanced > .menu-item > .menu {
+      display: block;
+    }
+
+    > .menu-item--expanded,
+    > .menu-overflow {
+      position: relative;
+
+      > .menu {
+        position: absolute;
+
+        background-color: $menu-primary-background-colour;
+
+        @include material-shadow($depth: 2);
+      }
+    }
+
+    .menu-overflow {
+      &__toggle {
+        // Remove default <button> styling from this.
+        border-width:     0;
+        background-color: transparent;
+      }
+
+      > .menu {
+        right: 0;
+
+        min-width: 10em;
+      }
+    }
+
+    > .menu-item {
+      > .menu {
+        // Until interacted with, sub-menus are absolutely positioned way off to
+        // the left and are invisible and unclickable.
+        left:     -9999em;
+        opacity:  0;
+        pointer-events: none;
+
+        // Sub-menus look better if they're not narrower than the parent item.
+        min-width: 100%;
+      }
+
+      // Show the sub-menu on the pointer hovering over it or its parent, when
+      // the parent link is focused (e.g. by keyboard, etc.), or when anything
+      // is focused inside of the sub-menu.
+      &:hover > .menu,
+      > :link:focus + .menu,
+      &.ally-focus-within .menu {
+        left:     0;
+        opacity:  1;
+        pointer-events: auto;
+      }
+      // This needs to be separate as not all browsers support it and
+      // non-supporting browsers would ignore any rule it was part of.
+      &:focus-within .menu {
+        left:     0;
+        opacity:  1;
+        pointer-events: auto;
+      }
+    }
+
     .menu-item {
       // Remove padding added by Classy.
       padding-top: 0;
+
+      &--expanded {
+        // Remove the expanded indicator.
+        list-style: none;
+      }
 
       @include menu-item-is-active-path {
         @include menu-primary-item-colours;
@@ -184,7 +267,8 @@ $menu-primary-item-underline-height:  4px;
       }
     }
 
-    a {
+    a,
+    .menu-overflow__toggle {
       position: relative;
 
       display:  block;

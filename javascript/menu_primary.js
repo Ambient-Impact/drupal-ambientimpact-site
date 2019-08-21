@@ -66,21 +66,21 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryHeadroom', function(
 });
 });
 
-AmbientImpact.on('menuHorizontalPeek', function(aiMenuHorizontalPeek, $) {
-AmbientImpact.addComponent('siteThemeMenuPrimaryPeek', function(
-  siteThemeMenuPrimaryPeek, $
+AmbientImpact.on('menuOverflow', function(aiMenuOverflow, $) {
+AmbientImpact.addComponent('siteThemeMenuOverflow', function(
+  siteThemeMenuOverflow, $
 ) {
   'use strict';
 
   this.addBehaviour(
-    'AmbientImpactSiteThemeMenuPrimaryPeek',
-    'ambientimpact-site-theme-menu-primary-peek',
-    '.layout-container',
+    'AmbientImpactSiteThemeMenuPrimaryOverflow',
+    'ambientimpact-site-theme-menu-primary-overflow',
+    '.region-primary-menu .block-menu > .menu',
     function(context, settings) {
-      $('.region-primary-menu .block-menu > .menu', context)
-        .once('ambientimpact-site-theme-menu-primary-peek').each(function() {
-          aiMenuHorizontalPeek.peek(this);
-        });
+      aiMenuOverflow.attach(this);
+    },
+    function(context, settings, trigger) {
+      aiMenuOverflow.detach(this);
     }
   );
 });
