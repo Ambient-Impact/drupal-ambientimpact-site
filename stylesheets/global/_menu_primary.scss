@@ -104,6 +104,9 @@ $menu-primary-item-underline-height:  4px;
   }
 }
 
+///
+/// Hide a sub-menu of the primary menu.
+///
 @mixin menu-primary-sub-menu-hide {
   // Until interacted with, sub-menus are absolutely positioned way off to the
   // left and are invisible and unclickable.
@@ -112,6 +115,9 @@ $menu-primary-item-underline-height:  4px;
   pointer-events: none;
 }
 
+///
+/// Show a sub-menu of the primary menu.
+///
 @mixin menu-primary-sub-menu-show {
   @include root-conditions(('[dir=ltr]'), 'html') {
     left:   0;
