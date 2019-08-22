@@ -21,10 +21,10 @@ $menu-primary-background-colour: $ambientimpact-orange;
 /// Primary menu item foreground colour.
 ///
 $menu-primary-item-foreground-colour: get-contrasting-colour(
-    $background:          $menu-primary-background-colour,
-    $foreground-on-light: $foreground-colour-on-light,
-    $foreground-on-dark:  $foreground-colour-on-dark
-  );
+  $background:          $menu-primary-background-colour,
+  $foreground-on-light: $foreground-colour-on-light,
+  $foreground-on-dark:  $foreground-colour-on-dark
+);
 
 ///
 /// Primary menu item horizontal padding.
