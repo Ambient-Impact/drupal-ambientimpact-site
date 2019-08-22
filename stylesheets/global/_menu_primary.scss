@@ -104,6 +104,26 @@ $menu-primary-item-underline-height:  4px;
   }
 }
 
+@mixin menu-primary-sub-menu-hide {
+  // Until interacted with, sub-menus are absolutely positioned way off to the
+  // left and are invisible and unclickable.
+  left:     -9999em;
+  opacity:  0;
+  pointer-events: none;
+}
+
+@mixin menu-primary-sub-menu-show {
+  @include root-conditions(('[dir=ltr]'), 'html') {
+    left:   0;
+  }
+  @include root-conditions(('[dir=rtl]'), 'html') {
+    right:  0;
+  }
+
+  opacity:  1;
+  pointer-events: auto;
+}
+
 .region-primary-menu {
   ///
   /// The local stacking order of elements; later in the list is higher.
@@ -209,7 +229,12 @@ $menu-primary-item-underline-height:  4px;
       }
 
       > .menu {
-        right: 0;
+        @include root-conditions(('[dir=ltr]'), 'html') {
+          right: 0;
+        }
+        @include root-conditions(('[dir=rtl]'), 'html') {
+          left:  0;
+        }
 
         min-width: 10em;
       }
@@ -217,11 +242,7 @@ $menu-primary-item-underline-height:  4px;
 
     > .menu-item {
       > .menu {
-        // Until interacted with, sub-menus are absolutely positioned way off to
-        // the left and are invisible and unclickable.
-        left:     -9999em;
-        opacity:  0;
-        pointer-events: none;
+        @include menu-primary-sub-menu-hide;
 
         // Sub-menus look better if they're not narrower than the parent item.
         min-width: 100%;
@@ -233,16 +254,12 @@ $menu-primary-item-underline-height:  4px;
       &:hover > .menu,
       > :link:focus + .menu,
       &.ally-focus-within .menu {
-        left:     0;
-        opacity:  1;
-        pointer-events: auto;
+        @include menu-primary-sub-menu-show;
       }
       // This needs to be separate as not all browsers support it and
       // non-supporting browsers would ignore any rule it was part of.
       &:focus-within .menu {
-        left:     0;
-        opacity:  1;
-        pointer-events: auto;
+        @include menu-primary-sub-menu-show;
       }
     }
 
