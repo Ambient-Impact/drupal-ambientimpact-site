@@ -130,6 +130,17 @@ $menu-primary-item-underline-height:  4px;
   pointer-events: auto;
 }
 
+///
+/// Transform a primary menu sub-menu indicator to its open state.
+///
+@mixin menu-primary-sub-menu-indicator-open {
+  // Rotate the icon 180 degrees when the sub-menu is open, so that the icon
+  // points up rather than down.
+  @include on-icon-icon {
+    transform: rotate(180deg);
+  }
+}
+
 .region-primary-menu {
   ///
   /// The local stacking order of elements; later in the list is higher.
@@ -267,6 +278,19 @@ $menu-primary-item-underline-height:  4px;
       &:focus-within > .menu {
         @include menu-primary-sub-menu-show;
       }
+
+      &--expanded {
+        // Transform the sub-menu indicator to its open state when a sub-menu is
+        // open.
+        &:hover > :link,
+        > :link:focus,
+        &.ally-focus-within > :link {
+          @include menu-primary-sub-menu-indicator-open;
+        }
+        &:focus-within > :link {
+          @include menu-primary-sub-menu-indicator-open;
+        }
+      }
     }
 
     .menu-item {
@@ -276,6 +300,14 @@ $menu-primary-item-underline-height:  4px;
       &--expanded {
         // Remove the expanded indicator.
         list-style: none;
+
+        @include on-icon-container {
+          // For drop-down menus, icons look better after the text, rather than
+          // before.
+          @include set-icon-order(text-first);
+        }
+
+        @include icon-transform-transition;
       }
 
       @include menu-item-is-active-path {

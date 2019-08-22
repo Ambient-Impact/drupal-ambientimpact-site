@@ -18,6 +18,7 @@ global-scripts:
     - ambientimpact_core/ally.js
     - ambientimpact_core/framework
     - ambientimpact_core/component.font
+    - ambientimpact_icon/component.icon
     - ambientimpact_ux/component.headroom
     - ambientimpact_ux/component.menu_overflow
 

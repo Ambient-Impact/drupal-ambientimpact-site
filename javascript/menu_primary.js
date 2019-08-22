@@ -66,6 +66,27 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryHeadroom', function(
 });
 });
 
+AmbientImpact.on('icon', function(aiIcon) {
+AmbientImpact.addComponent('siteThemeMenuPrimarySubMenuIcons', function(
+  siteThemeMenuPrimarySubMenuIcons, $
+) {
+  'use strict';
+
+  this.addBehaviour(
+    'AmbientImpactSiteThemeMenuPrimarySubMenuIcons',
+    'ambientimpact-site-theme-menu-primary-sub-menu-icons',
+    '.region-primary-menu .block-menu > .menu',
+    function(context, settings) {
+      $(this).find('> .menu-item--expanded > a')
+        .wrapTextWithIcon('arrow-down', {bundle: 'core'});
+    },
+    function(context, settings, trigger) {
+      $(this).find('> .menu-item--expanded > a').unwrapTextWithIcon();
+    }
+  );
+});
+});
+
 AmbientImpact.on('menuOverflow', function(aiMenuOverflow, $) {
 AmbientImpact.addComponent('siteThemeMenuOverflow', function(
   siteThemeMenuOverflow, $
