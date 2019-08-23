@@ -76,7 +76,7 @@
         // material as the menu bar. The 105% causes the left, right, and bottom
         // edges to extend past the menu edges, so that those sides' shadows are
         // not clipped.
-        clip-path: polygon(0 0, 105% 0, 105% 105%, 0 105%);
+        clip-path: polygon(-5% 0, 105% 0px, 105% 105%, -5% 105%);
       }
     }
 
