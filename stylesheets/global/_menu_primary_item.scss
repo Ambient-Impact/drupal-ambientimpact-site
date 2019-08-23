@@ -22,9 +22,9 @@ $menu-primary-item-padding-x:   $layout-gutter;
 $menu-primary-item-padding-y:   $general-spacing * 0.75;
 
 ///
-/// Primary menu item underline height, used to indicate active menu item.
+/// Primary menu item indicator thickness, used to indicate active menu item.
 ///
-$menu-primary-item-underline-height:  4px;
+$menu-primary-item-indicator-thickness:  4px;
 
 ///
 /// Set primary menu item colours.
@@ -47,9 +47,9 @@ $menu-primary-item-underline-height:  4px;
 }
 
 ///
-/// Set primary menu item indicator as active, i.e. current/hovered/focussed.
+/// Set primary menu item indicator as active for primary menu items.
 ///
-@mixin menu-primary-item-indicator-active {
+@mixin menu-primary-item-primary-indicator-active {
   // Using scale rather than translate as that has less of a chance of
   // accidentally being shown if the browser has issues rendering, e.g. Firefox
   // during and after the front page animations.
@@ -61,24 +61,59 @@ $menu-primary-item-underline-height:  4px;
 }
 
 ///
-/// Set primary menu item indicator as inactive.
+/// Set primary menu item indicator as inactive for primary menu items.
 ///
-@mixin menu-primary-item-indicator-inactive {
+@mixin menu-primary-item-primary-indicator-inactive {
   transform: scaleY(0);
+}
+
+///
+/// Set primary menu item indicator as active for secondary menu items.
+///
+@mixin menu-primary-item-secondary-indicator-active {
+  transform: scaleX(1);
+
+  // This is necessary to override the default instant transition in on links,
+  // so we transition in and out at the same rate, which looks better for this.
+  @include menu-primary-item-indicator-transition;
+}
+
+///
+/// Set primary menu item indicator as inactive for secondary menu items.
+///
+@mixin menu-primary-item-secondary-indicator-inactive {
+  transform: scaleX(0);
 }
 
 ///
 /// Set primary menu item indicator state when menu is :hover or :focus-within.
 ///
-@mixin menu-primary-item-active-path-indicator-hover-focus-within {
+@mixin menu-primary-item-primary-active-path-indicator-hover-focus-within {
   @include menu-item-is-active-path {
     &::after {
-      @include menu-primary-item-indicator-inactive;
+      @include menu-primary-item-primary-indicator-inactive;
     }
 
     @include link-hover {
       &::after {
-        @include menu-primary-item-indicator-active;
+        @include menu-primary-item-primary-indicator-active;
+      }
+    }
+  }
+}
+
+///
+/// Set primary menu item indicator state when menu is :hover or :focus-within.
+///
+@mixin menu-primary-item-secondary-active-path-indicator-hover-focus-within {
+  @include menu-item-is-active-path {
+    &::after {
+      @include menu-primary-item-secondary-indicator-inactive;
+    }
+
+    @include link-hover {
+      &::after {
+        @include menu-primary-item-secondary-indicator-active;
       }
     }
   }
@@ -146,7 +181,8 @@ $menu-primary-item-underline-height:  4px;
 
     @include material-ripple;
 
-    // Don't wrap to new lines since the container scrolls.
+    // Don't wrap to new lines since the container scrolls and has overflow
+    // functionality.
     white-space: nowrap;
 
     // This ensures the indicator is above the margin-top: -1px; on the any
@@ -161,30 +197,93 @@ $menu-primary-item-underline-height:  4px;
 
       position: absolute;
 
+      background-color: $foreground-colour-on-dark;
+
+      will-change:  transform;
+
+      // Set the transition for the indicator when interaction has ceased. The
+      // menu-primary-item-primary-indicator-active mixin sets the transition in.
+      @include menu-primary-item-indicator-transition;
+    }
+  }
+
+  // Primary (top level) item indicators. These are horizontal lines beneath the
+  // text of the menu item text.
+  .block > .menu > .menu-item > a,
+  .menu-overflow__toggle {
+    &::after {
       left:     $menu-primary-item-padding-x;
       right:    $menu-primary-item-padding-x;
       bottom:   0;
 
-      height:   $menu-primary-item-underline-height;
-
-      background-color: $foreground-colour-on-dark;
+      height:   $menu-primary-item-indicator-thickness;
 
       transform-origin: bottom center;
 
       // Hidden by default.
-      @include menu-primary-item-indicator-inactive;
-      will-change:  transform;
-
-      // Set the transition for the indicator when interaction has ceased. The
-      // menu-primary-item-indicator-active mixin sets the transition in.
-      @include menu-primary-item-indicator-transition;
+      @include menu-primary-item-primary-indicator-inactive;
     }
 
     // This makes the indicator visible on an item when it's being interacted
     // with.
     @include link-hover {
       &::after {
-        @include menu-primary-item-indicator-active;
+        @include menu-primary-item-primary-indicator-active;
+      }
+    }
+  }
+
+  .block > .menu > .menu-item {
+    @include menu-item-is-active-path {
+      // Active path item indicators are visible by default. This is necessary
+      // in case the browser doesn't support :focus-within and our polyfill
+      // doesn't get applied.
+      &::after {
+        @include menu-primary-item-primary-indicator-active;
+      }
+    }
+  }
+
+  // Secondary (second level and deeper) indicators. These are vertical lines to
+  // the left (in LTR) or to the right (in RTL) of the menu item text.
+  .menu .menu .menu-item a {
+    &::after {
+      top:      $menu-primary-item-padding-y;
+      bottom:   $menu-primary-item-padding-y;
+
+      width:    $menu-primary-item-indicator-thickness;
+
+      @include root-conditions(('[dir=ltr]'), 'html') {
+        left:   0;
+
+        transform-origin: center left;
+      }
+      @include root-conditions(('[dir=rtl]'), 'html') {
+        right:  0;
+
+        transform-origin: center right;
+      }
+
+      // Hidden by default.
+      @include menu-primary-item-secondary-indicator-inactive;
+    }
+
+    // This makes the indicator visible on an item when it's being interacted
+    // with.
+    @include link-hover {
+      &::after {
+        @include menu-primary-item-secondary-indicator-active;
+      }
+    }
+  }
+
+  .menu .menu .menu-item {
+    @include menu-item-is-active-path {
+      // Active path item indicators are visible by default. This is necessary
+      // in case the browser doesn't support :focus-within and our polyfill
+      // doesn't get applied.
+      &::after {
+        @include menu-primary-item-secondary-indicator-active;
       }
     }
   }
@@ -195,13 +294,6 @@ $menu-primary-item-underline-height:  4px;
 
       // Remove fancy link underlines. This is here for specificity.
       @include remove-fancy-link-underlines;
-
-      // Active path item indicators are visible by default. This is necessary
-      // in case the browser doesn't support :focus-within and our polyfill
-      // doesn't get applied.
-      &::after {
-        @include menu-primary-item-indicator-active;
-      }
     }
   }
 
@@ -216,14 +308,31 @@ $menu-primary-item-underline-height:  4px;
     // has to be a separate rule from the rest so that a browser that doesn't
     // support the selector doesn't ignore the other selectors, which it should
     // understand.
-    &:focus-within .menu-item {
-      @include menu-primary-item-active-path-indicator-hover-focus-within;
+    &:focus-within > .menu-item {
+      @include menu-primary-item-primary-active-path-indicator-hover-focus-within;
     }
     // Hover and polyfilled :focus-within.
     &:hover,
     &.ally-focus-within {
-      .menu-item {
-        @include menu-primary-item-active-path-indicator-hover-focus-within;
+      > .menu-item {
+        @include menu-primary-item-primary-active-path-indicator-hover-focus-within;
+      }
+    }
+  }
+
+  .menu .menu {
+    // Hide the indicator when the menu matches :focus-within. Note that this
+    // has to be a separate rule from the rest so that a browser that doesn't
+    // support the selector doesn't ignore the other selectors, which it should
+    // understand.
+    &:focus-within > .menu-item {
+      @include menu-primary-item-secondary-active-path-indicator-hover-focus-within;
+    }
+    // Hover and polyfilled :focus-within.
+    &:hover,
+    &.ally-focus-within {
+      > .menu-item {
+        @include menu-primary-item-secondary-active-path-indicator-hover-focus-within;
       }
     }
   }
