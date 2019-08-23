@@ -1,0 +1,230 @@
+// -----------------------------------------------------------------------------
+//   Primary site menu - menu items
+// -----------------------------------------------------------------------------
+
+///
+/// Primary menu item foreground colour.
+///
+$menu-primary-item-foreground-colour: get-contrasting-colour(
+  $background:          $menu-primary-background-colour,
+  $foreground-on-light: $foreground-colour-on-light,
+  $foreground-on-dark:  $foreground-colour-on-dark
+);
+
+///
+/// Primary menu item horizontal padding.
+///
+$menu-primary-item-padding-x:   $layout-gutter;
+
+///
+/// Primary menu item vertical padding.
+///
+$menu-primary-item-padding-y:   $general-spacing * 0.75;
+
+///
+/// Primary menu item underline height, used to indicate active menu item.
+///
+$menu-primary-item-underline-height:  4px;
+
+///
+/// Set primary menu item colours.
+///
+@mixin menu-primary-item-colours {
+  @include link-colours(
+    $background:      $menu-primary-background-colour,
+    $normal-on-dark:  $menu-primary-item-foreground-colour,
+    $hover-on-dark:   $menu-primary-item-foreground-colour
+  );
+}
+
+///
+/// Set primary menu item indicator transition properties.
+///
+@mixin menu-primary-item-indicator-transition {
+  transition-duration: 0.1s;
+
+  transition-property: transform;
+}
+
+///
+/// Set primary menu item indicator as active, i.e. current/hovered/focussed.
+///
+@mixin menu-primary-item-indicator-active {
+  // Using scale rather than translate as that has less of a chance of
+  // accidentally being shown if the browser has issues rendering, e.g. Firefox
+  // during and after the front page animations.
+  transform: scaleY(1);
+
+  // This is necessary to override the default instant transition in on links,
+  // so we transition in and out at the same rate, which looks better for this.
+  @include menu-primary-item-indicator-transition;
+}
+
+///
+/// Set primary menu item indicator as inactive.
+///
+@mixin menu-primary-item-indicator-inactive {
+  transform: scaleY(0);
+}
+
+///
+/// Set primary menu item indicator state when menu is :hover or :focus-within.
+///
+@mixin menu-primary-item-active-path-indicator-hover-focus-within {
+  @include menu-item-is-active-path {
+    &::after {
+      @include menu-primary-item-indicator-inactive;
+    }
+
+    @include link-hover {
+      &::after {
+        @include menu-primary-item-indicator-active;
+      }
+    }
+  }
+}
+
+.region-primary-menu {
+  // Top level menus have negative lateral margins to pull items (which have
+  // lateral padding) flush with the sides of the block, which lines up the text
+  // edges with the gutter.
+  .block > .menu {
+    @include root-conditions(('[dir=ltr]'), 'html') {
+      margin-left:  -$menu-primary-item-padding-x;
+      margin-right: -$menu-primary-item-padding-x;
+    }
+
+    // We have to specify the RTL selector so that we override Classy's menu
+    // margins.
+    @include root-conditions(('[dir=rtl]'), 'html') {
+      margin-left:  -$menu-primary-item-padding-x;
+      margin-right: -$menu-primary-item-padding-x;
+    }
+  }
+
+  .menu-item {
+    // Remove padding added by Classy.
+    padding-top: 0;
+  }
+
+  .menu-item--expanded {
+    // Remove the default Drupal expanded indicator.
+    list-style: none;
+
+    @include on-icon-container {
+      // For drop-down menus, icons look better after the text, rather than
+      // before.
+      @include set-icon-order(text-first);
+    }
+
+    @include icon-transform-transition;
+
+    // Transform the sub-menu indicator to its open state when a sub-menu is
+    // open.
+    &:hover > :link,
+    > :link:focus,
+    &.ally-focus-within > :link {
+      @include menu-primary-sub-menu-indicator-open;
+    }
+    &:focus-within > :link {
+      @include menu-primary-sub-menu-indicator-open;
+    }
+  }
+
+  .menu-item a, // Specificity for colours.
+  .menu-overflow__toggle {
+    position: relative;
+
+    display:  block;
+
+    padding:  $menu-primary-item-padding-y $menu-primary-item-padding-x;
+
+    @include menu-primary-item-colours;
+
+    // Remove fancy link underlines.
+    @include remove-fancy-link-underlines;
+
+    @include material-ripple;
+
+    // Don't wrap to new lines since the container scrolls.
+    white-space: nowrap;
+
+    // This ensures the indicator is above the margin-top: -1px; on the any
+    // sub-menu, so that it doesn't clipped by the sub-menu being on top of
+    // the indicator.
+    z-index: 1;
+
+    // This pseudo-element is used to create the underline for current and
+    // hovered/focussed menu item links.
+    &::after {
+      content:  '';
+
+      position: absolute;
+
+      left:     $menu-primary-item-padding-x;
+      right:    $menu-primary-item-padding-x;
+      bottom:   0;
+
+      height:   $menu-primary-item-underline-height;
+
+      background-color: $foreground-colour-on-dark;
+
+      transform-origin: bottom center;
+
+      // Hidden by default.
+      @include menu-primary-item-indicator-inactive;
+      will-change:  transform;
+
+      // Set the transition for the indicator when interaction has ceased. The
+      // menu-primary-item-indicator-active mixin sets the transition in.
+      @include menu-primary-item-indicator-transition;
+    }
+
+    // This makes the indicator visible on an item when it's being interacted
+    // with.
+    @include link-hover {
+      &::after {
+        @include menu-primary-item-indicator-active;
+      }
+    }
+  }
+
+  .menu-item {
+    @include menu-item-is-active-path {
+      @include menu-primary-item-colours;
+
+      // Remove fancy link underlines. This is here for specificity.
+      @include remove-fancy-link-underlines;
+
+      // Active path item indicators are visible by default. This is necessary
+      // in case the browser doesn't support :focus-within and our polyfill
+      // doesn't get applied.
+      &::after {
+        @include menu-primary-item-indicator-active;
+      }
+    }
+  }
+
+  // Remove default <button> styling from the overflow toggle.
+  .menu-overflow__toggle {
+    border-width:     0;
+    background-color: transparent;
+  }
+
+  .block > .menu {
+    // Hide the indicator when the menu matches :focus-within. Note that this
+    // has to be a separate rule from the rest so that a browser that doesn't
+    // support the selector doesn't ignore the other selectors, which it should
+    // understand.
+    &:focus-within .menu-item {
+      @include menu-primary-item-active-path-indicator-hover-focus-within;
+    }
+    // Hover and polyfilled :focus-within.
+    &:hover,
+    &.ally-focus-within {
+      .menu-item {
+        @include menu-primary-item-active-path-indicator-hover-focus-within;
+      }
+    }
+  }
+}
