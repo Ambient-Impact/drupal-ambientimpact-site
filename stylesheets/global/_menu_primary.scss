@@ -232,9 +232,20 @@ $menu-primary-item-underline-height:  4px;
       > .menu {
         position: absolute;
 
+        // The clip-path causes Chrome on Windows to display a slight gap along
+        // the top due to a rounding error, so this seems to fix that.
+        margin-top: -1px;
+
         background-color: $menu-primary-background-colour;
 
         @include material-shadow($depth: 2);
+
+        // This clips the top of the menu so that no shadow peeks over the top
+        // onto the menu bar, allowing it to appear as if it's part of the same
+        // material as the menu bar. The 105% causes the left, right, and bottom
+        // edges to extend past the menu edges, so that those sides' shadows are
+        // not clipped.
+        clip-path: polygon(0 0, 105% 0, 105% 105%, 0 105%);
       }
     }
 
@@ -339,6 +350,11 @@ $menu-primary-item-underline-height:  4px;
 
       // Don't wrap to new lines since the container scrolls.
       white-space: nowrap;
+
+      // This ensures the indicator is above the margin-top: -1px; on the any
+      // sub-menu, so that it doesn't clipped by the sub-menu being on top of
+      // the indicator.
+      z-index: 1;
 
       // This pseudo-element is used to create the underline for current and
       // hovered/focussed menu item links.
