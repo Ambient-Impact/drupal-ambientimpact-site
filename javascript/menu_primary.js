@@ -66,7 +66,10 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryHeadroom', function(
 });
 });
 
-AmbientImpact.on('icon', function(aiIcon) {
+// Add arrow icons to menu items with child menus. We wait for both the icon
+// component and the menu overflow component so that we don't add the icon if
+// the overflow component doesn't load.
+AmbientImpact.on(['icon', 'menuOverflow'], function(aiIcon, aiMenuOverflow) {
 AmbientImpact.addComponent('siteThemeMenuPrimarySubMenuIcons', function(
   siteThemeMenuPrimarySubMenuIcons, $
 ) {
