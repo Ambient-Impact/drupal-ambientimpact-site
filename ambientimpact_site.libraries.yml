@@ -20,6 +20,7 @@ global-scripts:
     - ambientimpact_core/component.font
     - ambientimpact_icon/component.icon
     - ambientimpact_ux/component.headroom
+    - ambientimpact_ux/component.menu_drop_down
     - ambientimpact_ux/component.menu_overflow
 
 # This is the node type project title library, attached only to those nodes.

@@ -66,45 +66,26 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryHeadroom', function(
 });
 });
 
-// Add arrow icons to menu items with child menus. We wait for both the icon
-// component and the menu overflow component so that we don't add the icon if
-// the overflow component doesn't load.
-AmbientImpact.on(['icon', 'menuOverflow'], function(aiIcon, aiMenuOverflow) {
-AmbientImpact.addComponent('siteThemeMenuPrimarySubMenuIcons', function(
-  siteThemeMenuPrimarySubMenuIcons, $
+// Add overflow and drop-down support/improvements to the primary menu.
+AmbientImpact.on(['menuOverflow', 'menuDropDown'], function(
+  aiMenuOverflow, aiMenuDropDown
+) {
+AmbientImpact.addComponent('siteThemeMenuPrimary', function(
+  siteThemeMenuPrimary, $
 ) {
   'use strict';
 
   this.addBehaviour(
-    'AmbientImpactSiteThemeMenuPrimarySubMenuIcons',
-    'ambientimpact-site-theme-menu-primary-sub-menu-icons',
-    '.region-primary-menu .block-menu > .menu',
-    function(context, settings) {
-      $(this).find('> .menu-item--expanded > a')
-        .wrapTextWithIcon('arrow-down', {bundle: 'core'});
-    },
-    function(context, settings, trigger) {
-      $(this).find('> .menu-item--expanded > a').unwrapTextWithIcon();
-    }
-  );
-});
-});
-
-AmbientImpact.on('menuOverflow', function(aiMenuOverflow, $) {
-AmbientImpact.addComponent('siteThemeMenuOverflow', function(
-  siteThemeMenuOverflow, $
-) {
-  'use strict';
-
-  this.addBehaviour(
-    'AmbientImpactSiteThemeMenuPrimaryOverflow',
-    'ambientimpact-site-theme-menu-primary-overflow',
+    'AmbientImpactSiteThemeMenuPrimary',
+    'ambientimpact-site-theme-menu-primary',
     '.region-primary-menu .block-menu > .menu',
     function(context, settings) {
       aiMenuOverflow.attach(this);
+      aiMenuDropDown.attach(this);
     },
     function(context, settings, trigger) {
       aiMenuOverflow.detach(this);
+      aiMenuDropDown.detach(this);
     }
   );
 });
