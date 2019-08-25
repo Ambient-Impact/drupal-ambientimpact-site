@@ -232,6 +232,13 @@ $menu-primary-sub-menu-clip-padding: 10px;
 
         // Sub-menus look better if they're not narrower than the parent item.
         min-width: 100%;
+
+        // Override the base layout max-width, as that would force the menu to
+        // shrink to fit narrow parent menu items if the menu contents are wider
+        // that its parent. If available, we set it to 100vw to avoid making it
+        // wider than the viewport.
+        max-width: none;
+        max-width: 100vw;
       }
 
       // Show the sub-menu on the pointer hovering over it or its parent, when
