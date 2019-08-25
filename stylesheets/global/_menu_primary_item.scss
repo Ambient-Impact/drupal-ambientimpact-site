@@ -119,6 +119,17 @@ $menu-primary-item-indicator-thickness:  0.2em;
   }
 }
 
+///
+/// Transform a primary menu sub-menu indicator to its open state.
+///
+@mixin menu-primary-sub-menu-indicator-open {
+  // Rotate the icon 180 degrees when the sub-menu is open, so that the icon
+  // points up rather than down.
+  @include on-icon-icon {
+    transform: rotate(180deg);
+  }
+}
+
 .region-primary-menu {
   // Top level menus have negative lateral margins to pull items (which have
   // lateral padding) flush with the sides of the block, which lines up the text

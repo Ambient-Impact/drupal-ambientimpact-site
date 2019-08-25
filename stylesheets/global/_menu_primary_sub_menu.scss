@@ -141,17 +141,6 @@ $menu-primary-sub-menu-clip-padding: 10px;
   );
 }
 
-///
-/// Transform a primary menu sub-menu indicator to its open state.
-///
-@mixin menu-primary-sub-menu-indicator-open {
-  // Rotate the icon 180 degrees when the sub-menu is open, so that the icon
-  // points up rather than down.
-  @include on-icon-icon {
-    transform: rotate(180deg);
-  }
-}
-
 .region-primary-menu {
   .menu .menu {
     // Reset lateral margins that Classy sets.
