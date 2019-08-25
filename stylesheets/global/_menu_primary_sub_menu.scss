@@ -10,18 +10,71 @@
 $menu-primary-sub-menu-clip-padding: 10px;
 
 ///
+/// @supports test for our primary menu sub-menu transform and clipping.
+///
+/// @content
+///   Properties to wrap in the @supports block.
+///
+/// @require {Function} menu-primary-clip-path()
+/// @require {Variable} $menu-primary-sub-menu-clip-padding
+///
+@mixin menu-primary-supports-translate-clip-path {
+  $padding: $menu-primary-sub-menu-clip-padding;
+
+  @supports (transform: translateY(calc(-100% - #{$padding}))) and
+  (clip-path: menu-primary-clip-path()) {
+    @content;
+  }
+}
+
+///
 /// Hide a sub-menu of the primary menu.
 ///
+/// This hides a menu using one of two methods, depending on whether our
+/// clip-path and the translate transform are both supported:
+///
+/// * If not supported, the menu is moved way off to the left, with zero opacity
+///   and pointer-events: none.
+///
+/// * If supported, the menu is kept in its current location laterally but
+///   translated upwards so that its totally hidden inside its parent menu item.
+///   This allows us to transition the translation, when available.
+///
+/// @see {Mixin} menu-primary-sub-menu-show
+///   The inverse of the current mixin; shows the sub-menu.
+///
+/// @require {Mixin}    menu-primary-supports-translate-clip-path
+/// @require {Variable} $menu-primary-sub-menu-clip-padding
+///
 @mixin menu-primary-sub-menu-hide {
-  // Until interacted with, sub-menus are absolutely positioned way off to the
-  // left and are invisible and unclickable.
-  left:     -9999em;
-  opacity:  0;
+  left:       -9999em;
+  opacity:    0;
+
   pointer-events: none;
+
+  @include menu-primary-supports-translate-clip-path {
+    @include root-conditions(('[dir=ltr]'), 'html') {
+      left:   0;
+    }
+    @include root-conditions(('[dir=rtl]'), 'html') {
+      right:  0;
+    }
+
+    opacity:  1;
+
+    transform: translateY(calc(-100% - #{$menu-primary-sub-menu-clip-padding}));
+  }
 }
 
 ///
 /// Show a sub-menu of the primary menu.
+///
+/// @see {Mixin} menu-primary-sub-menu-hide
+///   The inverse of the current mixin; hides the sub-menu.
+///
+/// @require {Mixin}    menu-primary-supports-translate-clip-path
+/// @require {Mixin}    root-conditions
+/// @require {Variable} $menu-primary-sub-menu-clip-padding
 ///
 @mixin menu-primary-sub-menu-show {
   @include root-conditions(('[dir=ltr]'), 'html') {
@@ -32,7 +85,60 @@ $menu-primary-sub-menu-clip-padding: 10px;
   }
 
   opacity:  1;
+
   pointer-events: auto;
+
+  @include menu-primary-supports-translate-clip-path {
+    transform: translateY(0);
+  }
+}
+
+///
+/// Primary menu item clip-path polygon to clip sub-menus.
+///
+/// This essentially creates a polygon that covers both the bounding box of the
+/// menu item itself (so that it's not clipped) and a larger area below and to
+/// both sides so that sub-menus can be clipped in such a way as to appear to be
+/// part of the same material as the menu bar, while also translating up into
+/// the menu bar when closed.
+///
+/// If you're having trouble visualizing this, Firefox's devtools have an
+/// excellent tool for this:; inspect the menu item and then click the four-
+/// pointed polygon icon directly after "clip-path:", which will show the
+/// polygon and its vertices.
+///
+/// **Very important warning**: don't set either $width or $height to some huge
+/// amount like 9999em, because while this seems to work fine in Firefox, Chrome
+/// 76.0.3809.100 64-bit on Windows 10 has been observed to reliably freeze the
+/// OS, eventually crashing it, probably due to video driver issues. This may
+/// be an isolated case to this particular development machine, but don't take
+/// this chance.
+///
+/// @param {Number} $width [10em]
+///   The amount to extend the sub-menu portion of the polygon to the left and
+///   right past the edges of the menu-item's bounding box.
+///
+/// @param {Number} $height [25em]
+///   The amount to extend the sub-menu portion of the polygon downwards past
+///   the bottom edge of the menu-item's bounding box.
+///
+/// @return {String}
+///   The polygon() declaration as described in this functions description.
+///
+@function menu-primary-clip-path(
+  $width:   10em,
+  $height:  25em
+) {
+  @return polygon(
+    -$width                 100%,
+    0                       100%,
+    0                       0,
+    100%                    0,
+    100%                    100%,
+    calc(100% + #{$width})  100%,
+    calc(100% + #{$width})  calc(100% + #{$height}),
+    -$width                 calc(100% + #{$height})
+  );
 }
 
 ///
@@ -65,32 +171,58 @@ $menu-primary-sub-menu-clip-padding: 10px;
 
     > .menu-item--expanded,
     > .menu-overflow {
+      ///
+      /// The local stacking order of elements; later in the list is higher.
+      ///
+      $local-stacking-order: menu, background, content;
+
       position: relative;
+
+      // The clip.
+      clip-path: menu-primary-clip-path();
+
+      @include menu-primary-supports-translate-clip-path {
+        // This solid colour block is placed below the menu item contents but
+        // above the sub-menu, so that when the sub-menu slides up into its
+        // hidden state, it's not visible behind the menu item contents, the
+        // latter of which we need avoid clipping so that they're visible.
+        &::after {
+          content:  '';
+          display:  block;
+
+          position: absolute;
+          top:      0;
+          bottom:   0;
+          left:     0;
+          right:    0;
+
+          z-index:  index($local-stacking-order, background);
+
+          background-color: $menu-primary-background-colour;
+        }
+      }
+
+      > a,
+      > .menu-overflow__toggle {
+        position: relative;
+
+        z-index:  index($local-stacking-order, content);
+      }
 
       > .menu {
         position: absolute;
 
-        // The clip-path causes Chrome on Windows to display a slight gap along
-        // the top due to a rounding error, so this seems to fix that.
-        margin-top: -1px;
+        z-index:  index($local-stacking-order, menu);
 
         background-color: $menu-primary-background-colour;
 
         @include material-shadow($depth: 2);
 
-        $clip-padding: $menu-primary-sub-menu-clip-padding;
+        transition-property: transform;
+        transition-duration: 200ms;
+        transition-timing-function: $easing-standard;
 
-        // This clips the top of the menu so that no shadow peeks over the top
-        // onto the menu bar, allowing it to appear as if it's part of the same
-        // material as the menu bar. The calc() causes the left, right, and
-        // bottom edges to extend past the menu edges, so that those sides'
-        // shadows are not clipped.
-        clip-path: polygon(
-          -$clip-padding                0,
-          calc(100% + #{$clip-padding}) 0,
-          calc(100% + #{$clip-padding}) calc(100% + #{$clip-padding}),
-          -$clip-padding                calc(100% + #{$clip-padding})
-        );
+        will-change: transform;
       }
     }
 
