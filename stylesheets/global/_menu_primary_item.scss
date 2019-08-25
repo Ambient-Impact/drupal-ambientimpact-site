@@ -300,6 +300,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
   // Remove default <button> styling from the overflow toggle.
   .menu-overflow__toggle {
     border-width:     0;
+    border-radius:    0; // Firefox/Gecko.
     background-color: transparent;
   }
 
