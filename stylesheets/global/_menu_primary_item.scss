@@ -148,11 +148,21 @@ $menu-primary-item-indicator-thickness:  0.2em;
     }
   }
 
+  // All menu items, regardless of depth.
   .menu-item {
     // Remove padding added by Classy.
     padding-top: 0;
+
+    @include menu-item-is-active-path {
+      @include menu-primary-item-colours;
+
+      // Remove fancy link underlines. This is here for specificity as the base
+      // link styles also target active path links.
+      @include remove-fancy-link-underlines;
+    }
   }
 
+  // Menu items that are expanded, meaning they have a rendered sub-menu.
   .menu-item--expanded {
     // Remove the default Drupal expanded indicator.
     list-style: none;
@@ -167,18 +177,22 @@ $menu-primary-item-indicator-thickness:  0.2em;
 
     // Transform the sub-menu indicator to its open state when a sub-menu is
     // open.
-    &:hover > :link,
-    > :link:focus,
-    &.ally-focus-within > :link {
+    &:hover > a,
+    &:hover > button,
+    > a:focus,
+    > button:focus,
+    &.ally-focus-within > a,
+    &.ally-focus-within > button {
       @include menu-primary-sub-menu-indicator-open;
     }
-    &:focus-within > :link {
+    &:focus-within > a,
+    &:focus-within > button {
       @include menu-primary-sub-menu-indicator-open;
     }
   }
 
-  .menu-item a, // Specificity for colours.
-  .menu-overflow__toggle {
+  .menu-item > a, // Specificity for colours.
+  .menu-item > button {
     position: relative;
 
     display:  block;
@@ -218,103 +232,100 @@ $menu-primary-item-indicator-thickness:  0.2em;
     }
   }
 
-  // Primary (top level) item indicators. These are horizontal lines beneath the
-  // text of the menu item text.
-  .block > .menu > .menu-item > a,
-  .menu-overflow__toggle {
-    &::after {
-      left:     $menu-primary-item-padding-x;
-      right:    $menu-primary-item-padding-x;
-      bottom:   0;
-
-      height:   $menu-primary-item-indicator-thickness;
-
-      transform-origin: bottom center;
-
-      // Hidden by default.
-      @include menu-primary-item-primary-indicator-inactive;
-    }
-
-    // This makes the indicator visible on an item when it's being interacted
-    // with.
-    @include link-hover {
-      &::after {
-        @include menu-primary-item-primary-indicator-active;
-      }
-    }
-  }
-
-  .block > .menu > .menu-item {
-    @include menu-item-is-active-path {
-      // Active path item indicators are visible by default. This is necessary
-      // in case the browser doesn't support :focus-within and our polyfill
-      // doesn't get applied.
-      &::after {
-        @include menu-primary-item-primary-indicator-active;
-      }
-    }
-  }
-
-  // Secondary (second level and deeper) indicators. These are vertical lines to
-  // the left (in LTR) or to the right (in RTL) of the menu item text.
-  .menu .menu .menu-item a {
-    &::after {
-      top:      $menu-primary-item-padding-y;
-      bottom:   $menu-primary-item-padding-y;
-
-      width:    $menu-primary-item-indicator-thickness;
-
-      @include root-conditions(('[dir=ltr]'), 'html') {
-        left:   0;
-
-        transform-origin: center left;
-      }
-      @include root-conditions(('[dir=rtl]'), 'html') {
-        right:  0;
-
-        transform-origin: center right;
-      }
-
-      // Hidden by default.
-      @include menu-primary-item-secondary-indicator-inactive;
-    }
-
-    // This makes the indicator visible on an item when it's being interacted
-    // with.
-    @include link-hover {
-      &::after {
-        @include menu-primary-item-secondary-indicator-active;
-      }
-    }
-  }
-
-  .menu .menu .menu-item {
-    @include menu-item-is-active-path {
-      // Active path item indicators are visible by default. This is necessary
-      // in case the browser doesn't support :focus-within and our polyfill
-      // doesn't get applied.
-      &::after {
-        @include menu-primary-item-secondary-indicator-active;
-      }
-    }
-  }
-
-  .menu-item {
-    @include menu-item-is-active-path {
-      @include menu-primary-item-colours;
-
-      // Remove fancy link underlines. This is here for specificity.
-      @include remove-fancy-link-underlines;
-    }
-  }
-
-  // Remove default <button> styling from the overflow toggle.
-  .menu-overflow__toggle {
+  // Remove default <button> styling from the overflow toggle and any other
+  // buttons.
+  .menu-item > button {
     border-width:     0;
     border-radius:    0; // Firefox/Gecko.
     background-color: transparent;
   }
 
+  // Top level menu items.
+  .block > .menu > .menu-item {
+     > a,
+     > button {
+      // Primary (top level) item indicators. These are horizontal lines beneath
+      // the text of the menu item text.
+      &::after {
+        left:     $menu-primary-item-padding-x;
+        right:    $menu-primary-item-padding-x;
+        bottom:   0;
+
+        height:   $menu-primary-item-indicator-thickness;
+
+        transform-origin: bottom center;
+
+        // Hidden by default.
+        @include menu-primary-item-primary-indicator-inactive;
+      }
+
+      // This makes the indicator visible on an item when it's being interacted
+      // with.
+      @include link-hover {
+        &::after {
+          @include menu-primary-item-primary-indicator-active;
+        }
+      }
+    }
+
+    @include menu-item-is-active-path {
+      // Active path item indicators are visible by default. This is necessary
+      // in case the browser doesn't support :focus-within and our polyfill
+      // doesn't get applied.
+      &::after {
+        @include menu-primary-item-primary-indicator-active;
+      }
+    }
+  }
+
+  // Second level and deeper menu items.
+  .menu .menu .menu-item {
+    > a,
+    > button {
+      // Secondary (second level and deeper) indicators. These are vertical
+      // lines to the left (in LTR) or to the right (in RTL) of the menu item
+      // text.
+      &::after {
+        top:      $menu-primary-item-padding-y;
+        bottom:   $menu-primary-item-padding-y;
+
+        width:    $menu-primary-item-indicator-thickness;
+
+        @include root-conditions(('[dir=ltr]'), 'html') {
+          left:   0;
+
+          transform-origin: center left;
+        }
+        @include root-conditions(('[dir=rtl]'), 'html') {
+          right:  0;
+
+          transform-origin: center right;
+        }
+
+        // Hidden by default.
+        @include menu-primary-item-secondary-indicator-inactive;
+      }
+
+      // This makes the indicator visible on an item when it's being interacted
+      // with.
+      @include link-hover {
+        &::after {
+          @include menu-primary-item-secondary-indicator-active;
+        }
+      }
+    }
+
+    @include menu-item-is-active-path {
+      // Active path item indicators are visible by default. This is necessary
+      // in case the browser doesn't support :focus-within and our polyfill
+      // doesn't get applied.
+      &::after {
+        @include menu-primary-item-secondary-indicator-active;
+      }
+    }
+  }
+
+  // Top level menus.
   .block > .menu {
     // Hide the indicator when the menu matches :focus-within. Note that this
     // has to be a separate rule from the rest so that a browser that doesn't
@@ -332,6 +343,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
     }
   }
 
+  // Nested menus.
   .menu .menu {
     // Hide the indicator when the menu matches :focus-within. Note that this
     // has to be a separate rule from the rest so that a browser that doesn't

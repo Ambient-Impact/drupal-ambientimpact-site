@@ -54,10 +54,10 @@ $menu-primary-sub-menu-clip-padding: 10px;
 
   @include menu-primary-supports-translate-clip-path {
     @include root-conditions(('[dir=ltr]'), 'html') {
-      left:   0;
+      left:   auto;
     }
     @include root-conditions(('[dir=rtl]'), 'html') {
-      right:  0;
+      right:  auto;
     }
 
     opacity:  1;
@@ -78,10 +78,10 @@ $menu-primary-sub-menu-clip-padding: 10px;
 ///
 @mixin menu-primary-sub-menu-show {
   @include root-conditions(('[dir=ltr]'), 'html') {
-    left:   0;
+    left:   auto;
   }
   @include root-conditions(('[dir=rtl]'), 'html') {
-    right:  0;
+    right:  auto;
   }
 
   opacity:  1;
@@ -158,8 +158,7 @@ $menu-primary-sub-menu-clip-padding: 10px;
       display: block;
     }
 
-    > .menu-item--expanded,
-    > .menu-overflow {
+    > .menu-item--expanded {
       ///
       /// The local stacking order of elements; later in the list is higher.
       ///
@@ -192,7 +191,7 @@ $menu-primary-sub-menu-clip-padding: 10px;
       }
 
       > a,
-      > .menu-overflow__toggle {
+      > button {
         position: relative;
 
         z-index:  index($local-stacking-order, content);
@@ -253,7 +252,5 @@ $menu-primary-sub-menu-clip-padding: 10px;
     @include root-conditions(('[dir=rtl]'), 'html') {
       left:  0;
     }
-
-    min-width: 10em;
   }
 }
