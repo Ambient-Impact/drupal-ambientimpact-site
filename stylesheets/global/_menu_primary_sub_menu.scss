@@ -233,7 +233,8 @@ $menu-primary-sub-menu-clip-padding: 10px;
       // the parent link is focused (e.g. by keyboard, etc.), or when anything
       // is focused inside of the sub-menu.
       &:hover > .menu,
-      > :link:focus + .menu,
+      > a:focus + .menu,
+      > button:focus + .menu,
       &.ally-focus-within > .menu {
         @include menu-primary-sub-menu-show;
       }
