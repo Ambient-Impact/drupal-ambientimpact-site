@@ -177,16 +177,18 @@ $menu-primary-item-indicator-thickness:  0.2em;
 
     // Transform the sub-menu indicator to its open state when a sub-menu is
     // open.
-    &:hover > a,
-    &:hover > button,
-    > a:focus,
-    > button:focus,
-    &.ally-focus-within > a,
-    &.ally-focus-within > button {
+    &:not(.menu-item--menu-closed):hover > a,
+    &:not(.menu-item--menu-closed):hover > button,
+    &:not(.menu-item--menu-closed) > a:focus,
+    &:not(.menu-item--menu-closed) > button:focus,
+    &:not(.menu-item--menu-closed).ally-focus-within > a,
+    &:not(.menu-item--menu-closed).ally-focus-within > button,
+    &.menu-item--menu-open > a,
+    &.menu-item--menu-open > button {
       @include menu-primary-sub-menu-indicator-open;
     }
-    &:focus-within > a,
-    &:focus-within > button {
+    &:not(.menu-item--menu-closed):focus-within > a,
+    &:not(.menu-item--menu-closed):focus-within > button {
       @include menu-primary-sub-menu-indicator-open;
     }
   }

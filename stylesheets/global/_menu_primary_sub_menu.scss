@@ -232,15 +232,16 @@ $menu-primary-sub-menu-clip-padding: 10px;
       // Show the sub-menu on the pointer hovering over it or its parent, when
       // the parent link is focused (e.g. by keyboard, etc.), or when anything
       // is focused inside of the sub-menu.
-      &:hover > .menu,
-      > a:focus + .menu,
-      > button:focus + .menu,
-      &.ally-focus-within > .menu {
+      &:not(.menu-item--menu-closed):hover > .menu,
+      &:not(.menu-item--menu-closed) > a:focus + .menu,
+      &:not(.menu-item--menu-closed) > button:focus + .menu,
+      &:not(.menu-item--menu-closed).ally-focus-within > .menu,
+      &--menu-open > .menu {
         @include menu-primary-sub-menu-show;
       }
       // This needs to be separate as not all browsers support it and
       // non-supporting browsers would ignore any rule it was part of.
-      &:focus-within > .menu {
+      &:not(.menu-item--menu-closed):focus-within > .menu {
         @include menu-primary-sub-menu-show;
       }
     }
