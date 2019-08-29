@@ -48,6 +48,16 @@
   $primary-menu-reveal-duration: 2s;
 
   ///
+  /// Primary menu reveal animation delay.
+  ///
+  /// This should be just long enough that most browsers will have already done
+  /// most of their layout rendering and most DOMContentLoaded JavaScript has
+  /// (hopefully) finished executing so the reveal animation has a better chance
+  /// of playing smoothly and without too many frames dropped.
+  ///
+  $primary-menu-reveal-animation-delay: 0.5s;
+
+  ///
   /// Primary menu block reveal animation duration.
   ///
   $primary-menu-block-reveal-duration: 0.5s;
@@ -141,8 +151,9 @@
   animation-name:       front-page-body-scroll-prevention;
   animation-duration:   0.1s;
   animation-delay:
-    $primary-menu-reveal-duration + $primary-menu-block-reveal-duration +
-    $site-name-reveal-animation-duration + $content-reveal-duration;
+    $primary-menu-reveal-animation-delay + $primary-menu-reveal-duration +
+    $primary-menu-block-reveal-duration + $site-name-reveal-animation-duration +
+    $content-reveal-duration;
   animation-fill-mode:  backwards;
 
   // Site header element contains the top shadow for the primary menu bar, so
@@ -153,6 +164,7 @@
     animation-duration:         $primary-menu-reveal-duration;
     animation-timing-function:  $easing-standard;
     animation-fill-mode:        backwards;
+    animation-delay:            $primary-menu-reveal-animation-delay;
   }
 
   // This ensures the scale transform keeps the top shadow with the top of the
@@ -164,7 +176,8 @@
   // Delay the site name reveal animation until the primary menu reveal has
   // completed.
   .site-name {
-    animation-delay: $primary-menu-reveal-duration;
+    animation-delay:
+      $primary-menu-reveal-animation-delay + $primary-menu-reveal-duration;
   }
 
   .region-primary-menu {
@@ -179,7 +192,8 @@
       animation-duration:         $primary-menu-block-reveal-duration;
       animation-timing-function:  $easing-standard;
       animation-delay:
-        $primary-menu-reveal-duration + $site-name-reveal-animation-duration;
+        $primary-menu-reveal-animation-delay + $primary-menu-reveal-duration +
+        $site-name-reveal-animation-duration;
       animation-fill-mode:        backwards;
     }
   }
@@ -191,7 +205,8 @@
     animation-duration:         $content-reveal-duration;
     animation-timing-function:  $easing-standard;
     animation-delay:
-      $primary-menu-reveal-duration + $primary-menu-block-reveal-duration +
+      $primary-menu-reveal-animation-delay + $primary-menu-reveal-duration +
+      $primary-menu-block-reveal-duration +
       $site-name-reveal-animation-duration;
     animation-fill-mode:        backwards;
   }
