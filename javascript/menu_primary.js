@@ -82,8 +82,31 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
     function(context, settings) {
       aiMenuOverflow.attach(this);
       aiMenuDropDown.attach(this);
+
+      var menu = this;
+      var $menu = $(this);
+
+      // This automatically closes drop-down menus if the menu bar becomes
+      // unpinned, which means it has transitioned upwards off screen.
+      //
+      // Note that the immerseEnter event is not currently implemented as it
+      // usually happens when focus is lost by the open menu, thus closing it
+      // automatically.
+      $menu.closest('.region-primary-menu')
+        .on('headroomUnpin.aiSiteThemeMenuPrimaryDropDown', function(event) {
+          var $items = $menu.find('.menu-item--menu-open');
+
+          for (var i = 0; i < $items.length; i++) {
+            if ('aiMenuDropDown' in $items[i]) {
+              $items[i].aiMenuDropDown.close();
+            }
+          }
+        });
     },
     function(context, settings, trigger) {
+      $(this).closest('.region-primary-menu')
+        .off('headroomUnpin.aiSiteThemeMenuPrimaryDropDown');
+
       aiMenuOverflow.detach(this);
       aiMenuDropDown.detach(this);
     }
