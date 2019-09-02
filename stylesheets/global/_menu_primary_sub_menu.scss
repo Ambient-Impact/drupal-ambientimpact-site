@@ -258,4 +258,23 @@ $menu-primary-sub-menu-clip-padding: 10px;
       left:  0;
     }
   }
+
+  .block > .menu > .menu-item > .menu {
+    // This ensures that drop-down menus don't extend past the bottom of the
+    // screen on short screen sizes (e.g. mobile), and are scrollable so that
+    // all items can be accessed without having to worry about the menu
+    // disappearing. The 5.6em is roughly the space the menu bar itself and the
+    // site title take up - this is for when the menu bar is still considered at
+    // the top by Headroom.js.
+    max-height: calc(100vh - 5.6em);
+
+    overflow-y: auto;
+  }
+
+  // When Headroom.js believes the menu bar is no longer at the top but is
+  // floating, substract a smaller value from the screen height, roughly equal
+  // to the height of the menu bar.
+  &.headroom--not-top .block > .menu > .menu-item > .menu {
+    max-height: calc(100vh - 2.9em);
+  }
 }
