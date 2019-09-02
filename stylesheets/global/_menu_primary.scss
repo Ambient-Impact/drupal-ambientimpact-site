@@ -77,6 +77,12 @@ $menu-primary-background-colour: $ambientimpact-orange;
     // IMPORTANT: space-around causes some odd overflow hiding.
     justify-content: space-between;
 
+    // When all items are in the overflow menu, centre-align the overflow
+    // toggle, which is the only item visible in that case.
+    &--all-overflow {
+      justify-content: center;
+    }
+
     font-size: $menu-primary-font-size-small;
 
     @include media('>=menu-primary-font-size-large') {

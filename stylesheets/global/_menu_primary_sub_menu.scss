@@ -10,6 +10,13 @@
 $menu-primary-sub-menu-clip-padding: 10px;
 
 ///
+/// Overflow menu width when all items are in overflow.
+///
+/// This implies a narrow viewport, e.g. mobile.
+///
+$menu-primary-all-overflow-sub-menu-width: 100vw;
+
+///
 /// @supports test for our primary menu sub-menu transform and clipping.
 ///
 /// @content
@@ -247,6 +254,17 @@ $menu-primary-sub-menu-clip-padding: 10px;
       &:not(.menu-item--menu-closed):focus-within > .menu {
         @include menu-primary-sub-menu-show;
       }
+    }
+
+    // When all items are in the overflow menu, centre the overflow menu under
+    // the menu bar rather than have it be to one side.
+    &--all-overflow .menu-overflow > .menu {
+      width:  $menu-primary-all-overflow-sub-menu-width;
+
+      left:   50%   !important;
+      right:  auto  !important;
+
+      margin-left: -($menu-primary-all-overflow-sub-menu-width / 2);
     }
 
     // Indent nested menus to indicate hierarchy.
