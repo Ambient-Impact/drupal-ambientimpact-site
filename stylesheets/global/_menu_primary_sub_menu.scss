@@ -248,6 +248,16 @@ $menu-primary-sub-menu-clip-padding: 10px;
         @include menu-primary-sub-menu-show;
       }
     }
+
+    // Indent nested menus to indicate hierarchy.
+    .menu .menu {
+      @include root-conditions(('[dir=ltr]'), 'html') {
+        padding-left:   1em;
+      }
+      @include root-conditions(('[dir=rtl]'), 'html') {
+        padding-right:  1em
+      }
+    }
   }
 
   .menu-overflow > .menu {
