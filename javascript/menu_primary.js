@@ -22,9 +22,24 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryHeadroom', function(
       // sync the header with it.
       $header.addClass('header--menu-bar-sticky');
 
-      // Add/remove classes on header to sync it with the menu
-      // bar Headroom stuff.
-      $primaryMenu.on('headroomPin.aiThemeMenu', function(event) {
+      // Add/remove classes on header to sync it with the menu bar Headroom
+      // state.
+      //
+      // Note that we have to bind to both the pin and top events to set the
+      // header as pinned, as the top event is required to ensure that the
+      // header doesn't get stuck in its unpinned state if the user scrolls
+      // upwards quickly in a mobile browser where the browser chrome is hidden
+      // and then shown about the time the the menu bar goes from unpinned to
+      // pinned - this has been observed to happen in both Firefox and Chrome on
+      // Android. This may be due to the menu bar being pinned and unpinned two
+      // or more times due to the changing viewport top. This is not a perfect
+      // solution, as the header can be seen to get out of sync with the menu
+      // bar briefly before transitioning into its expected location, but it
+      // works for now.
+      $primaryMenu.on([
+        'headroomPin.aiThemeMenu',
+        'headroomTop.aiThemeMenu',
+      ].join(' '), function(event) {
         $header
           .addClass('header--pinned')
           .removeClass('header--unpinned');
