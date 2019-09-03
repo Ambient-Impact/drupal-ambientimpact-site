@@ -94,6 +94,19 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
       // automatically.
       $menu.closest('.region-primary-menu')
         .on('headroomUnpin.aiSiteThemeMenuPrimaryDropDown', function(event) {
+          // Don't close if the menu is in all overflow mode. This is a crude
+          // heuristic to determine if the user is trying to scroll the menu
+          // when it's scrollable. This is needed in Chrome on Android as it
+          // does some clever stuff with viewport units so the browser chrome
+          // isn't taken into account when it's shown or hidden.
+          //
+          // @todo A more robust version of this would check if the user is
+          // touch dragging or scrolling on the menu itself and use that to
+          // determine if we should hide or not.
+          if ($menu.hasClass('menu--all-overflow')) {
+            return;
+          }
+
           var $items = $menu.find('.menu-item--menu-open');
 
           for (var i = 0; i < $items.length; i++) {
