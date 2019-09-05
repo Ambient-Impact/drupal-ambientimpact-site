@@ -58,15 +58,21 @@
   }
 
   .font-loaded-furore .layout-container & {
+    @mixin furore-heading-underline-adjust {
+      // This adds a bit of space for the fancy underline so that it has enough
+      // space between it and the text above. This doesn't affect the vertical
+      // space inline elements take up, but does affect their bounding box, thus
+      // enlarging it downwards. This is preferably to simply increasing the
+      // underline distance, which will end up getting clipped if we have to go
+      // above 100%.
+      padding-bottom: 0.1em;
+    }
+
     :link, :visited {
-      @include custom-property(
-        'fancy-link-underline-distance', 100%
-      );
+      @include furore-heading-underline-adjust;
     }
     @include abbr {
-      @include custom-property(
-        'text-underline-position', 100%
-      );
+      @include furore-heading-underline-adjust;
     }
   }
 }

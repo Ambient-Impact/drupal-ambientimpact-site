@@ -125,6 +125,9 @@ $node-project-header-stacking-order: top-shadow, title;
   canvas {
     display:    block;
     max-width:  100%;
+
+    // Undo _typography.scss
+    padding-bottom: 0;
   }
 
   :link {
