@@ -168,6 +168,9 @@ $menu-primary-item-indicator-thickness:  0.2em;
     list-style: none;
 
     @include on-icon-container {
+      @include set-icon-vertical-alignment($align: centre);
+      @include set-icon-size(1.2em);
+
       // For drop-down menus, icons look better after the text, rather than
       // before.
       @include set-icon-order(text-first);
