@@ -1,0 +1,208 @@
+// -----------------------------------------------------------------------------
+//   Reveal animations for all pages
+// -----------------------------------------------------------------------------
+
+// This animates all the page elements into their normal locations:
+//
+// 1. The primary menu bar and site name fade in at the same time as the site
+//    name slides up out from the top of the primary menu bar.
+//
+// 2. The primary menu bar contents slide up and fade in as all remaining
+//    regions (.i.e. content) do the same.
+//
+// Additional notes:
+//
+// - Note the use of animation-fill-mode: backwards; which causes the start
+//   state to be applied to elements before the animation has actually started,
+//   i.e. for delayed animations.
+//
+// - Some animations start out with visibility: hidden; on the first frame
+//   and then set visibility: visible; on the subsequent frame. This is done so
+//   that the element cannot be interacted with, either with pointers, keyboard,
+//   or other means. This primarly avoids the issue of clicks registering on
+//   invisible elements.
+
+///
+/// Site name reveal animation duration.
+///
+$site-name-reveal-animation-duration: 0.8s;
+
+///
+/// Site name reveal animation delay.
+///
+/// This should be just long enough that most browsers will have already done
+/// most of their layout rendering and most DOMContentLoaded JavaScript has
+/// (hopefully) finished executing so the reveal animation has a better chance
+/// of playing smoothly and without too many frames dropped.
+///
+$site-name-reveal-animation-delay: 0.5s;
+
+///
+/// Primary menu region reveal animation duration.
+///
+$region-primary-menu-reveal-animation-duration: 0.5s;
+
+///
+/// Primary menu region reveal animation delay.
+///
+/// This should be just long enough that most browsers will have already done
+/// most of their layout rendering and most DOMContentLoaded JavaScript has
+/// (hopefully) finished executing so the reveal animation has a better chance
+/// of playing smoothly and without too many frames dropped.
+///
+$region-primary-menu-reveal-animation-delay: 0.5s;
+
+///
+/// Primary menu block .menu element reveal animation duration.
+///
+/// This is applied to .menu elements inside the primary menu region, not the
+/// region itself.
+///
+$region-primary-menu-block-menu-reveal-duration: 0.5s;
+
+///
+/// Content reveal animation duration.
+///
+$content-reveal-duration: 0.5s;
+
+///
+/// Site name reveal animation keyframes.
+///
+@keyframes site-name-reveal {
+  0% {
+    // The calc() is to account for the drop shadow around the site name.
+    transform:  translateY(calc(100% + 1em));
+  }
+
+  100% {
+    transform:  none;
+  }
+}
+
+///
+/// Primary menu region reveal animation keyframes.
+///
+@keyframes region-primary-menu-reveal {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+///
+/// Primary menu .block element overflow hiding animation keyframes.
+///
+/// This is applied to the .block while the .menu element(s) translate
+/// vertically so that the .menu contents don't start visibly outside the .block
+/// element.
+///
+@keyframes primary-menu-block-overflow {
+  0% {
+    overflow: hidden;
+  }
+  100% {
+    overflow: hidden;
+  }
+}
+
+///
+/// Primary menu block .menu reveal animation keyframes.
+///
+@keyframes primary-menu-block-menu-reveal {
+  0% {
+    visibility: hidden;
+    opacity:    0;
+    transform:  translateY(20%);
+  }
+  1% {
+    visibility: visible;
+  }
+  100% {
+    opacity:    1;
+    transform:  translateY(0);
+  }
+}
+
+///
+/// Content reveal animation keyframes.
+///
+@keyframes content-reveal {
+  0% {
+    visibility: hidden;
+    opacity:    0;
+    transform:  translateY(10vh);
+  }
+  1% {
+    visibility: visible;
+  }
+  100% {
+    opacity:    1;
+    transform:  translateY(0);
+  }
+}
+
+.site-name {
+  animation-name:             site-name-reveal;
+  animation-duration:         $site-name-reveal-animation-duration;
+  animation-timing-function:  $easing-decelerate;
+  animation-fill-mode:        backwards;
+  animation-delay:            $site-name-reveal-animation-delay;
+}
+
+header[role='banner'],
+.region-primary-menu {
+  animation-name:             region-primary-menu-reveal;
+  animation-duration:         $region-primary-menu-reveal-animation-duration;
+  animation-timing-function:  linear;
+  animation-fill-mode:        backwards;
+  animation-delay:            $region-primary-menu-reveal-animation-delay;
+}
+
+.region-primary-menu .block {
+  animation-name:             primary-menu-block-overflow;
+  animation-duration:         $region-primary-menu-block-menu-reveal-duration;
+  animation-fill-mode:        backwards;
+
+  > .menu {
+    animation-name:             primary-menu-block-menu-reveal;
+    animation-duration:         $region-primary-menu-block-menu-reveal-duration;
+    animation-timing-function:  $easing-standard;
+    animation-fill-mode:        backwards;
+  }
+}
+
+.region-primary-menu .block,
+.region-primary-menu .block > .menu,
+.region:not(.region-header):not(.region-primary-menu) {
+  // This delays the .menu and content reveal animations until the primary menu
+  // region and site name are half-way transitioned in. This makes the page
+  // usable faster than if we waited for the primary menu region and content to
+  // complete their animation.
+  animation-delay:
+    $region-primary-menu-reveal-animation-delay +
+    ($region-primary-menu-reveal-animation-duration / 2);
+}
+
+// All other regions are considered content and are animated in after the rest
+// of the animations have completed.
+.region:not(.region-header):not(.region-primary-menu) {
+  animation-name:             content-reveal;
+  animation-duration:         $content-reveal-duration;
+  animation-timing-function:  $easing-standard;
+  animation-fill-mode:        backwards;
+}
+
+// Don't animate if the user indicates they prefer reduced motion.
+// @see https://ambientimpact.com/web/snippets/the-reduced-motion-media-query
+@media (prefers-reduced-motion: reduce) {
+  header[role='banner'],
+  .site-name,
+  .region-primary-menu,
+  .region-primary-menu .block,
+  .region-primary-menu .block > .menu,
+  .region:not(.region-header):not(.region-primary-menu) {
+    animation: none;
+  }
+}

@@ -17,7 +17,6 @@ $menu-primary-font-size-large:  110%;
 ///
 $menu-primary-background-colour: $ambientimpact-orange;
 
-
 @include add-breakpoints((
   // At which height to start using $menu-primary-font-size-large.
   'menu-primary-font-size-large': get-breakpoint-value('height-small')

@@ -1,9 +1,11 @@
 // -----------------------------------------------------------------------------
-//   Site front page
+//   Reveal animations for the front page
 // -----------------------------------------------------------------------------
 
-// This animates all the page elements in on the front page, to make it stand
-// out from other pages and provide a flashy intro. Steps:
+// This builds upon the reveal animations in _reveal.scss to animate all the
+// page elements in on the front page in a longer, staggered sequence; this
+// makes the front page stand out from other pages and provide a flashy intro
+// for anyone visiting the site for the first time. Steps:
 //
 // 1. The primary menu bar is the only visible element, at twice its normal
 //    height, placed roughly in the middle of the page, and without any children
@@ -33,117 +35,89 @@
 //   or other means. This primarly avoids the issue of clicks registering on
 //   invisible elements.
 
+///
+/// Primary menu transform when starting animation.
+///
+/// Note that we're using scaleY() rather than scale() as the latter produces
+/// issues in Edge where the transform-origin seems to be completely off.
+///
+$front-page-region-primary-menu-start-transform: scaleY(2) translateY(15vh);
+
+///
+/// Primary menu reveal animation duration.
+///
+$front-page-region-primary-menu-reveal-animation-duration: 2s;
+
+///
+/// Primary menu reveal animation delay.
+///
+/// This should be just long enough that most browsers will have already done
+/// most of their layout rendering and most DOMContentLoaded JavaScript has
+/// (hopefully) finished executing so the reveal animation has a better chance
+/// of playing smoothly and without too many frames dropped.
+///
+$front-page-region-primary-menu-reveal-animation-delay: 0.5s;
+
+///
+/// <body> scroll prevention keyframes.
+///
+/// This is applied before and until all other animations have completed
+/// running to temporarily disable scrolling, which can mess up the animation.
+///
+@keyframes front-page-body-scroll-prevention {
+  0% {
+    height:     100vh;
+    overflow:   hidden;
+    box-sizing: border-box;
+  }
+  100% {
+    height:     auto;
+    overflow:   visible;
+  }
+}
+
+///
+/// Primary menu reveal animation keyframes.
+///
+@keyframes front-page-primary-menu-reveal {
+  0% {
+    visibility: hidden;
+    opacity:    0;
+    transform:  $front-page-region-primary-menu-start-transform;
+  }
+  1% {
+    visibility: visible;
+  }
+  50% {
+    transform:  $front-page-region-primary-menu-start-transform;
+  }
+  60% {
+    opacity:    1;
+  }
+  100% {
+    transform:  scaleY(1) translateY(0);
+  }
+}
+
+///
+/// Primary menu block reveal animation keyframes.
+///
+@keyframes front-page-primary-menu-block-reveal {
+  0% {
+    visibility: hidden;
+    opacity:    0;
+    transform:  translateX(10%);
+  }
+  1% {
+    visibility: visible;
+  }
+  100% {
+    opacity:    1;
+    transform:  translateX(0);
+  }
+}
+
 .path-frontpage {
-  ///
-  /// Primary menu transform when starting animation.
-  ///
-  /// Note that we're using scaleY() rather than scale() as the latter produces
-  /// issues in Edge where the transform-origin seems to be completely off.
-  ///
-  $primary-menu-start-transform: scaleY(2) translateY(15vh);
-
-  ///
-  /// Primary menu reveal animation duration.
-  ///
-  $primary-menu-reveal-duration: 2s;
-
-  ///
-  /// Primary menu reveal animation delay.
-  ///
-  /// This should be just long enough that most browsers will have already done
-  /// most of their layout rendering and most DOMContentLoaded JavaScript has
-  /// (hopefully) finished executing so the reveal animation has a better chance
-  /// of playing smoothly and without too many frames dropped.
-  ///
-  $primary-menu-reveal-animation-delay: 0.5s;
-
-  ///
-  /// Primary menu block reveal animation duration.
-  ///
-  $primary-menu-block-reveal-duration: 0.5s;
-
-  ///
-  /// Content reveal animation duration.
-  ///
-  $content-reveal-duration: 0.5s;
-
-  ///
-  /// <body> scroll prevention keyframes.
-  ///
-  /// This is applied before and until all other animations have completed
-  /// running to temporarily disable scrolling, which can mess up the animation.
-  ///
-  @keyframes front-page-body-scroll-prevention {
-    0% {
-      box-sizing: border-box;
-      height: 100vh;
-      overflow: hidden;
-    }
-    100% {
-      height: auto;
-      overflow: visible;
-    }
-  }
-
-  ///
-  /// Primary menu reveal animation keyframes.
-  ///
-  @keyframes front-page-primary-menu-reveal {
-    0% {
-      visibility: hidden;
-      opacity:    0;
-      transform:  $primary-menu-start-transform;
-    }
-    1% {
-      visibility: visible;
-    }
-    50% {
-      transform:  $primary-menu-start-transform;
-    }
-    60% {
-      opacity:    1;
-    }
-    100% {
-      transform:  scaleY(1) translateY(0);
-    }
-  }
-
-  ///
-  /// Primary menu block reveal animation keyframes.
-  ///
-  @keyframes front-page-primary-menu-block-reveal {
-    0% {
-      visibility: hidden;
-      opacity:    0;
-      transform:  translateX(10%);
-    }
-    1% {
-      visibility: visible;
-    }
-    100% {
-      opacity:    1;
-      transform:  translateX(0);
-    }
-  }
-
-  ///
-  /// Content reveal animation keyframes.
-  ///
-  @keyframes front-page-content-reveal {
-    0% {
-      visibility: hidden;
-      opacity:    0;
-      transform:  translateY(20%);
-    }
-    1% {
-      visibility: visible;
-    }
-    100% {
-      opacity:    1;
-      transform:  translateY(0);
-    }
-  }
-
   // Apply the scroll prevention animation with a delay equal to the durations
   // of all other animations. This works fine in Firefox (both Windows and
   // Android) and Chrome (Windows), but Edge and Chrome on Android refuse to
@@ -151,8 +125,10 @@
   animation-name:       front-page-body-scroll-prevention;
   animation-duration:   0.1s;
   animation-delay:
-    $primary-menu-reveal-animation-delay + $primary-menu-reveal-duration +
-    $primary-menu-block-reveal-duration + $site-name-reveal-animation-duration +
+    $front-page-region-primary-menu-reveal-animation-delay +
+    $front-page-region-primary-menu-reveal-animation-duration +
+    $region-primary-menu-block-menu-reveal-duration +
+    $site-name-reveal-animation-duration +
     $content-reveal-duration;
   animation-fill-mode:  backwards;
 
@@ -161,10 +137,12 @@
   header[role='banner'],
   .region-primary-menu {
     animation-name:             front-page-primary-menu-reveal;
-    animation-duration:         $primary-menu-reveal-duration;
+    animation-duration:
+      $front-page-region-primary-menu-reveal-animation-duration;
     animation-timing-function:  $easing-standard;
     animation-fill-mode:        backwards;
-    animation-delay:            $primary-menu-reveal-animation-delay;
+    animation-delay:
+      $front-page-region-primary-menu-reveal-animation-delay;
   }
 
   // This ensures the scale transform keeps the top shadow with the top of the
@@ -177,7 +155,8 @@
   // completed.
   .site-name {
     animation-delay:
-      $primary-menu-reveal-animation-delay + $primary-menu-reveal-duration;
+      $front-page-region-primary-menu-reveal-animation-delay +
+      $front-page-region-primary-menu-reveal-animation-duration;
   }
 
   .region-primary-menu {
@@ -187,26 +166,25 @@
     // in the site header.
     transform-origin: center calc(0% + 1px);
 
-    .block {
-      animation-name:             front-page-primary-menu-block-reveal;
-      animation-duration:         $primary-menu-block-reveal-duration;
-      animation-timing-function:  $easing-standard;
+    .block,
+    .block > .menu {
       animation-delay:
-        $primary-menu-reveal-animation-delay + $primary-menu-reveal-duration +
+        $front-page-region-primary-menu-reveal-animation-delay +
+        $front-page-region-primary-menu-reveal-animation-duration +
         $site-name-reveal-animation-duration;
-      animation-fill-mode:        backwards;
     }
   }
 
   // All other regions are considered content and are animated in after the rest
   // of the animations have completed.
   .region:not(.region-header):not(.region-primary-menu) {
-    animation-name:             front-page-content-reveal;
+    animation-name:             content-reveal;
     animation-duration:         $content-reveal-duration;
     animation-timing-function:  $easing-standard;
     animation-delay:
-      $primary-menu-reveal-animation-delay + $primary-menu-reveal-duration +
-      $primary-menu-block-reveal-duration +
+      $front-page-region-primary-menu-reveal-animation-delay +
+      $front-page-region-primary-menu-reveal-animation-duration +
+      $region-primary-menu-block-menu-reveal-duration +
       $site-name-reveal-animation-duration;
     animation-fill-mode:        backwards;
   }
@@ -214,10 +192,12 @@
   // Don't animate if the user indicates they prefer reduced motion.
   // @see https://ambientimpact.com/web/snippets/the-reduced-motion-media-query
   @media (prefers-reduced-motion: reduce) {
+    &,
     header[role='banner'],
-    .region-header,
+    .site-name,
     .region-primary-menu,
     .region-primary-menu .block,
+    .region-primary-menu .block > .menu,
     .region:not(.region-header):not(.region-primary-menu) {
       animation: none;
     }
