@@ -89,3 +89,11 @@ h1, h2 {
     }
   }
 }
+
+@include content-area {
+  h2 {
+    // Add a subtle border under <h2> elements in content areas to visually
+    // denote their importance over <h3>s and lower level headings.
+    border-bottom: 1px solid $material-line-colour;
+  }
+}
