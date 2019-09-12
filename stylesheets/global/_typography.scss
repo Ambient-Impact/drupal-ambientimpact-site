@@ -40,16 +40,10 @@
     }
   }
 }
+
 #{$h1to6} {
   //hyphens:    auto;
   line-height:  1.4;
-
-  // This adds a significant top margin to headings preceded by another element,
-  // excluding contextual link placeholders or full contextual links.
-  *:not([data-contextual-id]) + &,
-  * + [data-contextual-id] + & {
-    margin-top: $general-spacing * 3;
-  }
 
   .nbsp {
     // Furore displays odd characters instead of a non-breaking space, so
@@ -77,6 +71,14 @@
   }
 }
 
+@include vertical-spacing-against-previous(
+  $h1to6,
+  // Somewhat higher spacing than the default to visually separate headings and
+  // preceding elements.
+  $spacing-small: $content-item-vertical-spacing-small * 1.8,
+  $spacing-large: $content-item-vertical-spacing-large * 1.8
+);
+
 h1, h2 {
   :link, :visited {
     .font-loaded-furore .layout-container & {
@@ -95,5 +97,9 @@ h1, h2 {
     // Add a subtle border under <h2> elements in content areas to visually
     // denote their importance over <h3>s and lower level headings.
     border-bottom: 1px solid $material-line-colour;
+  }
+
+  #{$h1to6} {
+    margin-bottom: $content-item-vertical-spacing-small;
   }
 }
