@@ -11,16 +11,15 @@
   text-transform: uppercase;
 
   // Set letter spacing to try and match the line length of Furore, before it
-  // has loaded. This is done so avoid as much layout shifting as
-  // possible.This assumes Roboto is the fallback font. Not sure how well it
-  // works with other fonts.
+  // has loaded. This is done so avoid as much layout shifting as possible. This
+  // assumes the default system font stack are the fallback fonts.
   letter-spacing: 0.166em;
 
   // Increase the weight to better match Furore, if/when it loads.
   font-weight: 700;
 
   .font-loaded-furore & {
-    font-family: Furore, sans-serif;
+    font-family: Furore, $font-stack;
 
     letter-spacing: 0.1em;
 
