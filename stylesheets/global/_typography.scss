@@ -99,6 +99,8 @@ h1, h2 {
   }
 
   #{$h1to6} {
-    margin-bottom: $content-item-vertical-spacing-small;
+    &:not(.code-highlighted__heading) {
+      margin-bottom: $content-item-vertical-spacing-small;
+    }
   }
 }
