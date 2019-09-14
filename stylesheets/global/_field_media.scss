@@ -165,9 +165,12 @@ $media-field-spacing: $layout-gutter !default;
     margin-top: 0;
     padding:    ($media-field-spacing / 2) 0;
 
-    @include contain-floats;
+    @include use-grid {
+      padding-top:    $media-field-spacing;
+      padding-bottom: $media-field-spacing;
+    }
 
-    // Remove field item spacing, since we use a different method below.
+    // Remove field item spacing, since we use CSS grid below.
     @include vertical-spacing-against-previous(
       '.field__item',
       $spacing-small: 0,
@@ -175,27 +178,32 @@ $media-field-spacing: $layout-gutter !default;
     );
 
     .field__item {
-      float:  left;
+      padding:  ($media-field-spacing / 2) 0;
+    }
 
-      width: 50%;
-      width: calc(50% - (#{$media-field-spacing / 2}));
-
-      &:nth-child(odd) {
-        // Use calc() to ensure we only apply the margin if calc() is
-        // supported, using the second width above. We also multiply it by 0.99 to
-        // fix a rounding error observed in Firefox Developer Edition 68.0b5
-        // (64-bit) as of 2019-05-31.
-        margin-right: calc(#{$media-field-spacing} * 0.99);
-
-        // If this odd item is the last child, make it span the whole row.
-        &:last-child {
-          float:        none;
-          width:        100%;
-          margin-right: auto;
-        }
+    // If available, use CSS grid to lay out the project images in a two column
+    // grid.
+    @include use-grid {
+      .field__items {
+        display:                grid;
+        grid-template-columns:  1fr 1fr;
+        grid-gap:               $media-field-spacing;
       }
 
-      padding:  ($media-field-spacing / 2) 0;
+      .field__item {
+        // This ensures that the intrinsic ratio wrapper doesn't collapse to
+        // zero width.
+        min-width:      100%;
+
+        padding-top:    0;
+        padding-bottom: 0;
+
+        // Odd last items span the whole row, since we know we have exactly two
+        // columns.
+        &:nth-child(odd):last-child {
+          grid-column: 1 / -1;
+        }
+      }
     }
   }
 
