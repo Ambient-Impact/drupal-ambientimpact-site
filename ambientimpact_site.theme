@@ -201,12 +201,11 @@ function ambientimpact_site_preprocess_page_title(&$variables) {
 /**
  * Prepares variables for node templates.
  *
- * This attaches the 'ambientimpact_site/project-title' library to 'project'
- * node types.
+ * This attaches the 'ambientimpact_site/project' library to 'project' nodes.
  */
 function ambientimpact_site_preprocess_node(&$variables) {
   if ($variables['node']->getType() === 'project') {
-    $variables['#attached']['library'][] = 'ambientimpact_site/project-title';
+    $variables['#attached']['library'][] = 'ambientimpact_site/project';
   }
 }
 

@@ -23,8 +23,8 @@ global-scripts:
     - ambientimpact_ux/component.menu_drop_down
     - ambientimpact_ux/component.menu_overflow
 
-# This is the node type project title library, attached only to those nodes.
-project-title:
+# This is the project node library, attached only to those nodes.
+project:
   js:
     javascript/project_title.js: {}
   dependencies:
