@@ -179,6 +179,17 @@ $media-field-spacing: $layout-gutter !default;
 
     .field__item {
       padding:  ($media-field-spacing / 2) 0;
+
+      // This hides individual field items when they're off screen. We hav to
+      // use visibility: hidden; in order to get Firefox on Android to not
+      // render them. See ../../javascript/project_media.js for details.
+      &--off-screen {
+        visibility: hidden;
+        opacity:    0;
+      }
+
+      // Short fade in when being shown from being off screen.
+      transition: 200ms opacity linear;
     }
 
     // If available, use CSS grid to lay out the project images in a two column
