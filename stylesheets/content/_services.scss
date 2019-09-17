@@ -1,0 +1,108 @@
+// -----------------------------------------------------------------------------
+//   Services section styles
+// -----------------------------------------------------------------------------
+
+// This lays out the services overview list as large icons in a grid, with solid
+// colour backgrounds for the entire links.
+
+///
+/// Services overview link background colour.
+///
+$services-overview-link-background-colour: $link-normal-colour-on-light;
+
+///
+/// Services overview link foreground colour.
+///
+$services-overview-link-foreground-colour: get-contrasting-colour(
+  $background:          $services-overview-link-background-colour,
+  $foreground-on-light: $foreground-colour-on-light,
+  $foreground-on-dark:  $foreground-colour-on-dark
+);
+
+///
+/// Services overview link icon size.
+///
+$services-overview-link-icon-size: 8em;
+
+.services-overview {
+  $self: &;
+
+  @include unlisted-list;
+
+  @include use-grid {
+    // Lay out the list items as a responsive grid, fitting as many as possible
+    // into rows.
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+    grid-gap: $general-spacing;
+
+    // Remove the default list item spacing against previous as we use grid-gap.
+    @include vertical-spacing-against-previous(
+      '#{$self}__item',
+      $spacing-small: 0,
+      $spacing-large: 0
+    );
+  }
+
+  &__item {
+    @include use-grid {
+      // This causes the link to stretch to full row height if grid is used, so
+      // that all links in a row are the same height regardless of contents.
+      display: grid;
+    }
+  }
+
+  &__link {
+    display: block;
+
+    padding: $general-spacing;
+
+    border-radius: $material-border-radius;
+
+    @include set-colours(
+      $background: $services-overview-link-background-colour
+    );
+
+    @include material-ripple;
+
+    .layout-container & {
+      @include link-colours(
+        $background:                $services-overview-link-background-colour,
+        $normal-on-dark:            $services-overview-link-foreground-colour,
+        $hover-on-dark:             $services-overview-link-foreground-colour,
+        $active-on-dark:            $services-overview-link-foreground-colour,
+        $underline-normal-on-dark:  $services-overview-link-foreground-colour,
+        $underline-hover-on-dark:   $services-overview-link-foreground-colour,
+        $underline-active-on-dark:  $services-overview-link-foreground-colour
+      );
+
+      @if $use-fancy-link-underlines == true {
+        @include fancy-link-underlines-link {
+          @include transition-fade-base($props: append(
+            $transition-fade-properties, text-shadow
+          ));
+        }
+      }
+
+      @include link-hover {
+        @include set-colours($background: $link-hover-colour-on-light);
+
+        @if $use-fancy-link-underlines == true {
+          @include fancy-link-underlines-link {
+            @include transition-fade-active;
+          }
+        }
+      }
+    }
+
+    text-align: center;
+  }
+
+  // This for specificity over the default icon styles.
+  a#{&}__link {
+    @include on-icon-container {
+      @include set-icon-stacked;
+      @include set-icon-size($size: $services-overview-link-icon-size);
+    }
+  }
+}
