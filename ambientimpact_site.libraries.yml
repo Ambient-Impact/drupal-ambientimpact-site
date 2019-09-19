@@ -17,7 +17,7 @@ global-scripts:
     # Required for the :focus-within polyfill.
     - ambientimpact_core/ally.js
     - ambientimpact_core/framework
-    - ambientimpact_core/component.font
+    - ambientimpact_ux/component.font
     - ambientimpact_icon/component.icon
     - ambientimpact_ux/component.headroom
     - ambientimpact_ux/component.menu_drop_down
@@ -30,5 +30,5 @@ project:
     javascript/project_media.js: {}
   dependencies:
     - ambientimpact_core/framework
-    - ambientimpact_core/component.font
+    - ambientimpact_ux/component.font
     - core/modernizr
