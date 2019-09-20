@@ -45,3 +45,24 @@ AmbientImpact.addComponent('siteThemeFocusWithin', function(
   );
 });
 });
+
+// Pointer type detection.
+AmbientImpact.on('pointerType', function(aiPointerType) {
+AmbientImpact.addComponent('siteThemeTouchUsed', function(
+  siteThemeTouchUsed, $
+) {
+  'use strict';
+
+  this.addBehaviour(
+    'AmbientImpactSiteThemePointerType',
+    'ambientimpact-site-theme-pointer-type',
+    '.layout-container',
+    function(context, settings) {
+      aiPointerType.attach(this);
+    },
+    function(context, settings, trigger) {
+      aiPointerType.detach(this);
+    }
+  );
+});
+});
