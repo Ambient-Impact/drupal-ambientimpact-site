@@ -1,0 +1,29 @@
+// -----------------------------------------------------------------------------
+//   Scroll bar colours
+// -----------------------------------------------------------------------------
+
+// This gives scrollbars custom colours. Note that this is only supported in
+// Firefox using the standard properties. Blink doesn't seem to want to apply
+// ::-webkit-* properties to the viewport scrollbar, so that's left out.
+//
+// @see https://www.filamentgroup.com/lab/scrollbars/
+
+///
+/// The scrollbar thumb colour.
+///
+/// The thumb is the moving portion of the scrollbar, that indicates the current
+/// scroll position.
+///
+$scrollbar-thumb-colour: mix($ambientimpact-orange, $background-colour, 80%);
+
+///
+/// The scrollbar track colour.
+///
+/// The track is the portion of the scrollbar that spans the full width or
+/// height, along which the thumb slides.
+///
+$scrollbar-track-colour: mix($foreground-colour, $background-colour, 10%);
+
+html {
+  scrollbar-color: $scrollbar-thumb-colour $scrollbar-track-colour;
+}
