@@ -117,89 +117,85 @@ $front-page-region-primary-menu-reveal-animation-delay: 0.5s;
   }
 }
 
-.path-frontpage {
-  // Apply the scroll prevention animation with a delay equal to the durations
-  // of all other animations. This works fine in Firefox (both Windows and
-  // Android) and Chrome (Windows), but Edge and Chrome on Android refuse to
-  // apply this for some reason.
-  animation-name:       front-page-body-scroll-prevention;
-  animation-duration:   0.1s;
-  animation-delay:
-    $front-page-region-primary-menu-reveal-animation-delay +
-    $front-page-region-primary-menu-reveal-animation-duration +
-    $region-primary-menu-block-menu-reveal-duration +
-    $site-name-reveal-animation-duration +
-    $content-reveal-duration;
-  animation-fill-mode:  backwards;
-
-  // Site header element contains the top shadow for the primary menu bar, so
-  // they need to be animated together.
-  header[role='banner'],
-  .region-primary-menu {
-    animation-name:             front-page-primary-menu-reveal;
-    animation-duration:
-      $front-page-region-primary-menu-reveal-animation-duration;
-    animation-timing-function:  $easing-standard;
-    animation-fill-mode:        backwards;
-    animation-delay:
-      $front-page-region-primary-menu-reveal-animation-delay;
-  }
-
-  // This ensures the scale transform keeps the top shadow with the top of the
-  // primary menu bar below it.
-  header[role='banner'] {
-    transform-origin: center bottom;
-  }
-
-  // Delay the site name reveal animation until the primary menu reveal has
-  // completed.
-  .site-name {
-    animation-delay:
-      $front-page-region-primary-menu-reveal-animation-delay +
-      $front-page-region-primary-menu-reveal-animation-duration;
-  }
-
-  .region-primary-menu {
-    // This ensures the scale transform keeps the top edge in the right location
-    // with the top shadow. Note the 1px offset - this helps prevent a slight
-    // space between the top of the menu bar and the top shadow, which is placed
-    // in the site header.
-    transform-origin: center calc(0% + 1px);
-
-    .block,
-    .block > .menu {
-      animation-delay:
-        $front-page-region-primary-menu-reveal-animation-delay +
-        $front-page-region-primary-menu-reveal-animation-duration +
-        $site-name-reveal-animation-duration;
-    }
-  }
-
-  // All other regions are considered content and are animated in after the rest
-  // of the animations have completed.
-  .region:not(.region-header):not(.region-primary-menu) {
-    animation-name:             content-reveal;
-    animation-duration:         $content-reveal-duration;
-    animation-timing-function:  $easing-standard;
+// Only apply the front page animations if the user doesn't indicate they prefer
+// reduced motion. Undoing all these and reverting to the reveal animations for
+// all pages if (prefers-reduced-motion: reduce) matches is a huge pain, so
+// rather just wrap this whole thing in (prefers-reduced-motion: no-preference);
+// most modern browsers support it, and older ones may not be as optimized for
+// animation, if they support it at all, so it's probably not much of a loss.
+//
+// @see https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
+@media (prefers-reduced-motion: no-preference) {
+  .path-frontpage {
+    // Apply the scroll prevention animation with a delay equal to the durations
+    // of all other animations. This works fine in Firefox (both Windows and
+    // Android) and Chrome (Windows), but Edge and Chrome on Android refuse to
+    // apply this for some reason.
+    animation-name:       front-page-body-scroll-prevention;
+    animation-duration:   0.1s;
     animation-delay:
       $front-page-region-primary-menu-reveal-animation-delay +
       $front-page-region-primary-menu-reveal-animation-duration +
       $region-primary-menu-block-menu-reveal-duration +
-      $site-name-reveal-animation-duration;
-    animation-fill-mode:        backwards;
-  }
+      $site-name-reveal-animation-duration +
+      $content-reveal-duration;
+    animation-fill-mode:  backwards;
 
-  // Don't animate if the user indicates they prefer reduced motion.
-  // @see https://ambientimpact.com/web/snippets/the-reduced-motion-media-query
-  @media (prefers-reduced-motion: reduce) {
-    &,
+    // Site header element contains the top shadow for the primary menu bar, so
+    // they need to be animated together.
     header[role='banner'],
-    .site-name,
-    .region-primary-menu,
-    .region-primary-menu .block,
-    .region-primary-menu .block > .menu,
+    .region-primary-menu {
+      animation-name:             front-page-primary-menu-reveal;
+      animation-duration:
+        $front-page-region-primary-menu-reveal-animation-duration;
+      animation-timing-function:  $easing-standard;
+      animation-fill-mode:        backwards;
+      animation-delay:
+        $front-page-region-primary-menu-reveal-animation-delay;
+    }
+
+    // This ensures the scale transform keeps the top shadow with the top of the
+    // primary menu bar below it.
+    header[role='banner'] {
+      transform-origin: center bottom;
+    }
+
+    // Delay the site name reveal animation until the primary menu reveal has
+    // completed.
+    .site-name {
+      animation-delay:
+        $front-page-region-primary-menu-reveal-animation-delay +
+        $front-page-region-primary-menu-reveal-animation-duration;
+    }
+
+    .region-primary-menu {
+      // This ensures the scale transform keeps the top edge in the right
+      // location with the top shadow. Note the 1px offset - this helps prevent
+      // a slight space between the top of the menu bar and the top shadow,
+      // which is placed in the site header.
+      transform-origin: center calc(0% + 1px);
+
+      .block,
+      .block > .menu {
+        animation-delay:
+          $front-page-region-primary-menu-reveal-animation-delay +
+          $front-page-region-primary-menu-reveal-animation-duration +
+          $site-name-reveal-animation-duration;
+      }
+    }
+
+    // All other regions are considered content and are animated in after the
+    // rest of the animations have completed.
     .region:not(.region-header):not(.region-primary-menu) {
-      animation: none;
+      animation-name:             content-reveal;
+      animation-duration:         $content-reveal-duration;
+      animation-timing-function:  $easing-standard;
+      animation-delay:
+        $front-page-region-primary-menu-reveal-animation-delay +
+        $front-page-region-primary-menu-reveal-animation-duration +
+        $region-primary-menu-block-menu-reveal-duration +
+        $site-name-reveal-animation-duration;
+      animation-fill-mode:        backwards;
     }
   }
 }
