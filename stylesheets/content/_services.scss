@@ -24,6 +24,46 @@ $services-overview-link-foreground-colour: get-contrasting-colour(
 ///
 $services-overview-link-icon-size: 8em;
 
+///
+/// Services overview link icon reveal animation duration.
+///
+$services-overview-icon-reveal-animation-duration: 0.4s;
+
+///
+/// Services overview file icon reveal animation.
+///
+/// This zooms the icon in to full size while fading opacity in.
+///
+@keyframes services-overview-icon-file-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+///
+/// Services overview wrench icon reveal animation.
+///
+/// This fades in the icon opacity while also rotating the wrench as if it's
+/// turning a bolt.
+///
+@keyframes services-overview-icon-wrench-reveal {
+  0% {
+    opacity: 0;
+    transform: rotate(-30deg);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 .services-overview {
   $self: &;
 
@@ -103,6 +143,44 @@ $services-overview-link-icon-size: 8em;
     @include on-icon-container {
       @include set-icon-stacked;
       @include set-icon-size($size: $services-overview-link-icon-size);
+    }
+  }
+
+  // If the user hasn't indicated they prefer reduced motion, add some fancy
+  // animations to the large icons. The user does prefer reduced motion, fade in
+  // animations will still occur, both from the page reveal and from the icons
+  // loading in, so we don't need to create any additional alternate animation
+  // @keyframes.
+  //
+  // @see https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
+  @media (prefers-reduced-motion: no-preference) {
+    .ambientimpact-icon--name-file {
+      @include on-icon-icon {
+        animation-name:             services-overview-icon-file-reveal;
+        animation-timing-function:  $easing-decelerate;
+        animation-fill-mode:        backwards;
+        animation-delay:            $site-revealed;
+        animation-duration:
+          $services-overview-icon-reveal-animation-duration;
+      }
+    }
+
+    .ambientimpact-icon--name-wrench {
+      @include on-icon-icon {
+        // Centre the rotate transform in the @keyframes to roughly where the
+        // bolt would be.
+        transform-origin: 20% 20%;
+
+        animation-name:             services-overview-icon-wrench-reveal;
+        animation-timing-function:  $easing-decelerate;
+        animation-fill-mode:        backwards;
+        // Stagger this so it comes in once the previous icon has completed its
+        // reveal animation.
+        animation-delay:
+          $site-revealed + $services-overview-icon-reveal-animation-duration;
+        animation-duration:
+          $services-overview-icon-reveal-animation-duration;
+      }
     }
   }
 }
