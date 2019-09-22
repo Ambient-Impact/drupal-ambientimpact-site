@@ -66,6 +66,27 @@ $region-primary-menu-block-menu-reveal-duration: 0.5s;
 $content-reveal-duration: 0.5s;
 
 ///
+/// Content reveal animation delay total.
+///
+/// This includes the primary menu region animation delay and half of that
+/// region's animation duration so that the content animation starts when the
+/// primary menu region is almost done animating but doesn't wait until it's
+/// actually done so as to keep the flow going.
+///
+$content-reveal-animation-delay-total:
+  $region-primary-menu-reveal-animation-delay +
+  ($region-primary-menu-reveal-animation-duration / 2);
+
+///
+/// The point at which all the site reveal animations are nearly complete.
+///
+/// This is useful to be able to run additional animations in the page content
+/// when the content becomes visible and not too early.
+///
+$site-revealed:
+  $content-reveal-animation-delay-total + ($content-reveal-duration / 2);
+
+///
 /// Site name reveal animation keyframes.
 ///
 @keyframes site-name-reveal {
@@ -222,13 +243,7 @@ header[role='banner'],
 .region-primary-menu .block,
 .region-primary-menu .block > .menu,
 .region:not(.region-header):not(.region-primary-menu) {
-  // This delays the .menu and content reveal animations until the primary menu
-  // region and site name are half-way transitioned in. This makes the page
-  // usable faster than if we waited for the primary menu region and content to
-  // complete their animation.
-  animation-delay:
-    $region-primary-menu-reveal-animation-delay +
-    ($region-primary-menu-reveal-animation-duration / 2);
+  animation-delay: $content-reveal-animation-delay-total;
 }
 
 // All other regions are considered content and are animated in after the rest
