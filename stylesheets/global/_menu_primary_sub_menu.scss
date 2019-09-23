@@ -214,6 +214,9 @@ $menu-primary-all-overflow-sub-menu-width: 100vw;
 
         background-color: $menu-primary-background-colour;
 
+        border-bottom-left-radius:  $material-border-radius;
+        border-bottom-right-radius: $material-border-radius;
+
         @include material-shadow($depth: 2);
 
         transition-property: transform;
