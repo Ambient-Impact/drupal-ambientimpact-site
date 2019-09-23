@@ -96,7 +96,7 @@ $menu-primary-all-overflow-sub-menu-width: 100vw;
   pointer-events: auto;
 
   @include menu-primary-supports-translate-clip-path {
-    transform: translateY(0);
+    transform: translateY(-1px);
   }
 }
 
