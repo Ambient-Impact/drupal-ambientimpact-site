@@ -45,6 +45,26 @@ $menu-primary-background-colour: $ambientimpact-orange;
     position: sticky;
   }
 
+  // Brief opacity transition for all siblings following this region.
+  ~ * {
+    transition-duration:        0.2s;
+    transition-property:        opacity filter;
+    transition-timing-function: linear;
+  }
+
+  // This makes all siblings that follow the primary menu region - i.e. regions,
+  // main content, and footer - somewhat transparent and ignore any pointer
+  // events while a drop-down menu is open in the primary menu region.
+  //
+  // @todo Find a way to target only high performance devices so that we can
+  // use grayscale() and blur() without punishing low performance devices, e.g.
+  // most mobile and lower end laptops.
+  &--has-menu-open ~ * {
+    opacity:        0.6;
+    // filter:         grayscale(40%) blur(4px);
+    pointer-events: none;
+  }
+
   .block > .menu {
     position:   relative;
 

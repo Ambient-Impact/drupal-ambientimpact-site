@@ -90,6 +90,13 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
 ) {
   'use strict';
 
+  /**
+   * Class applied to the primary menu region when it has a menu open.
+   *
+   * @type {String}
+   */
+  var regionHasMenuOpenClass = 'region-primary-menu--has-menu-open';
+
   this.addBehaviour(
     'AmbientImpactSiteThemeMenuPrimary',
     'ambientimpact-site-theme-menu-primary',
@@ -98,17 +105,35 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
       aiMenuOverflow.attach(this);
       aiMenuDropDown.attach(this);
 
+      /**
+       * The menu element we're attaching to.
+       *
+       * @type {HTMLElement}
+       */
       var menu = this;
+
+      /**
+       * The menu element we're attaching to, wrapped in a jQuery collection.
+       *
+       * @type {jQuery}
+       */
       var $menu = $(this);
 
-      // This automatically closes drop-down menus if the menu bar becomes
-      // unpinned, which means it has transitioned upwards off screen.
-      //
-      // Note that the immerseEnter event is not currently implemented as it
-      // usually happens when focus is lost by the open menu, thus closing it
-      // automatically.
-      $menu.closest('.region-primary-menu')
-        .on('headroomUnpin.aiSiteThemeMenuPrimaryDropDown', function(event) {
+      /**
+       * The primary menu region, wrapped in a jQuery object.
+       *
+       * @type {jQuery}
+       */
+      var $primaryMenuRegion = $menu.closest('.region-primary-menu');
+
+      $primaryMenuRegion
+        // This automatically closes drop-down menus if the menu bar becomes
+        // unpinned, which means it has transitioned upwards off screen.
+        //
+        // Note that the immerseEnter event is not currently implemented as it
+        // usually happens when focus is lost by the open menu, thus closing it
+        // automatically.
+        .on('headroomUnpin.aiSiteThemeMenuPrimary', function(event) {
           // Don't close if the menu is in all overflow mode. This is a crude
           // heuristic to determine if the user is trying to scroll the menu
           // when it's scrollable. This is needed in Chrome on Android as it
@@ -129,11 +154,25 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
               $items[i].aiMenuDropDown.close();
             }
           }
+        })
+
+        // Add and remove a class on the region when a menu is opened or closed,
+        // respectively.
+        .on('menuDropDownOpened.aiSiteThemeMenuPrimary', function(event, data) {
+          $primaryMenuRegion.addClass(regionHasMenuOpenClass);
+        })
+        .on('menuDropDownClosed.aiSiteThemeMenuPrimary', function(event, data) {
+          $primaryMenuRegion.removeClass(regionHasMenuOpenClass);
         });
     },
     function(context, settings, trigger) {
       $(this).closest('.region-primary-menu')
-        .off('headroomUnpin.aiSiteThemeMenuPrimaryDropDown');
+        .off([
+          'headroomUnpin.aiSiteThemeMenuPrimary',
+          'menuDropDownOpened.aiSiteThemeMenuPrimary',
+          'menuDropDownClosed.aiSiteThemeMenuPrimary',
+        ].join(' '))
+        .removeClass(regionHasMenuOpenClass);
 
       aiMenuOverflow.detach(this);
       aiMenuDropDown.detach(this);
