@@ -3,9 +3,14 @@
 // -----------------------------------------------------------------------------
 
 ///
-/// Media field background colour.
+/// Media field background colour on light backgrounds.
 ///
-$media-field-background-colour: black !default;
+$media-field-background-colour-on-light: black !default;
+
+///
+/// Media field background colour on dark backgrounds.
+///
+$media-field-background-colour-on-dark: hsl(0, 0, 60%) !default;
 
 ///
 /// Media field spacing.
@@ -34,17 +39,29 @@ $media-field-spacing: $layout-gutter !default;
   padding:  $media-field-spacing  0;
 
   @include set-colours(
-    $background:  $media-field-background-colour
+    $background:  $media-field-background-colour-on-light
   );
 
   @include horizontal-bleed-background(
-    $colour:  $media-field-background-colour,
+    $colour:  $media-field-background-colour-on-light,
     $z-index: index($local-stacking-order, background),
     $shadow:  $shadow-settings
   );
 
   :link, :visited {
-    @include link-colours($media-field-background-colour);
+    @include link-colours($media-field-background-colour-on-light);
+  }
+
+  @include on-dark-colour-scheme {
+    @include horizontal-bleed-background(
+      $colour:  $media-field-background-colour-on-dark,
+      $z-index: index($local-stacking-order, background),
+      $shadow:  $shadow-settings
+    );
+
+    :link, :visited {
+      @include link-colours($media-field-background-colour-on-dark);
+    }
   }
 
   // Remove fancy link underlines on links not inside a <figcaption>.

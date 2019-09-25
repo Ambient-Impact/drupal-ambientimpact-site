@@ -108,6 +108,11 @@ $site-name-height: 83.997;
         width:    100%;
         height:   100%;
       }
+      // Force this to always use $ambientimpact-orange, even on a dark colour
+      // scheme where the link foreground colour may be different.
+      &:not(:hover):not(:focus):not(:active) {
+        color: $ambientimpact-orange;
+      }
     }
   }
 

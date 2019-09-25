@@ -9,21 +9,47 @@
 // @see https://www.filamentgroup.com/lab/scrollbars/
 
 ///
-/// The scrollbar thumb colour.
+/// The scrollbar thumb colour on light background colours.
 ///
 /// The thumb is the moving portion of the scrollbar, that indicates the current
 /// scroll position.
 ///
-$scrollbar-thumb-colour: mix($ambientimpact-orange, $background-colour, 80%);
+$scrollbar-thumb-colour-on-light:
+  mix($ambientimpact-orange, $background-colour-light, 80%);
 
 ///
-/// The scrollbar track colour.
+/// The scrollbar thumb colour on dark background colours.
+///
+/// The thumb is the moving portion of the scrollbar, that indicates the current
+/// scroll position.
+///
+$scrollbar-thumb-colour-on-dark:
+  mix($ambientimpact-orange, $background-colour-dark, 80%);
+
+///
+/// The scrollbar track colour on light background colours.
 ///
 /// The track is the portion of the scrollbar that spans the full width or
 /// height, along which the thumb slides.
 ///
-$scrollbar-track-colour: mix($foreground-colour, $background-colour, 10%);
+$scrollbar-track-colour-on-light:
+  mix($foreground-colour-on-light, $background-colour-light, 10%);
+
+///
+/// The scrollbar track colour on dark background colours.
+///
+/// The track is the portion of the scrollbar that spans the full width or
+/// height, along which the thumb slides.
+///
+$scrollbar-track-colour-on-dark:
+  mix($foreground-colour-on-dark, $background-colour-dark, 10%);
 
 html {
-  scrollbar-color: $scrollbar-thumb-colour $scrollbar-track-colour;
+  scrollbar-color:
+    $scrollbar-thumb-colour-on-light $scrollbar-track-colour-on-light;
+
+  @include on-dark-colour-scheme {
+    scrollbar-color:
+      $scrollbar-thumb-colour-on-dark $scrollbar-track-colour-on-dark;
+  }
 }

@@ -44,6 +44,12 @@
   //hyphens:    auto;
   line-height:  1.4;
 
+  // Fade out the heading font colour a little in dark mode as the solid white
+  // feels a bit overpowering.
+  @include on-dark-colour-scheme {
+    color: mix($foreground-colour-on-dark, $background-colour-dark, 80%);
+  }
+
   .nbsp {
     // Furore displays odd characters instead of a non-breaking space, so
     // use the default font stack for these instead.
@@ -95,7 +101,11 @@ h1, h2 {
   h2 {
     // Add a subtle border under <h2> elements in content areas to visually
     // denote their importance over <h3>s and lower level headings.
-    border-bottom: 1px solid $material-line-colour;
+    border-bottom: 1px solid $material-line-colour-on-light;
+
+    @include on-dark-colour-scheme {
+      border-bottom-color: $material-line-colour-on-dark;
+    }
   }
 
   #{$h1to6} {

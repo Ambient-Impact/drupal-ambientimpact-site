@@ -79,7 +79,11 @@ $node-project-stacking-order: top-shadow, title, content;
     }
   }
 
-  color: $media-field-background-colour;
+  color: $media-field-background-colour-on-light;
+
+  @include on-dark-colour-scheme {
+    color: $media-field-background-colour-on-dark;
+  }
 
   // This doubles as the minimum font size the <canvas> element will scale text
   // down to.
@@ -161,6 +165,15 @@ $node-project-stacking-order: top-shadow, title, content;
     @include material-shadow-filter-ambient(
       $depth: $fancy-heading-shadow-depth-small
     );
+
+    @include on-dark-colour-scheme {
+      // On dark colour scheme, just invert equal to the lightness of the media
+      // field background colour. Don't add a drop shadow as that'll end up
+      // getting inverted as well and will look wrong.
+      filter: #{'invert(' +
+        lightness($media-field-background-colour-on-dark) +
+      ')'};
+    }
   }
 
   @include media('>=fancy-heading-shadow-depth') {
@@ -174,6 +187,15 @@ $node-project-stacking-order: top-shadow, title, content;
       @include material-shadow-filter-ambient(
         $depth: $fancy-heading-shadow-depth-large
       );
+
+      @include on-dark-colour-scheme {
+        // On dark colour scheme, just invert equal to the lightness of the
+        // media field background colour. Don't add a drop shadow as that'll end
+        // up getting inverted as well and will look wrong.
+        filter: #{'invert(' +
+          lightness($media-field-background-colour-on-dark) +
+        ')'};
+      }
     }
   }
 }

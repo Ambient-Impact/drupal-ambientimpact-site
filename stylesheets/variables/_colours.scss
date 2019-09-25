@@ -8,6 +8,8 @@ $material-primary-colour:     $ambientimpact-orange;
 
 $foreground-colour-on-light:  hsl(0, 0, 30%);
 
+$background-colour-dark: hsl(0, 0, 10%);
+
 // Inherit the link colour for feed links because having two different oranges
 // looks unpleasant.
 $feed-link-colour: currentColor;
