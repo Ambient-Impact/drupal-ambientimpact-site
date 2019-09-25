@@ -3,11 +3,11 @@
 // -----------------------------------------------------------------------------
 
 ///
-/// Project node header stacking order.
+/// Project node elements stacking order.
 ///
 /// Later in the list means a higher z-index.
 ///
-$node-project-header-stacking-order: top-shadow, title;
+$node-project-stacking-order: top-shadow, title, content;
 
 ///
 /// Target project node titles on their own page and in views, etc.
@@ -113,12 +113,20 @@ $node-project-header-stacking-order: top-shadow, title;
     $shadow-element-height: 1rem;
 
     @include horizontal-bleed-background-top-peek-shadow(
-      $z-index: index($node-project-header-stacking-order, top-shadow),
+      $z-index: index($node-project-stacking-order, top-shadow),
       $depth:   $full-bleed-panel-shadow-depth,
       $height:  $shadow-element-height
     );
 
     bottom: -$shadow-element-height;
+  }
+
+  .field--name-title {
+    display: block;
+
+    position: relative;
+
+    z-index: index($node-project-stacking-order, title);
   }
 
   :link,
@@ -209,11 +217,15 @@ $node-project-header-stacking-order: top-shadow, title;
   }
 }
 
-// Remove the top margin on node content.
 .node--type-project .node__content {
+  // Remove the top margin on node content.
   @include node-project-supports-flex-ordering {
     margin-top: 0;
   }
+
+  position: relative;
+
+  z-index: index($node-project-stacking-order, content);
 }
 
 // This re-orders the content region to place the local tasks block above the
