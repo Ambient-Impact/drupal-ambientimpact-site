@@ -48,7 +48,7 @@ $menu-primary-background-colour: $ambientimpact-orange;
   // Brief opacity transition for all siblings following this region.
   ~ * {
     transition-duration:        0.2s;
-    transition-property:        opacity filter;
+    transition-property:        opacity, filter;
     transition-timing-function: linear;
   }
 
