@@ -76,13 +76,17 @@
   }
 }
 
-@include vertical-spacing-against-previous(
-  $h1to6,
-  // Somewhat higher spacing than the default to visually separate headings and
-  // preceding elements.
-  $spacing-small: $content-item-vertical-spacing-small * 1.8,
-  $spacing-large: $content-item-vertical-spacing-large * 1.8
-);
+// Awkward nesting to apply vertical spacing against previous for all heading
+// levels because the vertical-spacing-against-previous mixin doesn't work with
+// $h1to6. Somewhat higher spacing than the default to visually separate
+// headings and preceding elements.
+@for $i from 1 through 6 {
+  @include vertical-spacing-against-previous(
+    'h#{$i}',
+    $spacing-small: $content-item-vertical-spacing-small * 1.8,
+    $spacing-large: $content-item-vertical-spacing-large * 1.8
+  );
+}
 
 h1, h2 {
   :link, :visited {
