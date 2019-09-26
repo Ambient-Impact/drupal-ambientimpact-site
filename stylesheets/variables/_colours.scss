@@ -27,6 +27,15 @@ $foreground-colour-on-light: hsl(0, 0, 30%);
 $background-colour-dark: hsl(0, 0, 10%);
 
 ///
+/// Link colour on dark backgrounds when not highlighted/activated.
+///
+/// This overrides the default value of invert-lightness($link-base-colour)
+/// which washes out Ambient.Impact orange a bit too much, while making it a
+/// little too bright.
+///
+$link-normal-colour-on-dark: lighten($material-primary-colour, 10%);
+
+///
 /// Feed link colour.
 ///
 /// This uses currentColor as having another orange in addition to
