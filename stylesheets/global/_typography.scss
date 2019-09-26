@@ -47,7 +47,9 @@
   // Fade out the heading font colour a little in dark mode as the solid white
   // feels a bit overpowering.
   @include on-dark-colour-scheme {
-    color: mix($foreground-colour-on-dark, $background-colour-dark, 80%);
+    &:not(.content-popup__title) {
+      color: mix($foreground-colour-on-dark, $background-colour-dark, 80%);
+    }
   }
 
   .nbsp {
