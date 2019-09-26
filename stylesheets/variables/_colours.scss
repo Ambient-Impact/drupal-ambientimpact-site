@@ -2,14 +2,34 @@
 //   Variables - Colours
 // -----------------------------------------------------------------------------
 
-$ambientimpact-orange:        #c07300;
+///
+/// Ambient.Impact orange.
+///
+$ambientimpact-orange: #c07300;
 
-$material-primary-colour:     $ambientimpact-orange;
+///
+/// Material Design primary colour; using Ambient.Impact orange.
+///
+$material-primary-colour: $ambientimpact-orange;
 
-$foreground-colour-on-light:  hsl(0, 0, 30%);
+///
+/// Foreground colour on light backgrounds.
+///
+/// This is faded a bit so it's not pure black.
+///
+$foreground-colour-on-light: hsl(0, 0, 30%);
 
+///
+/// Dark background colour.
+///
+/// This is set to a very dark grey but not pure black.
+///
 $background-colour-dark: hsl(0, 0, 10%);
 
-// Inherit the link colour for feed links because having two different oranges
-// looks unpleasant.
+///
+/// Feed link colour.
+///
+/// This uses currentColor as having another orange in addition to
+/// Ambient.Impact orange doesn't look great.
+///
 $feed-link-colour: currentColor;
