@@ -1,12 +1,13 @@
 // -----------------------------------------------------------------------------
-//  Typography partial
+//   Typography partial
 // -----------------------------------------------------------------------------
 
 // This attempts to mimic the Furore font spacing, weight, and size using the
 // default system font stack, to minimize the amount of shifting that occurs
 // if/when Furore loads and is applied. Note that this is based on Roboto, but
 // should work similarly with the other fonts in the system font stack.
-#{$h1to6}, .region-primary-menu .menu {
+#{$h1to6},
+.region-primary-menu .menu {
   // Furore only has uppercase, so use that.
   text-transform: uppercase;
 
@@ -40,7 +41,20 @@
   }
 }
 
-#{$h1to6} {
+///
+/// Furore font heading underline adjustment.
+///
+/// This adds a bit of space for the fancy underline so that it has enough space
+/// between it and the text above. This doesn't affect the vertical space inline
+/// elements take up, but does affect their bounding box, thus enlarging it
+/// downwards. This is preferably to simply increasing the underline distance,
+/// which will end up getting clipped if we have to go above 100%.
+///
+@mixin furore-heading-underline-adjust {
+  padding-bottom: 0.1em;
+}
+
+@include headings {
   //hyphens:    auto;
   line-height:  1.4;
 
@@ -53,22 +67,12 @@
   }
 
   .nbsp {
-    // Furore displays odd characters instead of a non-breaking space, so
-    // use the default font stack for these instead.
-    font-family:  $font-stack;
+    // Furore displays odd characters instead of a non-breaking space, so use
+    // the default font stack for these instead.
+    font-family: $font-stack;
   }
 
   .font-loaded-furore .layout-container & {
-    @mixin furore-heading-underline-adjust {
-      // This adds a bit of space for the fancy underline so that it has enough
-      // space between it and the text above. This doesn't affect the vertical
-      // space inline elements take up, but does affect their bounding box, thus
-      // enlarging it downwards. This is preferably to simply increasing the
-      // underline distance, which will end up getting clipped if we have to go
-      // above 100%.
-      padding-bottom: 0.1em;
-    }
-
     :link, :visited {
       @include furore-heading-underline-adjust;
     }
@@ -90,7 +94,7 @@
   );
 }
 
-h1, h2 {
+@include headings($from: 1, $to: 2) {
   :link, :visited {
     .font-loaded-furore .layout-container & {
       // Make fancy link underlines thicker for these as they have a large
@@ -114,7 +118,7 @@ h1, h2 {
     }
   }
 
-  #{$h1to6} {
+  @include headings {
     &:not(.code-highlighted__heading) {
       margin-bottom: $content-item-vertical-spacing-small;
     }
