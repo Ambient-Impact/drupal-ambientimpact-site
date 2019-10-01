@@ -114,31 +114,30 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
   this.addBehaviour(
     'AmbientImpactSiteThemeMenuPrimary',
     'ambientimpact-site-theme-menu-primary',
-    '.region-primary-menu .block-menu > .menu',
+    '.layout-container',
     function(context, settings) {
-      aiMenuOverflow.attach(this);
-      aiMenuDropDown.attach(this);
-
       /**
-       * The menu element we're attaching to.
-       *
-       * @type {HTMLElement}
-       */
-      var menu = this;
-
-      /**
-       * The menu element we're attaching to, wrapped in a jQuery collection.
+       * The layout container, wrapped in a jQuery object.
        *
        * @type {jQuery}
        */
-      var $menu = $(this);
+      var $layoutContainer = $(this);
 
       /**
        * The primary menu region, wrapped in a jQuery object.
        *
        * @type {jQuery}
        */
-      var $primaryMenuRegion = $menu.closest('.region-primary-menu');
+      var $primaryMenuRegion = $layoutContainer.find('.region-primary-menu');
+
+      /**
+       * The menu elements we're attaching to, wrapped in a jQuery collection.
+       *
+       * Note that this explicitly targets only the top-level menus.
+       *
+       * @type {jQuery}
+       */
+      var $menus = $primaryMenuRegion.find('.block-menu > .menu');
 
       /**
        * The primary menu region's overlay, wrapped in a jQuery object.
@@ -147,18 +146,24 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
        */
       var $overlay = $('<div></div>');
 
-      $overlay
-        .addClass(overlayBaseClass)
-        .prependTo($primaryMenuRegion.closest('.layout-container'));
+      for (var i = $menus.length - 1; i >= 0; i--) {
+        aiMenuOverflow.attach($menus[i]);
+        aiMenuDropDown.attach($menus[i]);
+      }
 
-      $primaryMenuRegion
-        // This automatically closes drop-down menus if the menu bar becomes
-        // unpinned, which means it has transitioned upwards off screen.
-        //
-        // Note that the immerseEnter event is not currently implemented as it
-        // usually happens when focus is lost by the open menu, thus closing it
-        // automatically.
-        .on('headroomUnpin.aiSiteThemeMenuPrimary', function(event) {
+      /**
+       * Headroom unpin event handler; closes open menus on Headroom unpin.
+       *
+       * This automatically closes drop-down menus if the menu bar becomes
+       * unpinned, which means it has transitioned upwards off screen.
+       *
+       * @param {jQuery.Event} event
+       *   The jQuery event object.
+       */
+      var headroomUnpinHandler = function(event) {
+        for (var i = $menus.length - 1; i >= 0; i--) {
+          var $menu = $menus.eq(i);
+
           // Don't close if the menu is in all overflow mode. This is a crude
           // heuristic to determine if the user is trying to scroll the menu
           // when it's scrollable. This is needed in Chrome on Android as it
@@ -169,7 +174,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
           // touch dragging or scrolling on the menu itself and use that to
           // determine if we should hide or not.
           if ($menu.hasClass('menu--all-overflow')) {
-            return;
+            continue;
           }
 
           var $items = $menu.find('.menu-item--menu-open');
@@ -179,7 +184,21 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
               $items[i].aiMenuDropDown.close();
             }
           }
-        })
+        }
+      };
+
+      $overlay
+        .addClass(overlayBaseClass)
+        .prependTo($layoutContainer);
+
+      $primaryMenuRegion
+        // This automatically closes drop-down menus if the menu bar becomes
+        // unpinned, which means it has transitioned upwards off screen.
+        //
+        // Note that the immerseEnter event is not currently implemented as it
+        // usually happens when focus is lost by the open menu, thus closing it
+        // automatically.
+        .on('headroomUnpin.aiSiteThemeMenuPrimary', headroomUnpinHandler)
 
         // Add and remove classes on the region and the overlay when a menu is
         // opened or closed, respectively.
@@ -193,11 +212,20 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
 
           $overlay.removeClass(overlayOpenClass);
         });
+
+      // Save all our jQuery collections to an object on the layout container
+      // for detachment.
+      this.siteThemeMenuPrimary = {
+        $layoutContainer:   $layoutContainer,
+        $primaryMenuRegion: $primaryMenuRegion,
+        $menus:             $menus,
+        $overlay:           $overlay
+      };
     },
     function(context, settings, trigger) {
-      var $primaryMenuRegion = $(this).closest('.region-primary-menu');
+      var data = this.siteThemeMenuPrimary;
 
-      $primaryMenuRegion
+      data.$primaryMenuRegion
         .off([
           'headroomUnpin.aiSiteThemeMenuPrimary',
           'menuDropDownOpened.aiSiteThemeMenuPrimary',
@@ -205,12 +233,14 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
         ].join(' '))
         .removeClass(regionHasMenuOpenClass);
 
-      $primaryMenuRegion.closest('.layout-container')
-        .find('.' + overlayBaseClass)
-          .remove();
+      data.$overlay.remove();
 
-      aiMenuOverflow.detach(this);
-      aiMenuDropDown.detach(this);
+      for (var i = data.$menus.length - 1; i >= 0; i--) {
+        aiMenuOverflow.detach(data.$menus[i]);
+        aiMenuDropDown.detach(data.$menus[i]);
+      }
+
+      delete this.siteThemeMenuPrimary;
     }
   );
 });
