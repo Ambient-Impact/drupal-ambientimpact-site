@@ -97,6 +97,20 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
    */
   var regionHasMenuOpenClass = 'region-primary-menu--has-menu-open';
 
+  /**
+   * The primary menu overlay base class.
+   *
+   * @type {String}
+   */
+  var overlayBaseClass = 'region-primary-menu-overlay';
+
+  /**
+   * The primary menu overlay BEM modifier class when a sub-menu is open.
+   *
+   * @type {String}
+   */
+  var overlayOpenClass = overlayBaseClass + '--menu-is-open';
+
   this.addBehaviour(
     'AmbientImpactSiteThemeMenuPrimary',
     'ambientimpact-site-theme-menu-primary',
@@ -125,6 +139,17 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
        * @type {jQuery}
        */
       var $primaryMenuRegion = $menu.closest('.region-primary-menu');
+
+      /**
+       * The primary menu region's overlay, wrapped in a jQuery object.
+       *
+       * @type {jQuery}
+       */
+      var $overlay = $('<div></div>');
+
+      $overlay
+        .addClass(overlayBaseClass)
+        .prependTo($primaryMenuRegion.closest('.layout-container'));
 
       $primaryMenuRegion
         // This automatically closes drop-down menus if the menu bar becomes
@@ -156,23 +181,33 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
           }
         })
 
-        // Add and remove a class on the region when a menu is opened or closed,
-        // respectively.
+        // Add and remove classes on the region and the overlay when a menu is
+        // opened or closed, respectively.
         .on('menuDropDownOpened.aiSiteThemeMenuPrimary', function(event, data) {
           $primaryMenuRegion.addClass(regionHasMenuOpenClass);
+
+          $overlay.addClass(overlayOpenClass);
         })
         .on('menuDropDownClosed.aiSiteThemeMenuPrimary', function(event, data) {
           $primaryMenuRegion.removeClass(regionHasMenuOpenClass);
+
+          $overlay.removeClass(overlayOpenClass);
         });
     },
     function(context, settings, trigger) {
-      $(this).closest('.region-primary-menu')
+      var $primaryMenuRegion = $(this).closest('.region-primary-menu');
+
+      $primaryMenuRegion
         .off([
           'headroomUnpin.aiSiteThemeMenuPrimary',
           'menuDropDownOpened.aiSiteThemeMenuPrimary',
           'menuDropDownClosed.aiSiteThemeMenuPrimary',
         ].join(' '))
         .removeClass(regionHasMenuOpenClass);
+
+      $primaryMenuRegion.closest('.layout-container')
+        .find('.' + overlayBaseClass)
+          .remove();
 
       aiMenuOverflow.detach(this);
       aiMenuDropDown.detach(this);

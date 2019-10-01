@@ -8,6 +8,10 @@ html {
   overflow-x: hidden;
 }
 
+header[role='banner'] {
+  @include z-index(page-floating);
+}
+
 .region-primary-menu {
   @include z-index(page-floating);
 
@@ -21,6 +25,11 @@ html {
     @include z-index(floating-above);
   }
 }
+
+.region-primary-menu-overlay {
+  @include z-index(page-floating);
+}
+
 // This ensures any positioned items in the main content don't end up above
 // things such as the sticky/Headroom-enabled primary menu, e.g. contextual link
 // triggers.
