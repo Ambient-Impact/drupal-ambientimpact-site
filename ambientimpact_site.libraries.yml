@@ -20,6 +20,7 @@ global-scripts:
     - ambientimpact_ux/component.font
     - ambientimpact_icon/component.icon
     - ambientimpact_ux/component.headroom
+    - ambientimpact_ux/component.overlay
     - ambientimpact_ux/component.menu_drop_down
     - ambientimpact_ux/component.menu_overflow
     - ambientimpact_ux/component.pointer_type

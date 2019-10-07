@@ -82,8 +82,8 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryHeadroom', function(
 });
 
 // Add overflow and drop-down support/improvements to the primary menu.
-AmbientImpact.on(['menuOverflow', 'menuDropDown'], function(
-  aiMenuOverflow, aiMenuDropDown
+AmbientImpact.on(['menuOverflow', 'menuDropDown', 'overlay'], function(
+  aiMenuOverflow, aiMenuDropDown, aiOverlay
 ) {
 AmbientImpact.addComponent('siteThemeMenuPrimary', function(
   siteThemeMenuPrimary, $
@@ -98,18 +98,11 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
   var regionHasMenuOpenClass = 'region-primary-menu--has-menu-open';
 
   /**
-   * The primary menu overlay base class.
+   * The primary menu overlay class.
    *
    * @type {String}
    */
   var overlayBaseClass = 'region-primary-menu-overlay';
-
-  /**
-   * The primary menu overlay BEM modifier class when a sub-menu is open.
-   *
-   * @type {String}
-   */
-  var overlayOpenClass = overlayBaseClass + '--menu-is-open';
 
   this.addBehaviour(
     'AmbientImpactSiteThemeMenuPrimary',
@@ -144,7 +137,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
        *
        * @type {jQuery}
        */
-      var $overlay = $('<div></div>');
+      var $overlay = aiOverlay.create();
 
       for (var i = $menus.length - 1; i >= 0; i--) {
         aiMenuOverflow.attach($menus[i]);
@@ -205,12 +198,12 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
         .on('menuDropDownOpened.aiSiteThemeMenuPrimary', function(event, data) {
           $primaryMenuRegion.addClass(regionHasMenuOpenClass);
 
-          $overlay.addClass(overlayOpenClass);
+          $overlay[0].aiOverlay.show();
         })
         .on('menuDropDownClosed.aiSiteThemeMenuPrimary', function(event, data) {
           $primaryMenuRegion.removeClass(regionHasMenuOpenClass);
 
-          $overlay.removeClass(overlayOpenClass);
+          $overlay[0].aiOverlay.hide();
         });
 
       // Save all our jQuery collections to an object on the layout container
@@ -233,7 +226,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
         ].join(' '))
         .removeClass(regionHasMenuOpenClass);
 
-      data.$overlay.remove();
+      data.$overlay[0].aiOverlay.destroy();
 
       for (var i = data.$menus.length - 1; i >= 0; i--) {
         aiMenuOverflow.detach(data.$menus[i]);
