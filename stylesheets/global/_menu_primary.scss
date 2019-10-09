@@ -89,3 +89,10 @@ $menu-primary-background-colour: $ambientimpact-orange;
     }
   }
 }
+
+.region-primary-menu-overlay {
+  // Remove the max-width set in
+  // ambientimpact_base/stylesheets/global/_layout.scss so that this correctly
+  // covers the whole page width.
+  max-width: none;
+}
