@@ -17,6 +17,22 @@ $menu-primary-sub-menu-clip-padding: 10px;
 $menu-primary-all-overflow-sub-menu-width: 100vw;
 
 ///
+/// Primary menu sub-menu show transition duration.
+///
+/// This should be shorter than the hide duration to make the sub-menu feel
+/// quick to respond to user action.
+///
+$menu-primary-sub-menu-show-duration: 200ms;
+
+///
+/// Primary menu sub-menu hide transition duration.
+///
+/// This should be longer than the show duration to make the sub-menu feel a bit
+/// more relaxed after having responded to user action.
+///
+$menu-primary-sub-menu-hide-duration: 400ms;
+
+///
 /// @supports test for our primary menu sub-menu transform and clipping.
 ///
 /// @content
@@ -81,7 +97,7 @@ $menu-primary-all-overflow-sub-menu-width: 100vw;
 ///
 /// @require {Mixin}    menu-primary-supports-translate-clip-path
 /// @require {Mixin}    root-conditions
-/// @require {Variable} $menu-primary-sub-menu-clip-padding
+/// @require {Variable} $menu-primary-sub-menu-show-duration
 ///
 @mixin menu-primary-sub-menu-show {
   @include root-conditions(('[dir=ltr]'), 'html') {
@@ -98,6 +114,8 @@ $menu-primary-all-overflow-sub-menu-width: 100vw;
   @include menu-primary-supports-translate-clip-path {
     transform: translateY(-1px);
   }
+
+  transition-duration: $menu-primary-sub-menu-show-duration;
 }
 
 ///
@@ -220,7 +238,7 @@ $menu-primary-all-overflow-sub-menu-width: 100vw;
         @include material-shadow($depth: 2);
 
         transition-property: transform;
-        transition-duration: 200ms;
+        transition-duration: $menu-primary-sub-menu-hide-duration;
         transition-timing-function: $easing-standard;
 
         will-change: transform;
