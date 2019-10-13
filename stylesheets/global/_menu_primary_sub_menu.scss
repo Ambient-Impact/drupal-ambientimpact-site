@@ -308,7 +308,7 @@ $menu-primary-sub-menu-item-transition-count: 10;
 
         @include material-shadow($depth: 2);
 
-        transition-property: opacity transform;
+        transition-property: opacity, transform;
         transition-duration: $menu-primary-sub-menu-hide-duration;
         transition-timing-function: $easing-standard;
 
@@ -331,7 +331,7 @@ $menu-primary-sub-menu-item-transition-count: 10;
         max-width: 100vw;
 
         > .menu-item {
-          transition-property: opacity transform;
+          transition-property: opacity, transform;
           transition-duration: $menu-primary-sub-menu-hide-duration;
           transition-timing-function: $easing-standard;
         }
