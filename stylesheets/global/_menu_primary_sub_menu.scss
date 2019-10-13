@@ -43,8 +43,11 @@ $menu-primary-sub-menu-item-transition-count: 10;
 ///
 /// @supports test for our primary menu sub-menu transform and clipping.
 ///
+/// Additionally wraps @content in a (prefers-reduced-motion: no-preference)
+/// media query.
+///
 /// @content
-///   Properties to wrap in the @supports block.
+///   Properties to wrap in the @supports and @media blocks.
 ///
 /// @require {Function} menu-primary-clip-path()
 /// @require {Variable} $menu-primary-sub-menu-clip-padding
@@ -54,7 +57,9 @@ $menu-primary-sub-menu-item-transition-count: 10;
 
   @supports (transform: translateY(calc(-100% - #{$padding}))) and
   (clip-path: menu-primary-clip-path()) {
-    @content;
+    @media (prefers-reduced-motion: no-preference) {
+      @content;
+    }
   }
 }
 
@@ -81,7 +86,10 @@ $menu-primary-sub-menu-item-transition-count: 10;
   left:       -9999em;
   opacity:    0;
 
-  pointer-events: none;
+  @supports (pointer-events: none) {
+    left:     auto;
+    pointer-events: none;
+  }
 
   @include menu-primary-supports-translate-clip-path {
     @include root-conditions(('[dir=ltr]'), 'html') {
@@ -255,11 +263,13 @@ $menu-primary-sub-menu-item-transition-count: 10;
       // The clip.
       clip-path: menu-primary-clip-path();
 
-      @include menu-primary-supports-translate-clip-path {
-        // This solid colour block is placed below the menu item contents but
-        // above the sub-menu, so that when the sub-menu slides up into its
-        // hidden state, it's not visible behind the menu item contents, the
-        // latter of which we need avoid clipping so that they're visible.
+      // This solid colour block is placed below the menu item contents but
+      // above the sub-menu, so that when the sub-menu slides up into its hidden
+      // state, it's not visible behind the menu item contents, the latter of
+      // which we need avoid clipping so that they're visible. Note that we're
+      // not using the menu-primary-supports-translate-clip-path mixin, as that
+      // would not apply this if the user prefers reduced motion.
+      @supports (clip-path: menu-primary-clip-path()) {
         &::after {
           content:  '';
           display:  block;
@@ -298,7 +308,7 @@ $menu-primary-sub-menu-item-transition-count: 10;
 
         @include material-shadow($depth: 2);
 
-        transition-property: transform;
+        transition-property: opacity transform;
         transition-duration: $menu-primary-sub-menu-hide-duration;
         transition-timing-function: $easing-standard;
 
