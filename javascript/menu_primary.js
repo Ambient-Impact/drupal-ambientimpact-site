@@ -139,6 +139,16 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
        */
       var $overlay = aiOverlay.create();
 
+      /**
+       * jQuery collection containing zero or more open menu items.
+       *
+       * This is used to ensure the overlay is not hidden if a menu opens before
+       * another closes.
+       *
+       * @type {jQuery}
+       */
+      var $openMenuItems = $();
+
       for (var i = $menus.length - 1; i >= 0; i--) {
         aiMenuOverflow.attach($menus[i]);
         aiMenuDropDown.attach($menus[i]);
@@ -199,8 +209,22 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
           $primaryMenuRegion.addClass(regionHasMenuOpenClass);
 
           $overlay[0].aiOverlay.show();
+
+          // Add the just opened menu item to $openMenuItems.
+          $openMenuItems = $openMenuItems.add(event.target);
         })
         .on('menuDropDownClosed.aiSiteThemeMenuPrimary', function(event, data) {
+          // Remove the menu item that just closed from $openMenuItems.
+          $openMenuItems = $openMenuItems.not(event.target);
+
+          // If there are still menu items in $openMenuItems, return without
+          // hiding the overlay. This can occur if the user quickly hovers over
+          // another item while one is closing, so the new item would be open
+          // when the previous triggers its close event.
+          if ($openMenuItems.length > 0) {
+            return;
+          }
+
           $primaryMenuRegion.removeClass(regionHasMenuOpenClass);
 
           $overlay[0].aiOverlay.hide();
