@@ -111,7 +111,7 @@ $menu-primary-sub-menu-item-transition-count: 10;
     //
     // @see https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
     @media (prefers-reduced-motion: no-preference) {
-      transform: translateY(-50%);
+      transform: translateY(-100%);
     }
 
     // Default transition delay for items not covered by :nth-last-child().
