@@ -82,6 +82,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryHeadroom', function(
 });
 
 // Add overflow and drop-down support/improvements to the primary menu.
+AmbientImpact.onGlobals(['Modernizr.customproperties'], function() {
 AmbientImpact.on(['menuOverflow', 'menuDropDown', 'overlay'], function(
   aiMenuOverflow, aiMenuDropDown, aiOverlay
 ) {
@@ -103,6 +104,48 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
    * @type {String}
    */
   var overlayBaseClass = 'region-primary-menu-overlay';
+
+  /**
+   * Primary menu sub-menu item reveal stagger custom property name.
+   *
+   * @type {String}
+   */
+  var itemStaggerCustomPropertyName = '--menu-item-reveal-transition-delay';
+
+  if (Modernizr.customproperties === true) {
+    /**
+     * Set sub-menu menu item reveal stagger custom properties.
+     *
+     * This is defined if Modernizr.customproperties === true.
+     *
+     * @param {HTMLElement} parentMenuItem
+     *   The parent menu item that has a .menu as a direct descendent,
+     *   containing one or more .menu-item elements.
+     */
+    var setItemStaggerCustomProperties = function(parentMenuItem) {
+      var $menuItems = $(parentMenuItem).find('> .menu > .menu-item');
+
+      for (var i = $menuItems.length - 1; i >= 0; i--) {
+        $menuItems[i].style.setProperty(
+          itemStaggerCustomPropertyName,
+          $menuItems.length - i
+        );
+      }
+    };
+  } else {
+    /**
+     * Dummy set sub-menu menu item reveal stagger custom properties.
+     *
+     * This is defined once if Modernizr.customproperties !== true to avoid
+     * errors and reduce the work we have to do when a menu is opened, i.e. not
+     * check when the menu is opening.
+     *
+     * @param {HTMLElement} parentMenuItem
+     *   The parent menu item that has a .menu as a direct descendent,
+     *   containing one or more .menu-item elements.
+     */
+    var setItemStaggerCustomProperties = function(parentMenuItem) {};
+  }
 
   this.addBehaviour(
     'AmbientImpactSiteThemeMenuPrimary',
@@ -203,6 +246,12 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
         // automatically.
         .on('headroomUnpin.aiSiteThemeMenuPrimary', headroomUnpinHandler)
 
+        .on('menuDropDownOpening.aiSiteThemeMenuPrimary', function(
+          event, data
+        ) {
+          setItemStaggerCustomProperties(event.target);
+        })
+
         // Add and remove classes on the region and the overlay when a menu is
         // opened or closed, respectively.
         .on('menuDropDownOpened.aiSiteThemeMenuPrimary', function(event, data) {
@@ -245,6 +294,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
       data.$primaryMenuRegion
         .off([
           'headroomUnpin.aiSiteThemeMenuPrimary',
+          'menuDropDownOpening.aiSiteThemeMenuPrimary',
           'menuDropDownOpened.aiSiteThemeMenuPrimary',
           'menuDropDownClosed.aiSiteThemeMenuPrimary',
         ].join(' '))
@@ -257,8 +307,18 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
         aiMenuDropDown.detach(data.$menus[i]);
       }
 
+      var $secondLevelMenuItems =
+        data.$menus.find('> .menu-item > .menu > .menu-item');
+
+      // Remove any menu item stagger reveal custom properties on menu items.
+      for (var i = $secondLevelMenuItems.length - 1; i >= 0; i--) {
+        $secondLevelMenuItems[i].style
+          .removeProperty(itemStaggerCustomPropertyName);
+      }
+
       delete this.siteThemeMenuPrimary;
     }
   );
+});
 });
 });

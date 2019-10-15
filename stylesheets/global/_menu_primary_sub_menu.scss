@@ -33,12 +33,15 @@ $menu-primary-sub-menu-show-duration: 250ms;
 $menu-primary-sub-menu-hide-duration: 400ms;
 
 ///
-/// Primary menu sub-menu item transition rule generation count.
+/// Primary menu sub-menu item reveal transition stagger interval.
 ///
-/// This is the number of transition-delay rules to generate using
-/// :nth-last-child()/:nth-child.
+/// This is used to calculate the transition-delay property by multiplying this
+/// value with the --menu-item-reveal-transition-delay custom property in the
+/// menu-primary-sub-menu-show mixin.
 ///
-$menu-primary-sub-menu-item-transition-count: 10;
+/// @see {mixin} menu-primary-sub-menu-show
+///
+$menu-primary-sub-menu-item-reveal-stagger-interval: 70ms;
 
 ///
 /// @supports test for our primary menu sub-menu transform and clipping.
@@ -113,20 +116,6 @@ $menu-primary-sub-menu-item-transition-count: 10;
     @media (prefers-reduced-motion: no-preference) {
       transform: translateY(-100%);
     }
-
-    // Default transition delay for items not covered by :nth-last-child().
-    transition-delay: $menu-primary-sub-menu-hide-duration;
-  }
-
-  // Stagger the menu item hide transitions starting from the last item going
-  // towards the first.
-  @for $i from 1 through $menu-primary-sub-menu-item-transition-count {
-    > .menu-item:nth-last-child(#{$i}) {
-      transition-delay:
-        $menu-primary-sub-menu-hide-duration /
-        $menu-primary-sub-menu-item-transition-count *
-        $i;
-    }
   }
 }
 
@@ -139,6 +128,7 @@ $menu-primary-sub-menu-item-transition-count: 10;
 /// @require {Mixin}    menu-primary-supports-translate-clip-path
 /// @require {Mixin}    root-conditions
 /// @require {Variable} $menu-primary-sub-menu-show-duration
+/// @require {Variable} $menu-primary-sub-menu-item-reveal-stagger-interval
 ///
 @mixin menu-primary-sub-menu-show {
   @include root-conditions(('[dir=ltr]'), 'html') {
@@ -168,22 +158,13 @@ $menu-primary-sub-menu-item-transition-count: 10;
       transform: translateY(0);
     }
 
-    // Default transition delay for items not covered by :nth-last-child().
-    transition-delay: $menu-primary-sub-menu-show-duration;
-  }
-
-  // Stagger the menu item reveal transitions starting from the last item going
-  // towards the first. Note the + 100ms delay for each item on top of the
-  // calculated value, so that the menu is already partially revealed before any
-  // items begin their own reveal, which gives the whole thing more of a
-  // step-by-step feel rather than everything happening at once.
-  @for $i from 1 through $menu-primary-sub-menu-item-transition-count {
-    > .menu-item:nth-last-child(#{$i}) {
-      transition-delay:
-        $menu-primary-sub-menu-show-duration /
-        $menu-primary-sub-menu-item-transition-count *
-        $i + 100ms;
-    }
+    // This staggers the menu item reveal transitions based on the custom
+    // property set in menu_primary.js so that the items appear to fall into
+    // place from last to first.
+    transition-delay: calc(
+      (var(--menu-item-reveal-transition-delay, 0) - 1) *
+      #{$menu-primary-sub-menu-item-reveal-stagger-interval}
+    );
   }
 }
 
