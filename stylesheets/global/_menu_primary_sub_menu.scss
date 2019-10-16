@@ -205,12 +205,16 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
   $height:  25em
 ) {
   @return polygon(
-    -$width                 100%,
-    0                       100%,
+    // Note the - 1px in the Y axis: this is to fix rounding errors where the
+    // menu would display a single pixel line along the top where it joins with
+    // the menu bar. This was most prominent in Blink-based browsers, but Gecko
+    // would also exhibit this if zoomed in and then out again on mobile.
+    -$width                 calc(100% - 1px),
+    0                       calc(100% - 1px),
     0                       0,
     100%                    0,
-    100%                    100%,
-    calc(100% + #{$width})  100%,
+    100%                    calc(100% - 1px),
+    calc(100% + #{$width})  calc(100% - 1px),
     calc(100% + #{$width})  calc(100% + #{$height}),
     -$width                 calc(100% + #{$height})
   );
