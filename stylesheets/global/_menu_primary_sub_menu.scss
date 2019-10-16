@@ -262,9 +262,10 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
           position: absolute;
 
           // The -1px is to avoid rounding errors in Chrome where the sub-menu
-          // contents can sometimes be seen around the edges a little.
+          // contents can sometimes be seen around the edges a little. The 1px
+          // bottom is to match the clip-path Y coordinates.
           top:      -1px;
-          bottom:   0;
+          bottom:   1px;
           left:     -1px;
           right:    -1px;
 
