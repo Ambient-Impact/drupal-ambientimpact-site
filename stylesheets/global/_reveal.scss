@@ -23,6 +23,25 @@
 //   invisible elements.
 
 ///
+/// Reveal overlay animation duration.
+///
+/// The reveal overlays are used both to fade in the entire site, and also on
+/// the front page to reveal just the content after the site name and menu bar
+/// animations are finished.
+///
+$reveal-overlay-animation-duration: 0.5s;
+
+///
+/// Site reveal overlay animation delay.
+///
+/// This should be just long enough that most browsers will have already done
+/// most of their layout rendering and most DOMContentLoaded JavaScript has
+/// (hopefully) finished executing so the reveal animation has a better chance
+/// of playing smoothly and without too many frames dropped.
+///
+$site-reveal-overlay-animation-delay: 0.5s;
+
+///
 /// Site name reveal animation duration.
 ///
 $site-name-reveal-animation-duration: 0.8s;
@@ -61,19 +80,24 @@ $region-primary-menu-reveal-animation-delay: 0.5s;
 $region-primary-menu-block-menu-reveal-duration: 0.5s;
 
 ///
+/// Primary menu block .menu element reveal animation delay.
+///
+$region-primary-menu-block-menu-reveal-delay: 0.5s;
+
+///
 /// Content reveal animation duration.
 ///
 $content-reveal-duration: 0.5s;
 
 ///
-/// Content reveal animation delay total.
+/// Content reveal animation delay.
 ///
 /// This includes the primary menu region animation delay and half of that
 /// region's animation duration so that the content animation starts when the
 /// primary menu region is almost done animating but doesn't wait until it's
 /// actually done so as to keep the flow going.
 ///
-$content-reveal-animation-delay-total:
+$content-reveal-animation-delay:
   $region-primary-menu-reveal-animation-delay +
   ($region-primary-menu-reveal-animation-duration / 2);
 
@@ -84,7 +108,25 @@ $content-reveal-animation-delay-total:
 /// when the content becomes visible and not too early.
 ///
 $site-revealed:
-  $content-reveal-animation-delay-total + ($content-reveal-duration / 2);
+  $site-reveal-overlay-animation-delay +
+  ($reveal-overlay-animation-duration / 2);
+
+@keyframes reveal-overlay {
+  0% {
+    opacity:        1;
+    pointer-events: auto;
+    visibility:     visible;
+  }
+  1% {
+    pointer-events: none;
+  }
+  99% {
+    opacity:    0;
+  }
+  100% {
+    visibility: hidden;
+  }
+}
 
 ///
 /// Site name reveal animation keyframes.
@@ -97,18 +139,6 @@ $site-revealed:
 
   100% {
     transform:  none;
-  }
-}
-
-///
-/// Primary menu region reveal animation keyframes.
-///
-@keyframes region-primary-menu-reveal {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
   }
 }
 
@@ -162,40 +192,6 @@ $site-revealed:
   }
 }
 
-///
-/// Content reveal animation keyframes.
-///
-@keyframes content-reveal {
-  0% {
-    visibility: hidden;
-    opacity:    0;
-    transform:  translateY(10vh);
-  }
-  1% {
-    visibility: visible;
-  }
-  100% {
-    opacity:    1;
-    transform:  translateY(0);
-  }
-}
-
-///
-/// Content reveal animation keyframes without motion.
-///
-@keyframes content-reveal-no-motion {
-  0% {
-    visibility: hidden;
-    opacity:    0;
-  }
-  1% {
-    visibility: visible;
-  }
-  100% {
-    opacity:    1;
-  }
-}
-
 .site-name {
   animation-name:             site-name-reveal;
   animation-duration:         $site-name-reveal-animation-duration;
@@ -211,25 +207,18 @@ $site-revealed:
   }
 }
 
-header[role='banner'],
-.region-primary-menu {
-  animation-name:             region-primary-menu-reveal;
-  animation-duration:         $region-primary-menu-reveal-animation-duration;
-  animation-timing-function:  linear;
-  animation-fill-mode:        backwards;
-  animation-delay:            $region-primary-menu-reveal-animation-delay;
-}
-
 .region-primary-menu .block {
   animation-name:             primary-menu-block-overflow;
   animation-duration:         $region-primary-menu-block-menu-reveal-duration;
   animation-fill-mode:        backwards;
+  animation-delay:            $region-primary-menu-block-menu-reveal-delay;
 
   > .menu {
     animation-name:             primary-menu-block-menu-reveal;
     animation-duration:         $region-primary-menu-block-menu-reveal-duration;
     animation-timing-function:  $easing-standard;
     animation-fill-mode:        backwards;
+    animation-delay:            $region-primary-menu-block-menu-reveal-delay;
 
     // Only animate opacity if the user indicates they prefer reduced motion.
     //
@@ -240,24 +229,45 @@ header[role='banner'],
   }
 }
 
-.region-primary-menu .block,
-.region-primary-menu .block > .menu,
-.region:not(.region-header):not(.region-primary-menu) {
-  animation-delay: $content-reveal-animation-delay-total;
+// This is used to fade in the entire page. Currently used by the front page
+// reveal animations.
+.layout-container::before,
+// This is used to fade in the page content as it's far more performant than
+// fading in the content itself, presumably because browsers naively animate the
+// whole content area, including the parts that are off-screen - on some pages,
+// there is a substantial amount of content off-screen.
+.region-highlighted::before {
+  @supports (pointer-events: none) {
+    content: '';
+
+    display: block;
+
+    position: fixed;
+
+    left:   0;
+    right:  0;
+    top:    0;
+    bottom: 0;
+
+    @include set-colours($background: $background-colour-light);
+
+    @include on-dark-colour-scheme {
+      @include set-colours($background: $background-colour-dark);
+    }
+
+    visibility: hidden;
+    pointer-events: none;
+
+    opacity: 0;
+
+    animation-duration:         $reveal-overlay-animation-duration;
+    animation-timing-function:  linear;
+    animation-fill-mode:        backwards;
+  }
 }
-
-// All other regions are considered content and are animated in after the rest
-// of the animations have completed.
-.region:not(.region-header):not(.region-primary-menu) {
-  animation-name:             content-reveal;
-  animation-duration:         $content-reveal-duration;
-  animation-timing-function:  $easing-standard;
-  animation-fill-mode:        backwards;
-
-  // Only animate opacity if the user indicates they prefer reduced motion.
-  //
-  // @see https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
-  @media (prefers-reduced-motion: reduce) {
-    animation-name:           content-reveal-no-motion;
+.region-highlighted::before {
+  @supports (pointer-events: none) {
+    animation-name:   reveal-overlay;
+    animation-delay:  $site-reveal-overlay-animation-delay;
   }
 }

@@ -30,8 +30,16 @@ header[role='banner'] {
   @include z-index(floating);
 }
 
+// Content fade in overlay.
+.layout-container::before,
+// Primary menu drop-down overlay.
 .region-primary-menu-overlay {
   @include z-index(page-floating);
+}
+
+// Entire page fade in overlay.
+.region-highlighted::before {
+  @include z-index(floating-above);
 }
 
 .offcanvas-overlay {

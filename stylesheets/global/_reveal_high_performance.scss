@@ -1,0 +1,62 @@
+// -----------------------------------------------------------------------------
+//   Reveal animations for high performance devices.
+// -----------------------------------------------------------------------------
+
+// This is currently not included as it can be quite choppy on anything but a
+// high end PC on some pages - e.g. portfolio. This is considered archived until
+// other page load performance factors are resolved - e.g. JavaScript
+// behaviours.
+
+///
+/// Content reveal animation keyframes.
+///
+@keyframes content-reveal {
+  0% {
+    visibility: hidden;
+    opacity:    0;
+    transform:  translateY(10vh);
+  }
+  1% {
+    visibility: visible;
+  }
+  100% {
+    opacity:    1;
+    transform:  translateY(0);
+  }
+}
+
+///
+/// Content reveal animation keyframes without motion.
+///
+@keyframes content-reveal-no-motion {
+  0% {
+    visibility: hidden;
+    opacity:    0;
+  }
+  1% {
+    visibility: visible;
+  }
+  100% {
+    opacity:    1;
+  }
+}
+
+// All other regions are considered content and are animated in after the rest
+// of the animations have completed.
+.region:not(.region-header):not(.region-primary-menu):not(.region-content),
+.region-content .block,
+.view-header,
+.views-row:first-child,
+.path-node .node {
+  animation-name:             content-reveal;
+  animation-duration:         $content-reveal-duration;
+  animation-timing-function:  $easing-standard;
+  animation-fill-mode:        backwards;
+
+  // Only animate opacity if the user indicates they prefer reduced motion.
+  //
+  // @see https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
+  @media (prefers-reduced-motion: reduce) {
+    animation-name:           content-reveal-no-motion;
+  }
+}

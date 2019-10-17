@@ -20,8 +20,7 @@
 // 4. The primary menu contents fade in and move horizontally into their normal
 //    positions.
 //
-// 5. Regions other than the primary menu and header now fade in and move up
-//    slightly into their normal positions, having been hidden until now.
+// 5. Regions other than the primary menu and header now fade in.
 //
 // Additional notes:
 //
@@ -100,20 +99,17 @@ $front-page-region-primary-menu-reveal-animation-delay: 0.5s;
 }
 
 ///
-/// Primary menu block reveal animation keyframes.
+/// Front page content hidden keyframes.
 ///
-@keyframes front-page-primary-menu-block-reveal {
+/// This keeps content inaccessible to keyboard focus until it's actually
+/// started fading into view.
+///
+@keyframes front-page-content-hidden {
   0% {
     visibility: hidden;
-    opacity:    0;
-    transform:  translateX(10%);
-  }
-  1% {
-    visibility: visible;
   }
   100% {
-    opacity:    1;
-    transform:  translateX(0);
+    visibility: hidden;
   }
 }
 
@@ -134,6 +130,8 @@ $front-page-region-primary-menu-reveal-animation-delay: 0.5s;
     animation-name:       front-page-body-scroll-prevention;
     animation-duration:   0.1s;
     animation-delay:
+      $reveal-overlay-animation-duration +
+      $site-reveal-overlay-animation-delay +
       $front-page-region-primary-menu-reveal-animation-delay +
       $front-page-region-primary-menu-reveal-animation-duration +
       $region-primary-menu-block-menu-reveal-duration +
@@ -185,17 +183,30 @@ $front-page-region-primary-menu-reveal-animation-delay: 0.5s;
     }
 
     // All other regions are considered content and are animated in after the
-    // rest of the animations have completed.
-    .region:not(.region-header):not(.region-primary-menu) {
-      animation-name:             content-reveal;
-      animation-duration:         $content-reveal-duration;
-      animation-timing-function:  $easing-standard;
+    // rest of the animations have completed. Note .region-hightlighted is
+    // handled as a space case, as it's used to fade in the entire site via a
+    // ::before pseudo-element.
+    .layout-container::before,
+    .region:not(.region-header):not(.region-primary-menu):not(.region-highlighted),
+    .region-highlighted > * {
       animation-delay:
         $front-page-region-primary-menu-reveal-animation-delay +
         $front-page-region-primary-menu-reveal-animation-duration +
         $region-primary-menu-block-menu-reveal-duration +
         $site-name-reveal-animation-duration;
-      animation-fill-mode:        backwards;
+    }
+    // This fades in the site content after the header and menu bar animations
+    // are complete.
+    .layout-container::before {
+      animation-name:  reveal-overlay;
+    }
+    // This prevents keyboard focus to content elements that haven't faded into
+    // view yet.
+    .region:not(.region-header):not(.region-primary-menu):not(.region-highlighted),
+    .region-highlighted > * {
+      animation-name:       front-page-content-hidden;
+      animation-duration:   0.001s;
+      animation-fill-mode:  backwards;
     }
   }
 }
