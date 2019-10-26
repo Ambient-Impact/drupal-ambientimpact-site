@@ -4,6 +4,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\Url;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Template\Attribute;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Prepares variables for field_project_link templates.
@@ -156,14 +157,26 @@ function ambientimpact_site_preprocess_views_view_field(&$variables) {
       '#text'     => $termName,
     ];
 
+    // Replace the term name with the rendered icon + text.
+    $markup = preg_replace(
+      '/^(<[^>]+>)*(' . preg_quote(Html::escape($termName), '/') . ')/',
+      '$1' . \Drupal::service('renderer')->render($renderArray),
+      (string) $variables['output']
+    );
+
+    $crawler = new Crawler($markup);
+
+    $linkElement = $crawler->filter('body > a')->getNode(0);
+
+    \Drupal::service(
+      'plugin.manager.ambientimpact_component'
+    )->getComponentInstance('link.image')
+      ->processLink($linkElement);
+
     // Replace the term name with the rendered icon + text. We must use Markup
     // here so that it gets output as HTML, as a string would be escaped by
     // Drupal's renderer.
-    $variables['output'] = Markup::create(preg_replace(
-      '/^(<[^>]+>)*(' . preg_quote(Html::escape($termName), '/') . ')/',
-      '$1' . \Drupal::service('renderer')->render($renderArray),
-      $variables['output']
-    ));
+    $variables['output'] = Markup::create($crawler->filter('body')->html());
   }
 }
 
