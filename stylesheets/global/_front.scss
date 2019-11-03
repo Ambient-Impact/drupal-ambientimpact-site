@@ -1,0 +1,24 @@
+// -----------------------------------------------------------------------------
+//   Front page styles
+// -----------------------------------------------------------------------------
+
+.path-frontpage .region-content {
+  .block-views {
+    * + & {
+      // This adds some spacing between the views blocks and any preceding
+      // elements. We're using vertical-spacing rather than
+      // vertical-spacing-against-previous as the latter would be overkill here.
+      @include vertical-spacing;
+    }
+
+    .more-link {
+      font-weight: $font-weight-strong;
+      // text-transform: uppercase;
+      text-align: center;
+
+      * + & {
+        margin-top: $general-spacing;
+      }
+    }
+  }
+}
