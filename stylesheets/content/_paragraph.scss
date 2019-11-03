@@ -1,0 +1,129 @@
+// -----------------------------------------------------------------------------
+//   Paragraph entity styles
+// -----------------------------------------------------------------------------
+
+// This provides styles for the 'teaser' Paragraph view mode, which is currently
+// only used on the front page. This view mode's styles restrict the height of
+// the first Paragraph item and applies a linear gradient that fades out the
+// Paragraph at the bottom.
+//
+// Note that until the horizontal-bleed-background is reworked and the site
+// layout uses flexbox or grid to lay out the full width bars, we can't use CSS
+// masks to fade out the Paragraph item as it'll cut off the bars outside of the
+// layout column. Instead, we're overlaying a generated content element with a
+// gradient background that matches the site background colour while clipping
+// the bottom of the element with a clip-path: polygon().
+//
+// @link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-image
+
+///
+/// Paragraph item 'teaser' view mode maximum height.
+///
+$paragraph-teaser-max-height: 7em;
+
+.paragraph--view-mode--teaser {
+  .field__item:first-child > & {
+    ///
+    /// Paragraph item teaser clip-path polygon.
+    ///
+    $polygon: polygon(
+      -50vw 0,
+      calc(100% + 50vw) 0,
+      calc(100% + 50vw) 100%,
+      -50vw 100%
+    );
+
+    ///
+    /// Paragraph item teaser fade out gradient on light backgrounds.
+    ///
+    /// @link https://ambientimpact.com/web/snippets/safari-bug-with-gradients-that-fade-to-transparent
+    ///   Explanation of why we use the background colour with zero opacity
+    ///   instead of 'transparent'.
+    ///
+    $gradient-light: linear-gradient(
+      transparentize($background-colour-light, 1),
+      $background-colour-light
+    );
+
+    ///
+    /// Paragraph item teaser fade out gradient on dark backgrounds.
+    ///
+    /// @link https://ambientimpact.com/web/snippets/safari-bug-with-gradients-that-fade-to-transparent
+    ///   Explanation of why we use the background colour with zero opacity
+    ///   instead of 'transparent'.
+    ///
+    $gradient-dark: linear-gradient(
+      transparentize($background-colour-dark, 1),
+      $background-colour-dark
+    );
+
+    @supports (box-sizing: border-box) and (width: 1vw) and
+    (clip-path: #{$polygon}) {
+
+      // Required to correctly position the gradient overlay element.
+      position: relative;
+
+      // This clips the first field contained in the Paragraph item to a
+      // max-height and with a clip-path. Note that we can't do this on the
+      // Paragraph item itself, as that'll cause 1 pixel rounding errors along
+      // the bottom of the gradient where it should be fading into the
+      // background colour in Chrome/Blink and sometimes in Firefox/Gecko.
+      > .field:first-child {
+        box-sizing: border-box;
+        max-height: $paragraph-teaser-max-height;
+        clip-path: $polygon;
+      }
+
+      // If there happen to be any subsequent fields in this Paragraph item,
+      // just remove them entirely.
+      > .field:not(:first-child) {
+        display: none;
+      }
+
+      // This is the actual gradient overlay element.
+      &::before {
+        content: '';
+
+        position: absolute;
+
+        top:    0;
+        bottom: -1px;
+        left:   50%;
+
+        width: 100vw;
+
+        margin-left: -50vw;
+
+        // @todo Should we use the z-index function for this, or does it matter
+        // since the parent is position: relative and thus creates its own
+        // stacking context?
+        z-index: 100;
+
+        background-image: $gradient-light;
+
+        @include on-dark-colour-scheme {
+          background-image: $gradient-dark;
+        }
+      }
+
+    // Disabled mask-image styles for future use.
+
+    // $gradient-mask: linear-gradient(black, transparent);
+
+    // @supports (mask-image: $gradient-mask) {
+    //   max-height: $paragraph-teaser-max-height;
+
+    //   overflow-y: hidden;
+
+    //   mask-image: $gradient-mask;
+    // }
+    }
+  }
+
+  // Hide any additional Paragraph items in the field.
+  //
+  // @todo This should be done as a Paragraph entity display formatter.
+  .field__item:not(:first-child) > & {
+    display: none;
+  }
+}
