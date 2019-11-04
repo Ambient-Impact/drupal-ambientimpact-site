@@ -71,7 +71,17 @@ $paragraph-teaser-max-height: 7em;
       > .field:first-child {
         box-sizing: border-box;
         max-height: $paragraph-teaser-max-height;
-        clip-path: $polygon;
+        clip-path:  $polygon;
+      }
+
+      // This ensures that clipped field content doesn't affect the page layout.
+      // Note that we have to target both fields that have field items as
+      // children and those that have the field element double as the only field
+      // item.
+      > .field:first-child > .field__item,
+      > .field.field__item:first-child {
+        max-height: $paragraph-teaser-max-height;
+        overflow:   hidden;
       }
 
       // If there happen to be any subsequent fields in this Paragraph item,
