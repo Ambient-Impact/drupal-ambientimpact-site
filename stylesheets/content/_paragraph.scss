@@ -2,10 +2,10 @@
 //   Paragraph entity styles
 // -----------------------------------------------------------------------------
 
-// This provides styles for the 'teaser' Paragraph view mode, which is currently
-// only used on the front page. This view mode's styles restrict the height of
-// the first Paragraph item and applies a linear gradient that fades out the
-// Paragraph at the bottom.
+// This provides styles for the 'compact' Paragraph view mode, which is
+// currently only used on the front page. This view mode's styles restrict the
+// height of the first Paragraph item and applies a linear gradient that fades
+// out the Paragraph at the bottom.
 //
 // Note that until the horizontal-bleed-background is reworked and the site
 // layout uses flexbox or grid to lay out the full width bars, we can't use CSS
@@ -17,14 +17,14 @@
 // @link https://developer.mozilla.org/en-US/docs/Web/CSS/mask-image
 
 ///
-/// Paragraph item 'teaser' view mode maximum height.
+/// Paragraph item 'compact' view mode maximum height.
 ///
-$paragraph-teaser-max-height: 7em;
+$paragraph-compact-max-height: 7em;
 
-.paragraph--view-mode--teaser {
+.paragraph--view-mode--compact {
   .field__item:first-child > & {
     ///
-    /// Paragraph item teaser clip-path polygon.
+    /// Paragraph item compact clip-path polygon.
     ///
     $polygon: polygon(
       -50vw 0,
@@ -34,7 +34,7 @@ $paragraph-teaser-max-height: 7em;
     );
 
     ///
-    /// Paragraph item teaser fade out gradient on light backgrounds.
+    /// Paragraph item compact fade out gradient on light backgrounds.
     ///
     /// @link https://ambientimpact.com/web/snippets/safari-bug-with-gradients-that-fade-to-transparent
     ///   Explanation of why we use the background colour with zero opacity
@@ -46,7 +46,7 @@ $paragraph-teaser-max-height: 7em;
     );
 
     ///
-    /// Paragraph item teaser fade out gradient on dark backgrounds.
+    /// Paragraph item compact fade out gradient on dark backgrounds.
     ///
     /// @link https://ambientimpact.com/web/snippets/safari-bug-with-gradients-that-fade-to-transparent
     ///   Explanation of why we use the background colour with zero opacity
@@ -70,7 +70,7 @@ $paragraph-teaser-max-height: 7em;
       // background colour in Chrome/Blink and sometimes in Firefox/Gecko.
       > .field:first-child {
         box-sizing: border-box;
-        max-height: $paragraph-teaser-max-height;
+        max-height: $paragraph-compact-max-height;
         clip-path:  $polygon;
       }
 
@@ -80,7 +80,7 @@ $paragraph-teaser-max-height: 7em;
       // item.
       > .field:first-child > .field__item,
       > .field.field__item:first-child {
-        max-height: $paragraph-teaser-max-height;
+        max-height: $paragraph-compact-max-height;
         overflow:   hidden;
       }
 
@@ -121,7 +121,7 @@ $paragraph-teaser-max-height: 7em;
     // $gradient-mask: linear-gradient(black, transparent);
 
     // @supports (mask-image: $gradient-mask) {
-    //   max-height: $paragraph-teaser-max-height;
+    //   max-height: $paragraph-compact-max-height;
 
     //   overflow-y: hidden;
 
