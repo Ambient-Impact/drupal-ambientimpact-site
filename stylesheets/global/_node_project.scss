@@ -264,12 +264,15 @@ $node-project-stacking-order: top-shadow, title, content;
       .block-page-title-block {
         order: 2;
       }
+      // If the main content block has been placed, that will be wrapping .node,
+      // so we need to target that in addition to .node (for when the block
+      // isn't placed).
+      .block-system-main-block,
       .node {
         order: 3;
-
-        &__content {
-          margin-top: 0;
-        }
+      }
+      .node__content {
+        margin-top: 0;
       }
     }
   }
