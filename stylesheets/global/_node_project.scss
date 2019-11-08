@@ -83,6 +83,34 @@ $node-project-stacking-order: top-shadow, title, content;
 
   @include on-dark-colour-scheme {
     color: $media-field-background-colour-on-dark;
+
+    // This places a gradient behind the title in dark mode to help increase
+    // contrast between the title and background a bit.
+    &::before {
+      @supports (width: 100vw) {
+        content: '';
+
+        position: absolute;
+
+        left:   50%;
+        top:    0;
+        bottom: 0;
+
+        width: 100vw;
+
+        margin-left: -50vw;
+
+        z-index: -1;
+
+        // @link https://ambientimpact.com/web/snippets/safari-bug-with-gradients-that-fade-to-transparent
+        // Explanation of why we use the background colour with zero opacity
+        // instead of 'transparent'.
+        background-image: linear-gradient(
+          transparentize($background-colour-dark, 1),
+          mix($background-colour-dark, black, 25%)
+        );
+      }
+    }
   }
 
   // This doubles as the minimum font size the <canvas> element will scale text
