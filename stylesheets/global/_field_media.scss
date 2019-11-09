@@ -112,6 +112,28 @@ $media-field-spacing: $layout-gutter !default;
     );
   }
 
+  // This adds a background block behind media when they've been hidden by the
+  // project media IntersectionObserver so the space they fade into doesn't look
+  // totally empty.
+  .intrinsic-ratio {
+    @include set-colours(
+      $background: mix(
+        $media-field-background-colour-on-light,
+        $foreground-colour-on-light,
+        75%
+      )
+    );
+
+    @include on-dark-colour-scheme {
+      @include set-colours(
+        $background: mix(
+          $media-field-background-colour-on-dark,
+          $foreground-colour-on-dark,
+          75%
+        )
+      );
+    }
+  }
 }
 
 ///
@@ -197,16 +219,18 @@ $media-field-spacing: $layout-gutter !default;
     .field__item {
       padding:  ($media-field-spacing / 2) 0;
 
-      // This hides individual field items when they're off screen. We hav to
+      // This hides individual field items when they're off screen. We have to
       // use visibility: hidden; in order to get Firefox on Android to not
       // render them. See ../../javascript/project_media.js for details.
-      &--off-screen {
+      &--off-screen .intrinsic-ratio__ratio {
         visibility: hidden;
         opacity:    0;
       }
 
-      // Short fade in when being shown from being off screen.
-      transition: 200ms opacity linear;
+      .intrinsic-ratio__ratio {
+        // Short fade in when being shown from being off screen.
+        transition: 200ms opacity linear;
+      }
     }
 
     // If available, use CSS grid to lay out the project images in a two column
