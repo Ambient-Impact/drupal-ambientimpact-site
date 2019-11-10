@@ -34,11 +34,3 @@ $background-colour-dark: hsl(0, 0, 10%);
 /// little too bright.
 ///
 $link-normal-colour-on-dark: lighten($material-primary-colour, 10%);
-
-///
-/// Feed link colour.
-///
-/// This uses currentColor as having another orange in addition to
-/// Ambient.Impact orange doesn't look great.
-///
-$feed-link-colour: currentColor;
