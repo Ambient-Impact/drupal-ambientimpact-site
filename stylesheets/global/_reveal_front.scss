@@ -124,19 +124,18 @@ $front-page-region-primary-menu-reveal-animation-delay: 0.5s;
 @media (prefers-reduced-motion: no-preference) {
   .path-frontpage {
     // Apply the scroll prevention animation with a delay equal to the durations
-    // of all other animations. This works fine in Firefox (both Windows and
+    // of most other animations. This works fine in Firefox (both Windows and
     // Android) and Chrome (Windows), but Edge and Chrome on Android refuse to
-    // apply this for some reason.
+    // apply this for some reason. Note that we don't wait for the content
+    // reveal itself in order to make the page scrollable as early as possible
+    // to not annoy users.
     animation-name:       front-page-body-scroll-prevention;
-    animation-duration:   0.1s;
+    animation-duration:   0.01s;
     animation-delay:
-      $reveal-overlay-animation-duration +
-      $site-reveal-overlay-animation-delay +
       $front-page-region-primary-menu-reveal-animation-delay +
       $front-page-region-primary-menu-reveal-animation-duration +
       $region-primary-menu-block-menu-reveal-duration +
-      $site-name-reveal-animation-duration +
-      $content-reveal-duration;
+      $site-name-reveal-animation-duration;
     animation-fill-mode:  backwards;
 
     // Site header element contains the top shadow for the primary menu bar, so
