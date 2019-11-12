@@ -40,8 +40,13 @@ $paragraph-compact-max-height: 7em;
     ///   Explanation of why we use the background colour with zero opacity
     ///   instead of 'transparent'.
     ///
+    /// @link https://github.com/larsenwork/postcss-easing-gradients
+    ///   Uses this PostCSS plug-in to ease the gradient to create a less harsh
+    ///   fade to transparent, similar to how Photoshop does its gradients.
+    ///
     $gradient-light: linear-gradient(
       transparentize($background-colour-light, 1),
+      $easing-decelerate,
       $background-colour-light
     );
 
