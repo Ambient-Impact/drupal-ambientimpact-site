@@ -13,14 +13,6 @@ $media-field-background-colour-on-light: black !default;
 $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
 
 ///
-/// Media field spacing.
-///
-/// This is used as the overall field padding and spacing between field items.
-/// Defaults to $layout-gutter to look consistent with the page layout spacing.
-///
-$media-field-spacing: $layout-gutter !default;
-
-///
 /// Common style for media fields.
 ///
 /// @param {Bool} $use-top-shadow
@@ -64,44 +56,10 @@ $media-field-spacing: $layout-gutter !default;
     }
   }
 
-  // Remove fancy link underlines on links not inside a <figcaption>.
-  @if $use-fancy-link-underlines == true {
-    .field__item > :link,
-    figure > :link,
-    figure > :not(figcaption) :link {
-      @include remove-fancy-link-underlines;
-    }
-  }
-
-  img {
-    // Ensure images are always the full width of the field item.
-    width:  100%;
-  }
-
   .field__item {
     position: relative;
 
     z-index: index($local-stacking-order, content);
-  }
-
-  // Spacing between field items and any preceding element (usually another
-  // field item).
-  @include vertical-spacing-against-previous(
-    '.field__item',
-    $spacing-small: $media-field-spacing,
-    $spacing-large: $media-field-spacing
-  );
-
-  // These are centred using horizontal margins.
-  .field__item, .intrinsic-ratio, :link {
-    margin-left:  auto;
-    margin-right: auto;
-  }
-
-  // Links and images need to be displayed as block to avoid weird inline space
-  // appearing.
-  :link, img {
-    display: block;
   }
 
   img, picture {
@@ -132,56 +90,6 @@ $media-field-spacing: $layout-gutter !default;
           75%
         )
       );
-    }
-  }
-}
-
-///
-/// Common style for media field captions.
-///
-@mixin media-field-caption {
-  figure {
-    // Remove the margins added by normalize.css.
-    margin: 0;
-  }
-
-  figcaption {
-    margin-top:     $media-field-spacing;
-
-    // This is in case we're in a multiple item field, to distinguish this
-    // caption from any <figure> that may follow it. Note that in this case,
-    // we're using $general-spacing and not $media-field-spacing as the latter
-    // is specifically meant to match the layout gutter. Also note that it's
-    // impractical to use the vertical-spacing-against-previous mixin here as
-    // no major browser yet supports the :has() pseudo-class as of 2019-06-20.
-    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/:has
-    margin-bottom:  $general-spacing * 2.5;
-
-    text-align: center;
-
-    :first-child {
-      margin-top: 0;
-    }
-    :last-child {
-      margin-bottom: 0;
-    }
-
-    // Reset the display: block; set in mixin media-field back to the default of
-    // inline to links in the caption.
-    :link {
-      display: inline;
-    }
-  }
-
-  // Remove the bottom margin on the last item's caption. Note the direct child
-  // selectors so that we only consider the containing entity reference field's
-  // items; without the selector, this would apply to every media entity,
-  // because they all technically have a last .field__item as they contain their
-  // own fields.
-  > .field__item,
-  > .field__items > .field__item {
-    &:last-child figcaption {
-      margin-bottom: 0;
     }
   }
 }
@@ -258,24 +166,16 @@ $media-field-spacing: $layout-gutter !default;
       }
     }
   }
-
-  @include media-field-caption;
 }
 
 // Stand-alone media entity image fields.
-*:not(.field--type-entity-reference) > * > .media > .field--type-image:not(.form-wrapper) {
-  @include media-field;
-  @include media-field-caption;
-}
-
+*:not(.field--type-entity-reference) > * > .media > .field--type-image,
 // Entity reference fields that contain media entities.
 .field--name-field-animated-gifs,
-.field--name-field-images {
-  @include media-field;
-  @include media-field-caption;
-}
-
+.field--name-field-images,
 // Video fields.
-.field--type-video-embed-field:not(.form-wrapper) {
-  @include media-field;
+.field--type-video-embed-field {
+  &:not(.form-wrapper) {
+    @include media-field;
+  }
 }
