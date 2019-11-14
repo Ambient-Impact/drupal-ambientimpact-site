@@ -31,7 +31,6 @@ global-scripts:
 project:
   js:
     javascript/project_title.js: {}
-    javascript/project_media.js: {}
   dependencies:
     - ambientimpact_core/framework
     - ambientimpact_ux/component.font

@@ -2,6 +2,14 @@
 //   Ambient.Impact - Site theme - Project node media
 // -----------------------------------------------------------------------------
 
+// IMPORTANT: this is now disabled as the problem this was addressing has been
+// identified and solved. It was caused by the PhotoSwipe component applying
+// will-change: opacity to all thumbnails, thus promoting them all to their own
+// compositor layers which would overwhelm the browser and/or GPU. This file
+// will likely be removed in the future.
+//
+// -----------------------------------------------------------------------------
+//
 // This solves an issue in Firefox on Android where the number of project images
 // on the /porfolio page causes the position: sticky; functionality on the
 // primary menu bar to be extremely laggy and not synced with scrolling -
