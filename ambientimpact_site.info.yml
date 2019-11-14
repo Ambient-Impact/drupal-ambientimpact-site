@@ -6,6 +6,22 @@ package: Ambient.Impact
 screenshot: ambientimpact_site.screenshot.png
 core: 8.x
 
+# These are identitical to those in ambientimpact_base, duplicated here because
+# Drupal doesn't seem to allow inheriting regions.
+#
+# @see https://www.drupal.org/project/drupal/issues/301295
+regions:
+  header: 'Header'
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  breadcrumb: 'Breadcrumb'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  content: 'Content'
+  sidebar_first: 'First sidebar'
+  sidebar_second: 'Second sidebar'
+  footer: 'Footer'
+
 # These are always attached on every page the theme is active on. See:
 # https://www.drupal.org/docs/8/theming/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-theme#attach-library-all-pages
 libraries:
