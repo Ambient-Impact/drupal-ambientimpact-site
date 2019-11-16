@@ -56,7 +56,10 @@ $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
     }
   }
 
-  .field__item {
+  // When one or more field items are descendents, target those.
+  .field__item,
+  // When the field itself is also the field item, target the <figure>.
+  &.field__item figure {
     position: relative;
 
     z-index: index($local-stacking-order, content);
