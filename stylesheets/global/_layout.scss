@@ -13,7 +13,16 @@ header[role='banner'] {
 }
 
 .region-primary-menu {
-  @include z-index(page-floating);
+  &,
+  // Headroom post-0.9.4 only adds top/not-top classes once the user actually
+  // scrolls so we need to account for it being initialized but not having added
+  // those classes yet. It also does not trigger those callbacks, so we cannot
+  // use those to add the classes ourselves manually.
+  //
+  // @see https://github.com/WickyNilliams/headroom.js/issues/354
+  &.headroom:not(.headroom--top):not(.headroom--not-top) {
+    @include z-index(page-floating);
+  }
 
   // When Headroom is not at the top, increase the z-index. We don't do this
   // when we're at the top as that will cause the menu bar to be on top of full
