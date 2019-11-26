@@ -1,0 +1,16 @@
+{
+  "name": "ambient.impact/drupal-theme-site",
+  "description": "Ambient.Impact - Core",
+  "type": "project",
+  "license": "GPL-2.0-or-later",
+  "authors": [
+    {
+      "name": "Ambient.Impact",
+      "homepage": "https://ambientimpact.com/",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "kartsims/easysvg": "^1.0"
+  }
+}

@@ -9,81 +9,112 @@
 ///
 $node-project-stacking-order: top-shadow, title, content;
 
-///
-/// Target project node titles on their own page and in views, etc.
-///
-/// @param {String} $append-class ['']
-///   An optional string to append to the node class, usually a BEM-style
-///   modifier, e.g. '--has-sparkles'. Defaults to an empty string.
-///
-/// @param {Boolean} $container-only [true]
-///   If true, will target the unique container of the title. If false, will
-///   target the deepest child element containing the heading text, i.e. the
-///   .field--name-title element.
-///
-/// @content
-///   The content to wrap in the selectors.
-///
-@mixin node-project-title($append-class: '', $container-only: true) {
-  $page-title-selector: '';
-  $node-title-selector: '';
+@include add-breakpoints((
+  // The viewport width at which project titles switch between having a
+  // responsive width that never overflows the layout width (wider than this
+  // value) and allowing the project titles to overflow the layout horizontally
+  // to maintain readability but fade out the overflow off of the edge of the
+  // layout (narrower than this value).
+  'project-title-height-constraint': 25em
+));
 
-  @if ($container-only == false) {
-    $page-title-selector: ' .page-title .field--name-title';
-    $node-title-selector: ' .field--name-title';
-  }
-
-  // This targets nodes when displayed on their own node/# page.
-  .page-node-type-project#{$append-class}:not(.page-node-edit)
-    .block-page-title-block#{$page-title-selector},
-  // This targets nodes displayed in views and other places, outside of their
-  // own node/# page.
-  .node--type-project.node#{$append-class} .node__title#{$node-title-selector} {
-    @content;
-  }
-}
-
-///
-/// @supports wrapper for vertical flex re-ordering for node projects.
-///
-/// We need to double nest this because using an 'and' doesn't seem to result in
-/// output that actually matches. Could be an Autoprefixer or Sass issue.
-///
-@mixin node-project-supports-flex-ordering {
-  @supports (flex-direction: column) {
-    @supports (order: 1) {
-      @content;
-    }
-  }
-}
-
-// Styles applied at all times, whether or not <canvas>-based titles are active.
-@include node-project-title {
-  @include node-project-supports-flex-ordering {
-    // Ensure link and any other children are flush with the bottom of this,
-    // i.e. no gap between it and the black box below.
-    display:          flex;
-    flex-direction:   column;
-    justify-content:  flex-end;
-
-    // This brings up the top of the project images box flush with the bottom of
-    // the title.
-    position: relative;
-    bottom:   -0.32em;
-    // bottom:   -0.4em;
-
-    // Remove any vertical margins on the heading elements.
-    &, .page-title {
-      margin-top:     0;
-      margin-bottom:  0;
-    }
-  }
-
+.page-node-type-project:not(.page-node-edit) .page-title,
+.node--type-project .node__title {
   color: $media-field-background-colour-on-light;
 
   @include on-dark-colour-scheme {
     color: $media-field-background-colour-on-dark;
+  }
 
+  // Remove any vertical margins on the heading elements.
+  margin-top:     0;
+  margin-bottom:  0;
+}
+
+.page-node-type-project:not(.page-node-edit) .block-page-title-block,
+.node--type-project .node__title {
+  position: relative;
+
+  // This guards against rounding errors, i.e. showing a gap below text.
+  bottom: -1px;
+
+  // If mask-image with a gradient is supported, use that to fade out any text
+  // that's wider than the layout.
+  $mask-gradient-ltr: linear-gradient(
+    to left, transparent, black $layout-gutter
+  );
+  $mask-gradient-rtl: linear-gradient(
+    to right, transparent, black $layout-gutter
+  );
+  @supports (mask-image: $mask-gradient-ltr) and (width: 100vw) {
+    @include media('<=project-title-height-constraint') {
+      overflow: hidden;
+
+      // Undo _layout.scss since we need to span the layout gutter as well.
+      max-width: none;
+
+      width: 100vw;
+
+      // Compensate for padding.
+      margin-top:     -$layout-gutter;
+      @include root-conditions(('[dir=ltr]'), 'html') {
+        margin-left:  -$layout-gutter;
+      }
+      @include root-conditions(('[dir=rtl]'), 'html') {
+        margin-right: -$layout-gutter;
+      }
+
+      // Padding on all sides but the bottom so that the shadows don't get cut
+      // off by the overflow: hidden, in addition to fading out any overflow.
+      padding-top:    $layout-gutter;
+      padding-left:   $layout-gutter;
+      padding-right:  $layout-gutter;
+
+      box-sizing:     border-box;
+
+      @include root-conditions(('[dir=ltr]'), 'html') {
+        mask-image:   $mask-gradient-ltr;
+      }
+      @include root-conditions(('[dir=rtl]'), 'html') {
+        mask-image:   $mask-gradient-rtl;
+      }
+    }
+  }
+
+  // Hide the actual heading text if it's been wrapped in this element. Note
+  // that the text is still visible in the accessibility tree for assistive
+  // software like screen readers. The <svg> title has aria-hidden="true", as
+  // it exists for purely visual reasons.
+  .field__title-text {
+    @include hide-me;
+  }
+
+  .field__title-svg {
+    // Override the inline display: none, which exists in case stylesheets don't
+    // load for whatever reason.
+    display: block !important;
+
+    // This overrides the inline height to make it responsive, based on the
+    // width.
+    height: auto;
+
+    // In order to not make the title too small if the text is long on narrow
+    // viewports, allow the <svg> to expand with a max-height using viewport
+    // width (not height) units.
+    @include media('<=project-title-height-constraint') {
+      width:      auto;
+      max-width:  none;
+      max-height: 5vw;
+    }
+
+    path {
+      // Automatically inherit the foreground/text colour set on ancestor
+      // elements.
+      fill: currentColor;
+    }
+  }
+
+  @include on-dark-colour-scheme {
     // This places a gradient behind the title in dark mode to help increase
     // contrast between the title and background a bit.
     &::before {
@@ -113,29 +144,6 @@ $node-project-stacking-order: top-shadow, title, content;
     }
   }
 
-  // This doubles as the minimum font size the <canvas> element will scale text
-  // down to.
-  font-size: 1.3em;
-
-  // Setting a min-height allows us to avoid layout jumps under most
-  // circumstances, both during font loading, and also during enhancement to a
-  // <canvas> title.
-  min-height: 2.8em;
-}
-@include node-project-title($container-only: false) {
-  // Reset the font size so that it's consistent between the node page title and
-  // the node title in views, etc.
-  font-size: 100%;
-}
-
-// Styles applied when a node has a <canvas> title.
-@include node-project-title('--has-canvas-title') {
-  @include node-project-supports-flex-ordering {
-    // This overrides the non-<canvas> title and guards against rounding errors,
-    // i.e. showing a gap below text.
-    bottom: -0.5px;
-  }
-
   // This adds a shadow behind the top edge of the project images field. See
   // _field_media.scss for the bottom half of the shadow. This is done to allow
   // the top shadow to not overlap the node title but appear underneath it, so
@@ -152,35 +160,30 @@ $node-project-stacking-order: top-shadow, title, content;
 
     bottom: -$shadow-element-height;
   }
-
-  .field--name-title {
-    display: block;
-
-    position: relative;
-
-    z-index: index($node-project-stacking-order, title);
-  }
-
-  :link,
-  canvas {
-    display:    block;
-    max-width:  100%;
-
-    // Undo _typography.scss
-    padding-bottom: 0;
-  }
-
-  :link {
-    @include link-hover {
-      opacity: 0.7;
-    }
-    @include link-active {
-      opacity: 1;
-    }
-  }
 }
-@include node-project-title('--has-canvas-title', false) {
-  // Since the title is a <canvas>, we have to use CSS filters to get a drop
+
+// Title element z-index set above the top peek shadow but below the node
+// content after it.
+.page-node-type-project:not(.page-node-edit) .page-title,
+// We have to target the link specifically because Chrome/Blink doesn't seem to
+// want to place the title above the top peek shadow unless it's a sibling of
+// said shadow ::after pseudo element because reasons. Firefox/Gecko behaves as
+// you would hope in this case.
+.node--type-project .node__title :link {
+  position: relative;
+
+  z-index: index($node-project-stacking-order, title);
+}
+
+.page-node-type-project:not(.page-node-edit) .page-title,
+.node--type-project .node__title {
+  .field--name-title {
+    // Reset the font size so that it's consistent between the node page title
+    // and the node title in views.
+    font-size: 100%;
+  }
+
+  // Since the title is an <svg>, we have to use CSS filters to get a drop
   // shadow that matches the title lettering outlines.
 
   // Drop shadow, extends downwards.
@@ -188,100 +191,57 @@ $node-project-stacking-order: top-shadow, title, content;
     $depth: $fancy-heading-shadow-depth-small
   );
 
-  canvas {
-    // Drop shadow, centered to give ambient shadow effect.
-    @include material-shadow-filter-ambient(
-      $depth: $fancy-heading-shadow-depth-small
-    );
-
-    @include on-dark-colour-scheme {
-      // On dark colour scheme, just invert equal to the lightness of the media
-      // field background colour. Don't add a drop shadow as that'll end up
-      // getting inverted as well and will look wrong.
-      filter: #{'invert(' +
-        lightness($media-field-background-colour-on-dark) +
-      ')'};
-    }
-  }
-
   @include media('>=fancy-heading-shadow-depth') {
     // Drop shadow, extends downwards.
     @include material-shadow-filter-downward(
       $depth: $fancy-heading-shadow-depth-large
     );
+  }
 
-    canvas {
+  .field__title-svg {
+    // Drop shadow, centered to give ambient shadow effect.
+    @include material-shadow-filter-ambient(
+      $depth: $fancy-heading-shadow-depth-small
+    );
+
+    @include media('>=fancy-heading-shadow-depth') {
       // Drop shadow, centered to give ambient shadow effect.
       @include material-shadow-filter-ambient(
         $depth: $fancy-heading-shadow-depth-large
       );
-
-      @include on-dark-colour-scheme {
-        // On dark colour scheme, just invert equal to the lightness of the
-        // media field background colour. Don't add a drop shadow as that'll end
-        // up getting inverted as well and will look wrong.
-        filter: #{'invert(' +
-          lightness($media-field-background-colour-on-dark) +
-        ')'};
-      }
     }
   }
 }
 
-// Styles applied when a node has a <canvas> title with text that can't fit in
-// the given space.
-@include node-project-title('--has-overflow-canvas-title', false) {
-  $fade-out-width: 1.5rem;
+.node--type-project .node__title {
+  line-height: 0;
 
-  // If text is longer than what we can fit in the canvas, add a gradient
-  // overlay to fade out the text on the right side of the title.
-  @supports (pointer-events: none) {
-    &::after {
-      content:  '';
-
-      position: absolute;
-
-      top:    0;
-      bottom: 0;
-      left:   0;
-      right:  0;
-
-      background-image: linear-gradient(
-        to left, $background-colour, transparent $fade-out-width
-      );
-
-      // Allow users to click/tap the title below.
-      pointer-events:   none;
-    }
+  :link {
+    // Allows link to shrink-wrap the <svg> so that it's hitbox/clickable area
+    // matches the width of the <svg> and doesn't have phantom clickable space
+    // after the title ends.
+    display: inline-block;
   }
+}
 
-  // If mask-image with a gradient is supported, use that instead.
-  $mask-gradient: linear-gradient(to left, transparent, black $fade-out-width);
-  @supports (mask-image: $mask-gradient) {
-    mask-image: $mask-gradient;
-
-    // Hide the background-image gradient element.
-    &::after {
-      display: none;
-    }
-  }
+.font-loaded-furore .layout-container .node--type-project .node__title :link {
+  // Undo _typography.scss
+  padding-bottom: 0;
 }
 
 .node--type-project .node__content {
-  // Remove the top margin on node content.
-  @include node-project-supports-flex-ordering {
-    margin-top: 0;
-  }
-
   position: relative;
 
   z-index: index($node-project-stacking-order, content);
+
+  // Remove the top margin on node content.
+  margin-top: 0;
 }
 
 // This re-orders the content region to place the local tasks block above the
 // title, so the title is sitting directly above the top of the node.
 .page-node-type-project {
-  @include node-project-supports-flex-ordering {
+  @supports (flex-direction: column) and (order: 1) {
     .region-content {
       display:        flex;
       flex-direction: column;

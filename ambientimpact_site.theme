@@ -5,6 +5,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Template\Attribute;
 use Symfony\Component\DomCrawler\Crawler;
+use Drupal\ambientimpact_site\HeadingTextToSVG;
 
 /**
  * Prepares variables for field_project_link templates.
@@ -96,8 +97,14 @@ function ambientimpact_site_preprocess_field__field_web_tags(
  * as the Furore font does not support those and the browser would fall back to
  * another font, which would look out of place.
  *
+ * This generates <svg> elements containing <path>s of project node titles while
+ * preserving the title text for assistive software such as screen readers.
+ *
  * @see https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Language%21language.api.php/group/transliteration
  *   Documentation and example of how to transliterate.
+ *
+ * @see \Drupal\ambientimpact_site\HeadingTextToSVG::generate()
+ *   Class and method that generates the title <svg>s.
  *
  * @todo Can this be moved to a preprocess function targetted only at this
  * field? E.g. ambientimpact_site_preprocess_field__title? That variation
@@ -124,6 +131,37 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
           $item['content']['#context']['value'], $langCode
         );
     }
+  }
+
+  // Generate <svg> elements of project node titles.
+  if (
+    $variables['field_name'] === 'title' &&
+    $variables['element']['#entity_type'] === 'node' &&
+    $variables['element']['#bundle'] === 'project'
+  ) {
+    $title = $variables['items'][0]['content']['#context']['value'];
+
+    $SVGMarkup = HeadingTextToSVG::generate(
+      $title,
+      [
+        'class'       => 'field__title-svg',
+        // Entirely hidden by default if stylesheets are not applied.
+        'style'       => 'display: none;',
+        // Hidden from the accessibility tree as it exists for purely visual
+        // reasons. The original text is picked up and used in screen readers,
+        // for example.
+        'aria-hidden' => 'true',
+      ]
+    );
+
+    // Alter the inline_template to wrap the existing text in an element and
+    // append the generated <svg> markup.
+    //
+    // @todo Is this the best way to do this, or is there a best practices way?
+    $variables['items'][0]['content']['#template'] =
+      '<span class="field__title-text">' .
+        $variables['items'][0]['content']['#template'] .
+      '</span>' . $SVGMarkup;
   }
 }
 
@@ -208,17 +246,6 @@ function ambientimpact_site_preprocess_page_title(&$variables) {
       '#bundle'   => 'core',
       '#text'     => $variables['title'],
     ];
-  }
-}
-
-/**
- * Prepares variables for node templates.
- *
- * This attaches the 'ambientimpact_site/project' library to 'project' nodes.
- */
-function ambientimpact_site_preprocess_node(&$variables) {
-  if ($variables['node']->getType() === 'project') {
-    $variables['#attached']['library'][] = 'ambientimpact_site/project';
   }
 }
 
