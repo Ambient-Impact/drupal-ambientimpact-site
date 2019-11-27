@@ -9,6 +9,50 @@
 ///
 $node-project-stacking-order: top-shadow, title, content;
 
+///
+/// Project node title link colour on light backgrounds when not interacted.
+///
+$node-project-title-link-normal-colour-on-light:
+  $media-field-background-colour-on-light;
+
+///
+/// Project node title link colour on light backgrounds when hovered/focused.
+///
+$node-project-title-link-hover-colour-on-light: mix(
+  $media-field-background-colour-on-light,
+  $background-colour-light,
+  70%
+);
+
+///
+/// Project node title link colour on light backgrounds when activated.
+///
+/// @see {function} get-link-active-colour
+///
+$node-project-title-link-active-colour-on-light: auto;
+
+///
+/// Project node title link colour on dark backgrounds when not interacted.
+///
+$node-project-title-link-normal-colour-on-dark:
+  $media-field-background-colour-on-dark;
+
+///
+/// Project node title link colour on dark backgrounds when hovered/focused.
+///
+$node-project-title-link-hover-colour-on-dark: mix(
+  $media-field-background-colour-on-dark,
+  $foreground-colour-on-dark,
+  50%
+);
+
+///
+/// Project node title link colour on dark backgrounds when activated.
+///
+/// @see {function} get-link-active-colour
+///
+$node-project-title-link-active-colour-on-dark: auto;
+
 @include add-breakpoints((
   // The viewport width at which project titles switch between having a
   // responsive width that never overflows the layout width (wider than this
@@ -214,13 +258,48 @@ $node-project-stacking-order: top-shadow, title, content;
 }
 
 .node--type-project .node__title {
+  // Basically remove all line-height so that we don't get any extra space above
+  // and below the heading.
   line-height: 0;
 
-  :link {
+  :link, :visited {
     // Allows link to shrink-wrap the <svg> so that it's hitbox/clickable area
     // matches the width of the <svg> and doesn't have phantom clickable space
     // after the title ends.
     display: inline-block;
+
+    @include link-colours(
+      $background:      $background-colour-light,
+
+      $normal-on-light: $node-project-title-link-normal-colour-on-light,
+      $hover-on-light:  $node-project-title-link-hover-colour-on-light,
+      $active-on-light: $node-project-title-link-active-colour-on-light,
+
+      $normal-on-dark:  $node-project-title-link-normal-colour-on-dark,
+      $hover-on-dark:   $node-project-title-link-hover-colour-on-dark,
+      $active-on-dark:  $node-project-title-link-active-colour-on-dark,
+    );
+
+    @include on-dark-colour-scheme {
+      @include link-colours(
+        $background:      $background-colour-dark,
+
+        $normal-on-light: $node-project-title-link-normal-colour-on-light,
+        $hover-on-light:  $node-project-title-link-hover-colour-on-light,
+        $active-on-light: $node-project-title-link-active-colour-on-light,
+
+        $normal-on-dark:  $node-project-title-link-normal-colour-on-dark,
+        $hover-on-dark:   $node-project-title-link-hover-colour-on-dark,
+        $active-on-dark:  $node-project-title-link-active-colour-on-dark,
+      );
+    }
+
+    // Remove any underlines.
+    text-decoration: none;
+
+    @if $use-fancy-link-underlines == true {
+      @include remove-fancy-link-underlines;
+    }
   }
 }
 
