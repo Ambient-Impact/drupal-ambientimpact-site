@@ -27,7 +27,11 @@ $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
     $shadow-settings: (false, true, true);
   }
 
-  margin:   $general-spacing      0;
+  // Don't set horizontal margins as that needs to be left up to the base styles
+  // to centre this horizontally, if need be.
+  margin-top:     $general-spacing;
+  margin-bottom:  $general-spacing;
+
   padding:  $media-field-spacing  0;
 
   @include set-colours(
