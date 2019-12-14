@@ -180,6 +180,9 @@ $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
 // Entity reference fields that contain media entities.
 .field--name-field-animated-gifs,
 .field--name-field-images,
+.field--name-field-remote-video,
+// @todo remove this when .field--name-field-remote-video is media reference.
+.field--name-field-remote-video-media,
 // Video fields.
 .field--type-video-embed-field {
   &:not(.form-wrapper) {
