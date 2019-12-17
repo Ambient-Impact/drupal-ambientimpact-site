@@ -116,14 +116,18 @@ $site-name-height: 83.997;
     }
   }
 
-  &__svg {
-    display:  block;
+  // Hide the actual heading text if it's been wrapped in this element. Note
+  // that the text is still visible in the accessibility tree for assistive
+  // software like screen readers. The <svg> title has aria-hidden="true", as
+  // it exists for purely visual reasons.
+  &__text {
+    @include hide-me;
+  }
 
-    // This prevents the browser from showing the title attribute from the <svg>
-    // or the <title> tag within the <svg> as the tooltip, and forces it to use
-    // the one on the parent link instead, which is what we want for users not
-    // using a screen reader (which can and will see the descriptive text).
-    pointer-events: none;
+  &__svg {
+    // Override the inline display: none, which exists in case stylesheets don't
+    // load for whatever reason.
+    display: block !important;
 
     // This causes the SVG paths to use the link colours, including the
     // hover/focus colours.
