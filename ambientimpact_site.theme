@@ -38,6 +38,13 @@ function ambientimpact_site_preprocess_field__field_project_link(
       '#bundle'   => 'libricons',
       '#text'     => $text,
     ];
+
+    // Replace the no title class with the one indicating there is a title,
+    // since we added it programmatically. This overrides
+    // ambientimpact_base_preprocess_field().
+    $variables['items'][$key]['attributes']
+      ->removeClass('field__item--link-no-title')
+      ->addClass('field__item--link-has-title');
   }
 }
 
