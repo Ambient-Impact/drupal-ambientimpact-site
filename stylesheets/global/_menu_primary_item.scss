@@ -196,6 +196,11 @@ $menu-primary-item-indicator-thickness:  0.2em;
     }
   }
 
+  // Hide underlines on menu items.
+  .menu-item a {
+    text-decoration: none;
+  }
+
   .menu-item > a, // Specificity for colours.
   .menu-item > button {
     position: relative;
