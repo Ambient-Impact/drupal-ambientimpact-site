@@ -193,16 +193,16 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 ///   The amount to extend the sub-menu portion of the polygon to the left and
 ///   right past the edges of the menu-item's bounding box.
 ///
-/// @param {Number} $height [25em]
+/// @param {Number} $height [35em]
 ///   The amount to extend the sub-menu portion of the polygon downwards past
 ///   the bottom edge of the menu-item's bounding box.
 ///
 /// @return {String}
-///   The polygon() declaration as described in this functions description.
+///   The polygon() declaration as described in this function's description.
 ///
 @function menu-primary-clip-path(
   $width:   10em,
-  $height:  25em
+  $height:  35em
 ) {
   @return polygon(
     // Note the - 1px in the Y axis: this is to fix rounding errors where the
