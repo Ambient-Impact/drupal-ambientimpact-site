@@ -3,7 +3,7 @@ description: The theme used for ambientimpact.com.
 type: theme
 base theme: ambientimpact_base
 package: Ambient.Impact
-screenshot: ambientimpact_site.screenshot.png
+screenshot: images/screenshot.png
 core: 8.x
 
 # These are identitical to those in ambientimpact_base, duplicated here because
