@@ -2,8 +2,8 @@
 <browserconfig>
   <msapplication>
     <tile>
-      <square150x150logo src="/themes/ambientimpact/ambientimpact_site/images/icons/windows-tile-150x150.png?v=1"/>
-      <square310x310logo src="/themes/ambientimpact/ambientimpact_site/images/icons/windows-tile-310x310.png?v=1"/>
+      <square150x150logo src="/themes/ambientimpact/ambientimpact_site/images/icons/icon_windows_150.png?v=1"/>
+      <square310x310logo src="/themes/ambientimpact/ambientimpact_site/images/icons/icon_windows_310.png?v=1"/>
       <TileColor>#c07300</TileColor>
     </tile>
   </msapplication>
