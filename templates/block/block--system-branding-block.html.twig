@@ -7,13 +7,36 @@
  * Each branding element variable (logo, name, slogan) is only available if
  * enabled in the block configuration.
  *
- * This is copied from the Classy core theme with the following changes:
+ * This overrides the ambientimpact_base template with the following changes:
+ *
  * - site_name is now wrapped in an <svg>, which is a stylized "Ambient.Impact".
  *
  * Available variables:
+ *
  * - site_logo: Logo for site as defined in Appearance or theme settings.
+ *
+ * - site_logo_link_attributes: An Attributes object containing attributes for
+ *   the site logo link.
+ *
  * - site_name: Name for site as defined in Site information settings.
+ *
+ * - site_name_link_attributes: An Attributes object containing attributes for
+ *   the site name link.
+ *
  * - site_slogan: Slogan for site as defined in Site information settings.
+ *
+ * - content: Array containing 'site_logo', 'site_name', and 'site_slogan'
+ *   render arrays.
+ *
+ * - front_page_url: A Url object pointing to the front page
+ *
+ * @see ambientimpact_base_preprocess_block__system_branding_block()
+ *   Adds the various additional variables listed above and makes appropriate
+ *   changes to existing variables.
+ *
+ * @todo Move the <svg>-based site name to its own template and remove this
+ * template, as the ambientimpact_base template can now render render arrays as
+ * the site name. Use a preprocess function to add the necessary attributes.
  */
 #}
 
@@ -24,67 +47,68 @@
 
 {% block content %}
   {% if site_logo %}
-    <a{{ create_attribute({
-      'class':  ['site-logo'],
-      'href':   path('<front>'),
-      'title':  'Home'|t,
-      'rel':    'home'
-    }) }}>
-      {# @todo Shouldn't this be rendered via image.html.twig? #}
-      <img{{ create_attribute({
-        'src':  site_logo,
-        'alt':  'Home'|t
-      }) }} />
-    </a>
+    {{ link(
+      content.site_logo,
+      front_page_url,
+      site_logo_link_attributes
+        .addClass('site-logo')
+        .setAttribute('rel', 'home')
+        .setAttribute('title', 'Home'|t)
+    ) }}
   {% endif %}
   {% if site_name %}
+    {# Capture the site name content to a variable so that it can be passed to
+       the link() function. #}
+    {% set site_name_content %}
+      <span class="site-name__text">{{ site_name }}</span>
+      <svg{{ create_attribute({
+        'class':        ['site-name__svg'],
+        'aria-label':   'A stylized "Ambient.Impact"'|t,
+        'xmlns':        'http://www.w3.org/2000/svg',
+        'xmlns:xlink':  'http://www.w3.org/1999/xlink',
+        'xml:space':    'preserve',
+        'version':      '1.1',
+        'x':            '0px',
+        'y':            '0px',
+        'width':        siteNameWidth ~ 'px',
+        'height':       siteNameHeight ~ 'px',
+        'viewBox':      '0 0 ' ~ siteNameWidth ~ ' ' ~ siteNameHeight,
+        'enable-background':
+          'new 0 0 ' ~ siteNameWidth ~ ' ' ~ siteNameHeight,
+        'preserveAspectRatio':  'xMaxYMax meet',
+        'aria-hidden':  'true',
+        'style':        'display: none;'
+      }) }}>
+        <path d="M0 83.997V25.319L25.079 0h50.278v83.997H58.678V58.917H16.799v25.079H0zM58.678 42.118V16.799H33.479L16.799 33.719v8.399H58.678z"/>
+        <path d="M87.358 83.997V0h16.799l29.279 40.678L163.195 0h16.199v83.997h-16.799V27.359l-21.959 32.279h-14.039l-22.439-32.279v56.638H87.358z"/>
+        <path d="M191.397 83.997V0h67.077l8.279 8.52v25.199l-8.279 8.399 8.279 8.4v25.199l-8.279 8.28H191.397zM250.075 33.719V16.799h-41.878v16.919H250.075zM250.075 67.197V50.518h-41.878v16.679H250.075z"/>
+        <path d="M278.757 83.997V0h16.799v83.997H278.757z"/>
+        <path d="M307.556 83.997V0h71.276v16.799h-54.478v16.919h50.278v16.799h-50.278v16.679h54.478v16.799H307.556z"/>
+        <path d="M448.313 83.997l-41.879-56.038v56.038h-16.799V0h16.799l41.879 55.918V0h16.679v83.997H448.313z"/>
+        <path d="M502.793 83.997V16.799h-29.398V0h75.356v16.799h-29.159v67.197H502.793z"/>
+        <path d="M537.955 67.197h16.799v16.799h-16.799V67.197z"/>
+        <path d="M565.553 83.997V0h16.799v83.997H565.553z"/>
+        <path d="M594.352 83.997V0h16.799l29.279 40.678L670.188 0h16.199v83.997h-16.8V27.359l-21.959 32.279H633.59L611.15 27.359v56.638H594.352z"/>
+        <path d="M698.391 83.997V0h67.077l8.279 8.52v41.999l-8.279 8.399h-50.278v25.079H698.391zM757.068 42.118V16.799h-41.879v25.319H757.068z"/>
+        <path d="M783.349 83.997V25.319L808.428 0h50.277v83.997h-16.679V58.917h-41.878v25.079H783.349zM842.026 42.118V16.799h-25.199l-16.679 16.919v8.399H842.026z"/>
+        <path d="M878.987 83.997l-8.279-8.28V8.52L878.987 0h58.798l8.279 8.52v16.68h-16.679v-8.4h-41.879v50.398h41.879v-8.28h16.679v16.799l-8.279 8.28H878.987z"/>
+        <path d="M982.665 83.997V16.799h-29.399V0h75.357v16.799h-29.159v67.197H982.665z"/>
+      </svg>
+    {% endset %}
     <div{{ create_attribute({
-        'class':  ['site-name', 'site-name--has-svg']
-      }) }}>
-      <a{{ create_attribute({
-        'class':  ['site-name__link'],
-        'href':   path('<front>'),
-        'title':  'Home'|t,
-        'rel':    'home'
-      }) }}>
-        <span class="site-name__text">{{ site_name }}</span>
-        <svg{{ create_attribute({
-          'class':        ['site-name__svg'],
-          'aria-label':   'A stylized "Ambient.Impact"'|trans,
-          'xmlns':        'http://www.w3.org/2000/svg',
-          'xmlns:xlink':  'http://www.w3.org/1999/xlink',
-          'xml:space':    'preserve',
-          'version':      '1.1',
-          'x':            '0px',
-          'y':            '0px',
-          'width':        siteNameWidth ~ 'px',
-          'height':       siteNameHeight ~ 'px',
-          'viewBox':      '0 0 ' ~ siteNameWidth ~ ' ' ~ siteNameHeight,
-          'enable-background':
-            'new 0 0 ' ~ siteNameWidth ~ ' ' ~ siteNameHeight,
-          'preserveAspectRatio':  'xMaxYMax meet',
-          'aria-hidden':  'true',
-          'style':        'display: none;'
-        }) }}>
-          <path d="M0 83.997V25.319L25.079 0h50.278v83.997H58.678V58.917H16.799v25.079H0zM58.678 42.118V16.799H33.479L16.799 33.719v8.399H58.678z"/>
-          <path d="M87.358 83.997V0h16.799l29.279 40.678L163.195 0h16.199v83.997h-16.799V27.359l-21.959 32.279h-14.039l-22.439-32.279v56.638H87.358z"/>
-          <path d="M191.397 83.997V0h67.077l8.279 8.52v25.199l-8.279 8.399 8.279 8.4v25.199l-8.279 8.28H191.397zM250.075 33.719V16.799h-41.878v16.919H250.075zM250.075 67.197V50.518h-41.878v16.679H250.075z"/>
-          <path d="M278.757 83.997V0h16.799v83.997H278.757z"/>
-          <path d="M307.556 83.997V0h71.276v16.799h-54.478v16.919h50.278v16.799h-50.278v16.679h54.478v16.799H307.556z"/>
-          <path d="M448.313 83.997l-41.879-56.038v56.038h-16.799V0h16.799l41.879 55.918V0h16.679v83.997H448.313z"/>
-          <path d="M502.793 83.997V16.799h-29.398V0h75.356v16.799h-29.159v67.197H502.793z"/>
-          <path d="M537.955 67.197h16.799v16.799h-16.799V67.197z"/>
-          <path d="M565.553 83.997V0h16.799v83.997H565.553z"/>
-          <path d="M594.352 83.997V0h16.799l29.279 40.678L670.188 0h16.199v83.997h-16.8V27.359l-21.959 32.279H633.59L611.15 27.359v56.638H594.352z"/>
-          <path d="M698.391 83.997V0h67.077l8.279 8.52v41.999l-8.279 8.399h-50.278v25.079H698.391zM757.068 42.118V16.799h-41.879v25.319H757.068z"/>
-          <path d="M783.349 83.997V25.319L808.428 0h50.277v83.997h-16.679V58.917h-41.878v25.079H783.349zM842.026 42.118V16.799h-25.199l-16.679 16.919v8.399H842.026z"/>
-          <path d="M878.987 83.997l-8.279-8.28V8.52L878.987 0h58.798l8.279 8.52v16.68h-16.679v-8.4h-41.879v50.398h41.879v-8.28h16.679v16.799l-8.279 8.28H878.987z"/>
-          <path d="M982.665 83.997V16.799h-29.399V0h75.357v16.799h-29.159v67.197H982.665z"/>
-        </svg>
-      </a>
+      'class':  ['site-name', 'site-name--has-svg']
+    }) }}>
+      {{ link(
+        site_name_content,
+        front_page_url,
+        site_name_link_attributes
+          .setAttribute('rel', 'home')
+          .setAttribute('title', 'Home'|t)
+          .addClass('site-name__link')
+      ) }}
     </div>
   {% endif %}
   {% if site_slogan %}
-    <div class="site-slogan">{{ site_slogan }}</div>
+    <div class="site-slogan">{{ content.site_slogan }}</div>
   {% endif %}
 {% endblock %}
