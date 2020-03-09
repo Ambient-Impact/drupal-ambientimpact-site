@@ -47,14 +47,16 @@
 
 {% block content %}
   {% if site_logo %}
-    {{ link(
-      content.site_logo,
-      front_page_url,
-      site_logo_link_attributes
-        .addClass('site-logo')
-        .setAttribute('rel', 'home')
-        .setAttribute('title', 'Home'|t)
-    ) }}
+    <div class="site-logo">
+      {{ link(
+        content.site_logo,
+        front_page_url,
+        site_logo_link_attributes
+          .addClass('site-logo__link')
+          .setAttribute('rel', 'home')
+          .setAttribute('title', 'Home'|t)
+      ) }}
+    </div>
   {% endif %}
   {% if site_name %}
     {# Capture the site name content to a variable so that it can be passed to
