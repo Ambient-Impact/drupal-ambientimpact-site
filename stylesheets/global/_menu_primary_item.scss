@@ -168,6 +168,8 @@ $menu-primary-item-indicator-thickness:  0.2em;
     list-style: none;
 
     @include on-icon-container {
+      @include set-icon-display(block);
+
       @include set-icon-vertical-alignment($align: centre);
       @include set-icon-size(1.2em);
 
