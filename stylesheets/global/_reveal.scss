@@ -111,6 +111,9 @@ $site-revealed:
   $site-reveal-overlay-animation-delay +
   ($reveal-overlay-animation-duration / 2);
 
+///
+/// Site reveal overlay keyframes.
+///
 @keyframes reveal-overlay {
   0% {
     opacity:        1;
