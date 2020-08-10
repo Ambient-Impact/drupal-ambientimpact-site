@@ -2,7 +2,7 @@
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Url;
-use Drupal\Core\Render\Markup;
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Template\Attribute;
 use Symfony\Component\DomCrawler\Crawler;
 use Drupal\ambientimpact_site\HeadingTextToSVG;
@@ -218,10 +218,15 @@ function ambientimpact_site_preprocess_views_view_field(&$variables) {
     )->getComponentInstance('link.image')
       ->processLink($linkElement);
 
-    // Replace the term name with the rendered icon + text. We must use Markup
-    // here so that it gets output as HTML, as a string would be escaped by
-    // Drupal's renderer.
-    $variables['output'] = Markup::create($crawler->filter('body')->html());
+    // Replace the term name with the rendered icon + text. We must use a class
+    // that implements \Drupal\Component\Render\MarkupInterface here so that it
+    // gets output as HTML, as a plain string would be escaped by Drupal's
+    // renderer. In this case, \Drupal\Component\Render\FormattableMarkup does
+    // the job but \Drupal\Core\StringTranslation\TranslatableMarkup would also
+    // work if translation is needed.
+    $variables['output'] = new FormattableMarkup(
+      $crawler->filter('body')->html(), []
+    );
   }
 }
 
