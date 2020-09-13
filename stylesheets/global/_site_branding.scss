@@ -89,7 +89,6 @@ $site-name-height: 83.997;
     // This uses the padding-bottom technique to give the link the intrinsic
     // ratio of the <svg>, while allowing it scale correctly and without any
     // extra space above it on small screens.
-    // @todo Can the intrinsic ratio component handle this for us?
     #{$self}--has-svg & {
       display:  block;
 
