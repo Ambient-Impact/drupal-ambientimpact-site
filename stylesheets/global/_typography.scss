@@ -32,7 +32,7 @@
     // Remove the underline crop as Furore has no descenders but the
     // underline occasionally gets cropped a bit regardless, depending on
     // the font size.
-    :link, :visited {
+    :any-link {
       @include text-underline-crop(transparent);
     }
     @include abbr {
@@ -73,7 +73,7 @@
   }
 
   .font-loaded-furore .layout-container & {
-    :link, :visited {
+    :any-link {
       @include furore-heading-underline-adjust;
     }
     @include abbr {
@@ -95,7 +95,7 @@
 }
 
 @include headings($from: 1, $to: 2) {
-  :link, :visited {
+  :any-link {
     .font-loaded-furore .layout-container & {
       // Make fancy link underlines thicker for these as they have a large
       // font size. Setting this as pixels avoids blurry rounding that

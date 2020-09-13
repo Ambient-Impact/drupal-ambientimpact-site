@@ -262,7 +262,7 @@ $node-project-title-link-active-colour-on-dark: auto;
   // and below the heading.
   line-height: 0;
 
-  :link, :visited {
+  :any-link {
     // Allows link to shrink-wrap the <svg> so that it's hitbox/clickable area
     // matches the width of the <svg> and doesn't have phantom clickable space
     // after the title ends.

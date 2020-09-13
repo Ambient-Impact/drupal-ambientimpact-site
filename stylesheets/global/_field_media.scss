@@ -44,7 +44,7 @@ $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
     $shadow:  $shadow-settings
   );
 
-  :link, :visited {
+  :any-link {
     @include link-colours($media-field-background-colour-on-light);
   }
 
@@ -55,7 +55,7 @@ $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
       $shadow:  $shadow-settings
     );
 
-    :link, :visited {
+    :any-link {
       @include link-colours($media-field-background-colour-on-dark);
     }
   }
