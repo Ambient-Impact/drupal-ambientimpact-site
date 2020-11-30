@@ -4,7 +4,6 @@ type: theme
 base theme: ambientimpact_base
 package: Ambient.Impact
 screenshot: images/screenshot.png
-core: 8.x
 core_version_requirement: ^8 || ^9
 
 # These are identitical to those in ambientimpact_base, duplicated here because
