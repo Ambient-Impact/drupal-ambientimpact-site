@@ -27,9 +27,13 @@ header[role='banner'] {
   &.header--menu-bar-sticky {
     @include headroom-base;
 
+    // Required to prevent the header getting shifted down when viewport
+    // displacement is active and Headroom.js is attached.
+    --headroom-top: 0;
+
     // Sass will place this above the @include above, so we have to use the
     // nuclear option to make sure this is relative.
-    position: relative  !important;
+    position: relative !important;
   }
 
   &.header--unpinned {
