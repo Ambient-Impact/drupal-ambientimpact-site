@@ -111,6 +111,9 @@ function ambientimpact_site_preprocess_field__field_web_tags(
  * referenced. For example, media entities would be indicated by
  * .field--entity-reference-type-media
  *
+ * This limits entity reference fields with a media entity target to two items
+ * when displayed in the compact view mode.
+ *
  * @see https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Language%21language.api.php/group/transliteration
  *   Documentation and example of how to transliterate.
  *
@@ -187,6 +190,18 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
         ->getItemDefinition()->getSetting('target_type')
       );
 
+  }
+
+  // Media entity reference fields in compact view mode are limited to
+  // displaying two items at maximum.
+  if (
+    $variables['field_type'] === 'entity_reference' &&
+    $variables['element']['#items']->getFieldDefinition()
+      ->getItemDefinition()->getSetting('target_type') === 'media' &&
+      $variables['element']['#view_mode'] === 'compact' &&
+      count($variables['items']) > 2
+  ) {
+    $variables['items'] = \array_slice($variables['items'], 0, 2);
   }
 
 }
