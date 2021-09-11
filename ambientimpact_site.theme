@@ -97,7 +97,7 @@ function ambientimpact_site_preprocess_field__field_web_tags(
 }
 
 /**
- * Prepares variables for 'title' field templates.
+ * Prepares variables for field templates.
  *
  * This transliterates titles from various entities (primarily intended for
  * nodes, but others work too) to ASCII-only to avoid characters with accents,
@@ -107,17 +107,22 @@ function ambientimpact_site_preprocess_field__field_web_tags(
  * This generates <svg> elements containing <path>s of project node titles while
  * preserving the title text for assistive software such as screen readers.
  *
+ * This adds a class to entity reference fields indicating the entity type
+ * referenced. For example, media entities would be indicated by
+ * .field--entity-reference-type-media
+ *
  * @see https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Language%21language.api.php/group/transliteration
  *   Documentation and example of how to transliterate.
  *
  * @see \Drupal\ambientimpact_site\HeadingTextToSVG::generate()
  *   Class and method that generates the title <svg>s.
  *
- * @todo Can this be moved to a preprocess function targetted only at this
- * field? E.g. ambientimpact_site_preprocess_field__title? That variation
- * doesn't seem to register.
+ * @todo Can the 'title' field code be moved to a preprocess function targetted
+ *   only at this field? E.g. ambientimpact_site_preprocess_field__title? That
+ *   variation doesn't seem to register.
  */
 function ambientimpact_site_preprocess_field(&$variables, $hook) {
+
   if ($variables['field_name'] === 'title') {
     // Get the current language code.
     $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
@@ -170,6 +175,20 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
         $variables['items'][0]['content']['#template'] .
       '</span>' . $SVGMarkup;
   }
+
+  // If this is an entity reference field, add a class indicating the entity
+  // type it references.
+  if ($variables['field_type'] === 'entity_reference') {
+
+    $variables['attributes']['class'][] =
+      'field--entity-reference-type-' .
+      Html::cleanCssIdentifier($variables['element']['#items']
+        ->getFieldDefinition()
+        ->getItemDefinition()->getSetting('target_type')
+      );
+
+  }
+
 }
 
 /**
