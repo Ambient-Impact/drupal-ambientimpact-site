@@ -13,7 +13,7 @@ $media-field-background-colour-on-light: black !default;
 $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
 
 ///
-/// Common style for media fields.
+/// Common styles for media fields.
 ///
 /// @param {Bool} $use-top-shadow
 ///   Whether to include the top shadow when using mixin
@@ -78,70 +78,73 @@ $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
   }
 }
 
-// Image fields. The selector targets image fields that are not on a media
-// entity inside of an entity reference field. This ensures that fields
-// containing multiple media entities have one full bleed background, rather
-// than one for each media entity.
-*:not(.field--type-entity-reference) > * > *:not(.media) > .field--type-image:not(.form-wrapper) {
-  // Anything that isn't the project images field.
-  &:not(.field--name-field-project-images) {
-    @include media-field;
-  }
-  // Project images field.
-  &.field--name-field-project-images {
-    // Don't use the topmost shadow, as that would show on top of the node
-    // title. See _node_project.scss for the topmost shadow.
-    @include media-field($use-top-shadow: false);
-
-    margin-top: 0;
-    padding:    ($media-field-spacing / 2) 0;
-
-    @include use-grid {
-      padding-top:    $media-field-spacing;
-      padding-bottom: $media-field-spacing;
-    }
-
-    // Remove field item spacing, since we use CSS grid below.
-    @include vertical-spacing-against-previous(
-      '.field__item',
-      $spacing-small: 0,
-      $spacing-large: 0
-    );
-
-    .field__item {
-      padding:  ($media-field-spacing / 2) 0;
-    }
-
-    // If available, use CSS grid to lay out the project images in a two column
-    // grid.
-    @include use-grid {
-      .field__items {
-        display:                grid;
-        grid-template-columns:  1fr 1fr;
-        grid-gap:               $media-field-spacing;
-      }
-
-      .field__item {
-        padding-top:    0;
-        padding-bottom: 0;
-
-        // Odd last items span the whole row, since we know we have exactly two
-        // columns.
-        &:nth-child(odd):last-child {
-          grid-column: 1 / -1;
-        }
-      }
-    }
-  }
+.field--type-image:not(.form-wrapper),
+.field--entity-reference-type-media:not(.field--name-field-project-media) {
+  @include media-field;
 }
 
-// Stand-alone media entity image fields.
-*:not(.field--type-entity-reference) > * > .media > .field--type-image,
-// Entity reference fields that contain media entities.
-.field--name-field-animated-gifs,
-.field--name-field-images,
-.field--name-field-remote-video {
-  &:not(.form-wrapper) {
-    @include media-field;
+// This undoes some of the properties of the media-field mixin to avoid nesting
+// two instances of the mixin. When a media entity is in an entity reference
+// field, we only want the styles to apply to the entity reference field.
+.field--type-entity-reference .field--type-image:not(.form-wrapper) {
+
+  &::before {
+    display: none;
   }
+
+  margin-top:     0;
+  margin-bottom:  0;
+  padding-top:    0;
+  padding-bottom: 0;
+
+}
+
+// The project media field is a special case that adds a two column layout when
+// space allows and accounts for the SVG node titles.
+.field--name-field-project-media {
+
+  // Don't use the topmost shadow, as that would show on top of the node
+  // title. See _node_project.scss for the topmost shadow.
+  @include media-field($use-top-shadow: false);
+
+  margin-top: 0;
+  padding:    ($media-field-spacing / 2) 0;
+
+  @include use-grid {
+    padding-top:    $media-field-spacing;
+    padding-bottom: $media-field-spacing;
+  }
+
+  // Remove field item spacing, since we use CSS grid below.
+  @include vertical-spacing-against-previous(
+    '.field__item',
+    $spacing-small: 0,
+    $spacing-large: 0
+  );
+
+  .field__item {
+    padding:  ($media-field-spacing / 2) 0;
+  }
+
+  // If available, use CSS grid to lay out the project images in a two column
+  // grid.
+  @include use-grid {
+    .field__items {
+      display:                grid;
+      grid-template-columns:  1fr 1fr;
+      grid-gap:               $media-field-spacing;
+    }
+
+    .field__item {
+      padding-top:    0;
+      padding-bottom: 0;
+
+      // Odd last items span the whole row, since we know we have exactly two
+      // columns.
+      &:nth-child(odd):last-child {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
 }
