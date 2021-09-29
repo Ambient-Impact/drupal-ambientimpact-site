@@ -284,7 +284,7 @@ function ambientimpact_site_preprocess_page_title(&$variables) {
     !is_null($term = \Drupal\taxonomy\Entity\Term::load(
       \Drupal::routeMatch()->getRawParameter('taxonomy_term')
     )) &&
-    strpos($term->getVocabularyId(), 'tag') !== false
+    strpos($term->bundle(), 'tag') !== false
   ) {
     $variables['title'] = [
       '#type'     => 'ambientimpact_icon',
