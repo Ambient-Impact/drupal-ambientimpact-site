@@ -122,7 +122,7 @@ $front-page-region-primary-menu-reveal-animation-delay: 0.5s;
 //
 // @see https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
 @media (prefers-reduced-motion: no-preference) {
-  .path-frontpage {
+  .path-frontpage:not(.maintenance-page) {
     // Apply the scroll prevention animation with a delay equal to the durations
     // of most other animations. This works fine in Firefox (both Windows and
     // Android) and Chrome (Windows), but Edge and Chrome on Android refuse to

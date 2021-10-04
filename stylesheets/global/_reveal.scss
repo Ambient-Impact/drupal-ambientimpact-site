@@ -195,7 +195,7 @@ $site-revealed:
   }
 }
 
-.site-name {
+body:not(.maintenance-page) .site-name {
   animation-name:             site-name-reveal;
   animation-duration:         $site-name-reveal-animation-duration;
   animation-timing-function:  $easing-decelerate;
@@ -210,7 +210,7 @@ $site-revealed:
   }
 }
 
-.region-primary-menu .block {
+body:not(.maintenance-page) .region-primary-menu .block {
   animation-name:             primary-menu-block-overflow;
   animation-duration:         $region-primary-menu-block-menu-reveal-duration;
   animation-fill-mode:        backwards;
@@ -234,12 +234,12 @@ $site-revealed:
 
 // This is used to fade in the entire page. Currently used by the front page
 // reveal animations.
-.layout-container::before,
+body:not(.maintenance-page) .layout-container::before,
 // This is used to fade in the page content as it's far more performant than
 // fading in the content itself, presumably because browsers naively animate the
 // whole content area, including the parts that are off-screen - on some pages,
 // there is a substantial amount of content off-screen.
-.region-highlighted::before {
+body:not(.maintenance-page) .region-highlighted::before {
   @supports (pointer-events: none) {
     content: '';
 
@@ -268,7 +268,7 @@ $site-revealed:
     animation-fill-mode:        backwards;
   }
 }
-.region-highlighted::before {
+body:not(.maintenance-page) .region-highlighted::before {
   @supports (pointer-events: none) {
     animation-name:   reveal-overlay;
     animation-delay:  $site-reveal-overlay-animation-delay;
