@@ -296,6 +296,19 @@ function ambientimpact_site_preprocess_page_title(&$variables) {
 }
 
 /**
+ * Prepares variables for maintenance page templates.
+ *
+ * This removes $variables['logo'] because we don't actually have a logo but
+ * Drupal still tries to output an <img> element regardless which points to a
+ * non-existent file.
+ *
+ * @see \template_preprocess_maintenance_page()
+ */
+function ambientimpact_site_preprocess_maintenance_page(array &$variables) {
+  unset($variables['logo']);
+}
+
+/**
  * Prepares variables for image caption formatter templates.
  *
  * This moves the 'title' attribute to the image caption if the caption is empty
