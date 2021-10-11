@@ -192,9 +192,16 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
        */
       var $openMenuItems = $();
 
-      for (var i = $menus.length - 1; i >= 0; i--) {
+      // Wait for the menu overflow component to have finished attaching to
+      // attach the menu drop-down component.
+      $menus.one(
+        'menuOverflowAttached.aiSiteThemeMenuPrimary',
+      function(event) {
+        aiMenuDropDown.attach(this);
+      });
+
+      for (var i = 0; i < $menus.length; i++) {
         aiMenuOverflow.attach($menus[i]);
-        aiMenuDropDown.attach($menus[i]);
       }
 
       /**
@@ -302,9 +309,17 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
 
       data.$overlay[0].aiOverlay.destroy();
 
-      for (var i = data.$menus.length - 1; i >= 0; i--) {
+      data.$menus
+        // Just in case this hasn't been triggered yet.
+        .off('menuOverflowAttached.aiSiteThemeMenuPrimary')
+        .one(
+          'menuOverflowDetached.aiSiteThemeMenuPrimary',
+        function(event) {
+          aiMenuDropDown.detach(this);
+        });
+
+      for (var i = 0; i < $menus.length; i++) {
         aiMenuOverflow.detach(data.$menus[i]);
-        aiMenuDropDown.detach(data.$menus[i]);
       }
 
       var $secondLevelMenuItems =
