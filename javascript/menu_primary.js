@@ -286,6 +286,22 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
           $overlay[0].aiOverlay.hide();
         });
 
+      // Force an update if the Furore font load event is triggered as it's used
+      // for the menu items.
+      $(document).on('fontloaded.aiSiteThemeMenuPrimary', function(
+        event, fontMachineName
+      ) {
+
+        if (fontMachineName !== 'furore') {
+          return;
+        }
+
+        for (var i = $menus.length - 1; i >= 0; i--) {
+          $menus[i].aiMenuOverflow.update(true);
+        }
+
+      });
+
       // Save all our jQuery collections to an object on the layout container
       // for detachment.
       this.siteThemeMenuPrimary = {
@@ -296,6 +312,9 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
       };
     },
     function(context, settings, trigger) {
+
+      $(document).off('fontloaded.aiSiteThemeMenuPrimary');
+
       var data = this.siteThemeMenuPrimary;
 
       data.$primaryMenuRegion
