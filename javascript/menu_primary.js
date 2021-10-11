@@ -302,6 +302,17 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
 
       });
 
+      // Force an update so the overflow takes any changed toggle width into
+      // account.
+      //
+      // @todo Remove this once the menu overflow component reliably accounts
+      //   for toggle swapping.
+      $menus.on(
+        'menuOverflowToggleContentAfterUpdate.aiSiteThemeMenuPrimary',
+      function(event) {
+        this.aiMenuOverflow.update(true);
+      });
+
       // Save all our jQuery collections to an object on the layout container
       // for detachment.
       this.siteThemeMenuPrimary = {
@@ -329,8 +340,11 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
       data.$overlay[0].aiOverlay.destroy();
 
       data.$menus
-        // Just in case this hasn't been triggered yet.
-        .off('menuOverflowAttached.aiSiteThemeMenuPrimary')
+        .off([
+          // Just in case this hasn't been triggered yet.
+          'menuOverflowAttached.aiSiteThemeMenuPrimary',
+          'menuOverflowToggleContentAfterUpdate.aiSiteThemeMenuPrimary'
+        ].join(' '))
         .one(
           'menuOverflowDetached.aiSiteThemeMenuPrimary',
         function(event) {
