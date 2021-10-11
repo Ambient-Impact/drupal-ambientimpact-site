@@ -82,7 +82,6 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryHeadroom', function(
 });
 
 // Add overflow and drop-down support/improvements to the primary menu.
-AmbientImpact.onGlobals(['Modernizr.customproperties'], function() {
 AmbientImpact.on(['menuOverflow', 'menuDropDown', 'overlay'], function(
   aiMenuOverflow, aiMenuDropDown, aiOverlay
 ) {
@@ -112,40 +111,30 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
    */
   var itemStaggerCustomPropertyName = '--menu-item-reveal-transition-delay';
 
-  if (Modernizr.customproperties === true) {
-    /**
-     * Set sub-menu menu item reveal stagger custom properties.
-     *
-     * This is defined if Modernizr.customproperties === true.
-     *
-     * @param {HTMLElement} parentMenuItem
-     *   The parent menu item that has a .menu as a direct descendent,
-     *   containing one or more .menu-item elements.
-     */
-    var setItemStaggerCustomProperties = function(parentMenuItem) {
-      var $menuItems = $(parentMenuItem).find('> .menu > .menu-item');
+  /**
+   * Set sub-menu menu item reveal stagger custom properties.
+   *
+   * @param {HTMLElement} parentMenuItem
+   *   The parent menu item that has a .menu as a direct descendent,
+   *   containing one or more .menu-item elements.
+   */
+  function setItemStaggerCustomProperties(parentMenuItem) {
 
-      for (var i = $menuItems.length - 1; i >= 0; i--) {
-        $menuItems[i].style.setProperty(
-          itemStaggerCustomPropertyName,
-          $menuItems.length - i
-        );
-      }
-    };
-  } else {
     /**
-     * Dummy set sub-menu menu item reveal stagger custom properties.
+     * Sub-menu items to apply the custom properties to.
      *
-     * This is defined once if Modernizr.customproperties !== true to avoid
-     * errors and reduce the work we have to do when a menu is opened, i.e. not
-     * check when the menu is opening.
-     *
-     * @param {HTMLElement} parentMenuItem
-     *   The parent menu item that has a .menu as a direct descendent,
-     *   containing one or more .menu-item elements.
+     * @type {jQuery}
      */
-    var setItemStaggerCustomProperties = function(parentMenuItem) {};
-  }
+    var $menuItems = $(parentMenuItem).find('> .menu > .menu-item');
+
+    for (var i = $menuItems.length - 1; i >= 0; i--) {
+      $menuItems[i].style.setProperty(
+        itemStaggerCustomPropertyName,
+        $menuItems.length - i
+      );
+    }
+
+  };
 
   this.addBehaviour(
     'AmbientImpactSiteThemeMenuPrimary',
@@ -368,6 +357,5 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
       delete this.siteThemeMenuPrimary;
     }
   );
-});
 });
 });

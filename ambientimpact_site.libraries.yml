@@ -14,8 +14,6 @@ global-scripts:
     javascript/global.js: {}
     javascript/menu_primary.js: {}
   dependencies:
-    # Required for menu_primary.js.
-    - core/modernizr
     # Required for the :focus-within polyfill.
     - ambientimpact_core/ally.js
     - ambientimpact_core/framework
