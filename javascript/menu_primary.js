@@ -192,12 +192,20 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
        */
       var $openMenuItems = $();
 
-      // Wait for the menu overflow component to have finished attaching to
-      // attach the menu drop-down component.
       $menus.one(
         'menuOverflowAttached.aiSiteThemeMenuPrimary',
       function(event) {
+
+        // Wait for the menu overflow component to have finished attaching to
+        // attach the menu drop-down component.
         aiMenuDropDown.attach(this);
+
+        // Add stagger custom properties once the menu overflow has been
+        // attached.
+        $(this).children('.menu-item--expanded').each(function() {
+          setItemStaggerCustomProperties(this);
+        });
+
       });
 
       for (var i = 0; i < $menus.length; i++) {
@@ -252,12 +260,6 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
         // usually happens when focus is lost by the open menu, thus closing it
         // automatically.
         .on('headroomUnpin.aiSiteThemeMenuPrimary', headroomUnpinHandler)
-
-        .on('menuDropDownOpening.aiSiteThemeMenuPrimary', function(
-          event, data
-        ) {
-          setItemStaggerCustomProperties(event.target);
-        })
 
         // Add and remove classes on the region and the overlay when a menu is
         // opened or closed, respectively.
@@ -331,7 +333,6 @@ AmbientImpact.addComponent('siteThemeMenuPrimary', function(
       data.$primaryMenuRegion
         .off([
           'headroomUnpin.aiSiteThemeMenuPrimary',
-          'menuDropDownOpening.aiSiteThemeMenuPrimary',
           'menuDropDownOpened.aiSiteThemeMenuPrimary',
           'menuDropDownClosed.aiSiteThemeMenuPrimary',
         ].join(' '))
