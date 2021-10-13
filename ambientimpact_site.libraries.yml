@@ -12,7 +12,11 @@ global-scripts:
   js:
     javascript/fonts.js: {}
     javascript/global.js: {}
-    javascript/menu_primary.js: {}
+    javascript/menu_primary.drop_down.js: {}
+    javascript/menu_primary.headroom.js: {}
+    javascript/menu_primary.overflow.js: {}
+    javascript/menu_primary.overlay.js: {}
+    javascript/menu_primary.stagger.js: {}
   dependencies:
     # Required for the :focus-within polyfill.
     - ambientimpact_core/ally.js
