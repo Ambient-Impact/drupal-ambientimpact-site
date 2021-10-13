@@ -324,3 +324,16 @@ function ambientimpact_site_preprocess_image_caption_formatter(&$variables) {
     $variables['image']['#title'] = '';
   }
 }
+
+/**
+ * Prepares variables for menu templates.
+ *
+ * This attaches our primary menu library to the 'main' menu.
+ */
+function ambientimpact_site_preprocess_menu(array &$variables): void {
+
+  if ($variables['menu_name'] === 'main') {
+    $variables['#attached']['library'][] = 'ambientimpact_site/menu_primary';
+  }
+
+}
