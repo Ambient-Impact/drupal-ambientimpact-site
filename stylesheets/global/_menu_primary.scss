@@ -82,6 +82,27 @@ $menu-primary-background-colour: $ambientimpact-orange;
       justify-content: center;
     }
 
+    // This is the menu overflow measure shadow, which is used to determine what
+    // menu items to show or hide without having to alter the visible menu
+    // unless/until necessary. This prevents visible jank and other undesirable
+    // side effects. Note that the JavaScript takes care of disabling focus/
+    // keyboard interaction and hiding this from the accessibility tree.
+    &--overflow-measure-shadow {
+
+      position: absolute;
+
+      left:   0;
+      right:  0;
+
+      // Required so that menu items don't force the viewport to scroll.
+      overflow: hidden;
+
+      opacity: 0;
+
+      pointer-events: none;
+
+    }
+
     font-size: $menu-primary-font-size-small;
 
     @include media('>=menu-primary-font-size-large') {

@@ -216,7 +216,7 @@ body:not(.maintenance-page) .region-primary-menu .block {
   animation-fill-mode:        backwards;
   animation-delay:            $region-primary-menu-block-menu-reveal-delay;
 
-  > .menu {
+  > .menu:not(.menu--overflow-measure-shadow) {
     animation-name:             primary-menu-block-menu-reveal;
     animation-duration:         $region-primary-menu-block-menu-reveal-duration;
     animation-timing-function:  $easing-standard;
