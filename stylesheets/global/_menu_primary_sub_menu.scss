@@ -351,6 +351,14 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
       margin-left: -($menu-primary-all-overflow-sub-menu-width / 2);
     }
 
+    // When the menu is in all overflow mode, hide sub-menus of the overflow
+    // menu, as they don't look great at the moment with the staggered reveal.
+    //
+    // @todo Remove this when collapsible sub-menus are implemented.
+    &--all-overflow .menu-overflow__menu .menu {
+      display: none;
+    }
+
     // Indent nested menus to indicate hierarchy.
     .menu .menu {
       @include root-conditions(('[dir=ltr]'), 'html') {
