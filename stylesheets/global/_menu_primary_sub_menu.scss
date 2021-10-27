@@ -10,13 +10,6 @@
 $menu-primary-sub-menu-clip-padding: 10px;
 
 ///
-/// Overflow menu width when all items are in overflow.
-///
-/// This implies a narrow viewport, e.g. mobile.
-///
-$menu-primary-all-overflow-sub-menu-width: 100vw;
-
-///
 /// Primary menu sub-menu show transition duration.
 ///
 /// This should be shorter than the hide duration to make the sub-menu feel
@@ -342,13 +335,21 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 
     // When all items are in the overflow menu, centre the overflow menu under
     // the menu bar rather than have it be to one side.
-    &--all-overflow .menu-overflow > .menu {
-      width:  $menu-primary-all-overflow-sub-menu-width;
+    &--all-overflow .menu-overflow {
+      display:        flex;
+      flex-direction: column;
+      align-items:    center;
 
-      left:   50%   !important;
-      right:  auto  !important;
+      &__menu {
+        // Magic value as top: auto; no longer works when overflow menu is
+        // display: flex; and the menu gets pulled up, causing the first menu
+        // item to be hidden under the overflow toggle.
+        //
+        // @todo Figure out how to do this without the magic value.
+        top: 2.95em;
 
-      margin-left: -($menu-primary-all-overflow-sub-menu-width / 2);
+        text-align: center;
+      }
     }
 
     // When the menu is in all overflow mode, hide sub-menus of the overflow
@@ -370,7 +371,7 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
     }
   }
 
-  .menu-overflow > .menu {
+  .menu:not(.menu--all-overflow) > .menu-overflow > .menu {
     @include root-conditions(('[dir=ltr]'), 'html') {
       right: 0;
     }
