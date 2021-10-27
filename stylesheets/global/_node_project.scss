@@ -294,12 +294,6 @@ $node-project-title-link-active-colour-on-dark: auto;
       );
     }
 
-    // Remove any underlines.
-    text-decoration: none;
-
-    @if $use-fancy-link-underlines == true {
-      @include remove-fancy-link-underlines;
-    }
   }
 }
 

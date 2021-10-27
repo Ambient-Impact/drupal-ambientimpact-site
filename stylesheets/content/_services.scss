@@ -116,22 +116,8 @@ $services-overview-icon-reveal-animation-duration: 0.4s;
         $underline-active-on-dark:  $services-overview-link-foreground-colour
       );
 
-      @if $use-fancy-link-underlines == true {
-        @include fancy-link-underlines-link {
-          @include transition-fade-base($props: append(
-            $transition-fade-properties, text-shadow
-          ));
-        }
-      }
-
       @include link-hover {
         @include set-colours($background: $link-hover-colour-on-light);
-
-        @if $use-fancy-link-underlines == true {
-          @include fancy-link-underlines-link {
-            @include transition-fade-active;
-          }
-        }
       }
     }
 

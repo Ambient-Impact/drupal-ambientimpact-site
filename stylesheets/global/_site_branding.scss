@@ -64,9 +64,6 @@ $site-name-height: 83.997;
     @include material-shadow-filter-ambient(
       $depth: $fancy-heading-shadow-depth-small
     );
-
-    // Remove fancy link underlines.
-    @include remove-fancy-link-underlines;
   }
 
   @include media('>=fancy-heading-shadow-depth') {

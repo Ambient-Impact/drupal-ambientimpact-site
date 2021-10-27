@@ -2,6 +2,12 @@
 //   Typography partial
 // -----------------------------------------------------------------------------
 
+:root {
+  // This value achieves nearly identical results in both Firefox and Chrome.
+  // They both round to the nearest whole pixel.
+  --text-decoration-thickness: 0.13em;
+}
+
 // This attempts to mimic the Furore font spacing, weight, and size using the
 // default system font stack, to minimize the amount of shifting that occurs
 // if/when Furore loads and is applied. Note that this is based on Roboto, but
@@ -29,30 +35,6 @@
     font-weight: $font-weight-normal;
   }
 
-  .font-loaded-furore .layout-container & {
-    // Remove the underline crop as Furore has no descenders but the
-    // underline occasionally gets cropped a bit regardless, depending on
-    // the font size.
-    :any-link {
-      @include text-underline-crop(transparent);
-    }
-    @include abbr {
-      @include text-underline-crop(transparent);
-    }
-  }
-}
-
-///
-/// Furore font heading underline adjustment.
-///
-/// This adds a bit of space for the fancy underline so that it has enough space
-/// between it and the text above. This doesn't affect the vertical space inline
-/// elements take up, but does affect their bounding box, thus enlarging it
-/// downwards. This is preferably to simply increasing the underline distance,
-/// which will end up getting clipped if we have to go above 100%.
-///
-@mixin furore-heading-underline-adjust {
-  padding-bottom: 0.1em;
 }
 
 @include headings {
@@ -73,14 +55,6 @@
     font-family: $font-stack;
   }
 
-  .font-loaded-furore .layout-container & {
-    :any-link {
-      @include furore-heading-underline-adjust;
-    }
-    @include abbr {
-      @include furore-heading-underline-adjust;
-    }
-  }
 }
 
 // Awkward nesting to apply vertical spacing against previous for all heading
@@ -93,19 +67,6 @@
     $spacing-small: $content-item-vertical-spacing-small * 1.8,
     $spacing-large: $content-item-vertical-spacing-large * 1.8
   );
-}
-
-@include headings($from: 1, $to: 2) {
-  :any-link {
-    .font-loaded-furore .layout-container & {
-      // Make fancy link underlines thicker for these as they have a large
-      // font size. Setting this as pixels avoids blurry rounding that
-      // we'd often get with ems, etc.
-      @include custom-property(
-        'fancy-link-underline-thickness', 3px
-      );
-    }
-  }
 }
 
 ///

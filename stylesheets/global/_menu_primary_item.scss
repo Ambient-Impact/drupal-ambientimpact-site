@@ -155,10 +155,6 @@ $menu-primary-item-indicator-thickness:  0.2em;
 
     @include menu-item-is-active-path {
       @include menu-primary-item-colours;
-
-      // Remove fancy link underlines. This is here for specificity as the base
-      // link styles also target active path links.
-      @include remove-fancy-link-underlines;
     }
   }
 
@@ -212,9 +208,6 @@ $menu-primary-item-indicator-thickness:  0.2em;
     padding:  $menu-primary-item-padding-y $menu-primary-item-padding-x;
 
     @include menu-primary-item-colours;
-
-    // Remove fancy link underlines.
-    @include remove-fancy-link-underlines;
 
     @include material-ripple;
 
