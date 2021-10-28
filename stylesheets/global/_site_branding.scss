@@ -2,6 +2,9 @@
 //   Site branding
 // -----------------------------------------------------------------------------
 
+@use 'sass:list';
+@use 'sass:math';
+
 ///
 /// The site name <svg> width, in pixels.
 ///
@@ -43,7 +46,7 @@ $site-name-height: 83.997;
 
   position: relative;
 
-  z-index: index($header-stacking-order, site-name);
+  z-index: list.index($header-stacking-order, site-name);
 
   margin-bottom: -1px;
 
@@ -93,7 +96,7 @@ $site-name-height: 83.997;
 
       height:   0;
 
-      padding-bottom: ($site-name-height / $site-name-width) * 100%;
+      padding-bottom: math.div($site-name-height, $site-name-width) * 100%;
 
       & #{$self}__svg {
         position: absolute;

@@ -2,6 +2,9 @@
 //   Media field partial
 // -----------------------------------------------------------------------------
 
+@use 'sass:list';
+@use 'sass:math';
+
 ///
 /// Media field background colour on light backgrounds.
 ///
@@ -10,7 +13,7 @@ $media-field-background-colour-on-light: black !default;
 ///
 /// Media field background colour on dark backgrounds.
 ///
-$media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
+$media-field-background-colour-on-dark: hsl(0, 0%, 30%) !default;
 
 ///
 /// Common styles for media fields.
@@ -40,7 +43,7 @@ $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
 
   @include horizontal-bleed-background(
     $colour:  $media-field-background-colour-on-light,
-    $z-index: index($local-stacking-order, background),
+    $z-index: list.index($local-stacking-order, background),
     $shadow:  $shadow-settings
   );
 
@@ -51,7 +54,7 @@ $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
   @include on-dark-colour-scheme {
     @include horizontal-bleed-background(
       $colour:  $media-field-background-colour-on-dark,
-      $z-index: index($local-stacking-order, background),
+      $z-index: list.index($local-stacking-order, background),
       $shadow:  $shadow-settings
     );
 
@@ -66,7 +69,7 @@ $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
   &.field__item figure {
     position: relative;
 
-    z-index: index($local-stacking-order, content);
+    z-index: list.index($local-stacking-order, content);
   }
 
   img, picture {
@@ -108,7 +111,7 @@ $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
   @include media-field($use-top-shadow: false);
 
   margin-top: 0;
-  padding:    ($media-field-spacing / 2) 0;
+  padding:    math.div($media-field-spacing, 2) 0;
 
   @include use-grid {
     padding-top:    $media-field-spacing;
@@ -123,7 +126,7 @@ $media-field-background-colour-on-dark: hsl(0, 0, 30%) !default;
   );
 
   .field__item {
-    padding:  ($media-field-spacing / 2) 0;
+    padding:  math.div($media-field-spacing, 2) 0;
   }
 
   // If available, use CSS grid to lay out the project images in a two column

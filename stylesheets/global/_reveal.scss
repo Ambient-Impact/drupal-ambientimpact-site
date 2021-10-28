@@ -2,6 +2,8 @@
 //   Reveal animations for all pages
 // -----------------------------------------------------------------------------
 
+@use 'sass:math';
+
 // This animates all the page elements into their normal locations:
 //
 // 1. The primary menu bar and site name fade in at the same time as the site
@@ -99,7 +101,7 @@ $content-reveal-duration: 0.5s;
 ///
 $content-reveal-animation-delay:
   $region-primary-menu-reveal-animation-delay +
-  ($region-primary-menu-reveal-animation-duration / 2);
+  math.div($region-primary-menu-reveal-animation-duration, 2);
 
 ///
 /// The point at which all the site reveal animations are nearly complete.
@@ -109,7 +111,7 @@ $content-reveal-animation-delay:
 ///
 $site-revealed:
   $site-reveal-overlay-animation-delay +
-  ($reveal-overlay-animation-duration / 2);
+  math.div($reveal-overlay-animation-duration, 2);
 
 ///
 /// Site reveal overlay keyframes.
