@@ -2,6 +2,9 @@
 //   Project nodes
 // -----------------------------------------------------------------------------
 
+@use 'sass:color';
+@use 'sass:list';
+
 ///
 /// Project node elements stacking order.
 ///
@@ -18,7 +21,7 @@ $node-project-title-link-normal-colour-on-light:
 ///
 /// Project node title link colour on light backgrounds when hovered/focused.
 ///
-$node-project-title-link-hover-colour-on-light: mix(
+$node-project-title-link-hover-colour-on-light: color.mix(
   $media-field-background-colour-on-light,
   $background-colour-light,
   70%
@@ -40,7 +43,7 @@ $node-project-title-link-normal-colour-on-dark:
 ///
 /// Project node title link colour on dark backgrounds when hovered/focused.
 ///
-$node-project-title-link-hover-colour-on-dark: mix(
+$node-project-title-link-hover-colour-on-dark: color.mix(
   $media-field-background-colour-on-dark,
   $foreground-colour-on-dark,
   50%
@@ -181,8 +184,8 @@ $node-project-title-link-active-colour-on-dark: auto;
         // Explanation of why we use the background colour with zero opacity
         // instead of 'transparent'.
         background-image: linear-gradient(
-          transparentize($background-colour-dark, 1),
-          mix($background-colour-dark, black, 25%)
+          color.adjust($background-colour-dark, $alpha: -1),
+          color.mix($background-colour-dark, black, 25%)
         );
       }
     }
@@ -197,7 +200,7 @@ $node-project-title-link-active-colour-on-dark: auto;
     $shadow-element-height: 1rem;
 
     @include horizontal-bleed-background-top-peek-shadow(
-      $z-index: index($node-project-stacking-order, top-shadow),
+      $z-index: list.index($node-project-stacking-order, top-shadow),
       $depth:   $full-bleed-panel-shadow-depth,
       $height:  $shadow-element-height
     );
@@ -216,7 +219,7 @@ $node-project-title-link-active-colour-on-dark: auto;
 .node--type-project .node__title :link {
   position: relative;
 
-  z-index: index($node-project-stacking-order, title);
+  z-index: list.index($node-project-stacking-order, title);
 }
 
 .page-node-type-project:not(.page-node-edit) .page-title,
@@ -305,7 +308,7 @@ $node-project-title-link-active-colour-on-dark: auto;
 .node--type-project .node__content {
   position: relative;
 
-  z-index: index($node-project-stacking-order, content);
+  z-index: list.index($node-project-stacking-order, content);
 
   // Remove the top margin on node content.
   margin-top: 0;

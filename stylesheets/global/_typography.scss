@@ -2,6 +2,8 @@
 //   Typography partial
 // -----------------------------------------------------------------------------
 
+@use 'sass:color';
+
 :root {
   // This value achieves nearly identical results in both Firefox and Chrome.
   // They both round to the nearest whole pixel.
@@ -45,7 +47,7 @@
   // feels a bit overpowering.
   @include on-dark-colour-scheme {
     &:not(.content-popup__title) {
-      color: mix($foreground-colour-on-dark, $background-colour-dark, 80%);
+      color: color.mix($foreground-colour-on-dark, $background-colour-dark, 80%);
     }
   }
 

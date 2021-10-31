@@ -2,6 +2,8 @@
 //   Paragraph entity styles
 // -----------------------------------------------------------------------------
 
+@use 'sass:color';
+
 // This provides styles for the 'compact' Paragraph view mode, which is
 // currently only used on the front page. This view mode's styles restrict the
 // height of the first Paragraph item and applies a linear gradient that fades
@@ -45,7 +47,7 @@ $paragraph-compact-max-height: 7em;
     ///   fade to transparent, similar to how Photoshop does its gradients.
     ///
     $gradient-light: linear-gradient(
-      transparentize($background-colour-light, 1),
+      color.adjust($background-colour-light, $alpha: -1),
       $easing-decelerate,
       $background-colour-light
     );
@@ -62,7 +64,7 @@ $paragraph-compact-max-height: 7em;
     ///   fade to transparent, similar to how Photoshop does its gradients.
     ///
     $gradient-dark: linear-gradient(
-      transparentize($background-colour-dark, 1),
+      color.adjust($background-colour-dark, $alpha: -1),
       $easing-decelerate,
       $background-colour-dark
     );

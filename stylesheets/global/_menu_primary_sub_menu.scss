@@ -2,6 +2,8 @@
 //   Primary site menu - sub-menus
 // -----------------------------------------------------------------------------
 
+@use 'sass:list';
+
 ///
 /// The amount to allow for drop shadows when clipping sub-menus.
 ///
@@ -262,7 +264,7 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
           left:     -1px;
           right:    -1px;
 
-          z-index:  index($local-stacking-order, background);
+          z-index:  list.index($local-stacking-order, background);
 
           background-color: $menu-primary-background-colour;
         }
@@ -272,13 +274,13 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
       > button {
         position: relative;
 
-        z-index:  index($local-stacking-order, content);
+        z-index:  list.index($local-stacking-order, content);
       }
 
       > .menu {
         position: absolute;
 
-        z-index:  index($local-stacking-order, menu);
+        z-index:  list.index($local-stacking-order, menu);
 
         background-color: $menu-primary-background-colour;
 

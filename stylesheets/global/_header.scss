@@ -2,6 +2,8 @@
 //   Site header
 // -----------------------------------------------------------------------------
 
+@use 'sass:list';
+
 ///
 /// Header stacking order. Later in the list means a higher z-index.
 ///
@@ -17,7 +19,7 @@ header[role='banner'] {
   // bar.
   &::after {
     @include horizontal-bleed-background-top-peek-shadow(
-      $z-index: index($header-stacking-order, header-top-shadow),
+      $z-index: list.index($header-stacking-order, header-top-shadow),
       $depth:   $full-bleed-panel-shadow-depth
     );
   }
@@ -44,6 +46,6 @@ header[role='banner'] {
   // ordering of the top shadow, putting it on top of the site name.
   .region-header {
     position: relative;
-    z-index:  index($header-stacking-order, region-header);
+    z-index:  list.index($header-stacking-order, region-header);
   }
 }

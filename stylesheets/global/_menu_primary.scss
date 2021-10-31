@@ -2,6 +2,8 @@
 //   Primary site menu
 // -----------------------------------------------------------------------------
 
+@use 'sass:list';
+
 ///
 /// Primary menu item font size when large font size breakpoint doesn't match.
 ///
@@ -33,7 +35,7 @@ $menu-primary-background-colour: $ambientimpact-orange;
 
   @include horizontal-bleed-background(
     $colour:  $menu-primary-background-colour,
-    $z-index: index($local-stacking-order, background),
+    $z-index: list.index($local-stacking-order, background),
     // Don't use the topmost shadow, as that would show on top of the site
     // title. See _header.scss for the topmost shadow.
     $shadow:  (false, true, true)
@@ -58,7 +60,7 @@ $menu-primary-background-colour: $ambientimpact-orange;
 
     // See _menu_primary_item.scss for margin-left and margin-right.
 
-    z-index:    index($local-stacking-order, content);
+    z-index:    list.index($local-stacking-order, content);
 
     // This allows the menu items to scroll horizontally when the menu has not
     // been enhanced with the overflow functionality or that fails to correctly

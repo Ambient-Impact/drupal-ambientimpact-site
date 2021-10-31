@@ -2,6 +2,8 @@
 //   Scroll bar colours
 // -----------------------------------------------------------------------------
 
+@use 'sass:color';
+
 // This gives scrollbars custom colours. Note that this is only supported in
 // Firefox using the standard properties. Blink doesn't seem to want to apply
 // ::-webkit-* properties to the viewport scrollbar, so that's left out.
@@ -15,7 +17,7 @@
 /// scroll position.
 ///
 $scrollbar-thumb-colour-on-light:
-  mix($ambientimpact-orange, $background-colour-light, 80%);
+  color.mix($ambientimpact-orange, $background-colour-light, 80%);
 
 ///
 /// The scrollbar thumb colour on dark background colours.
@@ -24,7 +26,7 @@ $scrollbar-thumb-colour-on-light:
 /// scroll position.
 ///
 $scrollbar-thumb-colour-on-dark:
-  mix($ambientimpact-orange, $background-colour-dark, 80%);
+  color.mix($ambientimpact-orange, $background-colour-dark, 80%);
 
 ///
 /// The scrollbar track colour on light background colours.
@@ -33,7 +35,7 @@ $scrollbar-thumb-colour-on-dark:
 /// height, along which the thumb slides.
 ///
 $scrollbar-track-colour-on-light:
-  mix($foreground-colour-on-light, $background-colour-light, 10%);
+  color.mix($foreground-colour-on-light, $background-colour-light, 10%);
 
 ///
 /// The scrollbar track colour on dark background colours.
@@ -42,7 +44,7 @@ $scrollbar-track-colour-on-light:
 /// height, along which the thumb slides.
 ///
 $scrollbar-track-colour-on-dark:
-  mix($foreground-colour-on-dark, $background-colour-dark, 10%);
+  color.mix($foreground-colour-on-dark, $background-colour-dark, 10%);
 
 html {
   scrollbar-color:
