@@ -5,14 +5,15 @@
 .view-web-snippets {
   &__links {
     &-list {
-      // Remove the inline links negative margins as they interfere with the
-      // centre alignment and aren't really needed.
-      @include root-conditions(('[dir=ltr]'), 'html') {
-        margin-left:  0;
-      }
-      @include root-conditions(('[dir=rtl]'), 'html') {
-        margin-right: 0;
-      }
+
+      @include unlisted-list;
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      column-gap: 1em;
+      row-gap:    0.5em;
 
       &-item {}
     }
