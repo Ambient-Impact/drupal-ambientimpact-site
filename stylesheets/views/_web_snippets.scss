@@ -3,19 +3,18 @@
 // -----------------------------------------------------------------------------
 
 .view-web-snippets {
-  &__links {
-    &-list {
+  &__links-list {
 
-      @include unlisted-list;
+    @include unlisted-list;
 
-      display: flex;
+    display: flex;
 
-      flex-wrap: wrap;
+    flex-wrap: wrap;
 
-      column-gap: 1em;
-      row-gap:    0.5em;
+    column-gap: 1em;
+    row-gap:    0.5em;
 
-      &-item {}
-    }
+    &-item {}
+
   }
 }
