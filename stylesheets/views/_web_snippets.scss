@@ -2,10 +2,16 @@
 //   View - Web snippets
 // -----------------------------------------------------------------------------
 
+// @todo Remove fallbacks when flexbox with gap properties is well supported.
+
 .view-web-snippets {
   &__links-list {
 
     @include unlisted-list;
+
+    // If flexbox with gap properties is not supported, we have to contain the
+    // floated label and items.
+    @include contain-floats;
 
     @include supports-flexbox-gap {
 
@@ -17,7 +23,31 @@
 
     }
 
-    &-item {}
+    &-item {
+
+      @include root-conditions(('[dir=ltr]'), 'html') {
+        float: left;
+        padding-right: var(--field-column-gap);
+      }
+
+      @include root-conditions(('[dir=rtl]'), 'html') {
+        float: right;
+        padding-left: var(--field-column-gap);
+      }
+
+      @include supports-flexbox-gap {
+        @include root-conditions(('[dir=ltr]'), 'html') {
+          float: none;
+          padding-right: 0;
+        }
+
+        @include root-conditions(('[dir=rtl]'), 'html') {
+          float: none;
+          padding-left: 0;
+        }
+      }
+
+    }
 
   }
 }
