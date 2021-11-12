@@ -4,57 +4,55 @@
 
 // Tags fields.
 .field--name-field-web-tags {
-  // If Grid is not supported, we have to contain the floated label and items or
-  // they'll cause all sorts of float-based mayhem.
+
+  display:    flex;
+  flex-wrap:  wrap;
+
+  // If flexbox with gap properties is not supported, we have to contain the
+  // floated label and items.
   @include contain-floats;
 
-  // We have to use Grid to lay out the label + field content because if we
-  // leave this as floats, it'll shrink-wrap the tag grid container and force it
-  // to single-column.
-  @include use-grid {
-    display: grid;
-    grid-template-columns: auto 1fr;
-  }
+  .field__items {
 
-  @supports (
-    columns: $tags-list-column-max-count $tags-list-column-min-width
-  ) {
-    // Shift the label and items up so that the first row doesn't cause extra
-    // space between it and any other field preceding this one.
-    .field__label,
-    .field__items {
-      margin-top:    -$tags-list-gap;
-    }
-
-    // Match the label with the tag list top padding and add horizontal padding
-    // to also match.
-    .field__label {
-      padding-top:    $tags-list-gap;
+    .field__item {
 
       @include root-conditions(('[dir=ltr]'), 'html') {
-        padding-right:  $tags-list-gap;
+        float: left;
+        padding-right: var(--field-column-gap);
       }
 
       @include root-conditions(('[dir=rtl]'), 'html') {
-        padding-left:   $tags-list-gap;
+        float: right;
+        padding-left: var(--field-column-gap);
+      }
+
+    }
+
+    @include supports-flexbox-gap {
+
+      display:    flex;
+      flex-wrap:  wrap;
+
+      column-gap: var(--field-column-gap);
+      row-gap:    var(--field-row-gap);
+
+      .field__item {
+
+        @include root-conditions(('[dir=ltr]'), 'html') {
+          float: none;
+          padding-right: 0;
+        }
+
+        @include root-conditions(('[dir=rtl]'), 'html') {
+          float: right;
+          padding-none: 0;
+        }
+
       }
     }
+
   }
 
-  .field__items {
-    @extend %tags-list;
-
-    .field__item {
-      @extend %tags-list__item;
-    }
-
-    // Remove the top margins that the default .field__item rules set.
-    @include vertical-spacing-against-previous(
-      '.field__item',
-      $spacing-small: 0,
-      $spacing-large: 0
-    );
-  }
 }
 
 // Tags views.
