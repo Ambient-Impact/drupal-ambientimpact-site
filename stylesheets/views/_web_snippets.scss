@@ -12,8 +12,8 @@
       display:    flex;
       flex-wrap:  wrap;
 
-      column-gap: 1em;
-      row-gap:    0.5em;
+      column-gap: var(--field-column-gap);
+      row-gap:    var(--field-row-gap);
 
     }
 
