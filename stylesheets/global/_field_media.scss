@@ -2,8 +2,15 @@
 //   Media field partial
 // -----------------------------------------------------------------------------
 
+@use '../../../ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use '../../../ambientimpact_base/stylesheets/components/field_media' as field-media;
+@use 'link/link.colour' as link-colour;
 @use 'sass:list';
 @use 'sass:math';
+@use 'sass/helpers/colour';
+@use 'sass/helpers/layout';
+@use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
+@use 'sass/variables/general';
 
 ///
 /// Media field background colour on light backgrounds.
@@ -32,34 +39,34 @@ $media-field-background-colour-on-dark: hsl(0, 0%, 30%) !default;
 
   // Don't set horizontal margins as that needs to be left up to the base styles
   // to centre this horizontally, if need be.
-  margin-top:     $general-spacing;
-  margin-bottom:  $general-spacing;
+  margin-top:     general.$general-spacing;
+  margin-bottom:  general.$general-spacing;
 
-  padding:  $media-field-spacing  0;
+  padding:  field-media.$media-field-spacing  0;
 
-  @include set-colours(
+  @include colour.set-colours(
     $background:  $media-field-background-colour-on-light
   );
 
-  @include horizontal-bleed-background(
+  @include horizontal-bleed-background.horizontal-bleed-background(
     $colour:  $media-field-background-colour-on-light,
     $z-index: list.index($local-stacking-order, background),
     $shadow:  $shadow-settings
   );
 
   :any-link {
-    @include link-colours($media-field-background-colour-on-light);
+    @include link-colour.link-colours($media-field-background-colour-on-light);
   }
 
-  @include on-dark-colour-scheme {
-    @include horizontal-bleed-background(
+  @include colour.on-dark-colour-scheme {
+    @include horizontal-bleed-background.horizontal-bleed-background(
       $colour:  $media-field-background-colour-on-dark,
       $z-index: list.index($local-stacking-order, background),
       $shadow:  $shadow-settings
     );
 
     :any-link {
-      @include link-colours($media-field-background-colour-on-dark);
+      @include link-colour.link-colours($media-field-background-colour-on-dark);
     }
   }
 
@@ -75,7 +82,7 @@ $media-field-background-colour-on-dark: hsl(0, 0%, 30%) !default;
   img, picture {
     // This is in case a transparent image is used, which normally assumes a
     // light background colour.
-    @include set-colours(
+    @include colour.set-colours(
       $background:  white
     );
   }
@@ -111,31 +118,31 @@ $media-field-background-colour-on-dark: hsl(0, 0%, 30%) !default;
   @include media-field($use-top-shadow: false);
 
   margin-top: 0;
-  padding:    math.div($media-field-spacing, 2) 0;
+  padding:    math.div(field-media.$media-field-spacing, 2) 0;
 
-  @include use-grid {
-    padding-top:    $media-field-spacing;
-    padding-bottom: $media-field-spacing;
+  @include layout.use-grid {
+    padding-top:    field-media.$media-field-spacing;
+    padding-bottom: field-media.$media-field-spacing;
   }
 
   // Remove field item spacing, since we use CSS grid below.
-  @include vertical-spacing-against-previous(
+  @include vertical-spacing.vertical-spacing-against-previous(
     '.field__item',
     $spacing-small: 0,
     $spacing-large: 0
   );
 
   .field__item {
-    padding:  math.div($media-field-spacing, 2) 0;
+    padding:  math.div(field-media.$media-field-spacing, 2) 0;
   }
 
   // If available, use CSS grid to lay out the project images in a two column
   // grid.
-  @include use-grid {
+  @include layout.use-grid {
     .field__items {
       display:                grid;
       grid-template-columns:  1fr 1fr;
-      grid-gap:               $media-field-spacing;
+      grid-gap:               field-media.$media-field-spacing;
     }
 
     .field__item {

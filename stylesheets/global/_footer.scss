@@ -2,6 +2,9 @@
 //   Site footer
 // -----------------------------------------------------------------------------
 
+@use '../../../ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
 @at-root {
-  @include vertical-spacing-against-previous('footer[role=contentinfo]');
+  @include vertical-spacing.vertical-spacing-against-previous(
+    'footer[role=contentinfo]'
+  );
 }

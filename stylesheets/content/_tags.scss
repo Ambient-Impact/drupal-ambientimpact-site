@@ -2,6 +2,10 @@
 //   Taxonomy tags
 // -----------------------------------------------------------------------------
 
+@use '../../../ambientimpact_base/stylesheets/components/tags_list' as *;
+@use 'sass/helpers/layout';
+@use 'sass/helpers/selector';
+
 // Tags fields.
 .field--name-field-web-tags {
 
@@ -10,25 +14,25 @@
 
   // If flexbox with gap properties is not supported, we have to contain the
   // floated label and items.
-  @include contain-floats;
+  @include layout.contain-floats;
 
   .field__items {
 
     .field__item {
 
-      @include root-conditions(('[dir=ltr]'), 'html') {
+      @include selector.root-conditions(('[dir=ltr]'), 'html') {
         float: left;
         padding-right: var(--field-column-gap);
       }
 
-      @include root-conditions(('[dir=rtl]'), 'html') {
+      @include selector.root-conditions(('[dir=rtl]'), 'html') {
         float: right;
         padding-left: var(--field-column-gap);
       }
 
     }
 
-    @include supports-flexbox-gap {
+    @include layout.supports-flexbox-gap {
 
       display:    flex;
       flex-wrap:  wrap;
@@ -38,14 +42,14 @@
 
       .field__item {
 
-        @include root-conditions(('[dir=ltr]'), 'html') {
+        @include selector.root-conditions(('[dir=ltr]'), 'html') {
           float: none;
           padding-right: 0;
         }
 
-        @include root-conditions(('[dir=rtl]'), 'html') {
-          float: right;
-          padding-none: 0;
+        @include selector.root-conditions(('[dir=rtl]'), 'html') {
+          float: none;
+          padding-left: 0;
         }
 
       }

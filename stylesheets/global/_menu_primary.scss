@@ -3,6 +3,9 @@
 // -----------------------------------------------------------------------------
 
 @use 'sass:list';
+@use 'sass/helpers/breakpoint';
+@use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
+@use '../variables/colours' as *;
 @import 'include-media';
 
 ///
@@ -20,9 +23,11 @@ $menu-primary-font-size-large:  110%;
 ///
 $menu-primary-background-colour: $ambientimpact-orange;
 
-@include add-breakpoints((
+@include breakpoint.add-breakpoints((
   // At which height to start using $menu-primary-font-size-large.
-  'menu-primary-font-size-large': get-breakpoint-value('height-small')
+  'menu-primary-font-size-large': breakpoint.get-breakpoint-value(
+    'height-small'
+  )
 ));
 
 .region-primary-menu {
@@ -34,7 +39,7 @@ $menu-primary-background-colour: $ambientimpact-orange;
   margin-top:     0;
   margin-bottom:  3em;
 
-  @include horizontal-bleed-background(
+  @include horizontal-bleed-background.horizontal-bleed-background(
     $colour:  $menu-primary-background-colour,
     $z-index: list.index($local-stacking-order, background),
     // Don't use the topmost shadow, as that would show on top of the site

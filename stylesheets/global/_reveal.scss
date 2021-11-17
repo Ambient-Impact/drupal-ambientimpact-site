@@ -3,6 +3,8 @@
 // -----------------------------------------------------------------------------
 
 @use 'sass:math';
+@use 'sass/helpers/colour';
+@use 'sass/variables/motion';
 
 // This animates all the page elements into their normal locations:
 //
@@ -200,7 +202,7 @@ $site-revealed:
 body:not(.maintenance-page) .site-name {
   animation-name:             site-name-reveal;
   animation-duration:         $site-name-reveal-animation-duration;
-  animation-timing-function:  $easing-decelerate;
+  animation-timing-function:  motion.$easing-decelerate;
   animation-fill-mode:        backwards;
   animation-delay:            $site-name-reveal-animation-delay;
 
@@ -221,7 +223,7 @@ body:not(.maintenance-page) .region-primary-menu .block {
   > .menu:not(.menu--overflow-measure-shadow) {
     animation-name:             primary-menu-block-menu-reveal;
     animation-duration:         $region-primary-menu-block-menu-reveal-duration;
-    animation-timing-function:  $easing-standard;
+    animation-timing-function:  motion.$easing-standard;
     animation-fill-mode:        backwards;
     animation-delay:            $region-primary-menu-block-menu-reveal-delay;
 
@@ -254,10 +256,10 @@ body:not(.maintenance-page) .region-highlighted::before {
     top:    0;
     bottom: 0;
 
-    @include set-colours($background: $background-colour-light);
+    @include colour.set-colours($background: colour.$background-colour-light);
 
-    @include on-dark-colour-scheme {
-      @include set-colours($background: $background-colour-dark);
+    @include colour.on-dark-colour-scheme {
+      @include colour.set-colours($background: colour.$background-colour-dark);
     }
 
     visibility: hidden;

@@ -2,7 +2,13 @@
 //   Typography partial
 // -----------------------------------------------------------------------------
 
+@use '../../../ambientimpact_base/stylesheets/global/content';
+@use '../../../ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use '../../../ambientimpact_base/stylesheets/global/typography';
+@use '../../../ambientimpact_base/stylesheets/global/typography.heading' as typography-heading;
+@use 'material.common/material.colour' as material-colour;
 @use 'sass:color';
+@use 'sass/helpers/colour';
 
 :root {
   // This value achieves nearly identical results in both Firefox and Chrome.
@@ -14,7 +20,7 @@
 // default system font stack, to minimize the amount of shifting that occurs
 // if/when Furore loads and is applied. Note that this is based on Roboto, but
 // should work similarly with the other fonts in the system font stack.
-#{$h1to6},
+#{typography-heading.$h1to6},
 .region-primary-menu .menu,
 .region-primary-menu .menu-overflow__toggle {
   // Furore only has uppercase, so use that.
@@ -29,32 +35,34 @@
   font-weight: 700;
 
   .font-loaded-furore & {
-    font-family: Furore, $font-stack;
+    font-family: Furore, typography.$font-stack;
 
     letter-spacing: 0.1em;
 
     // Reset the font-weight back to normal.
-    font-weight: $font-weight-normal;
+    font-weight: typography.$font-weight-normal;
   }
 
 }
 
-@include headings {
+@include typography-heading.headings {
   //hyphens:    auto;
   line-height:  1.4;
 
   // Fade out the heading font colour a little in dark mode as the solid white
   // feels a bit overpowering.
-  @include on-dark-colour-scheme {
+  @include colour.on-dark-colour-scheme {
     &:not(.content-popup__title) {
-      color: color.mix($foreground-colour-on-dark, $background-colour-dark, 80%);
+      color: color.mix(
+        colour.$foreground-colour-on-dark, colour.$background-colour-dark, 80%
+      );
     }
   }
 
   .nbsp {
     // Furore displays odd characters instead of a non-breaking space, so use
     // the default font stack for these instead.
-    font-family: $font-stack;
+    font-family: typography.$font-stack;
   }
 
 }
@@ -64,10 +72,10 @@
 // $h1to6. Somewhat higher spacing than the default to visually separate
 // headings and preceding elements.
 @for $i from 1 through 6 {
-  @include vertical-spacing-against-previous(
+  @include vertical-spacing.vertical-spacing-against-previous(
     'h#{$i}',
-    $spacing-small: $content-item-vertical-spacing-small * 1.8,
-    $spacing-large: $content-item-vertical-spacing-large * 1.8
+    $spacing-small: content.$content-item-vertical-spacing-small * 1.8,
+    $spacing-large: content.$content-item-vertical-spacing-large * 1.8
   );
 }
 
@@ -78,21 +86,21 @@
 /// importance over lower level headings.
 ///
 @mixin heading-underline {
-  border-bottom: 1px solid $material-line-colour-on-light;
+  border-bottom: 1px solid material-colour.$material-line-colour-on-light;
 
-  @include on-dark-colour-scheme {
-    border-bottom-color: $material-line-colour-on-dark;
+  @include colour.on-dark-colour-scheme {
+    border-bottom-color: material-colour.$material-line-colour-on-dark;
   }
 }
 
-@include content-area {
+@include content.content-area {
   h2 {
     @include heading-underline;
   }
 
-  @include headings {
+  @include typography-heading.headings {
     &:not(.code-highlighted__heading) {
-      margin-bottom: $content-item-vertical-spacing-small;
+      margin-bottom: content.$content-item-vertical-spacing-small;
     }
   }
 }

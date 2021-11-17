@@ -2,7 +2,10 @@
 //   Site header
 // -----------------------------------------------------------------------------
 
+@use 'headroom';
 @use 'sass:list';
+@use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
+@use '../variables/general' as *;
 
 ///
 /// Header stacking order. Later in the list means a higher z-index.
@@ -18,7 +21,7 @@ header[role='banner'] {
   // that it appears the site name is part of the same sheet as the navigation
   // bar.
   &::after {
-    @include horizontal-bleed-background-top-peek-shadow(
+    @include horizontal-bleed-background.horizontal-bleed-background-top-peek-shadow(
       $z-index: list.index($header-stacking-order, header-top-shadow),
       $depth:   $full-bleed-panel-shadow-depth
     );
@@ -27,7 +30,7 @@ header[role='banner'] {
   // This syncs up the site header with the menu bar Headroom behaviour, so
   // quick scrolling near the top won't show them failing to overlap.
   &.header--menu-bar-sticky {
-    @include headroom-base;
+    @include headroom.headroom-base;
 
     // Required to prevent the header getting shifted down when viewport
     // displacement is active and Headroom.js is attached.
@@ -39,7 +42,7 @@ header[role='banner'] {
   }
 
   &.header--unpinned {
-    @include headroom-unpinned;
+    @include headroom.headroom-unpinned;
   }
 
   // This is required so that the front page animation doesn't mess up the

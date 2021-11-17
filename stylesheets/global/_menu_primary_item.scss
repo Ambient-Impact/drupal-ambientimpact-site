@@ -2,24 +2,35 @@
 //   Primary site menu - menu items
 // -----------------------------------------------------------------------------
 
+@use '../../../ambientimpact_base/stylesheets/global/layout';
+@use '../../../ambientimpact_base/stylesheets/global/menus';
+@use 'icon';
+@use 'link/link.colour' as link-colour;
+@use 'link/link.state' as link-state;
+@use 'material.ripple' as material-ripple;
+@use 'menu_primary' as *;
+@use 'sass/helpers/colour';
+@use 'sass/helpers/selector';
+@use 'sass/variables/general';
+
 ///
 /// Primary menu item foreground colour.
 ///
-$menu-primary-item-foreground-colour: get-contrasting-colour(
+$menu-primary-item-foreground-colour: colour.get-contrasting-colour(
   $background:          $menu-primary-background-colour,
-  $foreground-on-light: $foreground-colour-on-light,
-  $foreground-on-dark:  $foreground-colour-on-dark
+  $foreground-on-light: colour.$foreground-colour-on-light,
+  $foreground-on-dark:  colour.$foreground-colour-on-dark
 );
 
 ///
 /// Primary menu item horizontal padding.
 ///
-$menu-primary-item-padding-x:   $layout-gutter;
+$menu-primary-item-padding-x:   layout.$layout-gutter;
 
 ///
 /// Primary menu item vertical padding.
 ///
-$menu-primary-item-padding-y:   $general-spacing * 0.75;
+$menu-primary-item-padding-y:   general.$general-spacing * 0.75;
 
 ///
 /// Primary menu item indicator thickness, used to indicate active menu item.
@@ -30,7 +41,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
 /// Set primary menu item colours.
 ///
 @mixin menu-primary-item-colours {
-  @include link-colours(
+  @include link-colour.link-colours(
     $background:      $menu-primary-background-colour,
     $normal-on-dark:  $menu-primary-item-foreground-colour,
     $hover-on-dark:   $menu-primary-item-foreground-colour
@@ -89,12 +100,12 @@ $menu-primary-item-indicator-thickness:  0.2em;
 /// Set primary menu item indicator state when menu is :hover or :focus-within.
 ///
 @mixin menu-primary-item-primary-active-path-indicator-hover-focus-within {
-  @include menu-item-is-active-path {
+  @include menus.menu-item-is-active-path {
     &::after {
       @include menu-primary-item-primary-indicator-inactive;
     }
 
-    @include link-hover {
+    @include link-state.link-hover {
       &::after {
         @include menu-primary-item-primary-indicator-active;
       }
@@ -106,12 +117,12 @@ $menu-primary-item-indicator-thickness:  0.2em;
 /// Set primary menu item indicator state when menu is :hover or :focus-within.
 ///
 @mixin menu-primary-item-secondary-active-path-indicator-hover-focus-within {
-  @include menu-item-is-active-path {
+  @include menus.menu-item-is-active-path {
     &::after {
       @include menu-primary-item-secondary-indicator-inactive;
     }
 
-    @include link-hover {
+    @include link-state.link-hover {
       &::after {
         @include menu-primary-item-secondary-indicator-active;
       }
@@ -125,7 +136,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
 @mixin menu-primary-sub-menu-indicator-open {
   // Rotate the icon 180 degrees when the sub-menu is open, so that the icon
   // points up rather than down.
-  @include on-icon-icon {
+  @include icon.on-icon-icon {
     transform: rotate(180deg);
   }
 }
@@ -135,14 +146,14 @@ $menu-primary-item-indicator-thickness:  0.2em;
   // lateral padding) flush with the sides of the block, which lines up the text
   // edges with the gutter.
   .block > .menu {
-    @include root-conditions(('[dir=ltr]'), 'html') {
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
       margin-left:  -$menu-primary-item-padding-x;
       margin-right: -$menu-primary-item-padding-x;
     }
 
     // We have to specify the RTL selector so that we override Classy's menu
     // margins.
-    @include root-conditions(('[dir=rtl]'), 'html') {
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
       margin-left:  -$menu-primary-item-padding-x;
       margin-right: -$menu-primary-item-padding-x;
     }
@@ -153,7 +164,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
     // Remove padding added by Classy.
     padding-top: 0;
 
-    @include menu-item-is-active-path {
+    @include menus.menu-item-is-active-path {
       @include menu-primary-item-colours;
     }
   }
@@ -163,22 +174,22 @@ $menu-primary-item-indicator-thickness:  0.2em;
     // Remove the default Drupal expanded indicator.
     list-style: none;
 
-    @include on-icon-container {
-      @include set-icon-display(block);
+    @include icon.on-icon-container {
+      @include icon.set-icon-display(block);
 
-      @include set-icon-vertical-alignment($align: centre);
-      @include set-icon-size(1.2em);
+      @include icon.set-icon-vertical-alignment($align: centre);
+      @include icon.set-icon-size(1.2em);
 
       // For drop-down menus, icons look better after the text, rather than
       // before.
-      @include set-icon-order(text-first);
+      @include icon.set-icon-order(text-first);
     }
 
-    @include on-icon-text {
+    @include icon.on-icon-text {
       white-space: nowrap;
     }
 
-    @include icon-transform-transition;
+    @include icon.icon-transform-transition;
 
     // Transform the sub-menu indicator to its open state when a sub-menu is
     // open.
@@ -213,7 +224,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
 
     @include menu-primary-item-colours;
 
-    @include material-ripple;
+    @include material-ripple.material-ripple;
 
     // Don't wrap to new lines since the container scrolls and has overflow
     // functionality.
@@ -231,7 +242,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
 
       position: absolute;
 
-      background-color: $foreground-colour-on-dark;
+      background-color: colour.$foreground-colour-on-dark;
 
       will-change:  transform;
 
@@ -270,14 +281,14 @@ $menu-primary-item-indicator-thickness:  0.2em;
 
       // This makes the indicator visible on an item when it's being interacted
       // with.
-      @include link-hover {
+      @include link-state.link-hover {
         &::after {
           @include menu-primary-item-primary-indicator-active;
         }
       }
     }
 
-    @include menu-item-is-active-path {
+    @include menus.menu-item-is-active-path {
       // Active path item indicators are visible by default. This is necessary
       // in case the browser doesn't support :focus-within and our polyfill
       // doesn't get applied.
@@ -300,12 +311,12 @@ $menu-primary-item-indicator-thickness:  0.2em;
 
         width:    $menu-primary-item-indicator-thickness;
 
-        @include root-conditions(('[dir=ltr]'), 'html') {
+        @include selector.root-conditions(('[dir=ltr]'), 'html') {
           left:   0;
 
           transform-origin: center left;
         }
-        @include root-conditions(('[dir=rtl]'), 'html') {
+        @include selector.root-conditions(('[dir=rtl]'), 'html') {
           right:  0;
 
           transform-origin: center right;
@@ -317,14 +328,14 @@ $menu-primary-item-indicator-thickness:  0.2em;
 
       // This makes the indicator visible on an item when it's being interacted
       // with.
-      @include link-hover {
+      @include link-state.link-hover {
         &::after {
           @include menu-primary-item-secondary-indicator-active;
         }
       }
     }
 
-    @include menu-item-is-active-path {
+    @include menus.menu-item-is-active-path {
       // Active path item indicators are visible by default. This is necessary
       // in case the browser doesn't support :focus-within and our polyfill
       // doesn't get applied.

@@ -2,7 +2,9 @@
 //   Variables - Colours
 // -----------------------------------------------------------------------------
 
+@use 'material.common/material.colour' as material-colour;
 @use 'sass:color';
+@use 'sass/helpers/colour';
 
 ///
 /// Ambient.Impact orange.
@@ -12,21 +14,21 @@ $ambientimpact-orange: #c07300;
 ///
 /// Material Design primary colour; using Ambient.Impact orange.
 ///
-$material-primary-colour: $ambientimpact-orange;
+material-colour.$material-primary-colour: $ambientimpact-orange;
 
 ///
 /// Foreground colour on light backgrounds.
 ///
 /// This is faded a bit so it's not pure black.
 ///
-$foreground-colour-on-light: hsl(0, 0%, 30%);
+colour.$foreground-colour-on-light: hsl(0, 0%, 30%);
 
 ///
 /// Dark background colour.
 ///
 /// This is set to a very dark grey but not pure black.
 ///
-$background-colour-dark: hsl(0, 0%, 10%);
+colour.$background-colour-dark: hsl(0, 0%, 10%);
 
 ///
 /// Link colour on dark backgrounds when not highlighted/activated.
@@ -36,5 +38,9 @@ $background-colour-dark: hsl(0, 0%, 10%);
 /// little too bright.
 ///
 $link-normal-colour-on-dark: color.adjust(
-  $material-primary-colour, $lightness: 10%
+  material-colour.$material-primary-colour, $lightness: 10%
+);
+
+@use 'link/link.var' as link-var with (
+  $link-normal-colour-on-dark: $link-normal-colour-on-dark,
 );

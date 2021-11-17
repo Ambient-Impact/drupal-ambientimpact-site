@@ -2,6 +2,8 @@
 //   Reveal animations for high performance devices.
 // -----------------------------------------------------------------------------
 
+@use 'sass/variables/motion';
+
 // This is currently not included as it can be quite choppy on anything but a
 // high end PC on some pages - e.g. portfolio. This is considered archived until
 // other page load performance factors are resolved - e.g. JavaScript
@@ -50,7 +52,7 @@
 .path-node .node {
   animation-name:             content-reveal;
   animation-duration:         $content-reveal-duration;
-  animation-timing-function:  $easing-standard;
+  animation-timing-function:  motion.$easing-standard;
   animation-fill-mode:        backwards;
 
   // Only animate opacity if the user indicates they prefer reduced motion.

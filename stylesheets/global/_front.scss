@@ -2,22 +2,26 @@
 //   Front page styles
 // -----------------------------------------------------------------------------
 
+@use '../../../ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use '../../../ambientimpact_base/stylesheets/global/typography';
+@use 'sass/variables/general';
+
 .path-frontpage .region-content {
   .block-views {
     * + & {
       // This adds some spacing between the views blocks and any preceding
       // elements. We're using vertical-spacing rather than
       // vertical-spacing-against-previous as the latter would be overkill here.
-      @include vertical-spacing;
+      @include vertical-spacing.vertical-spacing;
     }
 
     .more-link {
-      font-weight: $font-weight-strong;
+      font-weight: typography.$font-weight-strong;
       // text-transform: uppercase;
       text-align: center;
 
       * + & {
-        margin-top: $general-spacing;
+        margin-top: general.$general-spacing;
       }
     }
   }

@@ -2,8 +2,15 @@
 //   Site branding
 // -----------------------------------------------------------------------------
 
+@use '../../../ambientimpact_base/stylesheets/global/layout';
+@use 'header' as *;
+@use 'material.common/material.shadow' as material-shadow;
 @use 'sass:list';
 @use 'sass:math';
+@use 'sass/helpers/breakpoint';
+@use 'sass/helpers/hide';
+@use '../variables/colours' as *;
+@use '../variables/general' as *;
 @import 'include-media';
 
 ///
@@ -28,14 +35,14 @@ $site-name-height: 83.997;
   // bottom of the primary menu bar. The padding and negative margins are so
   // that the lateral and top drop shadows on the site name are not clipped.
   @supports (animation-fill-mode: backwards) {
-    margin-top:     -$layout-gutter;
-    margin-left:    -$layout-gutter;
-    margin-right:   -$layout-gutter;
+    margin-top:     layout.$layout-gutter * -1;
+    margin-left:    layout.$layout-gutter * -1;
+    margin-right:   layout.$layout-gutter * -1;
     margin-bottom:  0;
 
-    padding-top:    $layout-gutter;
-    padding-left:   $layout-gutter;
-    padding-right:  $layout-gutter;
+    padding-top:    layout.$layout-gutter;
+    padding-left:   layout.$layout-gutter;
+    padding-right:  layout.$layout-gutter;
     padding-bottom: 0;
 
     overflow:       hidden;
@@ -59,26 +66,26 @@ $site-name-height: 83.997;
   // the shadow look heavy handed.
 
   // Drop shadow, extends downwards.
-  @include material-shadow-filter-downward(
+  @include material-shadow.material-shadow-filter-downward(
     $depth: $fancy-heading-shadow-depth-small
   );
 
   &__link {
     // Drop shadow, centered to give ambient shadow effect.
-    @include material-shadow-filter-ambient(
+    @include material-shadow.material-shadow-filter-ambient(
       $depth: $fancy-heading-shadow-depth-small
     );
   }
 
   @include media('>=fancy-heading-shadow-depth') {
     // Drop shadow, extends downwards.
-    @include material-shadow-filter-downward(
+    @include material-shadow.material-shadow-filter-downward(
       $depth: $fancy-heading-shadow-depth-large
     );
 
     &__link {
       // Drop shadow, centered to give ambient shadow effect.
-      @include material-shadow-filter-ambient(
+      @include material-shadow.material-shadow-filter-ambient(
         $depth: $fancy-heading-shadow-depth-large
       );
     }
@@ -121,7 +128,7 @@ $site-name-height: 83.997;
   // software like screen readers. The <svg> title has aria-hidden="true", as
   // it exists for purely visual reasons.
   &__text {
-    @include hide-me;
+    @include hide.hide-me;
   }
 
   &__svg {

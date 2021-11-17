@@ -2,14 +2,12 @@
 //   Ambient.Impact - Site theme - Master stylesheet
 // -----------------------------------------------------------------------------
 
-@import 'variables/_variables.scss';
+@use 'variables';
 
-// This imports all the partials from the base theme, ambientimpact_core module,
-// and ambientimpact_core components.
-@import '../../ambientimpact_base/stylesheets/_base.scss';
+@use '../../ambientimpact_base/stylesheets/base';
 
-@import 'variables/_breakpoints.scss';
+@use 'variables/breakpoints';
 
-@import 'global/_global.scss';
-@import 'content/_content.scss';
-@import 'views/_views.scss';
+@use 'global';
+@use 'content';
+@use 'views';

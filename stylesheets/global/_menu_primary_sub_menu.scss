@@ -2,7 +2,12 @@
 //   Primary site menu - sub-menus
 // -----------------------------------------------------------------------------
 
+@use 'material.common/material.general' as material-general;
+@use 'material.common/material.shadow' as material-shadow;
+@use 'menu_primary' as *;
 @use 'sass:list';
+@use 'sass/helpers/selector';
+@use 'sass/variables/motion';
 
 ///
 /// The amount to allow for drop shadows when clipping sub-menus.
@@ -90,10 +95,10 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
   }
 
   @include menu-primary-supports-translate-clip-path {
-    @include root-conditions(('[dir=ltr]'), 'html') {
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
       left:   auto;
     }
-    @include root-conditions(('[dir=rtl]'), 'html') {
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
       right:  auto;
     }
 
@@ -126,10 +131,10 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 /// @require {Variable} $menu-primary-sub-menu-item-reveal-stagger-interval
 ///
 @mixin menu-primary-sub-menu-show {
-  @include root-conditions(('[dir=ltr]'), 'html') {
+  @include selector.root-conditions(('[dir=ltr]'), 'html') {
     left:   auto;
   }
-  @include root-conditions(('[dir=rtl]'), 'html') {
+  @include selector.root-conditions(('[dir=rtl]'), 'html') {
     right:  auto;
   }
 
@@ -284,14 +289,14 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 
         background-color: $menu-primary-background-colour;
 
-        border-bottom-left-radius:  $material-border-radius;
-        border-bottom-right-radius: $material-border-radius;
+        border-bottom-left-radius:  material-general.$material-border-radius;
+        border-bottom-right-radius: material-general.$material-border-radius;
 
-        @include material-shadow($depth: 2);
+        @include material-shadow.material-shadow($depth: 2);
 
         transition-property: opacity, transform;
         transition-duration: $menu-primary-sub-menu-hide-duration;
-        transition-timing-function: $easing-standard;
+        transition-timing-function: motion.$easing-standard;
 
         will-change: transform;
       }
@@ -314,7 +319,7 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
         > .menu-item {
           transition-property: opacity, transform;
           transition-duration: $menu-primary-sub-menu-hide-duration;
-          transition-timing-function: $easing-standard;
+          transition-timing-function: motion.$easing-standard;
         }
       }
 
@@ -364,20 +369,20 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 
     // Indent nested menus to indicate hierarchy.
     .menu .menu {
-      @include root-conditions(('[dir=ltr]'), 'html') {
+      @include selector.root-conditions(('[dir=ltr]'), 'html') {
         padding-left:   1em;
       }
-      @include root-conditions(('[dir=rtl]'), 'html') {
+      @include selector.root-conditions(('[dir=rtl]'), 'html') {
         padding-right:  1em
       }
     }
   }
 
   .menu:not(.menu--all-overflow) > .menu-overflow > .menu {
-    @include root-conditions(('[dir=ltr]'), 'html') {
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
       right: 0;
     }
-    @include root-conditions(('[dir=rtl]'), 'html') {
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
       left:  0;
     }
   }
