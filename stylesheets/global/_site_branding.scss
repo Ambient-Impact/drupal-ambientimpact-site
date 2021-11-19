@@ -11,7 +11,6 @@
 @use 'sass/helpers/hide';
 @use '../variables/colours' as *;
 @use '../variables/general' as *;
-@import 'include-media';
 
 ///
 /// The site name <svg> width, in pixels.
@@ -77,7 +76,7 @@ $site-name-height: 83.997;
     );
   }
 
-  @include media('>=fancy-heading-shadow-depth') {
+  @include breakpoint.on('>=fancy-heading-shadow-depth') {
     // Drop shadow, extends downwards.
     @include material-shadow.material-shadow-filter-downward(
       $depth: $fancy-heading-shadow-depth-large

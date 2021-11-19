@@ -14,7 +14,6 @@
 @use 'sass/helpers/selector';
 @use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
 @use '../variables/general' as *;
-@import 'include-media';
 
 ///
 /// Project node elements stacking order.
@@ -105,7 +104,7 @@ $node-project-title-link-active-colour-on-dark: auto;
     to right, transparent, black layout.$layout-gutter
   );
   @supports (mask-image: $mask-gradient-ltr) and (width: 100vw) {
-    @include media('<=project-title-height-constraint') {
+    @include breakpoint.on('<=project-title-height-constraint') {
       overflow: hidden;
 
       // Undo _layout.scss since we need to span the layout gutter as well.
@@ -159,7 +158,7 @@ $node-project-title-link-active-colour-on-dark: auto;
     // In order to not make the title too small if the text is long on narrow
     // viewports, allow the <svg> to expand with a max-height using viewport
     // width (not height) units.
-    @include media('<=project-title-height-constraint') {
+    @include breakpoint.on('<=project-title-height-constraint') {
       width:      auto;
       max-width:  none;
       max-height: 5vw;
@@ -249,7 +248,7 @@ $node-project-title-link-active-colour-on-dark: auto;
     $depth: $fancy-heading-shadow-depth-small
   );
 
-  @include media('>=fancy-heading-shadow-depth') {
+  @include breakpoint.on('>=fancy-heading-shadow-depth') {
     // Drop shadow, extends downwards.
     @include material-shadow.material-shadow-filter-downward(
       $depth: $fancy-heading-shadow-depth-large
@@ -262,7 +261,7 @@ $node-project-title-link-active-colour-on-dark: auto;
       $depth: $fancy-heading-shadow-depth-small
     );
 
-    @include media('>=fancy-heading-shadow-depth') {
+    @include breakpoint.on('>=fancy-heading-shadow-depth') {
       // Drop shadow, centered to give ambient shadow effect.
       @include material-shadow.material-shadow-filter-ambient(
         $depth: $fancy-heading-shadow-depth-large

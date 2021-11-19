@@ -6,7 +6,6 @@
 @use 'sass/helpers/breakpoint';
 @use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
 @use '../variables/colours' as *;
-@import 'include-media';
 
 ///
 /// Primary menu item font size when large font size breakpoint doesn't match.
@@ -113,7 +112,7 @@ $menu-primary-background-colour: $ambientimpact-orange;
 
     font-size: $menu-primary-font-size-small;
 
-    @include media('>=menu-primary-font-size-large') {
+    @include breakpoint.on('>=menu-primary-font-size-large') {
       font-size: $menu-primary-font-size-large;
     }
   }
