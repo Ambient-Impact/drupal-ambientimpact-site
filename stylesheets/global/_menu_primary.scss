@@ -22,11 +22,9 @@ $menu-primary-font-size-large:  110%;
 ///
 $menu-primary-background-colour: $ambientimpact-orange;
 
-@include breakpoint.add-breakpoints((
+@include breakpoint.add((
   // At which height to start using $menu-primary-font-size-large.
-  'menu-primary-font-size-large': breakpoint.get-breakpoint-value(
-    'height-small'
-  )
+  'menu-primary-font-size-large': breakpoint.get-value('height-small')
 ));
 
 .region-primary-menu {

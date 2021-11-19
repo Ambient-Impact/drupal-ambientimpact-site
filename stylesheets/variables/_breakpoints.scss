@@ -4,7 +4,7 @@
 
 @use 'sass/helpers/breakpoint';
 
-@include breakpoint.add-breakpoints((
+@include breakpoint.add((
   // This is the viewport width where we switch from the small shadow depth to
   // the large one; used for the site title and project titles.
   'fancy-heading-shadow-depth'  : 35em

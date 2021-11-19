@@ -66,7 +66,7 @@ $node-project-title-link-hover-colour-on-dark: color.mix(
 ///
 $node-project-title-link-active-colour-on-dark: auto;
 
-@include breakpoint.add-breakpoints((
+@include breakpoint.add((
   // The viewport width at which project titles switch between having a
   // responsive width that never overflows the layout width (wider than this
   // value) and allowing the project titles to overflow the layout horizontally
