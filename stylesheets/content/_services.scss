@@ -4,6 +4,7 @@
 
 @use '../../../ambientimpact_base/stylesheets/elements/list';
 @use '../../../ambientimpact_base/stylesheets/global/layout.vertical_spacing' as vertical-spacing;
+@use '../../../ambientimpact_base/stylesheets/global/typography';
 @use '../global/reveal';
 @use 'icon';
 @use 'link/link.colour' as link-colour;
@@ -138,7 +139,10 @@ $services-overview-icon-reveal-animation-duration: 0.4s;
       }
     }
 
+    font-weight: typography.$font-weight-strong;
+
     text-align: center;
+
   }
 
   // This for specificity over the default icon styles.
