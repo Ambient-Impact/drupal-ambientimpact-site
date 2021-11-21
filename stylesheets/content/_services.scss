@@ -146,6 +146,8 @@ $services-overview-icon-reveal-animation-duration: 0.4s;
     @include icon.on-icon-container {
       @include icon.set-icon-stacked;
       @include icon.set-icon-size($size: $services-overview-link-icon-size);
+      @include icon.set-icon-text-indent(0);
+      @include icon.set-icon-text-spacing(0);
     }
   }
 
