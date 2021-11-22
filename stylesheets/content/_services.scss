@@ -12,6 +12,7 @@
 @use 'link/link.var' as link-var;
 @use 'material.common/material.general' as material-general;
 @use 'material.ripple' as material-ripple;
+@use 'sass:color';
 @use 'sass/helpers/colour';
 @use 'sass/helpers/layout';
 @use 'sass/variables/general';
@@ -44,6 +45,11 @@ $services-overview-link-icon-size: 8em;
 /// Services overview link icon reveal animation duration.
 ///
 $services-overview-icon-reveal-animation-duration: 0.4s;
+
+///
+/// If true, will use subtle shadows to shade the services icon links.
+///
+$use-shading-shadows: false;
 
 ///
 /// Services overview file icon reveal animation.
@@ -115,9 +121,44 @@ $services-overview-icon-reveal-animation-duration: 0.4s;
 
     border-radius: material-general.$material-border-radius;
 
-    @include colour.set-colours(
-      $background: $services-overview-link-background-colour
-    );
+    @if $use-shading-shadows == true {
+
+      // This needs to be a bit lighter to compensate for the inset shadow.
+      @include colour.set-colours($background: color.scale(
+        $services-overview-link-background-colour, $lightness: +10%
+      ));
+
+    } @else {
+
+      @include colour.set-colours(
+        $background: $services-overview-link-background-colour
+      );
+
+    }
+
+    // @todo Determine the performance impact of this.
+    @if $use-shading-shadows == true {
+
+      --shading-inset-shadow-colour:  rgba(0, 0, 0, 0.2);
+      --shading-text-shadow-colour:   rgba(0, 0, 0, 0.3);
+      --shading-icon-shadow-colour:   rgba(0, 0, 0, 0.2);
+
+      box-shadow: 0 0 5em var(--shading-inset-shadow-colour) inset;
+
+      text-shadow: 0 0 0.8em var(--shading-text-shadow-colour);
+
+      @include icon.on-icon-icon {
+        filter: drop-shadow(0 0 0.2em var(--shading-icon-shadow-colour));
+      }
+
+      // Increase shadow colour opacity a bit on dark colour scheme to attempt
+      // to keep the effect looking about the same perceptually.
+      @include colour.on-dark-colour-scheme {
+        --shading-inset-shadow-colour:  rgba(0, 0, 0, 0.4);
+        --shading-text-shadow-colour:   rgba(0, 0, 0, 0.4);
+      }
+
+    }
 
     @include material-ripple.material-ripple;
 
