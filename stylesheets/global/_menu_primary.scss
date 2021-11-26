@@ -5,25 +5,25 @@
 @use 'sass:list';
 @use 'sass/helpers/breakpoint';
 @use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
-@use '../variables/colours' as *;
+@use '../variables/colours';
 
 ///
 /// Primary menu item font size when large font size breakpoint doesn't match.
 ///
-$menu-primary-font-size-small:  100%;
+$font-size-small: 100%;
 
 ///
 /// Primary menu item font size when large font size breakpoint matches.
 ///
-$menu-primary-font-size-large:  110%;
+$font-size-large: 110%;
 
 ///
 /// Primary menu background colour.
 ///
-$menu-primary-background-colour: $ambientimpact-orange;
+$background-colour: colours.$ambientimpact-orange;
 
 @include breakpoint.add((
-  // At which height to start using $menu-primary-font-size-large.
+  // At which height to start using $font-size-large.
   'menu-primary-font-size-large': breakpoint.get-value('height-small')
 ));
 
@@ -37,7 +37,7 @@ $menu-primary-background-colour: $ambientimpact-orange;
   margin-bottom:  3em;
 
   @include horizontal-bleed-background.horizontal-bleed-background(
-    $colour:  $menu-primary-background-colour,
+    $colour:  $background-colour,
     $z-index: list.index($local-stacking-order, background),
     // Don't use the topmost shadow, as that would show on top of the site
     // title. See _header.scss for the topmost shadow.
@@ -108,10 +108,10 @@ $menu-primary-background-colour: $ambientimpact-orange;
 
     }
 
-    font-size: $menu-primary-font-size-small;
+    font-size: $font-size-small;
 
     @include breakpoint.on('>=menu-primary-font-size-large') {
-      font-size: $menu-primary-font-size-large;
+      font-size: $font-size-large;
     }
   }
 }

@@ -3,7 +3,7 @@
 // -----------------------------------------------------------------------------
 
 @use '../../../ambientimpact_base/stylesheets/global/layout';
-@use 'field_media' as *;
+@use 'field_media' as field-media;
 @use 'link/link.colour' as link-colour;
 @use 'material.common/material.shadow' as material-shadow;
 @use 'sass:color';
@@ -26,13 +26,13 @@ $node-project-stacking-order: top-shadow, title, content;
 /// Project node title link colour on light backgrounds when not interacted.
 ///
 $node-project-title-link-normal-colour-on-light:
-  $media-field-background-colour-on-light;
+  field-media.$background-colour-on-light;
 
 ///
 /// Project node title link colour on light backgrounds when hovered/focused.
 ///
 $node-project-title-link-hover-colour-on-light: color.mix(
-  $media-field-background-colour-on-light,
+  field-media.$background-colour-on-light,
   colour.$background-colour-light,
   70%
 );
@@ -48,13 +48,13 @@ $node-project-title-link-active-colour-on-light: auto;
 /// Project node title link colour on dark backgrounds when not interacted.
 ///
 $node-project-title-link-normal-colour-on-dark:
-  $media-field-background-colour-on-dark;
+  field-media.$media-field-background-colour-on-dark;
 
 ///
 /// Project node title link colour on dark backgrounds when hovered/focused.
 ///
 $node-project-title-link-hover-colour-on-dark: color.mix(
-  $media-field-background-colour-on-dark,
+  field-media.$media-field-background-colour-on-dark,
   colour.$foreground-colour-on-dark,
   50%
 );
@@ -77,10 +77,10 @@ $node-project-title-link-active-colour-on-dark: auto;
 
 .page-node-type-project:not(.page-node-edit) .page-title,
 .node--type-project .node__title {
-  color: $media-field-background-colour-on-light;
+  color: field-media.$background-colour-on-light;
 
   @include colour.on-dark-colour-scheme {
-    color: $media-field-background-colour-on-dark;
+    color: field-media.$media-field-background-colour-on-dark;
   }
 
   // Remove any vertical margins on the heading elements.

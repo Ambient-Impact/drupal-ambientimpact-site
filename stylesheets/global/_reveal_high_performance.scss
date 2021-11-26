@@ -3,6 +3,7 @@
 // -----------------------------------------------------------------------------
 
 @use 'sass/variables/motion';
+@use 'reveal';
 
 // This is currently not included as it can be quite choppy on anything but a
 // high end PC on some pages - e.g. portfolio. This is considered archived until
@@ -51,7 +52,7 @@
 .views-row:first-child,
 .path-node .node {
   animation-name:             content-reveal;
-  animation-duration:         $content-reveal-duration;
+  animation-duration:         reveal.$content-reveal-duration;
   animation-timing-function:  motion.$easing-standard;
   animation-fill-mode:        backwards;
 

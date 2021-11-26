@@ -2,20 +2,23 @@
 //  Font definitions partial
 // -----------------------------------------------------------------------------
 
-$fonts-path: '../fonts';
+///
+/// Relative path to the fonts directory from the stylesheets directory.
+///
+$path: '../fonts';
 
 @font-face {
   font-family:  'Furore';
   font-weight:  normal;
   font-style:   normal;
 
-  src:  url('#{$fonts-path}/furore/furore.eot');
-  src:  url('#{$fonts-path}/furore/furore.eot?#iefix')
+  src:  url('#{$path}/furore/furore.eot');
+  src:  url('#{$path}/furore/furore.eot?#iefix')
           format('embedded-opentype'),
-        url('#{$fonts-path}/furore/furore.woff')
+        url('#{$path}/furore/furore.woff')
           format('woff'),
-        url('#{$fonts-path}/furore/furore.ttf')
+        url('#{$path}/furore/furore.ttf')
           format('truetype'),
-        url('#{$fonts-path}/furore/furore.svg#furoreregular')
+        url('#{$path}/furore/furore.svg#furoreregular')
           format('svg');
 }

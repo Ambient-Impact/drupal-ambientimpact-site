@@ -23,7 +23,7 @@
 ///
 /// Paragraph item 'compact' view mode maximum height.
 ///
-$paragraph-compact-max-height: 7em;
+$compact-max-height: 7em;
 
 .paragraph--view-mode--compact {
   .field__item:first-child > & {
@@ -84,7 +84,7 @@ $paragraph-compact-max-height: 7em;
       // background colour in Chrome/Blink and sometimes in Firefox/Gecko.
       > .field:first-child {
         box-sizing: border-box;
-        max-height: $paragraph-compact-max-height;
+        max-height: $compact-max-height;
         clip-path:  $polygon;
       }
 
@@ -94,7 +94,7 @@ $paragraph-compact-max-height: 7em;
       // item.
       > .field:first-child > .field__item,
       > .field.field__item:first-child {
-        max-height: $paragraph-compact-max-height;
+        max-height: $compact-max-height;
         overflow:   hidden;
       }
 
@@ -135,7 +135,7 @@ $paragraph-compact-max-height: 7em;
     // $gradient-mask: linear-gradient(black, transparent);
 
     // @supports (mask-image: $gradient-mask) {
-    //   max-height: $paragraph-compact-max-height;
+    //   max-height: $compact-max-height;
 
     //   overflow-y: hidden;
 

@@ -8,7 +8,7 @@
 @use 'link/link.colour' as link-colour;
 @use 'link/link.state' as link-state;
 @use 'material.ripple' as material-ripple;
-@use 'menu_primary' as *;
+@use 'menu_primary' as menu-primary;
 @use 'sass/helpers/colour';
 @use 'sass/helpers/selector';
 @use 'sass/variables/general';
@@ -17,7 +17,7 @@
 /// Primary menu item foreground colour.
 ///
 $menu-primary-item-foreground-colour: colour.get-contrasting-colour(
-  $background:          $menu-primary-background-colour,
+  $background:          menu-primary.$background-colour,
   $foreground-on-light: colour.$foreground-colour-on-light,
   $foreground-on-dark:  colour.$foreground-colour-on-dark
 );
@@ -42,7 +42,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
 ///
 @mixin menu-primary-item-colours {
   @include link-colour.link-colours(
-    $background:      $menu-primary-background-colour,
+    $background:      menu-primary.$background-colour,
     $normal-on-dark:  $menu-primary-item-foreground-colour,
     $hover-on-dark:   $menu-primary-item-foreground-colour
   );

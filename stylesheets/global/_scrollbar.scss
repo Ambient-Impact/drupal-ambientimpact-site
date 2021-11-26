@@ -4,7 +4,7 @@
 
 @use 'sass:color';
 @use 'sass/helpers/colour';
-@use '../variables/colours' as *;
+@use '../variables/colours';
 
 // This gives scrollbars custom colours. Note that this is only supported in
 // Firefox using the standard properties. Blink doesn't seem to want to apply
@@ -18,8 +18,9 @@
 /// The thumb is the moving portion of the scrollbar, that indicates the current
 /// scroll position.
 ///
-$scrollbar-thumb-colour-on-light:
-  color.mix($ambientimpact-orange, colour.$background-colour-light, 80%);
+$thumb-colour-on-light: color.mix(
+  colours.$ambientimpact-orange, colour.$background-colour-light, 80%
+);
 
 ///
 /// The scrollbar thumb colour on dark background colours.
@@ -27,8 +28,9 @@ $scrollbar-thumb-colour-on-light:
 /// The thumb is the moving portion of the scrollbar, that indicates the current
 /// scroll position.
 ///
-$scrollbar-thumb-colour-on-dark:
-  color.mix($ambientimpact-orange, colour.$background-colour-dark, 80%);
+$thumb-colour-on-dark: color.mix(
+  colours.$ambientimpact-orange, colour.$background-colour-dark, 80%
+);
 
 ///
 /// The scrollbar track colour on light background colours.
@@ -36,7 +38,7 @@ $scrollbar-thumb-colour-on-dark:
 /// The track is the portion of the scrollbar that spans the full width or
 /// height, along which the thumb slides.
 ///
-$scrollbar-track-colour-on-light: color.mix(
+$track-colour-on-light: color.mix(
   colour.$foreground-colour-on-light, colour.$background-colour-light, 10%
 );
 
@@ -46,16 +48,14 @@ $scrollbar-track-colour-on-light: color.mix(
 /// The track is the portion of the scrollbar that spans the full width or
 /// height, along which the thumb slides.
 ///
-$scrollbar-track-colour-on-dark: color.mix(
+$track-colour-on-dark: color.mix(
   colour.$foreground-colour-on-dark, colour.$background-colour-dark, 10%
 );
 
 html {
-  scrollbar-color:
-    $scrollbar-thumb-colour-on-light $scrollbar-track-colour-on-light;
+  scrollbar-color: $thumb-colour-on-light $track-colour-on-light;
 
   @include colour.on-dark-colour-scheme {
-    scrollbar-color:
-      $scrollbar-thumb-colour-on-dark $scrollbar-track-colour-on-dark;
+    scrollbar-color: $thumb-colour-on-dark $track-colour-on-dark;
   }
 }

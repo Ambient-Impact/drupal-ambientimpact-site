@@ -24,14 +24,13 @@
 ///
 /// Services overview link background colour.
 ///
-$services-overview-link-background-colour:
-  link-var.$link-normal-colour-on-light;
+$link-background-colour: link-var.$link-normal-colour-on-light;
 
 ///
 /// Services overview link foreground colour.
 ///
-$services-overview-link-foreground-colour: colour.get-contrasting-colour(
-  $background:          $services-overview-link-background-colour,
+$link-foreground-colour: colour.get-contrasting-colour(
+  $background:          $link-background-colour,
   $foreground-on-light: colour.$foreground-colour-on-light,
   $foreground-on-dark:  colour.$foreground-colour-on-dark
 );
@@ -39,12 +38,12 @@ $services-overview-link-foreground-colour: colour.get-contrasting-colour(
 ///
 /// Services overview link icon size.
 ///
-$services-overview-link-icon-size: 8em;
+$link-icon-size: 8em;
 
 ///
 /// Services overview link icon reveal animation duration.
 ///
-$services-overview-icon-reveal-animation-duration: 0.4s;
+$icon-reveal-animation-duration: 0.4s;
 
 ///
 /// If true, will use subtle shadows to shade the services icon links.
@@ -125,13 +124,13 @@ $use-shading-shadows: false;
 
       // This needs to be a bit lighter to compensate for the inset shadow.
       @include colour.set-colours($background: color.scale(
-        $services-overview-link-background-colour, $lightness: +10%
+        $link-background-colour, $lightness: +10%
       ));
 
     } @else {
 
       @include colour.set-colours(
-        $background: $services-overview-link-background-colour
+        $background: $link-background-colour
       );
 
     }
@@ -164,13 +163,13 @@ $use-shading-shadows: false;
 
     .layout-container & {
       @include link-colour.link-colours(
-        $background:                $services-overview-link-background-colour,
-        $normal-on-dark:            $services-overview-link-foreground-colour,
-        $hover-on-dark:             $services-overview-link-foreground-colour,
-        $active-on-dark:            $services-overview-link-foreground-colour,
-        $underline-normal-on-dark:  $services-overview-link-foreground-colour,
-        $underline-hover-on-dark:   $services-overview-link-foreground-colour,
-        $underline-active-on-dark:  $services-overview-link-foreground-colour
+        $background:                $link-background-colour,
+        $normal-on-dark:            $link-foreground-colour,
+        $hover-on-dark:             $link-foreground-colour,
+        $active-on-dark:            $link-foreground-colour,
+        $underline-normal-on-dark:  $link-foreground-colour,
+        $underline-hover-on-dark:   $link-foreground-colour,
+        $underline-active-on-dark:  $link-foreground-colour
       );
 
       @include link-state.link-hover {
@@ -190,7 +189,7 @@ $use-shading-shadows: false;
   a#{&}__link {
     @include icon.on-icon-container {
       @include icon.set-icon-stacked;
-      @include icon.set-icon-size($size: $services-overview-link-icon-size);
+      @include icon.set-icon-size($size: $link-icon-size);
       @include icon.set-icon-text-indent(0);
       @include icon.set-icon-text-spacing(0);
     }
@@ -207,9 +206,8 @@ $use-shading-shadows: false;
 
     --services-icon-reveal-delay: #{reveal.$site-revealed};
     --services-icon-reveal-stagger-duration:
-      #{$services-overview-icon-reveal-animation-duration};
-    --services-icon-reveal-duration:
-      #{$services-overview-icon-reveal-animation-duration};
+      #{$icon-reveal-animation-duration};
+    --services-icon-reveal-duration:  #{$icon-reveal-animation-duration};
 
     // This removes the animation completely when the item is not yet visible
     // but is being observed, thus resetting the animation to its starting

@@ -33,7 +33,7 @@
 /// the front page to reveal just the content after the site name and menu bar
 /// animations are finished.
 ///
-$reveal-overlay-animation-duration: 0.5s;
+$overlay-animation-duration: 0.5s;
 
 ///
 /// Site reveal overlay animation delay.
@@ -43,12 +43,12 @@ $reveal-overlay-animation-duration: 0.5s;
 /// (hopefully) finished executing so the reveal animation has a better chance
 /// of playing smoothly and without too many frames dropped.
 ///
-$site-reveal-overlay-animation-delay: 0.5s;
+$overlay-animation-delay: 0.5s;
 
 ///
 /// Site name reveal animation duration.
 ///
-$site-name-reveal-animation-duration: 0.8s;
+$site-name-animation-duration: 0.8s;
 
 ///
 /// Site name reveal animation delay.
@@ -58,12 +58,12 @@ $site-name-reveal-animation-duration: 0.8s;
 /// (hopefully) finished executing so the reveal animation has a better chance
 /// of playing smoothly and without too many frames dropped.
 ///
-$site-name-reveal-animation-delay: 0.5s;
+$site-name-animation-delay: 0.5s;
 
 ///
 /// Primary menu region reveal animation duration.
 ///
-$region-primary-menu-reveal-animation-duration: 0.5s;
+$region-primary-menu-animation-duration: 0.5s;
 
 ///
 /// Primary menu region reveal animation delay.
@@ -73,7 +73,7 @@ $region-primary-menu-reveal-animation-duration: 0.5s;
 /// (hopefully) finished executing so the reveal animation has a better chance
 /// of playing smoothly and without too many frames dropped.
 ///
-$region-primary-menu-reveal-animation-delay: 0.5s;
+$region-primary-menu-animation-delay: 0.5s;
 
 ///
 /// Primary menu block .menu element reveal animation duration.
@@ -81,12 +81,12 @@ $region-primary-menu-reveal-animation-delay: 0.5s;
 /// This is applied to .menu elements inside the primary menu region, not the
 /// region itself.
 ///
-$region-primary-menu-block-menu-reveal-duration: 0.5s;
+$region-primary-menu-block-animation-duration: 0.5s;
 
 ///
 /// Primary menu block .menu element reveal animation delay.
 ///
-$region-primary-menu-block-menu-reveal-delay: 0.5s;
+$region-primary-menu-block-animation-delay: 0.5s;
 
 ///
 /// Content reveal animation duration.
@@ -102,8 +102,8 @@ $content-reveal-duration: 0.5s;
 /// actually done so as to keep the flow going.
 ///
 $content-reveal-animation-delay:
-  $region-primary-menu-reveal-animation-delay +
-  math.div($region-primary-menu-reveal-animation-duration, 2);
+  $region-primary-menu-animation-delay +
+  math.div($region-primary-menu-animation-duration, 2);
 
 ///
 /// The point at which all the site reveal animations are nearly complete.
@@ -112,8 +112,8 @@ $content-reveal-animation-delay:
 /// when the content becomes visible and not too early.
 ///
 $site-revealed:
-  $site-reveal-overlay-animation-delay +
-  math.div($reveal-overlay-animation-duration, 2);
+  $overlay-animation-delay +
+  math.div($overlay-animation-duration, 2);
 
 ///
 /// Site reveal overlay keyframes.
@@ -213,10 +213,10 @@ body {
 
 body:not(.maintenance-page) .site-name {
   animation-name:             site-name-reveal;
-  animation-duration:         $site-name-reveal-animation-duration;
+  animation-duration:         $site-name-animation-duration;
   animation-timing-function:  motion.$easing-decelerate;
   animation-fill-mode:        backwards;
-  animation-delay:            $site-name-reveal-animation-delay;
+  animation-delay:            $site-name-animation-delay;
 
   // Don't animate if the user indicates they prefer reduced motion.
   //
@@ -228,16 +228,16 @@ body:not(.maintenance-page) .site-name {
 
 body:not(.maintenance-page) .region-primary-menu .block {
   animation-name:             primary-menu-block-overflow;
-  animation-duration:         $region-primary-menu-block-menu-reveal-duration;
+  animation-duration:         $region-primary-menu-block-animation-duration;
   animation-fill-mode:        backwards;
-  animation-delay:            $region-primary-menu-block-menu-reveal-delay;
+  animation-delay:            $region-primary-menu-block-animation-delay;
 
   > .menu:not(.menu--overflow-measure-shadow) {
     animation-name:             primary-menu-block-menu-reveal;
-    animation-duration:         $region-primary-menu-block-menu-reveal-duration;
+    animation-duration:         $region-primary-menu-block-animation-duration;
     animation-timing-function:  motion.$easing-standard;
     animation-fill-mode:        backwards;
-    animation-delay:            $region-primary-menu-block-menu-reveal-delay;
+    animation-delay:            $region-primary-menu-block-animation-delay;
 
     // Only animate opacity if the user indicates they prefer reduced motion.
     //
@@ -279,7 +279,7 @@ body:not(.maintenance-page) .region-highlighted::before {
 
     opacity: 0;
 
-    animation-duration:         $reveal-overlay-animation-duration;
+    animation-duration:         $overlay-animation-duration;
     animation-timing-function:  linear;
     animation-fill-mode:        backwards;
   }
@@ -287,6 +287,6 @@ body:not(.maintenance-page) .region-highlighted::before {
 body:not(.maintenance-page) .region-highlighted::before {
   @supports (pointer-events: none) {
     animation-name:   reveal-overlay;
-    animation-delay:  $site-reveal-overlay-animation-delay;
+    animation-delay:  $overlay-animation-delay;
   }
 }

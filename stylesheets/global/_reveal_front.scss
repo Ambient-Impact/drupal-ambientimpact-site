@@ -43,12 +43,12 @@
 /// Note that we're using scaleY() rather than scale() as the latter produces
 /// issues in Edge where the transform-origin seems to be completely off.
 ///
-$front-page-region-primary-menu-start-transform: scaleY(2) translateY(15vh);
+$region-primary-menu-start-transform: scaleY(2) translateY(15vh);
 
 ///
 /// Primary menu reveal animation duration.
 ///
-$front-page-region-primary-menu-reveal-animation-duration: 2s;
+$region-primary-menu-animation-duration: 2s;
 
 ///
 /// Primary menu reveal animation delay.
@@ -58,7 +58,7 @@ $front-page-region-primary-menu-reveal-animation-duration: 2s;
 /// (hopefully) finished executing so the reveal animation has a better chance
 /// of playing smoothly and without too many frames dropped.
 ///
-$front-page-region-primary-menu-reveal-animation-delay: 0.5s;
+$region-primary-menu-animation-delay: 0.5s;
 
 ///
 /// The point at which all the site reveal animations are nearly complete.
@@ -66,10 +66,10 @@ $front-page-region-primary-menu-reveal-animation-delay: 0.5s;
 /// This is useful to be able to run additional animations in the page content
 /// when the content becomes visible and not too early.
 ///
-$front-page-site-revealed:
+$site-revealed:
   reveal.$site-revealed +
-  $front-page-region-primary-menu-reveal-animation-delay +
-  $front-page-region-primary-menu-reveal-animation-duration;
+  $region-primary-menu-animation-delay +
+  $region-primary-menu-animation-duration;
 
 ///
 /// <body> scroll prevention keyframes.
@@ -96,13 +96,13 @@ $front-page-site-revealed:
   0% {
     visibility: hidden;
     opacity:    0;
-    transform:  $front-page-region-primary-menu-start-transform;
+    transform:  $region-primary-menu-start-transform;
   }
   1% {
     visibility: visible;
   }
   50% {
-    transform:  $front-page-region-primary-menu-start-transform;
+    transform:  $region-primary-menu-start-transform;
   }
   60% {
     opacity:    1;
@@ -137,7 +137,8 @@ $front-page-site-revealed:
 // @see https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
 @media (prefers-reduced-motion: no-preference) {
   .path-frontpage:not(.maintenance-page) {
-    --site-reveal-duration: #{$front-page-site-revealed};
+
+    --site-reveal-duration: #{$site-revealed};
 
     // Apply the scroll prevention animation with a delay equal to the durations
     // of most other animations. This works fine in Firefox (both Windows and
@@ -148,10 +149,10 @@ $front-page-site-revealed:
     animation-name:       front-page-body-scroll-prevention;
     animation-duration:   0.01s;
     animation-delay:
-      $front-page-region-primary-menu-reveal-animation-delay +
-      $front-page-region-primary-menu-reveal-animation-duration +
-      reveal.$region-primary-menu-block-menu-reveal-duration +
-      reveal.$site-name-reveal-animation-duration;
+      $region-primary-menu-animation-delay +
+      $region-primary-menu-animation-duration +
+      reveal.$region-primary-menu-block-animation-duration +
+      reveal.$site-name-animation-duration;
     animation-fill-mode:  backwards;
 
     // Site header element contains the top shadow for the primary menu bar, so
@@ -160,11 +161,11 @@ $front-page-site-revealed:
     .region-primary-menu {
       animation-name:             front-page-primary-menu-reveal;
       animation-duration:
-        $front-page-region-primary-menu-reveal-animation-duration;
+        $region-primary-menu-animation-duration;
       animation-timing-function:  motion.$easing-standard;
       animation-fill-mode:        backwards;
       animation-delay:
-        $front-page-region-primary-menu-reveal-animation-delay;
+        $region-primary-menu-animation-delay;
     }
 
     // This ensures the scale transform keeps the top shadow with the top of the
@@ -177,8 +178,8 @@ $front-page-site-revealed:
     // completed.
     .site-name {
       animation-delay:
-        $front-page-region-primary-menu-reveal-animation-delay +
-        $front-page-region-primary-menu-reveal-animation-duration;
+        $region-primary-menu-animation-delay +
+        $region-primary-menu-animation-duration;
     }
 
     .region-primary-menu {
@@ -191,9 +192,9 @@ $front-page-site-revealed:
       .block,
       .block > .menu:not(.menu--overflow-measure-shadow) {
         animation-delay:
-          $front-page-region-primary-menu-reveal-animation-delay +
-          $front-page-region-primary-menu-reveal-animation-duration +
-          reveal.$site-name-reveal-animation-duration;
+          $region-primary-menu-animation-delay +
+          $region-primary-menu-animation-duration +
+          reveal.$site-name-animation-duration;
       }
     }
 
@@ -205,10 +206,10 @@ $front-page-site-revealed:
     .region:not(.region-header):not(.region-primary-menu):not(.region-highlighted),
     .region-highlighted > * {
       animation-delay:
-        $front-page-region-primary-menu-reveal-animation-delay +
-        $front-page-region-primary-menu-reveal-animation-duration +
-        reveal.$region-primary-menu-block-menu-reveal-duration +
-        reveal.$site-name-reveal-animation-duration;
+        $region-primary-menu-animation-delay +
+        $region-primary-menu-animation-duration +
+        reveal.$region-primary-menu-block-animation-duration +
+        reveal.$site-name-animation-duration;
     }
     // This fades in the site content after the header and menu bar animations
     // are complete.

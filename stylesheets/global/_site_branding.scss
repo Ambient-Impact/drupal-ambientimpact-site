@@ -3,13 +3,13 @@
 // -----------------------------------------------------------------------------
 
 @use '../../../ambientimpact_base/stylesheets/global/layout';
-@use 'header' as *;
+@use 'header';
 @use 'material.common/material.shadow' as material-shadow;
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/hide';
-@use '../variables/colours' as *;
+@use '../variables/colours';
 @use '../variables/general' as *;
 
 ///
@@ -53,7 +53,7 @@ $site-name-height: 83.997;
 
   position: relative;
 
-  z-index: list.index($header-stacking-order, site-name);
+  z-index: list.index(header.$stacking-order, site-name);
 
   margin-bottom: -1px;
 
@@ -117,7 +117,7 @@ $site-name-height: 83.997;
       // Force this to always use $ambientimpact-orange, even on a dark colour
       // scheme where the link foreground colour may be different.
       &:not(:hover):not(:focus):not(:active) {
-        color: $ambientimpact-orange;
+        color: colours.$ambientimpact-orange;
       }
     }
   }

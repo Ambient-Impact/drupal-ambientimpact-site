@@ -4,7 +4,7 @@
 
 @use 'material.common/material.general' as material-general;
 @use 'material.common/material.shadow' as material-shadow;
-@use 'menu_primary' as *;
+@use 'menu_primary' as menu-primary;
 @use 'sass:list';
 @use 'sass/helpers/selector';
 @use 'sass/variables/motion';
@@ -271,7 +271,7 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 
           z-index:  list.index($local-stacking-order, background);
 
-          background-color: $menu-primary-background-colour;
+          background-color: menu-primary.$background-colour;
         }
       }
 
@@ -287,7 +287,7 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 
         z-index:  list.index($local-stacking-order, menu);
 
-        background-color: $menu-primary-background-colour;
+        background-color: menu-primary.$background-colour;
 
         border-bottom-left-radius:  material-general.$material-border-radius;
         border-bottom-right-radius: material-general.$material-border-radius;
