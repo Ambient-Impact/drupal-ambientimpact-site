@@ -33,3 +33,11 @@ menu_primary:
     - ambientimpact_ux/component.menu_drop_down
     - ambientimpact_ux/component.menu_overflow
     - ambientimpact_ux/component.overlay
+
+reveal:
+  js:
+    javascript/reveal.js: {}
+  dependencies:
+    - ambientimpact_core/framework
+    - ambientimpact_core/component.fastdom
+
