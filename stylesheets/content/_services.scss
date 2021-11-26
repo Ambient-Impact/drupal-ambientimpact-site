@@ -204,14 +204,23 @@ $use-shading-shadows: false;
   //
   // @see https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
   @media (prefers-reduced-motion: no-preference) {
+
+    --services-icon-reveal-delay: #{reveal.$site-revealed};
+    --services-icon-reveal-stagger-duration:
+      #{$services-overview-icon-reveal-animation-duration};
+    --services-icon-reveal-duration:
+      #{$services-overview-icon-reveal-animation-duration};
+
+    @include icon.on-icon-icon {
+      animation-timing-function:  motion.$easing-decelerate;
+      animation-fill-mode:        backwards;
+      animation-duration:         var(--services-icon-reveal-duration);
+    }
+
     .ambientimpact-icon--name-file {
       @include icon.on-icon-icon {
-        animation-name:             services-overview-icon-file-reveal;
-        animation-timing-function:  motion.$easing-decelerate;
-        animation-fill-mode:        backwards;
-        animation-delay:            reveal.$site-revealed;
-        animation-duration:
-          $services-overview-icon-reveal-animation-duration;
+        animation-name:   services-overview-icon-file-reveal;
+        animation-delay:  var(--services-icon-reveal-delay);
       }
     }
 
@@ -221,15 +230,13 @@ $use-shading-shadows: false;
         // bolt would be.
         transform-origin: 20% 20%;
 
-        animation-name:             services-overview-icon-wrench-reveal;
-        animation-timing-function:  motion.$easing-decelerate;
-        animation-fill-mode:        backwards;
+        animation-name:   services-overview-icon-wrench-reveal;
         // Stagger this so it comes in once the previous icon has completed its
         // reveal animation.
-        animation-delay:            reveal.$site-revealed +
-          $services-overview-icon-reveal-animation-duration;
-        animation-duration:
-          $services-overview-icon-reveal-animation-duration;
+        animation-delay:  calc(
+          var(--services-icon-reveal-delay) +
+          var(--services-icon-reveal-stagger-duration)
+        );
       }
     }
   }
