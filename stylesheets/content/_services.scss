@@ -211,6 +211,22 @@ $use-shading-shadows: false;
     --services-icon-reveal-duration:
       #{$services-overview-icon-reveal-animation-duration};
 
+    // This removes the animation completely when the item is not yet visible
+    // but is being observed, thus resetting the animation to its starting
+    // position in case it starts to play before the Intersection Observer has
+    // been initialized.
+    &__item.content-visibility-observe--observing {
+      &:not(.content-visibility-observe--visible) {
+        @include icon.on-icon-icon {
+
+          animation-name: none;
+
+          opacity: 0;
+
+        }
+      }
+    }
+
     @include icon.on-icon-icon {
       animation-timing-function:  motion.$easing-decelerate;
       animation-fill-mode:        backwards;

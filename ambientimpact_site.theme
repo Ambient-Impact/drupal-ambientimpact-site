@@ -8,6 +8,30 @@ use Symfony\Component\DomCrawler\Crawler;
 use Drupal\ambientimpact_site\HeadingTextToSVG;
 
 /**
+ * Prepares variables for HTML document templates.
+ *
+ * This attaches the 'ambientimpact_site/services' library to the Services page.
+ *
+ * @todo Rework this so that we don't have to check the path, but rather attach
+ *   this to a specific render array or the filter process result of the node?
+ *   Better yet, rework the Services overview as a theme element and its own
+ *   route?
+ */
+function ambientimpact_site_preprocess_html(array &$variables): void {
+
+  $unaliasedPath = \Drupal::service('path.current')->getPath();
+
+  $aliasedPath = \Drupal::service('path_alias.manager')->getAliasByPath(
+    $unaliasedPath
+  );
+
+  if ($aliasedPath === '/web/services') {
+    $variables['#attached']['library'][] = 'ambientimpact_site/services';
+  }
+
+}
+
+/**
  * Prepares variables for field_project_link templates.
  *
  * This sets the link text to contain the title of the parent node if the link

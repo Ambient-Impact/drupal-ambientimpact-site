@@ -41,3 +41,10 @@ reveal:
     - ambientimpact_core/framework
     - ambientimpact_core/component.fastdom
 
+services:
+  js:
+    javascript/services.js: {}
+  dependencies:
+    - ambientimpact_core/framework
+    - ambientimpact_site/reveal
+    - ambientimpact_ux/component.content_visibility
