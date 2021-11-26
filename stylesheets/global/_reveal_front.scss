@@ -61,6 +61,17 @@ $front-page-region-primary-menu-reveal-animation-duration: 2s;
 $front-page-region-primary-menu-reveal-animation-delay: 0.5s;
 
 ///
+/// The point at which all the site reveal animations are nearly complete.
+///
+/// This is useful to be able to run additional animations in the page content
+/// when the content becomes visible and not too early.
+///
+$front-page-site-revealed:
+  reveal.$site-revealed +
+  $front-page-region-primary-menu-reveal-animation-delay +
+  $front-page-region-primary-menu-reveal-animation-duration;
+
+///
 /// <body> scroll prevention keyframes.
 ///
 /// This is applied before and until all other animations have completed
@@ -126,6 +137,8 @@ $front-page-region-primary-menu-reveal-animation-delay: 0.5s;
 // @see https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion
 @media (prefers-reduced-motion: no-preference) {
   .path-frontpage:not(.maintenance-page) {
+    --site-reveal-duration: #{$front-page-site-revealed};
+
     // Apply the scroll prevention animation with a delay equal to the durations
     // of most other animations. This works fine in Firefox (both Windows and
     // Android) and Chrome (Windows), but Edge and Chrome on Android refuse to

@@ -199,6 +199,18 @@ $site-revealed:
   }
 }
 
+body {
+  --site-reveal-duration: 0ms;
+
+  &:not(.maintenance-page) {
+    --site-reveal-duration: #{$site-revealed};
+
+    @media (prefers-reduced-motion: reduce) {
+      --site-reveal-duration: 0ms;
+    }
+  }
+}
+
 body:not(.maintenance-page) .site-name {
   animation-name:             site-name-reveal;
   animation-duration:         $site-name-reveal-animation-duration;
