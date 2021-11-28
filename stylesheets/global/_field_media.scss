@@ -37,12 +37,9 @@ $media-field-background-colour-on-dark: hsl(0, 0%, 30%) !default;
     $shadow-settings: (false, true, true);
   }
 
-  // Don't set horizontal margins as that needs to be left up to the base styles
-  // to centre this horizontally, if need be.
-  margin-top:     general.$general-spacing;
-  margin-bottom:  general.$general-spacing;
+  --field-item-gap: #{field-media.$media-field-spacing};
 
-  padding:  field-media.$media-field-spacing  0;
+  padding: var(--field-item-gap) 0;
 
   @include colour.set-colours(
     $background:  $background-colour-on-light
@@ -118,11 +115,11 @@ $media-field-background-colour-on-dark: hsl(0, 0%, 30%) !default;
   @include media-field($use-top-shadow: false);
 
   margin-top: 0;
-  padding:    math.div(field-media.$media-field-spacing, 2) 0;
+  padding:    calc(var(--field-item-gap) / 2) 0;
 
   @include layout.use-grid {
-    padding-top:    field-media.$media-field-spacing;
-    padding-bottom: field-media.$media-field-spacing;
+    padding-top:    var(--field-item-gap);
+    padding-bottom: var(--field-item-gap);
   }
 
   // Remove field item spacing, since we use CSS grid below.
@@ -133,7 +130,7 @@ $media-field-background-colour-on-dark: hsl(0, 0%, 30%) !default;
   );
 
   .field__item {
-    padding:  math.div(field-media.$media-field-spacing, 2) 0;
+    padding: calc(var(--field-item-gap) / 2) 0;
   }
 
   // If available, use CSS grid to lay out the project images in a two column
@@ -142,7 +139,7 @@ $media-field-background-colour-on-dark: hsl(0, 0%, 30%) !default;
     .field__items {
       display:                grid;
       grid-template-columns:  1fr 1fr;
-      grid-gap:               field-media.$media-field-spacing;
+      grid-gap:               var(--field-item-gap);
     }
 
     .field__item {
