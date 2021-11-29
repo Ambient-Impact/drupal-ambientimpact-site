@@ -13,6 +13,7 @@
 @use 'sass/helpers/hide';
 @use 'sass/helpers/selector';
 @use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
+@use 'sass/variables/motion';
 @use '../variables/general' as *;
 
 ///
@@ -47,8 +48,11 @@ $node-project-title-link-active-colour-on-light: auto;
 ///
 /// Project node title link colour on dark backgrounds when not interacted.
 ///
-$node-project-title-link-normal-colour-on-dark:
-  field-media.$media-field-background-colour-on-dark;
+$node-project-title-link-normal-colour-on-dark: color.mix(
+  field-media.$media-field-background-colour-on-dark,
+  colour.$foreground-colour-on-dark,
+  70%
+);
 
 ///
 /// Project node title link colour on dark backgrounds when hovered/focused.
@@ -56,7 +60,7 @@ $node-project-title-link-normal-colour-on-dark:
 $node-project-title-link-hover-colour-on-dark: color.mix(
   field-media.$media-field-background-colour-on-dark,
   colour.$foreground-colour-on-dark,
-  50%
+  40%
 );
 
 ///
@@ -80,7 +84,7 @@ $node-project-title-link-active-colour-on-dark: auto;
   color: field-media.$background-colour-on-light;
 
   @include colour.on-dark-colour-scheme {
-    color: field-media.$media-field-background-colour-on-dark;
+    color: $node-project-title-link-normal-colour-on-dark;
   }
 
   // Remove any vertical margins on the heading elements.
@@ -349,5 +353,17 @@ $node-project-title-link-active-colour-on-dark: auto;
         margin-top: 0;
       }
     }
+  }
+}
+
+// This fades the dark colour scheme media field background from the heading
+// colour to the field colour.
+.field--name-field-project-media::before {
+  @include colour.on-dark-colour-scheme {
+    background-image: linear-gradient(
+      $node-project-title-link-normal-colour-on-dark,
+      motion.$easing-decelerate,
+      field-media.$media-field-background-colour-on-dark
+    );
   }
 }
