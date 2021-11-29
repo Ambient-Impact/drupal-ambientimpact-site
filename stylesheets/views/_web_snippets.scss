@@ -11,7 +11,7 @@
 .view-web-snippets {
   &__links-list {
 
-    @include list.unlisted-list;
+    @include list.unlisted;
 
     // If flexbox with gap properties is not supported, we have to contain the
     // floated label and items.

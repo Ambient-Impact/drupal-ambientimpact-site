@@ -34,14 +34,14 @@ $site-name-height: 83.997;
   // bottom of the primary menu bar. The padding and negative margins are so
   // that the lateral and top drop shadows on the site name are not clipped.
   @supports (animation-fill-mode: backwards) {
-    margin-top:     layout.$layout-gutter * -1;
-    margin-left:    layout.$layout-gutter * -1;
-    margin-right:   layout.$layout-gutter * -1;
+    margin-top:     layout.$gutter * -1;
+    margin-left:    layout.$gutter * -1;
+    margin-right:   layout.$gutter * -1;
     margin-bottom:  0;
 
-    padding-top:    layout.$layout-gutter;
-    padding-left:   layout.$layout-gutter;
-    padding-right:  layout.$layout-gutter;
+    padding-top:    layout.$gutter;
+    padding-left:   layout.$gutter;
+    padding-right:  layout.$gutter;
     padding-bottom: 0;
 
     overflow:       hidden;

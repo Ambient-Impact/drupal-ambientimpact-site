@@ -88,7 +88,7 @@ $use-shading-shadows: false;
 .services-overview {
   $self: &;
 
-  @include list.unlisted-list;
+  @include list.unlisted;
 
   @include layout.use-grid {
     // Lay out the list items as a responsive grid, fitting as many as possible
@@ -98,7 +98,7 @@ $use-shading-shadows: false;
     grid-gap: general.$general-spacing;
 
     // Remove the default list item spacing against previous as we use grid-gap.
-    @include vertical-spacing.vertical-spacing-against-previous(
+    @include vertical-spacing.against-previous(
       '#{$self}__item',
       $spacing-small: 0,
       $spacing-large: 0

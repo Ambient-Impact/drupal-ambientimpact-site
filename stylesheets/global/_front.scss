@@ -11,7 +11,7 @@
     * + & {
       // This adds some spacing between the views blocks and any preceding
       // elements. We're using vertical-spacing rather than
-      // vertical-spacing-against-previous as the latter would be overkill here.
+      // against-previous as the latter would be overkill here.
       @include vertical-spacing.vertical-spacing;
     }
 

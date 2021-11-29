@@ -25,7 +25,7 @@ $menu-primary-item-foreground-colour: colour.get-contrasting-colour(
 ///
 /// Primary menu item horizontal padding.
 ///
-$menu-primary-item-padding-x:   layout.$layout-gutter;
+$menu-primary-item-padding-x:   layout.$gutter;
 
 ///
 /// Primary menu item vertical padding.
@@ -100,7 +100,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
 /// Set primary menu item indicator state when menu is :hover or :focus-within.
 ///
 @mixin menu-primary-item-primary-active-path-indicator-hover-focus-within {
-  @include menus.menu-item-is-active-path {
+  @include menus.is-item-active-path {
     &::after {
       @include menu-primary-item-primary-indicator-inactive;
     }
@@ -117,7 +117,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
 /// Set primary menu item indicator state when menu is :hover or :focus-within.
 ///
 @mixin menu-primary-item-secondary-active-path-indicator-hover-focus-within {
-  @include menus.menu-item-is-active-path {
+  @include menus.is-item-active-path {
     &::after {
       @include menu-primary-item-secondary-indicator-inactive;
     }
@@ -164,7 +164,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
     // Remove padding added by Classy.
     padding-top: 0;
 
-    @include menus.menu-item-is-active-path {
+    @include menus.is-item-active-path {
       @include menu-primary-item-colours;
     }
   }
@@ -288,7 +288,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
       }
     }
 
-    @include menus.menu-item-is-active-path {
+    @include menus.is-item-active-path {
       // Active path item indicators are visible by default. This is necessary
       // in case the browser doesn't support :focus-within and our polyfill
       // doesn't get applied.
@@ -335,7 +335,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
       }
     }
 
-    @include menus.menu-item-is-active-path {
+    @include menus.is-item-active-path {
       // Active path item indicators are visible by default. This is necessary
       // in case the browser doesn't support :focus-within and our polyfill
       // doesn't get applied.

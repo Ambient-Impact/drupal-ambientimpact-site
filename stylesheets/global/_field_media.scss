@@ -37,7 +37,7 @@ $media-field-background-colour-on-dark: hsl(0, 0%, 30%) !default;
     $shadow-settings: (false, true, true);
   }
 
-  --field-item-gap: #{field-media.$media-field-spacing};
+  --field-item-gap: #{field-media.$spacing};
 
   padding: var(--field-item-gap) 0;
 
@@ -123,7 +123,7 @@ $media-field-background-colour-on-dark: hsl(0, 0%, 30%) !default;
   }
 
   // Remove field item spacing, since we use CSS grid below.
-  @include vertical-spacing.vertical-spacing-against-previous(
+  @include vertical-spacing.against-previous(
     '.field__item',
     $spacing-small: 0,
     $spacing-large: 0

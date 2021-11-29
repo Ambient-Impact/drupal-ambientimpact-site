@@ -98,10 +98,10 @@ $node-project-title-link-active-colour-on-dark: auto;
   // If mask-image with a gradient is supported, use that to fade out any text
   // that's wider than the layout.
   $mask-gradient-ltr: linear-gradient(
-    to left, transparent, black layout.$layout-gutter
+    to left, transparent, black layout.$gutter
   );
   $mask-gradient-rtl: linear-gradient(
-    to right, transparent, black layout.$layout-gutter
+    to right, transparent, black layout.$gutter
   );
   @supports (mask-image: $mask-gradient-ltr) and (width: 100vw) {
     @include breakpoint.on('<=project-title-height-constraint') {
@@ -113,19 +113,19 @@ $node-project-title-link-active-colour-on-dark: auto;
       width: 100vw;
 
       // Compensate for padding.
-      margin-top:     layout.$layout-gutter * -1;
+      margin-top:     layout.$gutter * -1;
       @include selector.root-conditions(('[dir=ltr]'), 'html') {
-        margin-left:  layout.$layout-gutter * -1;
+        margin-left:  layout.$gutter * -1;
       }
       @include selector.root-conditions(('[dir=rtl]'), 'html') {
-        margin-right: layout.$layout-gutter * -1;
+        margin-right: layout.$gutter * -1;
       }
 
       // Padding on all sides but the bottom so that the shadows don't get cut
       // off by the overflow: hidden, in addition to fading out any overflow.
-      padding-top:    layout.$layout-gutter;
-      padding-left:   layout.$layout-gutter;
-      padding-right:  layout.$layout-gutter;
+      padding-top:    layout.$gutter;
+      padding-left:   layout.$gutter;
+      padding-right:  layout.$gutter;
 
       box-sizing:     border-box;
 

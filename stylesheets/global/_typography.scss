@@ -68,14 +68,14 @@
 }
 
 // Awkward nesting to apply vertical spacing against previous for all heading
-// levels because the vertical-spacing-against-previous mixin doesn't work with
+// levels because the against-previous mixin doesn't work with
 // $h1to6. Somewhat higher spacing than the default to visually separate
 // headings and preceding elements.
 @for $i from 1 through 6 {
-  @include vertical-spacing.vertical-spacing-against-previous(
+  @include vertical-spacing.against-previous(
     'h#{$i}',
-    $spacing-small: content.$content-item-vertical-spacing-small * 1.8,
-    $spacing-large: content.$content-item-vertical-spacing-large * 1.8
+    $spacing-small: content.$item-vertical-spacing-small * 1.8,
+    $spacing-large: content.$item-vertical-spacing-large * 1.8
   );
 }
 
@@ -93,14 +93,14 @@
   }
 }
 
-@include content.content-area {
+@include content.area {
   h2 {
     @include heading-underline;
   }
 
   @include typography-heading.headings {
     &:not(.code-highlighted__heading) {
-      margin-bottom: content.$content-item-vertical-spacing-small;
+      margin-bottom: content.$item-vertical-spacing-small;
     }
   }
 }
