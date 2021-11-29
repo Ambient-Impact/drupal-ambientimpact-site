@@ -2,6 +2,7 @@
 //   Ambient.Impact - Site theme - Primary menu - Stagger
 // -----------------------------------------------------------------------------
 
+AmbientImpact.on(['fastdom'], function(aiFastDom) {
 AmbientImpact.addComponent('siteThemeMenuPrimaryStagger', function(
   siteThemeMenuPrimaryStagger, $
 ) {
@@ -14,6 +15,13 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryStagger', function(
    * @type {String}
    */
   const eventNamespace = 'AmbientImpactSiteThemeMenuPrimaryStagger';
+
+  /**
+   * FastDom instance.
+   *
+   * @type {FastDom}
+   */
+  const fastdom = aiFastDom.getInstance();
 
   /**
    * Sub-menu item reveal stagger custom property name.
@@ -84,12 +92,14 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryStagger', function(
        */
       let $menus = $(this).find('.region-primary-menu .block-menu > .menu');
 
+      // Add stagger custom properties once the menu overflow has been
+      // attached.
       $menus.one('menuOverflowAttached.' + eventNamespace, function(event) {
 
-        // Add stagger custom properties once the menu overflow has been
-        // attached.
-        $(this).children('.menu-item--expanded').each(function() {
-          setCustomProperties(this);
+        fastdom.mutate(function() {
+          $menus.children('.menu-item--expanded').each(function() {
+            setCustomProperties(this);
+          });
         });
 
       });
@@ -108,16 +118,25 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryStagger', function(
 
       let data = this.siteThemeMenuPrimaryStagger;
 
+      let layoutContainer = this;
+
       data.$menus.off('menuOverflowAttached.' + eventNamespace);
 
-      data.$menus.children('.menu-item--expanded').each(function() {
-        removeCustomProperties(this);
-      });
+      fastdom.mutate(function() {
 
-      delete this.siteThemeMenuPrimaryStagger;
+        data.$menus.children('.menu-item--expanded').each(function() {
+          removeCustomProperties(this);
+        });
+
+      }).then(function() {
+
+        delete layoutContainer.siteThemeMenuPrimaryStagger;
+
+      });
 
     }
 
   );
 
+});
 });

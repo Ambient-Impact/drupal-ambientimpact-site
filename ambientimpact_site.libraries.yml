@@ -27,6 +27,7 @@ menu_primary:
     javascript/menu_primary.overlay.js: {}
     javascript/menu_primary.stagger.js: {}
   dependencies:
+    - ambientimpact_core/component.fastdom
     - ambientimpact_core/framework
     - ambientimpact_icon/component.icon
     - ambientimpact_ux/component.headroom
