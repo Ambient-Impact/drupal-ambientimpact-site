@@ -20,7 +20,7 @@ $background-colour-on-light: black !default;
 ///
 /// Media field background colour on dark backgrounds.
 ///
-$media-field-background-colour-on-dark: hsl(0, 0%, 30%) !default;
+$background-colour-on-dark: hsl(0, 0%, 30%) !default;
 
 ///
 /// Common styles for media fields.
@@ -57,13 +57,13 @@ $media-field-background-colour-on-dark: hsl(0, 0%, 30%) !default;
 
   @include colour.on-dark-colour-scheme {
     @include horizontal-bleed-background.horizontal-bleed-background(
-      $colour:  $media-field-background-colour-on-dark,
+      $colour:  $background-colour-on-dark,
       $z-index: list.index($local-stacking-order, background),
       $shadow:  $shadow-settings
     );
 
     :any-link {
-      @include link-colour.link-colours($media-field-background-colour-on-dark);
+      @include link-colour.link-colours($background-colour-on-dark);
     }
   }
 

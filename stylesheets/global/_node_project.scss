@@ -21,18 +21,18 @@
 ///
 /// Later in the list means a higher z-index.
 ///
-$node-project-stacking-order: top-shadow, title, content;
+$stacking-order: top-shadow, title, content;
 
 ///
 /// Project node title link colour on light backgrounds when not interacted.
 ///
-$node-project-title-link-normal-colour-on-light:
+$title-link-normal-colour-on-light:
   field-media.$background-colour-on-light;
 
 ///
 /// Project node title link colour on light backgrounds when hovered/focused.
 ///
-$node-project-title-link-hover-colour-on-light: color.mix(
+$title-link-hover-colour-on-light: color.mix(
   field-media.$background-colour-on-light,
   colour.$background-colour-light,
   70%
@@ -41,15 +41,15 @@ $node-project-title-link-hover-colour-on-light: color.mix(
 ///
 /// Project node title link colour on light backgrounds when activated.
 ///
-/// @see {function} get-link-active-colour
+/// @see {function} link-colour.get-link-active-colour
 ///
-$node-project-title-link-active-colour-on-light: auto;
+$title-link-active-colour-on-light: auto;
 
 ///
 /// Project node title link colour on dark backgrounds when not interacted.
 ///
-$node-project-title-link-normal-colour-on-dark: color.mix(
-  field-media.$media-field-background-colour-on-dark,
+$title-link-normal-colour-on-dark: color.mix(
+  field-media.$background-colour-on-dark,
   colour.$foreground-colour-on-dark,
   70%
 );
@@ -57,8 +57,8 @@ $node-project-title-link-normal-colour-on-dark: color.mix(
 ///
 /// Project node title link colour on dark backgrounds when hovered/focused.
 ///
-$node-project-title-link-hover-colour-on-dark: color.mix(
-  field-media.$media-field-background-colour-on-dark,
+$title-link-hover-colour-on-dark: color.mix(
+  field-media.$background-colour-on-dark,
   colour.$foreground-colour-on-dark,
   40%
 );
@@ -66,9 +66,9 @@ $node-project-title-link-hover-colour-on-dark: color.mix(
 ///
 /// Project node title link colour on dark backgrounds when activated.
 ///
-/// @see {function} get-link-active-colour
+/// @see {function} link-colour.get-link-active-colour
 ///
-$node-project-title-link-active-colour-on-dark: auto;
+$title-link-active-colour-on-dark: auto;
 
 @include breakpoint.add((
   // The viewport width at which project titles switch between having a
@@ -84,7 +84,7 @@ $node-project-title-link-active-colour-on-dark: auto;
   color: field-media.$background-colour-on-light;
 
   @include colour.on-dark-colour-scheme {
-    color: $node-project-title-link-normal-colour-on-dark;
+    color: $title-link-normal-colour-on-dark;
   }
 
   // Remove any vertical margins on the heading elements.
@@ -214,7 +214,7 @@ $node-project-title-link-active-colour-on-dark: auto;
     $shadow-element-height: 1rem;
 
     @include horizontal-bleed-background.horizontal-bleed-background-top-peek-shadow(
-      $z-index: list.index($node-project-stacking-order, top-shadow),
+      $z-index: list.index($stacking-order, top-shadow),
       $depth:   $full-bleed-panel-shadow-depth,
       $height:  $shadow-element-height
     );
@@ -233,7 +233,7 @@ $node-project-title-link-active-colour-on-dark: auto;
 .node--type-project .node__title :link {
   position: relative;
 
-  z-index: list.index($node-project-stacking-order, title);
+  z-index: list.index($stacking-order, title);
 }
 
 .page-node-type-project:not(.page-node-edit) .page-title,
@@ -288,26 +288,26 @@ $node-project-title-link-active-colour-on-dark: auto;
     @include link-colour.link-colours(
       $background:      colour.$background-colour-light,
 
-      $normal-on-light: $node-project-title-link-normal-colour-on-light,
-      $hover-on-light:  $node-project-title-link-hover-colour-on-light,
-      $active-on-light: $node-project-title-link-active-colour-on-light,
+      $normal-on-light: $title-link-normal-colour-on-light,
+      $hover-on-light:  $title-link-hover-colour-on-light,
+      $active-on-light: $title-link-active-colour-on-light,
 
-      $normal-on-dark:  $node-project-title-link-normal-colour-on-dark,
-      $hover-on-dark:   $node-project-title-link-hover-colour-on-dark,
-      $active-on-dark:  $node-project-title-link-active-colour-on-dark,
+      $normal-on-dark:  $title-link-normal-colour-on-dark,
+      $hover-on-dark:   $title-link-hover-colour-on-dark,
+      $active-on-dark:  $title-link-active-colour-on-dark,
     );
 
     @include colour.on-dark-colour-scheme {
       @include link-colour.link-colours(
         $background:      colour.$background-colour-dark,
 
-        $normal-on-light: $node-project-title-link-normal-colour-on-light,
-        $hover-on-light:  $node-project-title-link-hover-colour-on-light,
-        $active-on-light: $node-project-title-link-active-colour-on-light,
+        $normal-on-light: $title-link-normal-colour-on-light,
+        $hover-on-light:  $title-link-hover-colour-on-light,
+        $active-on-light: $title-link-active-colour-on-light,
 
-        $normal-on-dark:  $node-project-title-link-normal-colour-on-dark,
-        $hover-on-dark:   $node-project-title-link-hover-colour-on-dark,
-        $active-on-dark:  $node-project-title-link-active-colour-on-dark,
+        $normal-on-dark:  $title-link-normal-colour-on-dark,
+        $hover-on-dark:   $title-link-hover-colour-on-dark,
+        $active-on-dark:  $title-link-active-colour-on-dark,
       );
     }
 
@@ -322,7 +322,7 @@ $node-project-title-link-active-colour-on-dark: auto;
 .node--type-project .node__content {
   position: relative;
 
-  z-index: list.index($node-project-stacking-order, content);
+  z-index: list.index($stacking-order, content);
 
   // Remove the top margin on node content.
   margin-top: 0;
@@ -361,9 +361,9 @@ $node-project-title-link-active-colour-on-dark: auto;
 .field--name-field-project-media::before {
   @include colour.on-dark-colour-scheme {
     background-image: linear-gradient(
-      $node-project-title-link-normal-colour-on-dark,
+      $title-link-normal-colour-on-dark,
       motion.$easing-decelerate,
-      field-media.$media-field-background-colour-on-dark
+      field-media.$background-colour-on-dark
     );
   }
 }
