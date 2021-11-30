@@ -76,7 +76,7 @@ $title-link-active-colour-on-dark: auto;
   // value) and allowing the project titles to overflow the layout horizontally
   // to maintain readability but fade out the overflow off of the edge of the
   // layout (narrower than this value).
-  'project-title-height-constraint': 25em
+  'project-title-height-constraint': 30em
 ));
 
 .page-node-type-project:not(.page-node-edit) .page-title,
