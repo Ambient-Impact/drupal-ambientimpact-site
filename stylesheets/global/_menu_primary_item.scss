@@ -16,7 +16,7 @@
 ///
 /// Primary menu item foreground colour.
 ///
-$menu-primary-item-foreground-colour: colour.get-contrasting-colour(
+$foreground-colour: colour.get-contrasting-colour(
   $background:          menu-primary.$background-colour,
   $foreground-on-light: colour.$foreground-colour-on-light,
   $foreground-on-dark:  colour.$foreground-colour-on-dark
@@ -25,33 +25,33 @@ $menu-primary-item-foreground-colour: colour.get-contrasting-colour(
 ///
 /// Primary menu item horizontal padding.
 ///
-$menu-primary-item-padding-x:   layout.$gutter;
+$padding-x: layout.$gutter;
 
 ///
 /// Primary menu item vertical padding.
 ///
-$menu-primary-item-padding-y:   general.$general-spacing * 0.75;
+$padding-y: general.$general-spacing * 0.75;
 
 ///
 /// Primary menu item indicator thickness, used to indicate active menu item.
 ///
-$menu-primary-item-indicator-thickness:  0.2em;
+$indicator-thickness: 0.2em;
 
 ///
 /// Set primary menu item colours.
 ///
-@mixin menu-primary-item-colours {
+@mixin colours {
   @include link-colour.link-colours(
     $background:      menu-primary.$background-colour,
-    $normal-on-dark:  $menu-primary-item-foreground-colour,
-    $hover-on-dark:   $menu-primary-item-foreground-colour
+    $normal-on-dark:  $foreground-colour,
+    $hover-on-dark:   $foreground-colour
   );
 }
 
 ///
 /// Set primary menu item indicator transition properties.
 ///
-@mixin menu-primary-item-indicator-transition {
+@mixin indicator-transition {
   transition-duration: 0.1s;
 
   transition-property: transform;
@@ -60,7 +60,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
 ///
 /// Set primary menu item indicator as active for primary menu items.
 ///
-@mixin menu-primary-item-primary-indicator-active {
+@mixin primary-indicator-active {
   // Using scale rather than translate as that has less of a chance of
   // accidentally being shown if the browser has issues rendering, e.g. Firefox
   // during and after the front page animations.
@@ -68,46 +68,46 @@ $menu-primary-item-indicator-thickness:  0.2em;
 
   // This is necessary to override the default instant transition in on links,
   // so we transition in and out at the same rate, which looks better for this.
-  @include menu-primary-item-indicator-transition;
+  @include indicator-transition;
 }
 
 ///
 /// Set primary menu item indicator as inactive for primary menu items.
 ///
-@mixin menu-primary-item-primary-indicator-inactive {
+@mixin primary-indicator-inactive {
   transform: scaleY(0);
 }
 
 ///
 /// Set primary menu item indicator as active for secondary menu items.
 ///
-@mixin menu-primary-item-secondary-indicator-active {
+@mixin secondary-indicator-active {
   transform: scaleX(1);
 
   // This is necessary to override the default instant transition in on links,
   // so we transition in and out at the same rate, which looks better for this.
-  @include menu-primary-item-indicator-transition;
+  @include indicator-transition;
 }
 
 ///
 /// Set primary menu item indicator as inactive for secondary menu items.
 ///
-@mixin menu-primary-item-secondary-indicator-inactive {
+@mixin secondary-indicator-inactive {
   transform: scaleX(0);
 }
 
 ///
 /// Set primary menu item indicator state when menu is :hover or :focus-within.
 ///
-@mixin menu-primary-item-primary-active-path-indicator-hover-focus-within {
+@mixin primary-active-path-indicator-hover-focus-within {
   @include menus.is-item-active-path {
     &::after {
-      @include menu-primary-item-primary-indicator-inactive;
+      @include primary-indicator-inactive;
     }
 
     @include link-state.link-hover {
       &::after {
-        @include menu-primary-item-primary-indicator-active;
+        @include primary-indicator-active;
       }
     }
   }
@@ -116,15 +116,15 @@ $menu-primary-item-indicator-thickness:  0.2em;
 ///
 /// Set primary menu item indicator state when menu is :hover or :focus-within.
 ///
-@mixin menu-primary-item-secondary-active-path-indicator-hover-focus-within {
+@mixin secondary-active-path-indicator-hover-focus-within {
   @include menus.is-item-active-path {
     &::after {
-      @include menu-primary-item-secondary-indicator-inactive;
+      @include secondary-indicator-inactive;
     }
 
     @include link-state.link-hover {
       &::after {
-        @include menu-primary-item-secondary-indicator-active;
+        @include secondary-indicator-active;
       }
     }
   }
@@ -133,7 +133,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
 ///
 /// Transform a primary menu sub-menu indicator to its open state.
 ///
-@mixin menu-primary-sub-menu-indicator-open {
+@mixin sub-menu-indicator-open {
   // Rotate the icon 180 degrees when the sub-menu is open, so that the icon
   // points up rather than down.
   @include icon.on-icon-icon {
@@ -147,15 +147,15 @@ $menu-primary-item-indicator-thickness:  0.2em;
   // edges with the gutter.
   .block > .menu {
     @include selector.root-conditions(('[dir=ltr]'), 'html') {
-      margin-left:  -$menu-primary-item-padding-x;
-      margin-right: -$menu-primary-item-padding-x;
+      margin-left:  -$padding-x;
+      margin-right: -$padding-x;
     }
 
     // We have to specify the RTL selector so that we override Classy's menu
     // margins.
     @include selector.root-conditions(('[dir=rtl]'), 'html') {
-      margin-left:  -$menu-primary-item-padding-x;
-      margin-right: -$menu-primary-item-padding-x;
+      margin-left:  -$padding-x;
+      margin-right: -$padding-x;
     }
   }
 
@@ -165,7 +165,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
     padding-top: 0;
 
     @include menus.is-item-active-path {
-      @include menu-primary-item-colours;
+      @include colours;
     }
   }
 
@@ -201,11 +201,11 @@ $menu-primary-item-indicator-thickness:  0.2em;
     &:not(.menu-item--menu-closed).ally-focus-within > button,
     &.menu-item--menu-open > a,
     &.menu-item--menu-open > button {
-      @include menu-primary-sub-menu-indicator-open;
+      @include sub-menu-indicator-open;
     }
     &:not(.menu-item--menu-closed):focus-within > a,
     &:not(.menu-item--menu-closed):focus-within > button {
-      @include menu-primary-sub-menu-indicator-open;
+      @include sub-menu-indicator-open;
     }
   }
 
@@ -220,9 +220,9 @@ $menu-primary-item-indicator-thickness:  0.2em;
 
     display:  block;
 
-    padding:  $menu-primary-item-padding-y $menu-primary-item-padding-x;
+    padding:  $padding-y $padding-x;
 
-    @include menu-primary-item-colours;
+    @include colours;
 
     @include material-ripple.material-ripple;
 
@@ -247,8 +247,8 @@ $menu-primary-item-indicator-thickness:  0.2em;
       will-change:  transform;
 
       // Set the transition for the indicator when interaction has ceased. The
-      // menu-primary-item-primary-indicator-active mixin sets the transition in.
-      @include menu-primary-item-indicator-transition;
+      // primary-indicator-active mixin sets the transition in.
+      @include indicator-transition;
     }
   }
 
@@ -267,23 +267,23 @@ $menu-primary-item-indicator-thickness:  0.2em;
       // Primary (top level) item indicators. These are horizontal lines beneath
       // the text of the menu item text.
       &::after {
-        left:     $menu-primary-item-padding-x;
-        right:    $menu-primary-item-padding-x;
+        left:     $padding-x;
+        right:    $padding-x;
         bottom:   0;
 
-        height:   $menu-primary-item-indicator-thickness;
+        height:   $indicator-thickness;
 
         transform-origin: bottom center;
 
         // Hidden by default.
-        @include menu-primary-item-primary-indicator-inactive;
+        @include primary-indicator-inactive;
       }
 
       // This makes the indicator visible on an item when it's being interacted
       // with.
       @include link-state.link-hover {
         &::after {
-          @include menu-primary-item-primary-indicator-active;
+          @include primary-indicator-active;
         }
       }
     }
@@ -293,7 +293,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
       // in case the browser doesn't support :focus-within and our polyfill
       // doesn't get applied.
       &::after {
-        @include menu-primary-item-primary-indicator-active;
+        @include primary-indicator-active;
       }
     }
   }
@@ -306,10 +306,10 @@ $menu-primary-item-indicator-thickness:  0.2em;
       // lines to the left (in LTR) or to the right (in RTL) of the menu item
       // text.
       &::after {
-        top:      $menu-primary-item-padding-y;
-        bottom:   $menu-primary-item-padding-y;
+        top:      $padding-y;
+        bottom:   $padding-y;
 
-        width:    $menu-primary-item-indicator-thickness;
+        width:    $indicator-thickness;
 
         @include selector.root-conditions(('[dir=ltr]'), 'html') {
           left:   0;
@@ -323,14 +323,14 @@ $menu-primary-item-indicator-thickness:  0.2em;
         }
 
         // Hidden by default.
-        @include menu-primary-item-secondary-indicator-inactive;
+        @include secondary-indicator-inactive;
       }
 
       // This makes the indicator visible on an item when it's being interacted
       // with.
       @include link-state.link-hover {
         &::after {
-          @include menu-primary-item-secondary-indicator-active;
+          @include secondary-indicator-active;
         }
       }
     }
@@ -340,7 +340,7 @@ $menu-primary-item-indicator-thickness:  0.2em;
       // in case the browser doesn't support :focus-within and our polyfill
       // doesn't get applied.
       &::after {
-        @include menu-primary-item-secondary-indicator-active;
+        @include secondary-indicator-active;
       }
     }
   }
@@ -352,13 +352,13 @@ $menu-primary-item-indicator-thickness:  0.2em;
     // support the selector doesn't ignore the other selectors, which it should
     // understand.
     &:focus-within > .menu-item {
-      @include menu-primary-item-primary-active-path-indicator-hover-focus-within;
+      @include primary-active-path-indicator-hover-focus-within;
     }
     // Hover and polyfilled :focus-within.
     &:hover,
     &.ally-focus-within {
       > .menu-item {
-        @include menu-primary-item-primary-active-path-indicator-hover-focus-within;
+        @include primary-active-path-indicator-hover-focus-within;
       }
     }
   }
@@ -370,13 +370,13 @@ $menu-primary-item-indicator-thickness:  0.2em;
     // support the selector doesn't ignore the other selectors, which it should
     // understand.
     &:focus-within > .menu-item {
-      @include menu-primary-item-secondary-active-path-indicator-hover-focus-within;
+      @include secondary-active-path-indicator-hover-focus-within;
     }
     // Hover and polyfilled :focus-within.
     &:hover,
     &.ally-focus-within {
       > .menu-item {
-        @include menu-primary-item-secondary-active-path-indicator-hover-focus-within;
+        @include secondary-active-path-indicator-hover-focus-within;
       }
     }
   }

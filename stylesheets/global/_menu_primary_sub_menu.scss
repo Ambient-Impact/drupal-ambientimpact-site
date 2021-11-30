@@ -14,7 +14,7 @@
 ///
 /// This is in px rather than ems because shadows currently use px.
 ///
-$menu-primary-sub-menu-clip-padding: 10px;
+$clip-padding: 10px;
 
 ///
 /// Primary menu sub-menu show transition duration.
@@ -22,7 +22,7 @@ $menu-primary-sub-menu-clip-padding: 10px;
 /// This should be shorter than the hide duration to make the sub-menu feel
 /// quick to respond to user action.
 ///
-$menu-primary-sub-menu-show-duration: 250ms;
+$show-duration: 250ms;
 
 ///
 /// Primary menu sub-menu hide transition duration.
@@ -30,18 +30,18 @@ $menu-primary-sub-menu-show-duration: 250ms;
 /// This should be longer than the show duration to make the sub-menu feel a bit
 /// more relaxed after having responded to user action.
 ///
-$menu-primary-sub-menu-hide-duration: 400ms;
+$hide-duration: 400ms;
 
 ///
 /// Primary menu sub-menu item reveal transition stagger interval.
 ///
 /// This is used to calculate the transition-delay property by multiplying this
 /// value with the --menu-item-reveal-transition-delay custom property in the
-/// menu-primary-sub-menu-show mixin.
+/// show mixin.
 ///
-/// @see {mixin} menu-primary-sub-menu-show
+/// @see {mixin} show
 ///
-$menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
+$item-reveal-stagger-interval: 40ms;
 
 ///
 /// @supports test for our primary menu sub-menu transform and clipping.
@@ -52,14 +52,14 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 /// @content
 ///   Properties to wrap in the @supports and @media blocks.
 ///
-/// @require {Function} menu-primary-clip-path()
-/// @require {Variable} $menu-primary-sub-menu-clip-padding
+/// @require {Function} clip-path()
+/// @require {Variable} $clip-padding
 ///
-@mixin menu-primary-supports-translate-clip-path {
-  $padding: $menu-primary-sub-menu-clip-padding;
+@mixin supports-translate-clip-path {
+  $padding: $clip-padding;
 
   @supports (transform: translateY(calc(-100% - #{$padding}))) and
-  (clip-path: menu-primary-clip-path()) {
+  (clip-path: clip-path()) {
     @media (prefers-reduced-motion: no-preference) {
       @content;
     }
@@ -79,13 +79,13 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 ///   translated upwards so that its totally hidden inside its parent menu item.
 ///   This allows us to transition the translation, when available.
 ///
-/// @see {Mixin} menu-primary-sub-menu-show
+/// @see {Mixin} show
 ///   The inverse of the current mixin; shows the sub-menu.
 ///
-/// @require {Mixin}    menu-primary-supports-translate-clip-path
-/// @require {Variable} $menu-primary-sub-menu-clip-padding
+/// @require {Mixin}    supports-translate-clip-path
+/// @require {Variable} $clip-padding
 ///
-@mixin menu-primary-sub-menu-hide {
+@mixin hide {
   left:       -9999em;
   opacity:    0;
 
@@ -94,7 +94,7 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
     pointer-events: none;
   }
 
-  @include menu-primary-supports-translate-clip-path {
+  @include supports-translate-clip-path {
     @include selector.root-conditions(('[dir=ltr]'), 'html') {
       left:   auto;
     }
@@ -104,7 +104,7 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 
     opacity:  1;
 
-    transform: translateY(calc(-100% - #{$menu-primary-sub-menu-clip-padding}));
+    transform: translateY(calc(-100% - #{$clip-padding}));
   }
 
   > .menu-item {
@@ -122,15 +122,15 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 ///
 /// Show a sub-menu of the primary menu.
 ///
-/// @see {Mixin} menu-primary-sub-menu-hide
+/// @see {Mixin} hide
 ///   The inverse of the current mixin; hides the sub-menu.
 ///
-/// @require {Mixin}    menu-primary-supports-translate-clip-path
+/// @require {Mixin}    supports-translate-clip-path
 /// @require {Mixin}    root-conditions
-/// @require {Variable} $menu-primary-sub-menu-show-duration
-/// @require {Variable} $menu-primary-sub-menu-item-reveal-stagger-interval
+/// @require {Variable} $show-duration
+/// @require {Variable} $item-reveal-stagger-interval
 ///
-@mixin menu-primary-sub-menu-show {
+@mixin show {
   @include selector.root-conditions(('[dir=ltr]'), 'html') {
     left:   auto;
   }
@@ -142,11 +142,11 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 
   pointer-events: auto;
 
-  @include menu-primary-supports-translate-clip-path {
+  @include supports-translate-clip-path {
     transform: translateY(-1px);
   }
 
-  transition-duration: $menu-primary-sub-menu-show-duration;
+  transition-duration: $show-duration;
 
   > .menu-item {
     opacity: 1;
@@ -163,7 +163,7 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
     // place from last to first.
     transition-delay: calc(
       (var(--menu-item-reveal-transition-delay, 0) - 1) *
-      #{$menu-primary-sub-menu-item-reveal-stagger-interval}
+      #{$item-reveal-stagger-interval}
     );
   }
 }
@@ -200,10 +200,7 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 /// @return {String}
 ///   The polygon() declaration as described in this function's description.
 ///
-@function menu-primary-clip-path(
-  $width:   10em,
-  $height:  35em
-) {
+@function clip-path($width: 10em, $height: 35em) {
   @return polygon(
     // Note the - 1px in the Y axis: this is to fix rounding errors where the
     // menu would display a single pixel line along the top where it joins with
@@ -246,15 +243,15 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
       position: relative;
 
       // The clip.
-      clip-path: menu-primary-clip-path();
+      clip-path: clip-path();
 
       // This solid colour block is placed below the menu item contents but
       // above the sub-menu, so that when the sub-menu slides up into its hidden
       // state, it's not visible behind the menu item contents, the latter of
       // which we need avoid clipping so that they're visible. Note that we're
-      // not using the menu-primary-supports-translate-clip-path mixin, as that
+      // not using the supports-translate-clip-path mixin, as that
       // would not apply this if the user prefers reduced motion.
-      @supports (clip-path: menu-primary-clip-path()) {
+      @supports (clip-path: clip-path()) {
         &::after {
           content:  '';
           display:  block;
@@ -295,7 +292,7 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
         @include material-shadow.material-shadow($depth: 2);
 
         transition-property: opacity, transform;
-        transition-duration: $menu-primary-sub-menu-hide-duration;
+        transition-duration: $hide-duration;
         transition-timing-function: motion.$easing-standard;
 
         will-change: transform;
@@ -304,7 +301,7 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 
     > .menu-item {
       > .menu {
-        @include menu-primary-sub-menu-hide;
+        @include hide;
 
         // Sub-menus look better if they're not narrower than the parent item.
         min-width: 100%;
@@ -318,7 +315,7 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
 
         > .menu-item {
           transition-property: opacity, transform;
-          transition-duration: $menu-primary-sub-menu-hide-duration;
+          transition-duration: $hide-duration;
           transition-timing-function: motion.$easing-standard;
         }
       }
@@ -331,12 +328,12 @@ $menu-primary-sub-menu-item-reveal-stagger-interval: 40ms;
       &:not(.menu-item--menu-closed) > button:focus + .menu,
       &:not(.menu-item--menu-closed).ally-focus-within > .menu,
       &--menu-open > .menu {
-        @include menu-primary-sub-menu-show;
+        @include show;
       }
       // This needs to be separate as not all browsers support it and
       // non-supporting browsers would ignore any rule it was part of.
       &:not(.menu-item--menu-closed):focus-within > .menu {
-        @include menu-primary-sub-menu-show;
+        @include show;
       }
     }
 
