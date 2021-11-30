@@ -55,7 +55,8 @@ $site-name-height: 83.997;
 
   z-index: list.index(header.$stacking-order, site-name);
 
-  margin-bottom: -1px;
+  // This attempts to prevent rounding errors, i.e. showing a gap below text.
+  transform: translateY(1%);
 
   // Since the title is an SVG, we have to use CSS filters to get a drop drop
   // shadow that matches the title lettering outlines.

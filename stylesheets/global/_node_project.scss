@@ -96,8 +96,8 @@ $title-link-active-colour-on-dark: auto;
 .node--type-project .node__title {
   position: relative;
 
-  // This guards against rounding errors, i.e. showing a gap below text.
-  bottom: -1px;
+  // This attempts to prevent rounding errors, i.e. showing a gap below text.
+  transform: translateY(1%);
 
   // If mask-image with a gradient is supported, use that to fade out any text
   // that's wider than the layout.
