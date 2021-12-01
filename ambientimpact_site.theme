@@ -180,7 +180,10 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
   ) {
     $title = $variables['items'][0]['content']['#context']['value'];
 
-    $SVGMarkup = HeadingTextToSVG::generate(
+    /** @var \Drupal\ambientimpact_site\HeadingTextToSVG $textToSvg */
+    $textToSvg = \Drupal::classResolver(HeadingTextToSVG::class);
+
+    $SVGMarkup = $textToSvg->generate(
       $title,
       [
         'class'       => 'field__title-svg',

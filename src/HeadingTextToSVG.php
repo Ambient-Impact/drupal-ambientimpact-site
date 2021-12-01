@@ -4,7 +4,10 @@ namespace Drupal\ambientimpact_site;
 
 use Drupal\ambientimpact_core\Utility\AttributeHelper;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Theme\ThemeManagerInterface;
 use EasySVG;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Generate <svg> elements with provided text converted to a <path> element.
@@ -14,9 +17,36 @@ use EasySVG;
  * @see https://github.com/kartsims/easysvg
  *   Uses this class to convert SVG font to <path>s.
  */
-class HeadingTextToSVG {
+class HeadingTextToSVG implements ContainerInjectionInterface {
+
   /**
-   * Generate an <svg> element from provided text.
+   * The Drupal theme manager service.
+   *
+   * @var \Drupal\Core\Theme\ThemeManagerInterface
+   */
+  protected $themeManager;
+
+  /**
+   * Constructor; saves dependencies.
+   *
+   * @param \Drupal\Core\Theme\ThemeManagerInterface $themeManager
+   *   The Drupal theme manager service.
+   */
+  public function __construct(
+    ThemeManagerInterface $themeManager
+  ) {
+    $this->themeManager = $themeManager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static($container->get('theme.manager'));
+  }
+
+  /**
+   * Generate an <svg> element with provided text converted to a <path> element.
    *
    * @param string $text
    *   Text to convert to an <svg> element.
@@ -28,12 +58,13 @@ class HeadingTextToSVG {
    *   Markup containing an <svg> element with the provided text converted to a
    *   <path>.
    */
-  public static function generate(
-    string $text, array $attributes = []
-  ) {
+  public function generate(string $text, array $attributes = []) {
+
+    /** @var EasySVG An instance of EasySVG. */
     $svg = new EasySVG();
 
-    $theme = \Drupal::theme()->getActiveTheme();
+    /** @var \Drupal\Core\Theme\ActiveTheme The active theme object. */
+    $theme = $this->themeManager->getActiveTheme();
 
     // Set the font and font size. Note that if you change the font size, you'll
     // have to recalculate a bunch of magic numbers farther down.
@@ -53,16 +84,21 @@ class HeadingTextToSVG {
     // Add the translated path definition to the EasySVG instance.
     $svg->addPath($def);
 
+    /** @var array */
     $textDimensions = $svg->textDimensions($text);
 
-    // Get the text width and height, adjusting for Furore's extra space around
-    // characters with some magic numbers. Note that if you change the font
-    // size, you'll have to recalculate at least the width offset below.
+    // The text width and height need to be adjusted for Furore's extra space
+    // around characters with some magic numbers. Note that if you change the
+    // font size, you'll have to recalculate at least the width offset below.
     //
     // @see https://github.com/kartsims/easysvg/issues/23
     //   Open issue for EasySVG that details problems with how it calculates
     //   these values.
+
+    /** @var float The text width, minus a Furore font magic number. */
     $width  = $textDimensions[0] - 7;
+
+    /** @var float The text height, multiplied by a Furore font magic number. */
     $height = $textDimensions[1] * 0.5833;
 
     /** @var integer The height of the bleed path. */
@@ -119,5 +155,7 @@ class HeadingTextToSVG {
       '',
       $svg->asXML()
     );
+
   }
+
 }
