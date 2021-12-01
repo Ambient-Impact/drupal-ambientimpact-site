@@ -2,6 +2,7 @@
 
 namespace Drupal\ambientimpact_site;
 
+use Drupal\ambientimpact_core\Utility\AttributeHelper;
 use Drupal\Component\Utility\NestedArray;
 use EasySVG;
 
@@ -64,22 +65,53 @@ class HeadingTextToSVG {
     $width  = $textDimensions[0] - 7;
     $height = $textDimensions[1] * 0.5833;
 
+    /** @var integer The height of the bleed path. */
+    $bleedHeight = 10;
+
+    /** @var float The bleed vertical adjust amount, as a multiplier. */
+    $bleedVerticalAdjustAmount = 1.06;
+
     // Merge any provided attributes on top of defaults we generate based on the
     // width and height of the text.
     $attributes = NestedArray::mergeDeep([
       'width'   => $width,
-      'height'  => $height,
-      'viewBox' => '0 0 ' . $width . ' ' . $height,
+      'height'  => $height * $bleedVerticalAdjustAmount,
+      'viewBox' => '0 0 ' . $width . ' ' . (
+        $height * $bleedVerticalAdjustAmount
+      ),
       'x'       => '0',
       'y'       => '0',
       // @see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/preserveAspectRatio
       'preserveAspectRatio' => 'xMaxYMax meet',
     ], $attributes);
 
+    if (!empty($attributes['style'])) {
+      $styleArray = AttributeHelper::parseStyleAttribute($attributes['style']);
+
+    } else {
+      $styleArray = [];
+    }
+
+    $styleArray['--bleed-vertical-adjust'] = (
+      ($bleedVerticalAdjustAmount - 1) * 100
+    ) . '%';
+
+    $attributes['style'] = AttributeHelper::serializeStyleArray($styleArray);
+
     // Add attributes.
     foreach ($attributes as $name => $value) {
       $svg->addAttribute($name, $value);
     }
+
+    // Add the bleed path. This creates a rectangle whose top edge is flush with
+    // the bottom of the text.
+    $svg->addPath(\implode(' ', [
+      'M 0 ' . ($height * 0.97),
+      'h ' . $width,
+      'v ' . $bleedHeight,
+      'h -' . $width,
+      'z',
+    ]), ['class' => 'bleed']);
 
     // Return the rendered <svg> without the XML declaration.
     return str_replace(

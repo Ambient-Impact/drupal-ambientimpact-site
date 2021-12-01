@@ -96,9 +96,6 @@ $title-link-active-colour-on-dark: auto;
 .node--type-project .node__title {
   position: relative;
 
-  // This attempts to prevent rounding errors, i.e. showing a gap below text.
-  transform: translateY(1%);
-
   // If mask-image with a gradient is supported, use that to fade out any text
   // that's wider than the layout.
   $mask-gradient-ltr: linear-gradient(
@@ -168,11 +165,26 @@ $title-link-active-colour-on-dark: auto;
       max-height: 5vw;
     }
 
-    path {
+    // Translate down by the amount provided in --vertical-adjust plus a bit
+    // more to try and hide and align the bleed path with the top of the media
+    // field below it.
+    transform: translateY(calc(var(--bleed-vertical-adjust, 0%) + 2.5%));
+
+    path:not(.bleed) {
       // Automatically inherit the foreground/text colour set on ancestor
       // elements.
       fill: currentColor;
     }
+
+    // The bleed path should not change colour during interactions.
+    path.bleed {
+      fill: $title-link-normal-colour-on-light;
+
+      @include colour.on-dark-colour-scheme {
+        fill: $title-link-normal-colour-on-dark;
+      }
+    }
+
   }
 
   @include colour.on-dark-colour-scheme {
