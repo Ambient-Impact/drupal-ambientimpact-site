@@ -156,13 +156,17 @@ $title-link-active-colour-on-dark: auto;
     // width.
     height: auto;
 
-    // In order to not make the title too small if the text is long on narrow
-    // viewports, allow the <svg> to expand with a max-height using viewport
-    // width (not height) units.
+    // Titles that are marked as being wide - i.e. longer than a certain number
+    // of characters - have their responsive behaviour on narrow screens
+    // switched from a max-width with auto height to a max-height based on the
+    // viewport width and overflowing horizontally. This is to avoid situations
+    // where the text would become uncomfortably small and difficult to read.
     @include breakpoint.on('<=project-title-height-constraint') {
-      width:      auto;
-      max-width:  none;
-      max-height: 5vw;
+      &--wide {
+        width:      auto;
+        max-width:  none;
+        max-height: 6.5vw;
+      }
     }
 
     // Translate down by the amount provided in --vertical-adjust plus a bit

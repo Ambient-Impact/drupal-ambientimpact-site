@@ -183,18 +183,28 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
     /** @var \Drupal\ambientimpact_site\HeadingTextToSVG $textToSvg */
     $textToSvg = \Drupal::classResolver(HeadingTextToSVG::class);
 
-    $SVGMarkup = $textToSvg->generate(
-      $title,
-      [
-        'class'       => 'field__title-svg',
-        // Entirely hidden by default if stylesheets are not applied.
-        'style'       => 'display: none;',
-        // Hidden from the accessibility tree as it exists for purely visual
-        // reasons. The original text is picked up and used in screen readers,
-        // for example.
-        'aria-hidden' => 'true',
-      ]
-    );
+    $svgAttributes = [
+      'class'       => 'field__title-svg',
+      // Entirely hidden by default if stylesheets are not applied.
+      'style'       => 'display: none;',
+      // Hidden from the accessibility tree as it exists for purely visual
+      // reasons. The original text is picked up and used in screen readers, for
+      // example.
+      'aria-hidden' => 'true',
+    ];
+
+    // If the text is longer than this many characters, add the wide modifier
+    // class so it can be adjusted on smaller screens to remain readable.
+    //
+    // @todo Can this value be made configurable/exposed in some way?
+    //
+    // @todo What about basing this on a width to height ratio rather than
+    //   character count?
+    if (\mb_strlen($title) > 18) {
+      $svgAttributes['class'] .= ' field__title-svg--wide';
+    }
+
+    $SVGMarkup = $textToSvg->generate($title, $svgAttributes);
 
     // Alter the inline_template to wrap the existing text in an element and
     // append the generated <svg> markup.
