@@ -3,19 +3,16 @@
 namespace Drupal\ambientimpact_site;
 
 use Drupal\ambientimpact_core\Utility\AttributeHelper;
+use Drupal\ambientimpact_site\TextToSvg;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Theme\ThemeManagerInterface;
-use EasySVG;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Generate <svg> elements with provided text converted to a <path> element.
  *
  * @todo Can this be reworked to be reusable with other fonts, font sizes, etc.?
- *
- * @see https://github.com/kartsims/easysvg
- *   Uses this class to convert SVG font to <path>s.
  */
 class HeadingTextToSvg implements ContainerInjectionInterface {
 
@@ -60,8 +57,8 @@ class HeadingTextToSvg implements ContainerInjectionInterface {
    */
   public function generate(string $text, array $attributes = []) {
 
-    /** @var EasySVG An instance of EasySVG. */
-    $svg = new EasySVG();
+    /** @var \Drupal\ambientimpact_site\TextToSvg */
+    $svg = new TextToSvg();
 
     /** @var \Drupal\Core\Theme\ActiveTheme The active theme object. */
     $theme = $this->themeManager->getActiveTheme();
@@ -149,12 +146,8 @@ class HeadingTextToSvg implements ContainerInjectionInterface {
       'z',
     ]), ['class' => 'bleed']);
 
-    // Return the rendered <svg> without the XML declaration.
-    return str_replace(
-      '<?xml version="1.0"?>' . "\n",
-      '',
-      $svg->asXML()
-    );
+    // Return the rendered <svg>.
+    return $svg->asHtml();
 
   }
 
