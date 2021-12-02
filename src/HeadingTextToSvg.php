@@ -51,11 +51,10 @@ class HeadingTextToSvg implements ContainerInjectionInterface {
    * @param array $attributes
    *   An optional array of attributes to add to the <svg> element.
    *
-   * @return string
-   *   Markup containing an <svg> element with the provided text converted to a
-   *   <path>.
+   * @return \Drupal\ambientimpact_site\TextToSvg
+   *   TextToSvg object containing the provided text as paths.
    */
-  public function generate(string $text, array $attributes = []) {
+  public function generate(string $text, array $attributes = []): TextToSvg {
 
     /** @var \Drupal\ambientimpact_site\TextToSvg */
     $svg = new TextToSvg();
@@ -146,8 +145,7 @@ class HeadingTextToSvg implements ContainerInjectionInterface {
       'z',
     ]), ['class' => 'bleed']);
 
-    // Return the rendered <svg>.
-    return $svg->asHtml();
+    return $svg;
 
   }
 

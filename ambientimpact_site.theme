@@ -204,7 +204,8 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
       $svgAttributes['class'] .= ' field__title-svg--wide';
     }
 
-    $svgMarkup = $textToSvg->generate($title, $svgAttributes);
+    /** @var \Drupal\ambientimpact_site\TextToSvg */
+    $svg = $textToSvg->generate($title, $svgAttributes);
 
     // Alter the inline_template to wrap the existing text in an element and
     // append the generated <svg> markup.
@@ -213,7 +214,7 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
     $variables['items'][0]['content']['#template'] =
       '<span class="field__title-text">' .
         $variables['items'][0]['content']['#template'] .
-      '</span>' . $svgMarkup;
+      '</span>' . $svg->asHtml();
   }
 
   // If this is an entity reference field, add a class indicating the entity
