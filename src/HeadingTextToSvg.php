@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @see https://github.com/kartsims/easysvg
  *   Uses this class to convert SVG font to <path>s.
  */
-class HeadingTextToSVG implements ContainerInjectionInterface {
+class HeadingTextToSvg implements ContainerInjectionInterface {
 
   /**
    * The Drupal theme manager service.

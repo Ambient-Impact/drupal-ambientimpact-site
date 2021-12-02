@@ -5,7 +5,7 @@ use Drupal\Core\Url;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Template\Attribute;
 use Symfony\Component\DomCrawler\Crawler;
-use Drupal\ambientimpact_site\HeadingTextToSVG;
+use Drupal\ambientimpact_site\HeadingTextToSvg;
 
 /**
  * Prepares variables for HTML document templates.
@@ -141,7 +141,7 @@ function ambientimpact_site_preprocess_field__field_web_tags(
  * @see https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Language%21language.api.php/group/transliteration
  *   Documentation and example of how to transliterate.
  *
- * @see \Drupal\ambientimpact_site\HeadingTextToSVG::generate()
+ * @see \Drupal\ambientimpact_site\HeadingTextToSvg::generate()
  *   Class and method that generates the title <svg>s.
  *
  * @todo Can the 'title' field code be moved to a preprocess function targetted
@@ -180,8 +180,8 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
   ) {
     $title = $variables['items'][0]['content']['#context']['value'];
 
-    /** @var \Drupal\ambientimpact_site\HeadingTextToSVG $textToSvg */
-    $textToSvg = \Drupal::classResolver(HeadingTextToSVG::class);
+    /** @var \Drupal\ambientimpact_site\HeadingTextToSvg $textToSvg */
+    $textToSvg = \Drupal::classResolver(HeadingTextToSvg::class);
 
     $svgAttributes = [
       'class'       => 'field__title-svg',
@@ -204,7 +204,7 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
       $svgAttributes['class'] .= ' field__title-svg--wide';
     }
 
-    $SVGMarkup = $textToSvg->generate($title, $svgAttributes);
+    $svgMarkup = $textToSvg->generate($title, $svgAttributes);
 
     // Alter the inline_template to wrap the existing text in an element and
     // append the generated <svg> markup.
@@ -213,7 +213,7 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
     $variables['items'][0]['content']['#template'] =
       '<span class="field__title-text">' .
         $variables['items'][0]['content']['#template'] .
-      '</span>' . $SVGMarkup;
+      '</span>' . $svgMarkup;
   }
 
   // If this is an entity reference field, add a class indicating the entity
