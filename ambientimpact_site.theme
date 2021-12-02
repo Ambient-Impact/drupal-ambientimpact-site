@@ -128,7 +128,7 @@ function ambientimpact_site_preprocess_field__field_web_tags(
  * as the Furore font does not support those and the browser would fall back to
  * another font, which would look out of place.
  *
- * This generates <svg> elements containing <path>s of project node titles while
+ * This generates SVG elements containing paths of project node titles while
  * preserving the title text for assistive software such as screen readers.
  *
  * This adds a class to entity reference fields indicating the entity type
@@ -142,7 +142,7 @@ function ambientimpact_site_preprocess_field__field_web_tags(
  *   Documentation and example of how to transliterate.
  *
  * @see \Drupal\ambientimpact_site\HeadingTextToSvg::generate()
- *   Class and method that generates the title <svg>s.
+ *   Class and method that generates the title SVGs.
  *
  * @todo Can the 'title' field code be moved to a preprocess function targetted
  *   only at this field? E.g. ambientimpact_site_preprocess_field__title? That
@@ -172,7 +172,7 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
     }
   }
 
-  // Generate <svg> elements of project node titles.
+  // Generate SVG elements of project node titles.
   if (
     $variables['field_name'] === 'title' &&
     $variables['element']['#entity_type'] === 'node' &&
@@ -180,8 +180,8 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
   ) {
     $title = $variables['items'][0]['content']['#context']['value'];
 
-    /** @var \Drupal\ambientimpact_site\HeadingTextToSvg $textToSvg */
-    $textToSvg = \Drupal::classResolver(HeadingTextToSvg::class);
+    /** @var \Drupal\ambientimpact_site\HeadingTextToSvg $headingTextToSvg */
+    $headingTextToSvg = \Drupal::classResolver(HeadingTextToSvg::class);
 
     $svgAttributes = [
       'class'       => 'field__title-svg',
@@ -205,10 +205,10 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
     }
 
     /** @var \Drupal\ambientimpact_site\TextToSvg */
-    $svg = $textToSvg->generate($title, $svgAttributes);
+    $svg = $headingTextToSvg->generate($title, $svgAttributes);
 
     // Alter the inline_template to wrap the existing text in an element and
-    // append the generated <svg> markup.
+    // append the generated SVG markup.
     //
     // @todo Is this the best way to do this, or is there a best practices way?
     $variables['items'][0]['content']['#template'] =

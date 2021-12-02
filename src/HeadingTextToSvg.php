@@ -10,7 +10,7 @@ use Drupal\Core\Theme\ThemeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Generate <svg> elements with provided text converted to a <path> element.
+ * Generate SVG elements with provided text converted to path elements.
  *
  * @todo Can this be reworked to be reusable with other fonts, font sizes, etc.?
  */
@@ -43,13 +43,13 @@ class HeadingTextToSvg implements ContainerInjectionInterface {
   }
 
   /**
-   * Generate an <svg> element with provided text converted to a <path> element.
+   * Generate an SVG element with provided text converted to path elements.
    *
    * @param string $text
-   *   Text to convert to an <svg> element.
+   *   Text to convert to an SVG element.
    *
    * @param array $attributes
-   *   An optional array of attributes to add to the <svg> element.
+   *   An optional array of attributes to add to the SVG element.
    *
    * @return \Drupal\ambientimpact_site\TextToSvg
    *   TextToSvg object containing the provided text as paths.
