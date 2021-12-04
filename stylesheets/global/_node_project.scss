@@ -11,7 +11,6 @@
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/colour';
 @use 'sass/helpers/hide';
-@use 'sass/helpers/selector';
 @use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
 @use 'sass/variables/motion';
 @use '../variables/general' as *;
@@ -21,7 +20,7 @@
 ///
 /// Later in the list means a higher z-index.
 ///
-$stacking-order: top-shadow, title, content;
+$stacking-order: top-shadow, title, content, sentinel;
 
 ///
 /// Project node title link colour on light backgrounds when not interacted.
@@ -98,13 +97,15 @@ $title-link-active-colour-on-dark: auto;
 
   // If mask-image with a gradient is supported, use that to fade out any text
   // that's wider than the layout.
-  $mask-gradient-ltr: linear-gradient(
-    to left, transparent, black layout.$gutter
+  $mask-gradient: linear-gradient(
+    to right,
+    transparent,
+    black layout.$gutter,
+    black calc(100vw - layout.$gutter),
+    transparent
   );
-  $mask-gradient-rtl: linear-gradient(
-    to right, transparent, black layout.$gutter
-  );
-  @supports (mask-image: $mask-gradient-ltr) and (width: 100vw) {
+
+  @supports (mask-image: $mask-gradient) and (width: 100vw) {
     @include breakpoint.on('<=project-title-height-constraint') {
       overflow: hidden;
 
@@ -114,13 +115,9 @@ $title-link-active-colour-on-dark: auto;
       width: 100vw;
 
       // Compensate for padding.
-      margin-top:     layout.$gutter * -1;
-      @include selector.root-conditions(('[dir=ltr]'), 'html') {
-        margin-left:  layout.$gutter * -1;
-      }
-      @include selector.root-conditions(('[dir=rtl]'), 'html') {
-        margin-right: layout.$gutter * -1;
-      }
+      margin-top:   layout.$gutter * -1;
+      margin-left:  layout.$gutter * -1;
+      margin-right: layout.$gutter * -1;
 
       // Padding on all sides but the bottom so that the shadows don't get cut
       // off by the overflow: hidden, in addition to fading out any overflow.
@@ -128,14 +125,10 @@ $title-link-active-colour-on-dark: auto;
       padding-left:   layout.$gutter;
       padding-right:  layout.$gutter;
 
-      box-sizing:     border-box;
+      box-sizing: border-box;
 
-      @include selector.root-conditions(('[dir=ltr]'), 'html') {
-        mask-image:   $mask-gradient-ltr;
-      }
-      @include selector.root-conditions(('[dir=rtl]'), 'html') {
-        mask-image:   $mask-gradient-rtl;
-      }
+      mask-image: $mask-gradient;
+
     }
   }
 
@@ -156,23 +149,14 @@ $title-link-active-colour-on-dark: auto;
     // width.
     height: auto;
 
-    // Titles that are marked as being wide - i.e. longer than a certain number
-    // of characters - have their responsive behaviour on narrow screens
-    // switched from a max-width with auto height to a max-height based on the
-    // viewport width and overflowing horizontally. This is to avoid situations
-    // where the text would become uncomfortably small and difficult to read.
-    @include breakpoint.on('<=project-title-height-constraint') {
-      &--wide {
-        width:      auto;
-        max-width:  none;
-        max-height: 6.5vw;
-      }
-    }
-
-    // Translate down by the amount provided in --vertical-adjust plus a bit
-    // more to try and hide and align the bleed path with the top of the media
-    // field below it.
-    transform: translateY(calc(var(--bleed-vertical-adjust, 0%) + 2.5%));
+    // Translate down by the amount provided in --bleed-vertical-adjust plus a
+    // bit more to try and hide and align the bleed path with the top of the
+    // media field below it. This is defined as a custom property so we can
+    // easily combine it with the scroll proxy transform.
+    --bleed-transform: translateY(calc(
+      var(--bleed-vertical-adjust, 0%) + 2.5%
+    ));
+    transform: var(--bleed-transform);
 
     path:not(.bleed) {
       // Automatically inherit the foreground/text colour set on ancestor
@@ -186,6 +170,29 @@ $title-link-active-colour-on-dark: auto;
 
       @include colour.on-dark-colour-scheme {
         fill: $title-link-normal-colour-on-dark;
+      }
+    }
+
+    --use-scroll-proxy: false;
+
+    // Titles that are marked as being wide - i.e. longer than a certain number
+    // of characters - have their responsive behaviour on narrow screens
+    // switched from a max-width with auto height to a max-height based on the
+    // viewport width and overflowing horizontally. This is to avoid situations
+    // where the text would become uncomfortably small and difficult to read.
+    @include breakpoint.on('<=project-title-height-constraint') {
+      &--wide {
+
+        width:      auto;
+        max-width:  none;
+        max-height: 6.5vw;
+
+        --use-scroll-proxy: true;
+        --scroll-proxy-gutter: #{layout.$gutter * 2};
+
+        // Combine the bleed transform with the scroll proxy transform.
+        transform: var(--scroll-proxy-transform) var(--bleed-transform);
+
       }
     }
 
@@ -236,6 +243,31 @@ $title-link-active-colour-on-dark: auto;
     );
 
     bottom: -$shadow-element-height;
+  }
+}
+
+@include breakpoint.on('<=project-title-height-constraint') {
+  .node--type-project {
+
+    position: relative;
+
+    .scroll-proxy-sentinel {
+
+      // This shifts the sentinel down down far enough for a user to be able to
+      // read the start of the title before it begins translating.
+      top: 35vh;
+
+      // This ensures that the end of the text is reached early enough so users
+      // don't need to be too precise with their scrolling to see it.
+      height: 50vh;
+
+      // Ensures the sentinel doesn't exceed the node height.
+      max-height: 100%;
+
+      // Is this necessary?
+      z-index: list.index($stacking-order, sentinel);
+
+    }
   }
 }
 

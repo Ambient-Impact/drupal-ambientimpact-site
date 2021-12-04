@@ -194,14 +194,25 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
     ];
 
     // If the text is longer than this many characters, add the wide modifier
-    // class so it can be adjusted on smaller screens to remain readable.
+    // class so it can be adjusted on smaller screens to remain readable, and
+    // attach the scroll proxy library and attributes.
     //
     // @todo Can this value be made configurable/exposed in some way?
     //
     // @todo What about basing this on a width to height ratio rather than
     //   character count?
     if (\mb_strlen($title) > 18) {
+
       $svgAttributes['class'] .= ' field__title-svg--wide';
+
+      $svgAttributes['data-scroll-proxy-item'] = 'true';
+
+      $svgAttributes['data-scroll-proxy-sentinel-container'] =
+        '.node--type-project';
+
+      $variables['items'][0]['content']['#attached']['library'][] =
+        'ambientimpact_ux/component.scroll_proxy';
+
     }
 
     /** @var \Drupal\ambientimpact_site\TextToSvg */
