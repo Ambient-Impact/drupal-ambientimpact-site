@@ -128,7 +128,7 @@ $site-name-height: 83.997;
   // software like screen readers. The <svg> title has aria-hidden="true", as
   // it exists for purely visual reasons.
   &__text {
-    @include hide.hide-me;
+    @include hide.me;
   }
 
   &__svg {

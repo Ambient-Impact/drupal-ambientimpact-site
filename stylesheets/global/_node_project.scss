@@ -137,7 +137,7 @@ $title-link-active-colour-on-dark: auto;
   // software like screen readers. The <svg> title has aria-hidden="true", as
   // it exists for purely visual reasons.
   .field__title-text {
-    @include hide.hide-me;
+    @include hide.me;
   }
 
   .field__title-svg {
