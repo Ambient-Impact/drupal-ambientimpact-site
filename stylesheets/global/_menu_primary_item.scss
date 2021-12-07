@@ -105,7 +105,7 @@ $indicator-thickness: 0.2em;
       @include primary-indicator-inactive;
     }
 
-    @include link-state.link-hover {
+    @include link-state.hover {
       &::after {
         @include primary-indicator-active;
       }
@@ -122,7 +122,7 @@ $indicator-thickness: 0.2em;
       @include secondary-indicator-inactive;
     }
 
-    @include link-state.link-hover {
+    @include link-state.hover {
       &::after {
         @include secondary-indicator-active;
       }
@@ -281,7 +281,7 @@ $indicator-thickness: 0.2em;
 
       // This makes the indicator visible on an item when it's being interacted
       // with.
-      @include link-state.link-hover {
+      @include link-state.hover {
         &::after {
           @include primary-indicator-active;
         }
@@ -328,7 +328,7 @@ $indicator-thickness: 0.2em;
 
       // This makes the indicator visible on an item when it's being interacted
       // with.
-      @include link-state.link-hover {
+      @include link-state.hover {
         &::after {
           @include secondary-indicator-active;
         }

@@ -172,7 +172,7 @@ $use-shading-shadows: false;
         $underline-active-on-dark:  $link-foreground-colour
       );
 
-      @include link-state.link-hover {
+      @include link-state.hover {
         @include colour.set-colours(
           $background: link-var.$link-hover-colour-on-light
         );
