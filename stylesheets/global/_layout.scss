@@ -11,7 +11,7 @@ html {
 }
 
 header[role='banner'] {
-  @include z-index.z-index(page-floating);
+  @include z-index.get(page-floating);
 }
 
 .region-primary-menu {
@@ -23,7 +23,7 @@ header[role='banner'] {
   //
   // @see https://github.com/WickyNilliams/headroom.js/issues/354
   &.headroom:not(.headroom--top):not(.headroom--not-top) {
-    @include z-index.z-index(page-floating);
+    @include z-index.get(page-floating);
   }
 
   // When Headroom is not at the top, increase the z-index. We don't do this
@@ -33,29 +33,29 @@ header[role='banner'] {
   // .headroom--not-top class and this may cause content to show on top of the
   // menu bar, especially on mobile where the connection may be slower.
   &:not(.headroom--top) {
-    @include z-index.z-index(floating-above);
+    @include z-index.get(floating-above);
   }
 }
 
 .overlay {
-  @include z-index.z-index(floating);
+  @include z-index.get(floating);
 }
 
 // Content fade in overlay.
 .layout-container::before,
 // Primary menu drop-down overlay.
 .region-primary-menu-overlay {
-  @include z-index.z-index(page-floating);
+  @include z-index.get(page-floating);
 }
 
 // Entire page fade in overlay.
 .region-highlighted::before {
-  @include z-index.z-index(floating-above);
+  @include z-index.get(floating-above);
 }
 
 .offcanvas-overlay {
   // This places the overlay over most elements, including the admin toolbar.
-  @include z-index.z-index('modal');
+  @include z-index.get('modal');
 }
 
 // This ensures any positioned items in the main content don't end up above
@@ -64,5 +64,5 @@ header[role='banner'] {
 main[role='main'] {
   position: relative;
 
-  @include z-index.z-index(page-main);
+  @include z-index.get(page-main);
 }
