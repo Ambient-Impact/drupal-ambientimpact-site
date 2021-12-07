@@ -36,7 +36,7 @@ $background-colour: colours.$ambientimpact-orange;
   margin-top:     0;
   margin-bottom:  3em;
 
-  @include horizontal-bleed-background.horizontal-bleed-background(
+  @include horizontal-bleed-background.set(
     $colour:  $background-colour,
     $z-index: list.index($local-stacking-order, background),
     // Don't use the topmost shadow, as that would show on top of the site

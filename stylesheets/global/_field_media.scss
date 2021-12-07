@@ -45,7 +45,7 @@ $background-colour-on-dark: hsl(0, 0%, 30%) !default;
     $background:  $background-colour-on-light
   );
 
-  @include horizontal-bleed-background.horizontal-bleed-background(
+  @include horizontal-bleed-background.set(
     $colour:  $background-colour-on-light,
     $z-index: list.index($local-stacking-order, background),
     $shadow:  $shadow-settings
@@ -56,7 +56,7 @@ $background-colour-on-dark: hsl(0, 0%, 30%) !default;
   }
 
   @include colour.on-dark-colour-scheme {
-    @include horizontal-bleed-background.horizontal-bleed-background(
+    @include horizontal-bleed-background.set(
       $colour:  $background-colour-on-dark,
       $z-index: list.index($local-stacking-order, background),
       $shadow:  $shadow-settings

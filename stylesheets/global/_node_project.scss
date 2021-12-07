@@ -236,7 +236,7 @@ $title-link-active-colour-on-dark: auto;
   &::after {
     $shadow-element-height: 1rem;
 
-    @include horizontal-bleed-background.horizontal-bleed-background-top-peek-shadow(
+    @include horizontal-bleed-background.top-peek-shadow(
       $z-index: list.index($stacking-order, top-shadow),
       $depth:   $full-bleed-panel-shadow-depth,
       $height:  $shadow-element-height

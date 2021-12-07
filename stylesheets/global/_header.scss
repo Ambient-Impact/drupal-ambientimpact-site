@@ -21,7 +21,7 @@ header[role='banner'] {
   // that it appears the site name is part of the same sheet as the navigation
   // bar.
   &::after {
-    @include horizontal-bleed-background.horizontal-bleed-background-top-peek-shadow(
+    @include horizontal-bleed-background.top-peek-shadow(
       $z-index: list.index($stacking-order, header-top-shadow),
       $depth:   $full-bleed-panel-shadow-depth
     );
