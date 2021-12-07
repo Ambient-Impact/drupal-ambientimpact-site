@@ -41,7 +41,7 @@ $indicator-thickness: 0.2em;
 /// Set primary menu item colours.
 ///
 @mixin colours {
-  @include link-colour.link-colours(
+  @include link-colour.set(
     $background:      menu-primary.$background-colour,
     $normal-on-dark:  $foreground-colour,
     $hover-on-dark:   $foreground-colour

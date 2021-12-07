@@ -24,7 +24,7 @@
 ///
 /// Services overview link background colour.
 ///
-$link-background-colour: link-var.$link-normal-colour-on-light;
+$link-background-colour: link-var.$normal-colour-on-light;
 
 ///
 /// Services overview link foreground colour.
@@ -162,7 +162,7 @@ $use-shading-shadows: false;
     @include material-ripple.material-ripple;
 
     .layout-container & {
-      @include link-colour.link-colours(
+      @include link-colour.set(
         $background:                $link-background-colour,
         $normal-on-dark:            $link-foreground-colour,
         $hover-on-dark:             $link-foreground-colour,
@@ -174,7 +174,7 @@ $use-shading-shadows: false;
 
       @include link-state.hover {
         @include colour.set-colours(
-          $background: link-var.$link-hover-colour-on-light
+          $background: link-var.$hover-colour-on-light
         );
       }
     }

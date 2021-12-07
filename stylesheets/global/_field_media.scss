@@ -52,7 +52,7 @@ $background-colour-on-dark: hsl(0, 0%, 30%) !default;
   );
 
   :any-link {
-    @include link-colour.link-colours($background-colour-on-light);
+    @include link-colour.set($background-colour-on-light);
   }
 
   @include colour.on-dark-colour-scheme {
@@ -63,7 +63,7 @@ $background-colour-on-dark: hsl(0, 0%, 30%) !default;
     );
 
     :any-link {
-      @include link-colour.link-colours($background-colour-on-dark);
+      @include link-colour.set($background-colour-on-dark);
     }
   }
 

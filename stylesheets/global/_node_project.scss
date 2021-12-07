@@ -40,7 +40,7 @@ $title-link-hover-colour-on-light: color.mix(
 ///
 /// Project node title link colour on light backgrounds when activated.
 ///
-/// @see {function} link-colour.get-link-active-colour
+/// @see {function} link-colour.get-active-colour
 ///
 $title-link-active-colour-on-light: auto;
 
@@ -65,7 +65,7 @@ $title-link-hover-colour-on-dark: color.mix(
 ///
 /// Project node title link colour on dark backgrounds when activated.
 ///
-/// @see {function} link-colour.get-link-active-colour
+/// @see {function} link-colour.get-active-colour
 ///
 $title-link-active-colour-on-dark: auto;
 
@@ -333,7 +333,7 @@ $title-link-active-colour-on-dark: auto;
     // after the title ends.
     display: inline-block;
 
-    @include link-colour.link-colours(
+    @include link-colour.set(
       $background:      colour.$background-colour-light,
 
       $normal-on-light: $title-link-normal-colour-on-light,
@@ -346,7 +346,7 @@ $title-link-active-colour-on-dark: auto;
     );
 
     @include colour.on-dark-colour-scheme {
-      @include link-colour.link-colours(
+      @include link-colour.set(
         $background:      colour.$background-colour-dark,
 
         $normal-on-light: $title-link-normal-colour-on-light,
