@@ -31,7 +31,7 @@ $title-link-normal-colour-on-light:
 ///
 /// Project node title link colour on light backgrounds when hovered/focused.
 ///
-$title-link-hover-colour-on-light: color.mix(
+$title-link-highlight-colour-on-light: color.mix(
   field-media.$background-colour-on-light,
   colour.$background-colour-light,
   70%
@@ -56,7 +56,7 @@ $title-link-normal-colour-on-dark: color.mix(
 ///
 /// Project node title link colour on dark backgrounds when hovered/focused.
 ///
-$title-link-hover-colour-on-dark: color.mix(
+$title-link-highlight-colour-on-dark: color.mix(
   field-media.$background-colour-on-dark,
   colour.$foreground-colour-on-dark,
   40%
@@ -334,28 +334,28 @@ $title-link-active-colour-on-dark: auto;
     display: inline-block;
 
     @include link-colour.set(
-      $background:      colour.$background-colour-light,
+      $background:          colour.$background-colour-light,
 
-      $normal-on-light: $title-link-normal-colour-on-light,
-      $hover-on-light:  $title-link-hover-colour-on-light,
-      $active-on-light: $title-link-active-colour-on-light,
+      $normal-on-light:     $title-link-normal-colour-on-light,
+      $highlight-on-light:  $title-link-highlight-colour-on-light,
+      $active-on-light:     $title-link-active-colour-on-light,
 
-      $normal-on-dark:  $title-link-normal-colour-on-dark,
-      $hover-on-dark:   $title-link-hover-colour-on-dark,
-      $active-on-dark:  $title-link-active-colour-on-dark,
+      $normal-on-dark:      $title-link-normal-colour-on-dark,
+      $highlight-on-dark:   $title-link-highlight-colour-on-dark,
+      $active-on-dark:      $title-link-active-colour-on-dark,
     );
 
     @include colour.on-dark-colour-scheme {
       @include link-colour.set(
-        $background:      colour.$background-colour-dark,
+        $background:          colour.$background-colour-dark,
 
-        $normal-on-light: $title-link-normal-colour-on-light,
-        $hover-on-light:  $title-link-hover-colour-on-light,
-        $active-on-light: $title-link-active-colour-on-light,
+        $normal-on-light:     $title-link-normal-colour-on-light,
+        $highlight-on-light:  $title-link-highlight-colour-on-light,
+        $active-on-light:     $title-link-active-colour-on-light,
 
-        $normal-on-dark:  $title-link-normal-colour-on-dark,
-        $hover-on-dark:   $title-link-hover-colour-on-dark,
-        $active-on-dark:  $title-link-active-colour-on-dark,
+        $normal-on-dark:      $title-link-normal-colour-on-dark,
+        $highlight-on-dark:   $title-link-highlight-colour-on-dark,
+        $active-on-dark:      $title-link-active-colour-on-dark,
       );
     }
 

@@ -44,7 +44,7 @@ $indicator-thickness: 0.2em;
   @include link-colour.set(
     $background:      menu-primary.$background-colour,
     $normal-on-dark:  $foreground-colour,
-    $hover-on-dark:   $foreground-colour
+    $highlight-on-dark:   $foreground-colour
   );
 }
 
@@ -97,15 +97,18 @@ $indicator-thickness: 0.2em;
 }
 
 ///
-/// Set primary menu item indicator state when menu is :hover or :focus-within.
+/// Set primary menu item indicator state when menu is highlighted.
 ///
-@mixin primary-active-path-indicator-hover-focus-within {
+/// This is applied when the menu item is higlighted directly or the menu
+/// contains a focused element.
+///
+@mixin primary-active-path-indicator-highlight {
   @include menus.is-item-active-path {
     &::after {
       @include primary-indicator-inactive;
     }
 
-    @include link-state.hover {
+    @include link-state.highlight {
       &::after {
         @include primary-indicator-active;
       }
@@ -114,15 +117,18 @@ $indicator-thickness: 0.2em;
 }
 
 ///
-/// Set primary menu item indicator state when menu is :hover or :focus-within.
+/// Set secondary menu item indicator state when menu is highlighted.
 ///
-@mixin secondary-active-path-indicator-hover-focus-within {
+/// This is applied when the menu item is higlighted directly or the menu
+/// contains a focused element.
+///
+@mixin secondary-active-path-indicator-highlight {
   @include menus.is-item-active-path {
     &::after {
       @include secondary-indicator-inactive;
     }
 
-    @include link-state.hover {
+    @include link-state.highlight {
       &::after {
         @include secondary-indicator-active;
       }
@@ -281,7 +287,7 @@ $indicator-thickness: 0.2em;
 
       // This makes the indicator visible on an item when it's being interacted
       // with.
-      @include link-state.hover {
+      @include link-state.highlight {
         &::after {
           @include primary-indicator-active;
         }
@@ -328,7 +334,7 @@ $indicator-thickness: 0.2em;
 
       // This makes the indicator visible on an item when it's being interacted
       // with.
-      @include link-state.hover {
+      @include link-state.highlight {
         &::after {
           @include secondary-indicator-active;
         }
@@ -352,13 +358,13 @@ $indicator-thickness: 0.2em;
     // support the selector doesn't ignore the other selectors, which it should
     // understand.
     &:focus-within > .menu-item {
-      @include primary-active-path-indicator-hover-focus-within;
+      @include primary-active-path-indicator-highlight;
     }
     // Hover and polyfilled :focus-within.
     &:hover,
     &.ally-focus-within {
       > .menu-item {
-        @include primary-active-path-indicator-hover-focus-within;
+        @include primary-active-path-indicator-highlight;
       }
     }
   }
@@ -370,13 +376,13 @@ $indicator-thickness: 0.2em;
     // support the selector doesn't ignore the other selectors, which it should
     // understand.
     &:focus-within > .menu-item {
-      @include secondary-active-path-indicator-hover-focus-within;
+      @include secondary-active-path-indicator-highlight;
     }
     // Hover and polyfilled :focus-within.
     &:hover,
     &.ally-focus-within {
       > .menu-item {
-        @include secondary-active-path-indicator-hover-focus-within;
+        @include secondary-active-path-indicator-highlight;
       }
     }
   }

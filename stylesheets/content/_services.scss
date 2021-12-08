@@ -163,18 +163,18 @@ $use-shading-shadows: false;
 
     .layout-container & {
       @include link-colour.set(
-        $background:                $link-background-colour,
-        $normal-on-dark:            $link-foreground-colour,
-        $hover-on-dark:             $link-foreground-colour,
-        $active-on-dark:            $link-foreground-colour,
-        $underline-normal-on-dark:  $link-foreground-colour,
-        $underline-hover-on-dark:   $link-foreground-colour,
-        $underline-active-on-dark:  $link-foreground-colour
+        $background:                  $link-background-colour,
+        $normal-on-dark:              $link-foreground-colour,
+        $highlight-on-dark:           $link-foreground-colour,
+        $active-on-dark:              $link-foreground-colour,
+        $underline-normal-on-dark:    $link-foreground-colour,
+        $underline-highlight-on-dark: $link-foreground-colour,
+        $underline-active-on-dark:    $link-foreground-colour
       );
 
-      @include link-state.hover {
+      @include link-state.highlight {
         @include colour.set-colours(
-          $background: link-var.$hover-colour-on-light
+          $background: link-var.$highlight-colour-on-light
         );
       }
     }
