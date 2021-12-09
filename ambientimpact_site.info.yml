@@ -6,6 +6,11 @@ package: Ambient.Impact
 screenshot: images/screenshot.png
 core_version_requirement: ^8 || ^9
 
+dependencies:
+  - ambientimpact_core:ambientimpact_core
+  - ambientimpact_icon:ambientimpact_icon
+  - ambientimpact_ux:ambientimpact_ux
+
 # These are identitical to those in ambientimpact_base, duplicated here because
 # Drupal doesn't seem to allow inheriting regions.
 #
