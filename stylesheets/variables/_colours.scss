@@ -14,7 +14,7 @@ $ambientimpact-orange: #c07300;
 ///
 /// Material Design primary colour; using Ambient.Impact orange.
 ///
-material-colour.$material-primary-colour: $ambientimpact-orange;
+material-colour.$primary: $ambientimpact-orange;
 
 ///
 /// Foreground colour on light backgrounds.
@@ -38,7 +38,7 @@ colour.$background-colour-dark: hsl(0, 0%, 10%);
 /// little too bright.
 ///
 $normal-colour-on-dark: color.adjust(
-  material-colour.$material-primary-colour, $lightness: 10%
+  material-colour.$primary, $lightness: 10%
 );
 
 @use 'link/link.var' as link-var with (

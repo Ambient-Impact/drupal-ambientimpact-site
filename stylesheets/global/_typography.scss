@@ -86,10 +86,10 @@
 /// importance over lower level headings.
 ///
 @mixin heading-underline {
-  border-bottom: 1px solid material-colour.$material-line-colour-on-light;
+  border-bottom: 1px solid material-colour.$line-on-light;
 
   @include colour.on-dark-colour-scheme {
-    border-bottom-color: material-colour.$material-line-colour-on-dark;
+    border-bottom-color: material-colour.$line-on-dark;
   }
 }
 
