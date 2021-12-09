@@ -118,7 +118,7 @@ $use-shading-shadows: false;
 
     padding: general.$general-spacing;
 
-    border-radius: material-general.$material-border-radius;
+    border-radius: material-general.$border-radius;
 
     @if $use-shading-shadows == true {
 

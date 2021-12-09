@@ -286,8 +286,8 @@ $item-reveal-stagger-interval: 40ms;
 
         background-color: menu-primary.$background-colour;
 
-        border-bottom-left-radius:  material-general.$material-border-radius;
-        border-bottom-right-radius: material-general.$material-border-radius;
+        border-bottom-left-radius:  material-general.$border-radius;
+        border-bottom-right-radius: material-general.$border-radius;
 
         @include material-shadow.material-shadow($depth: 2);
 
