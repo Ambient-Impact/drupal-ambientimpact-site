@@ -66,26 +66,26 @@ $site-name-height: 83.997;
   // the shadow look heavy handed.
 
   // Drop shadow, extends downwards.
-  @include material-shadow.material-shadow-filter-downward(
+  @include material-shadow.filter-downward(
     $depth: $fancy-heading-shadow-depth-small
   );
 
   &__link {
     // Drop shadow, centered to give ambient shadow effect.
-    @include material-shadow.material-shadow-filter-ambient(
+    @include material-shadow.filter-ambient(
       $depth: $fancy-heading-shadow-depth-small
     );
   }
 
   @include breakpoint.on('>=fancy-heading-shadow-depth') {
     // Drop shadow, extends downwards.
-    @include material-shadow.material-shadow-filter-downward(
+    @include material-shadow.filter-downward(
       $depth: $fancy-heading-shadow-depth-large
     );
 
     &__link {
       // Drop shadow, centered to give ambient shadow effect.
-      @include material-shadow.material-shadow-filter-ambient(
+      @include material-shadow.filter-ambient(
         $depth: $fancy-heading-shadow-depth-large
       );
     }

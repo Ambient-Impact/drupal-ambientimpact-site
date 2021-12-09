@@ -289,7 +289,7 @@ $item-reveal-stagger-interval: 40ms;
         border-bottom-left-radius:  material-general.$border-radius;
         border-bottom-right-radius: material-general.$border-radius;
 
-        @include material-shadow.material-shadow($depth: 2);
+        @include material-shadow.shadow($depth: 2);
 
         transition-property: opacity, transform;
         transition-duration: $hide-duration;

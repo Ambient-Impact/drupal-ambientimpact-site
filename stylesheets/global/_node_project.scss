@@ -296,26 +296,26 @@ $title-link-active-colour-on-dark: auto;
   // shadow that matches the title lettering outlines.
 
   // Drop shadow, extends downwards.
-  @include material-shadow.material-shadow-filter-downward(
+  @include material-shadow.filter-downward(
     $depth: $fancy-heading-shadow-depth-small
   );
 
   @include breakpoint.on('>=fancy-heading-shadow-depth') {
     // Drop shadow, extends downwards.
-    @include material-shadow.material-shadow-filter-downward(
+    @include material-shadow.filter-downward(
       $depth: $fancy-heading-shadow-depth-large
     );
   }
 
   .field__title-svg {
     // Drop shadow, centered to give ambient shadow effect.
-    @include material-shadow.material-shadow-filter-ambient(
+    @include material-shadow.filter-ambient(
       $depth: $fancy-heading-shadow-depth-small
     );
 
     @include breakpoint.on('>=fancy-heading-shadow-depth') {
       // Drop shadow, centered to give ambient shadow effect.
-      @include material-shadow.material-shadow-filter-ambient(
+      @include material-shadow.filter-ambient(
         $depth: $fancy-heading-shadow-depth-large
       );
     }
