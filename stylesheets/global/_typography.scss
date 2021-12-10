@@ -51,10 +51,10 @@
 
   // Fade out the heading font colour a little in dark mode as the solid white
   // feels a bit overpowering.
-  @include colour.on-dark-colour-scheme {
+  @include colour.on-dark-scheme {
     &:not(.content-popup__title) {
       color: color.mix(
-        colour.$foreground-colour-on-dark, colour.$background-colour-dark, 80%
+        colour.$foreground-on-dark, colour.$background-dark, 80%
       );
     }
   }
@@ -88,7 +88,7 @@
 @mixin heading-underline {
   border-bottom: 1px solid material-colour.$line-on-light;
 
-  @include colour.on-dark-colour-scheme {
+  @include colour.on-dark-scheme {
     border-bottom-color: material-colour.$line-on-dark;
   }
 }

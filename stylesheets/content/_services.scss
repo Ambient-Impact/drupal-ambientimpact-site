@@ -29,10 +29,10 @@ $link-background-colour: link-var.$normal-colour-on-light;
 ///
 /// Services overview link foreground colour.
 ///
-$link-foreground-colour: colour.get-contrasting-colour(
+$link-foreground-colour: colour.get-contrasting(
   $background:          $link-background-colour,
-  $foreground-on-light: colour.$foreground-colour-on-light,
-  $foreground-on-dark:  colour.$foreground-colour-on-dark
+  $foreground-on-light: colour.$foreground-on-light,
+  $foreground-on-dark:  colour.$foreground-on-dark
 );
 
 ///
@@ -123,13 +123,13 @@ $use-shading-shadows: false;
     @if $use-shading-shadows == true {
 
       // This needs to be a bit lighter to compensate for the inset shadow.
-      @include colour.set-colours($background: color.scale(
+      @include colour.set($background: color.scale(
         $link-background-colour, $lightness: +10%
       ));
 
     } @else {
 
-      @include colour.set-colours(
+      @include colour.set(
         $background: $link-background-colour
       );
 
@@ -152,7 +152,7 @@ $use-shading-shadows: false;
 
       // Increase shadow colour opacity a bit on dark colour scheme to attempt
       // to keep the effect looking about the same perceptually.
-      @include colour.on-dark-colour-scheme {
+      @include colour.on-dark-scheme {
         --shading-inset-shadow-colour:  rgba(0, 0, 0, 0.4);
         --shading-text-shadow-colour:   rgba(0, 0, 0, 0.4);
       }
@@ -173,7 +173,7 @@ $use-shading-shadows: false;
       );
 
       @include link-state.highlight {
-        @include colour.set-colours(
+        @include colour.set(
           $background: link-var.$highlight-colour-on-light
         );
       }

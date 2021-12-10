@@ -33,7 +33,7 @@ $title-link-normal-colour-on-light:
 ///
 $title-link-highlight-colour-on-light: color.mix(
   field-media.$background-colour-on-light,
-  colour.$background-colour-light,
+  colour.$background-light,
   70%
 );
 
@@ -49,7 +49,7 @@ $title-link-active-colour-on-light: auto;
 ///
 $title-link-normal-colour-on-dark: color.mix(
   field-media.$background-colour-on-dark,
-  colour.$foreground-colour-on-dark,
+  colour.$foreground-on-dark,
   70%
 );
 
@@ -58,7 +58,7 @@ $title-link-normal-colour-on-dark: color.mix(
 ///
 $title-link-highlight-colour-on-dark: color.mix(
   field-media.$background-colour-on-dark,
-  colour.$foreground-colour-on-dark,
+  colour.$foreground-on-dark,
   40%
 );
 
@@ -82,7 +82,7 @@ $title-link-active-colour-on-dark: auto;
 .node--type-project .node__title {
   color: field-media.$background-colour-on-light;
 
-  @include colour.on-dark-colour-scheme {
+  @include colour.on-dark-scheme {
     color: $title-link-normal-colour-on-dark;
   }
 
@@ -168,7 +168,7 @@ $title-link-active-colour-on-dark: auto;
     path.bleed {
       fill: $title-link-normal-colour-on-light;
 
-      @include colour.on-dark-colour-scheme {
+      @include colour.on-dark-scheme {
         fill: $title-link-normal-colour-on-dark;
       }
     }
@@ -198,7 +198,7 @@ $title-link-active-colour-on-dark: auto;
 
   }
 
-  @include colour.on-dark-colour-scheme {
+  @include colour.on-dark-scheme {
     // This places a gradient behind the title in dark mode to help increase
     // contrast between the title and background a bit.
     &::before {
@@ -221,8 +221,8 @@ $title-link-active-colour-on-dark: auto;
         // Explanation of why we use the background colour with zero opacity
         // instead of 'transparent'.
         background-image: linear-gradient(
-          color.adjust(colour.$background-colour-dark, $alpha: -1),
-          color.mix(colour.$background-colour-dark, black, 25%)
+          color.adjust(colour.$background-dark, $alpha: -1),
+          color.mix(colour.$background-dark, black, 25%)
         );
       }
     }
@@ -334,7 +334,7 @@ $title-link-active-colour-on-dark: auto;
     display: inline-block;
 
     @include link-colour.set(
-      $background:          colour.$background-colour-light,
+      $background:          colour.$background-light,
 
       $normal-on-light:     $title-link-normal-colour-on-light,
       $highlight-on-light:  $title-link-highlight-colour-on-light,
@@ -345,9 +345,9 @@ $title-link-active-colour-on-dark: auto;
       $active-on-dark:      $title-link-active-colour-on-dark,
     );
 
-    @include colour.on-dark-colour-scheme {
+    @include colour.on-dark-scheme {
       @include link-colour.set(
-        $background:          colour.$background-colour-dark,
+        $background:          colour.$background-dark,
 
         $normal-on-light:     $title-link-normal-colour-on-light,
         $highlight-on-light:  $title-link-highlight-colour-on-light,
@@ -407,7 +407,7 @@ $title-link-active-colour-on-dark: auto;
 // This fades the dark colour scheme media field background from the heading
 // colour to the field colour.
 .field--name-field-project-media::before {
-  @include colour.on-dark-colour-scheme {
+  @include colour.on-dark-scheme {
     background-image: linear-gradient(
       $title-link-normal-colour-on-dark,
       motion.$easing-decelerate,

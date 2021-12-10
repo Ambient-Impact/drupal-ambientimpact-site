@@ -41,7 +41,7 @@ $background-colour-on-dark: hsl(0, 0%, 30%) !default;
 
   padding: var(--field-item-gap) 0;
 
-  @include colour.set-colours(
+  @include colour.set(
     $background:  $background-colour-on-light
   );
 
@@ -55,7 +55,7 @@ $background-colour-on-dark: hsl(0, 0%, 30%) !default;
     @include link-colour.set($background-colour-on-light);
   }
 
-  @include colour.on-dark-colour-scheme {
+  @include colour.on-dark-scheme {
     @include horizontal-bleed-background.set(
       $colour:  $background-colour-on-dark,
       $z-index: list.index($local-stacking-order, background),
@@ -79,7 +79,7 @@ $background-colour-on-dark: hsl(0, 0%, 30%) !default;
   img, picture {
     // This is in case a transparent image is used, which normally assumes a
     // light background colour.
-    @include colour.set-colours(
+    @include colour.set(
       $background:  white
     );
   }

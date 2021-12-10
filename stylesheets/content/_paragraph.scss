@@ -49,9 +49,9 @@ $compact-max-height: 7em;
     ///   fade to transparent, similar to how Photoshop does its gradients.
     ///
     $gradient-light: linear-gradient(
-      color.adjust(colour.$background-colour-light, $alpha: -1),
+      color.adjust(colour.$background-light, $alpha: -1),
       motion.$easing-decelerate,
-      colour.$background-colour-light
+      colour.$background-light
     );
 
     ///
@@ -66,9 +66,9 @@ $compact-max-height: 7em;
     ///   fade to transparent, similar to how Photoshop does its gradients.
     ///
     $gradient-dark: linear-gradient(
-      color.adjust(colour.$background-colour-dark, $alpha: -1),
+      color.adjust(colour.$background-dark, $alpha: -1),
       motion.$easing-decelerate,
-      colour.$background-colour-dark
+      colour.$background-dark
     );
 
     @supports (box-sizing: border-box) and (width: 1vw) and
@@ -125,7 +125,7 @@ $compact-max-height: 7em;
 
         background-image: $gradient-light;
 
-        @include colour.on-dark-colour-scheme {
+        @include colour.on-dark-scheme {
           background-image: $gradient-dark;
         }
       }

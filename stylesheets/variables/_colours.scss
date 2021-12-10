@@ -21,14 +21,14 @@ material-colour.$primary: $ambientimpact-orange;
 ///
 /// This is faded a bit so it's not pure black.
 ///
-colour.$foreground-colour-on-light: hsl(0, 0%, 30%);
+colour.$foreground-on-light: hsl(0, 0%, 30%);
 
 ///
 /// Dark background colour.
 ///
 /// This is set to a very dark grey but not pure black.
 ///
-colour.$background-colour-dark: hsl(0, 0%, 10%);
+colour.$background-dark: hsl(0, 0%, 10%);
 
 ///
 /// Link colour on dark backgrounds when not highlighted/activated.

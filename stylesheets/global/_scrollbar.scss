@@ -19,7 +19,7 @@
 /// scroll position.
 ///
 $thumb-colour-on-light: color.mix(
-  colours.$ambientimpact-orange, colour.$background-colour-light, 80%
+  colours.$ambientimpact-orange, colour.$background-light, 80%
 );
 
 ///
@@ -29,7 +29,7 @@ $thumb-colour-on-light: color.mix(
 /// scroll position.
 ///
 $thumb-colour-on-dark: color.mix(
-  colours.$ambientimpact-orange, colour.$background-colour-dark, 80%
+  colours.$ambientimpact-orange, colour.$background-dark, 80%
 );
 
 ///
@@ -39,7 +39,7 @@ $thumb-colour-on-dark: color.mix(
 /// height, along which the thumb slides.
 ///
 $track-colour-on-light: color.mix(
-  colour.$foreground-colour-on-light, colour.$background-colour-light, 10%
+  colour.$foreground-on-light, colour.$background-light, 10%
 );
 
 ///
@@ -49,13 +49,13 @@ $track-colour-on-light: color.mix(
 /// height, along which the thumb slides.
 ///
 $track-colour-on-dark: color.mix(
-  colour.$foreground-colour-on-dark, colour.$background-colour-dark, 10%
+  colour.$foreground-on-dark, colour.$background-dark, 10%
 );
 
 html {
   scrollbar-color: $thumb-colour-on-light $track-colour-on-light;
 
-  @include colour.on-dark-colour-scheme {
+  @include colour.on-dark-scheme {
     scrollbar-color: $thumb-colour-on-dark $track-colour-on-dark;
   }
 }

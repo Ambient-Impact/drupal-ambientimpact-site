@@ -16,10 +16,10 @@
 ///
 /// Primary menu item foreground colour.
 ///
-$foreground-colour: colour.get-contrasting-colour(
+$foreground-colour: colour.get-contrasting(
   $background:          menu-primary.$background-colour,
-  $foreground-on-light: colour.$foreground-colour-on-light,
-  $foreground-on-dark:  colour.$foreground-colour-on-dark
+  $foreground-on-light: colour.$foreground-on-light,
+  $foreground-on-dark:  colour.$foreground-on-dark
 );
 
 ///
@@ -248,7 +248,7 @@ $indicator-thickness: 0.2em;
 
       position: absolute;
 
-      background-color: colour.$foreground-colour-on-dark;
+      background-color: colour.$foreground-on-dark;
 
       will-change:  transform;
 

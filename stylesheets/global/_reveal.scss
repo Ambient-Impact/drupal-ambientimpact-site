@@ -268,10 +268,10 @@ body:not(.maintenance-page) .region-highlighted::before {
     top:    0;
     bottom: 0;
 
-    @include colour.set-colours($background: colour.$background-colour-light);
+    @include colour.set($background: colour.$background-light);
 
-    @include colour.on-dark-colour-scheme {
-      @include colour.set-colours($background: colour.$background-colour-dark);
+    @include colour.on-dark-scheme {
+      @include colour.set($background: colour.$background-dark);
     }
 
     visibility: hidden;
