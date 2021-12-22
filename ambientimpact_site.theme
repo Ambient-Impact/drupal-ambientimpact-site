@@ -38,8 +38,8 @@ function ambientimpact_site_preprocess_html(array &$variables): void {
  * title has not been set and wraps the text in an icon.
  */
 function ambientimpact_site_preprocess_field__field_project_link(
-  &$variables, $hook
-) {
+  array &$variables, string $hook
+): void {
   foreach ($variables['element']['#items'] as $key => $item) {
     // Determine if a title has been set for this link, using it if so but
     // falling back to the parent node's title.
@@ -78,8 +78,8 @@ function ambientimpact_site_preprocess_field__field_project_link(
  * This wraps the text in an icon.
  */
 function ambientimpact_site_preprocess_field__field_source_link(
-  &$variables, $hook
-) {
+  array &$variables, string $hook
+): void {
   foreach ($variables['items'] as $key => &$item) {
     // Don't do anything to an item if the #title is not a string, which could
     // indicate modification by a module that we're not expecting.
@@ -102,8 +102,8 @@ function ambientimpact_site_preprocess_field__field_source_link(
  * This wraps the text in an icon.
  */
 function ambientimpact_site_preprocess_field__field_web_tags(
-  &$variables, $hook
-) {
+  array &$variables, string $hook
+): void {
   foreach ($variables['items'] as $key => &$item) {
     // Don't do anything to an item if the #title is not a string, which could
     // indicate modification by a module that we're not expecting.
@@ -148,7 +148,9 @@ function ambientimpact_site_preprocess_field__field_web_tags(
  *   only at this field? E.g. ambientimpact_site_preprocess_field__title? That
  *   variation doesn't seem to register.
  */
-function ambientimpact_site_preprocess_field(&$variables, $hook) {
+function ambientimpact_site_preprocess_field(
+  array &$variables, string $hook
+): void {
 
   if ($variables['field_name'] === 'title') {
     // Get the current language code.
@@ -268,7 +270,9 @@ function ambientimpact_site_preprocess_field(&$variables, $hook) {
  * @todo Can this be done in a cleaner fashion elsewhere? E.g. a custom Views
  * plugin?
  */
-function ambientimpact_site_preprocess_views_view_field(&$variables) {
+function ambientimpact_site_preprocess_views_view_field(
+  array &$variables
+): void {
   if (
     (
       $variables['view']->id() === 'tags' ||
@@ -326,7 +330,7 @@ function ambientimpact_site_preprocess_views_view_field(&$variables) {
  * @todo Can this be generalized to wrap in an icon if certain variables are
  * present?
  */
-function ambientimpact_site_preprocess_page_title(&$variables) {
+function ambientimpact_site_preprocess_page_title(array &$variables): void {
   if (
     \Drupal::routeMatch()->getRouteName() ===
       'entity.taxonomy_term.canonical' &&
@@ -353,7 +357,9 @@ function ambientimpact_site_preprocess_page_title(&$variables) {
  *
  * @see \template_preprocess_maintenance_page()
  */
-function ambientimpact_site_preprocess_maintenance_page(array &$variables) {
+function ambientimpact_site_preprocess_maintenance_page(
+  array &$variables
+): void {
   unset($variables['logo']);
 }
 
@@ -366,7 +372,9 @@ function ambientimpact_site_preprocess_maintenance_page(array &$variables) {
  *
  * @todo Remove this when title -> caption migration is working.
  */
-function ambientimpact_site_preprocess_image_caption_formatter(&$variables) {
+function ambientimpact_site_preprocess_image_caption_formatter(
+  array &$variables
+): void {
   if (empty($variables['caption']) && !empty($variables['image']['#title'])) {
     $variables['caption'] = $variables['image']['#title'];
 
