@@ -2,7 +2,7 @@
 //   Taxonomy tags
 // -----------------------------------------------------------------------------
 
-@use '../../../ambientimpact_base/stylesheets/components/tags_list' as *;
+@use 'base:components/tags_list' as *;
 @use 'sass/helpers/layout';
 @use 'sass/helpers/selector';
 

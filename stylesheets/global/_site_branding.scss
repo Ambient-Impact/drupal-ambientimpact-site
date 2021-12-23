@@ -2,7 +2,7 @@
 //   Site branding
 // -----------------------------------------------------------------------------
 
-@use '../../../ambientimpact_base/stylesheets/global/layout';
+@use 'base:global/layout';
 @use 'header';
 @use 'material.common/material.shadow' as material-shadow;
 @use 'sass:list';

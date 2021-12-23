@@ -2,10 +2,10 @@
 //   Variables - General
 // -----------------------------------------------------------------------------
 
-@use '../../../ambientimpact_base/stylesheets/global/typography' with (
+@use 'base:global/typography' with (
   $font-size: 110%,
 );
-@use '../../../ambientimpact_base/stylesheets/global/typography.heading' as typography-heading with (
+@use 'base:global/typography.heading' as typography-heading with (
   $heading-font-sizes: (1.5em, 1.35em, 1.2em, 1em, 1em, 1em),
 );
 

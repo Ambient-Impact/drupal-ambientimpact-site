@@ -2,8 +2,8 @@
 //   Primary site menu - menu items
 // -----------------------------------------------------------------------------
 
-@use '../../../ambientimpact_base/stylesheets/global/layout';
-@use '../../../ambientimpact_base/stylesheets/global/menus';
+@use 'base:global/layout';
+@use 'base:global/menus';
 @use 'icon';
 @use 'link/link.colour' as link-colour;
 @use 'link/link.state' as link-state;

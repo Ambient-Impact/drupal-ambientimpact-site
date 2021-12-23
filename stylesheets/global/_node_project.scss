@@ -2,7 +2,7 @@
 //   Project nodes
 // -----------------------------------------------------------------------------
 
-@use '../../../ambientimpact_base/stylesheets/global/layout';
+@use 'base:global/layout';
 @use 'field_media' as field-media;
 @use 'link/link.colour' as link-colour;
 @use 'material.common/material.shadow' as material-shadow;
