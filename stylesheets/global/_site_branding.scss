@@ -2,7 +2,7 @@
 //   Site branding
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout';
+@use 'base:layout/config' as layout-config;
 @use 'header';
 @use 'material.common/material.shadow' as material-shadow;
 @use 'sass:list';
@@ -34,14 +34,14 @@ $site-name-height: 83.997;
   // bottom of the primary menu bar. The padding and negative margins are so
   // that the lateral and top drop shadows on the site name are not clipped.
   @supports (animation-fill-mode: backwards) {
-    margin-top:     layout.$gutter * -1;
-    margin-left:    layout.$gutter * -1;
-    margin-right:   layout.$gutter * -1;
+    margin-top:     layout-config.$gutter * -1;
+    margin-left:    layout-config.$gutter * -1;
+    margin-right:   layout-config.$gutter * -1;
     margin-bottom:  0;
 
-    padding-top:    layout.$gutter;
-    padding-left:   layout.$gutter;
-    padding-right:  layout.$gutter;
+    padding-top:    layout-config.$gutter;
+    padding-left:   layout-config.$gutter;
+    padding-right:  layout-config.$gutter;
     padding-bottom: 0;
 
     overflow:       hidden;

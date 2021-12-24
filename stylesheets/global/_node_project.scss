@@ -2,7 +2,7 @@
 //   Project nodes
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout';
+@use 'base:layout/config' as layout-config;
 @use 'field_media' as field-media;
 @use 'link/link.colour' as link-colour;
 @use 'material.common/material.shadow' as material-shadow;
@@ -100,8 +100,8 @@ $title-link-active-colour-on-dark: auto;
   $mask-gradient: linear-gradient(
     to right,
     transparent,
-    black layout.$gutter,
-    black calc(100vw - layout.$gutter),
+    black layout-config.$gutter,
+    black calc(100vw - layout-config.$gutter),
     transparent
   );
 
@@ -115,15 +115,15 @@ $title-link-active-colour-on-dark: auto;
       width: 100vw;
 
       // Compensate for padding.
-      margin-top:   layout.$gutter * -1;
-      margin-left:  layout.$gutter * -1;
-      margin-right: layout.$gutter * -1;
+      margin-top:   layout-config.$gutter * -1;
+      margin-left:  layout-config.$gutter * -1;
+      margin-right: layout-config.$gutter * -1;
 
       // Padding on all sides but the bottom so that the shadows don't get cut
       // off by the overflow: hidden, in addition to fading out any overflow.
-      padding-top:    layout.$gutter;
-      padding-left:   layout.$gutter;
-      padding-right:  layout.$gutter;
+      padding-top:    layout-config.$gutter;
+      padding-left:   layout-config.$gutter;
+      padding-right:  layout-config.$gutter;
 
       box-sizing: border-box;
 
@@ -188,7 +188,7 @@ $title-link-active-colour-on-dark: auto;
         max-height: 6.5vw;
 
         --use-scroll-proxy: true;
-        --scroll-proxy-gutter: #{layout.$gutter * 2};
+        --scroll-proxy-gutter: #{layout-config.$gutter * 2};
 
         // Combine the bleed transform with the scroll proxy transform.
         transform: var(--scroll-proxy-transform) var(--bleed-transform);

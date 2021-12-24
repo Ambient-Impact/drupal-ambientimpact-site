@@ -2,8 +2,8 @@
 //   Primary site menu - menu items
 // -----------------------------------------------------------------------------
 
-@use 'base:global/layout';
 @use 'base:global/menus';
+@use 'base:layout/config' as layout-config;
 @use 'icon';
 @use 'link/link.colour' as link-colour;
 @use 'link/link.state' as link-state;
@@ -25,7 +25,9 @@ $foreground-colour: colour.get-contrasting(
 ///
 /// Primary menu item horizontal padding.
 ///
-$padding-x: layout.$gutter;
+/// @require {variable} layout-config.$gutter
+///
+$padding-x: layout-config.$gutter;
 
 ///
 /// Primary menu item vertical padding.
