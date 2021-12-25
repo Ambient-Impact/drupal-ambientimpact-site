@@ -2,9 +2,10 @@
 //   Typography partial
 // -----------------------------------------------------------------------------
 
+@use '../variables/typography'; // Configure typography.
+@use 'base:typography/config' as typography-config;
+@use 'base:typography/headings' as typography-headings;
 @use 'base:global/content';
-@use 'base:global/typography';
-@use 'base:global/typography.heading' as typography-heading;
 @use 'base:layout/vertical_spacing' as vertical-spacing;
 @use 'material.common/material.colour' as material-colour;
 @use 'sass:color';
@@ -20,7 +21,7 @@
 // default system font stack, to minimize the amount of shifting that occurs
 // if/when Furore loads and is applied. Note that this is based on Roboto, but
 // should work similarly with the other fonts in the system font stack.
-#{typography-heading.$h1to6},
+#{typography-headings.$h1to6},
 .region-primary-menu .menu,
 .region-primary-menu .menu-overflow__toggle {
   // Furore only has uppercase, so use that.
@@ -35,17 +36,17 @@
   font-weight: 700;
 
   .font-loaded-furore & {
-    font-family: Furore, typography.$font-stack;
+    font-family: Furore, typography-config.$font-stack;
 
     letter-spacing: 0.1em;
 
     // Reset the font-weight back to normal.
-    font-weight: typography.$font-weight-normal;
+    font-weight: typography-config.$font-weight-normal;
   }
 
 }
 
-@include typography-heading.headings {
+@include typography-headings.headings {
   //hyphens:    auto;
   line-height:  1.4;
 
@@ -62,7 +63,7 @@
   .nbsp {
     // Furore displays odd characters instead of a non-breaking space, so use
     // the default font stack for these instead.
-    font-family: typography.$font-stack;
+    font-family: typography-config.$font-stack;
   }
 
 }
@@ -98,7 +99,7 @@
     @include heading-underline;
   }
 
-  @include typography-heading.headings {
+  @include typography-headings.headings {
     &:not(.code-highlighted__heading) {
       margin-bottom: content.$item-vertical-spacing-small;
     }
