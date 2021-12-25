@@ -2,7 +2,7 @@
 //   Primary site menu - menu items
 // -----------------------------------------------------------------------------
 
-@use 'base:global/menus';
+@use 'base:components/menu';
 @use 'base:layout/config' as layout-config;
 @use 'icon';
 @use 'link/link.colour' as link-colour;
@@ -105,7 +105,7 @@ $indicator-thickness: 0.2em;
 /// contains a focused element.
 ///
 @mixin primary-active-path-indicator-highlight {
-  @include menus.is-item-active-path {
+  @include menu.is-item-active-path {
     &::after {
       @include primary-indicator-inactive;
     }
@@ -125,7 +125,7 @@ $indicator-thickness: 0.2em;
 /// contains a focused element.
 ///
 @mixin secondary-active-path-indicator-highlight {
-  @include menus.is-item-active-path {
+  @include menu.is-item-active-path {
     &::after {
       @include secondary-indicator-inactive;
     }
@@ -172,7 +172,7 @@ $indicator-thickness: 0.2em;
     // Remove padding added by Classy.
     padding-top: 0;
 
-    @include menus.is-item-active-path {
+    @include menu.is-item-active-path {
       @include colours;
     }
   }
@@ -296,7 +296,7 @@ $indicator-thickness: 0.2em;
       }
     }
 
-    @include menus.is-item-active-path {
+    @include menu.is-item-active-path {
       // Active path item indicators are visible by default. This is necessary
       // in case the browser doesn't support :focus-within and our polyfill
       // doesn't get applied.
@@ -343,7 +343,7 @@ $indicator-thickness: 0.2em;
       }
     }
 
-    @include menus.is-item-active-path {
+    @include menu.is-item-active-path {
       // Active path item indicators are visible by default. This is necessary
       // in case the browser doesn't support :focus-within and our polyfill
       // doesn't get applied.
