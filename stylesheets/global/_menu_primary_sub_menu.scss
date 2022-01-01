@@ -394,6 +394,13 @@ $item-reveal-stagger-interval: 40ms;
     max-height: calc(100vh - 5.6em);
 
     overflow-y: auto;
+
+    // Prevent scrolling any ancestor (e.g. the viewport) if the menu is
+    // scrollable and the user hits the top or bottom while scrolling this.
+    //
+    // @see https://ishadeed.com/article/prevent-scroll-chaining-overscroll-behavior/
+    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior-y
+    overscroll-behavior-y: contain;
   }
 
   // When Headroom.js believes the menu bar is no longer at the top but is
