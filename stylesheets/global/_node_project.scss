@@ -408,10 +408,18 @@ $title-link-active-colour-on-dark: auto;
 // colour to the field colour.
 .field--name-field-project-media::before {
   @include colour.on-dark-scheme {
+
     background-image: linear-gradient(
       $title-link-normal-colour-on-dark,
       motion.$easing-decelerate,
       field-media.$background-colour-on-dark
     );
+
+    background-repeat:  no-repeat;
+    // This ensures the gradient is a consistent height regardless of the number
+    // of rows in the media field, and specifically makes the gradient a bit
+    // less obvious when there's only a single row.
+    background-size:    100% 60vh;
+
   }
 }
