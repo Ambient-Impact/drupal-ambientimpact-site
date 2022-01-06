@@ -158,6 +158,16 @@ $title-link-active-colour-on-dark: auto;
     ));
     transform: var(--bleed-transform);
 
+    // Potential performance optimization: inform the browser that layout and
+    // paint of this element are independent from descendents and vice versa.
+    //
+    // Note that in the future adding 'size' to this may be useful, but an
+    // intrinsic ratio with the width and height will need to be established on
+    // the container of this element so that it doesn't collapse to zero.
+    //
+    // @see https://developer.mozilla.org/en-US/docs/Web/CSS/contain
+    contain: layout paint;
+
     path:not(.bleed) {
       // Automatically inherit the foreground/text colour set on ancestor
       // elements.
