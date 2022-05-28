@@ -4,6 +4,7 @@
 
 @use 'base:layout/config' as layout-config;
 @use 'field_media' as field-media;
+@use 'layout_scrollbar' as layout-scrollbar;
 @use 'link/link.colour' as link-colour;
 @use 'material.common/material.shadow' as material-shadow;
 @use 'sass:color';
@@ -224,6 +225,8 @@ $title-link-active-colour-on-dark: auto;
         width: 100vw;
 
         margin-left: -50vw;
+
+        @include layout-scrollbar.scroll-block-horizontal-bleed-background;
 
         z-index: -1;
 

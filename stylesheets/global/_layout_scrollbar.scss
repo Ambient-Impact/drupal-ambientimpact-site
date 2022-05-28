@@ -1,0 +1,28 @@
+// -----------------------------------------------------------------------------
+//   Site layout - Scrollbar
+// -----------------------------------------------------------------------------
+
+@use 'sass/helpers/selector';
+@use 'scroll_blocker' as scroll-blocker;
+
+///
+/// Adjust a horizontal bleed background element during scroll blocking.
+///
+/// @require {Mixin} scroll-blocker.on-scroll-blocked
+/// @require {Mixin} selector.root-conditions
+///
+@mixin scroll-block-horizontal-bleed-background {
+
+  @include scroll-blocker.on-scroll-blocked {
+
+    @include selector.root-conditions(('[dir=ltr]'), 'html') {
+      margin-left: calc(-50vw + var(--scrollbar-gutter, 0) / 2);
+    }
+
+    @include selector.root-conditions(('[dir=rtl]'), 'html') {
+      margin-left: calc(-50vw - var(--scrollbar-gutter, 0) / 2);
+    }
+
+  }
+
+}

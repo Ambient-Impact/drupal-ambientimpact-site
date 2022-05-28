@@ -4,6 +4,7 @@
 
 @use 'base:layout/vertical_spacing' as vertical-spacing;
 @use 'base:components/field_media' as field-media;
+@use 'layout_scrollbar' as layout-scrollbar;
 @use 'link/link.colour' as link-colour;
 @use 'sass:list';
 @use 'sass:math';
@@ -65,6 +66,12 @@ $background-colour-on-dark: hsl(0, 0%, 30%) !default;
     :any-link {
       @include link-colour.set($background-colour-on-dark);
     }
+  }
+
+  &::before {
+
+    @include layout-scrollbar.scroll-block-horizontal-bleed-background;
+
   }
 
   // When one or more field items are descendents, target those.

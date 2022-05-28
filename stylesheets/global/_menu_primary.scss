@@ -2,6 +2,7 @@
 //   Primary site menu
 // -----------------------------------------------------------------------------
 
+@use 'layout_scrollbar' as layout-scrollbar;
 @use 'sass:list';
 @use 'sass/helpers/breakpoint';
 @use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
@@ -43,6 +44,12 @@ $background-colour: colours.$ambientimpact-orange;
     // title. See _header.scss for the topmost shadow.
     $shadow:  (false, true, true)
   );
+
+  &::before {
+
+    @include layout-scrollbar.scroll-block-horizontal-bleed-background;
+
+  }
 
   &.headroom {
     // Make sure we're sticky if Headroom is active, as the horizontal-
