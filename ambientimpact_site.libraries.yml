@@ -7,8 +7,8 @@ global-styling:
 
 global-scripts:
   js:
-    javascript/fonts.js: {}
-    javascript/global.js: {}
+    javascript/fonts.js: { attributes: { defer: true } }
+    javascript/global.js: { attributes: { defer: true } }
   dependencies:
     # Required for the :focus-within polyfill.
     - ambientimpact_core/ally.js
@@ -18,11 +18,11 @@ global-scripts:
 
 menu_primary:
   js:
-    javascript/menu_primary.drop_down.js: {}
-    javascript/menu_primary.headroom.js: {}
-    javascript/menu_primary.overflow.js: {}
-    javascript/menu_primary.overlay.js: {}
-    javascript/menu_primary.stagger.js: {}
+    javascript/menu_primary.drop_down.js: { attributes: { defer: true } }
+    javascript/menu_primary.headroom.js: { attributes: { defer: true } }
+    javascript/menu_primary.overflow.js: { attributes: { defer: true } }
+    javascript/menu_primary.overlay.js: { attributes: { defer: true } }
+    javascript/menu_primary.stagger.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/component.fastdom
     - ambientimpact_core/framework
@@ -34,14 +34,14 @@ menu_primary:
 
 reveal:
   js:
-    javascript/reveal.js: {}
+    javascript/reveal.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/framework
     - ambientimpact_core/component.fastdom
 
 services:
   js:
-    javascript/services.js: {}
+    javascript/services.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/framework
     - ambientimpact_site/reveal
