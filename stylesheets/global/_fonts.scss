@@ -3,9 +3,9 @@
 // -----------------------------------------------------------------------------
 
 ///
-/// Relative path to the fonts directory from the stylesheets directory.
+/// Fonts directory path relative to this partial.
 ///
-$path: '../fonts';
+$path: '../../fonts';
 
 @font-face {
   font-family:  'Furore';
