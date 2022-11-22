@@ -1,0 +1,43 @@
+{
+  "name": "drupal-ambientimpact-site",
+  "version": "5.0.0",
+  "license": "GPL-2.0",
+  "repository": "github:Ambient-Impact/drupal-ambientimpact-site",
+  "scripts": {
+    "build": "webpack --progress --config webpack.config.js"
+  },
+  "yarn.build": {
+    "input": [
+      "webpack.config.js",
+      "**/stylesheets/**/*.scss",
+      "images/icons/*.{png,svg}"
+    ],
+    "output": [
+      "**/stylesheets/**/*.css",
+      "images/icons/generated/*"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.2",
+    "@babel/preset-env": "^7.20.2",
+    "@symfony/webpack-encore": "^4.1.1",
+    "autoprefixer": "^10.2.6",
+    "css-loader": "^6.7.1",
+    "favicons": "^7.0.2",
+    "favicons-webpack-plugin": "^6.0.0-alpha.2",
+    "glob": "^8.0.3",
+    "mini-css-extract-plugin": "^2.6.1",
+    "postcss": "^8.3.5",
+    "postcss-easing-gradients": "github:Ambient-Impact/postcss-easing-gradients",
+    "postcss-loader": "^7.0.1",
+    "sass": "^1.43.4",
+    "sass-loader": "^13.1.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-remove-empty-scripts": "^1.0.1"
+  },
+  "dependencies": {
+    "ambientimpact-drupal-modules": "workspace:^6",
+    "drupal-ambientimpact-base": "workspace:^5"
+  }
+}

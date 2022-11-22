@@ -1,7 +1,7 @@
 {
   "name": "drupal/ambientimpact_site",
   "description": "Ambient.Impact - Site theme",
-  "type": "project",
+  "type": "drupal-custom-theme",
   "license": "GPL-2.0-or-later",
   "authors": [
     {
