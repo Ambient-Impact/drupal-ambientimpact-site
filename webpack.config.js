@@ -160,7 +160,9 @@ Encore
 .enablePostCssLoader(function(options) {
   options.postcssOptions = {
     plugins: [
-      easingGradients(),
+      // Increase the default number of stops and alpha decimal places to reduce
+      // some of the banding.
+      easingGradients({stops: 25, alphaDecimals: 10}),
       autoprefixer(),
     ],
   };
