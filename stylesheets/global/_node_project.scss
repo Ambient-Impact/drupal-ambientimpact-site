@@ -222,6 +222,13 @@ $title-link-active-colour-on-dark: auto;
         top:    0;
         bottom: 0;
 
+        // When not constraining the title height, pull the gradient up higher.
+        // Note that when constraining the title, we can't pull the gradient up
+        // as it'll get clipped.
+        @include breakpoint.on('>=project-title-height-constraint') {
+          top:  -1em;
+        }
+
         width: 100vw;
 
         margin-left: -50vw;
@@ -235,6 +242,7 @@ $title-link-active-colour-on-dark: auto;
         // instead of 'transparent'.
         background-image: linear-gradient(
           color.adjust(colour.$background-dark, $alpha: -1),
+          motion.$easing-decelerate,
           color.mix(colour.$background-dark, black, 25%)
         );
       }
