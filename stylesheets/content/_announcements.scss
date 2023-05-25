@@ -1,0 +1,16 @@
+// -----------------------------------------------------------------------------
+//   Announcements
+// -----------------------------------------------------------------------------
+
+@use '../variables/typography'; // Configure typography.
+@use '../global/typography' as global-typography; // Provides %heading selector.
+@use 'base:typography/config' as typography-config;
+@use 'base:typography/headings' as typography-headings;
+
+.block-views .view-announcements .view-content {
+
+  @extend %heading;
+
+  @include typography-headings.heading-font-size(2);
+
+}

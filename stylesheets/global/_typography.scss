@@ -22,6 +22,7 @@
 // if/when Furore loads and is applied. Note that this is based on Roboto, but
 // should work similarly with the other fonts in the system font stack.
 #{typography-headings.$h1to6},
+%heading,
 .region-primary-menu .menu,
 .region-primary-menu .menu-overflow__toggle {
   // Furore only has uppercase, so use that.
