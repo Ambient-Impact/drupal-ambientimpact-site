@@ -369,6 +369,13 @@ $indicator-thickness: 0.2em;
         @include primary-active-path-indicator-highlight;
       }
     }
+
+    // When the menu is all overflow with just the one menu toggle visible,
+    // hide the indicator as it's meaningless from a UX point of view.
+    &--all-overflow > .menu-overflow.menu-item--active-trail > .menu-overflow__toggle::after {
+      @include primary-indicator-inactive;
+    }
+
   }
 
   // Nested menus.
