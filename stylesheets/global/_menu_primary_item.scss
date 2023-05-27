@@ -10,6 +10,7 @@
 @use 'material.ripple' as material-ripple;
 @use 'menu_primary' as menu-primary;
 @use 'sass/helpers/colour';
+@use 'sass/helpers/outline';
 @use 'sass/helpers/selector';
 @use 'sass/variables/general';
 
@@ -242,6 +243,11 @@ $indicator-thickness: 0.2em;
     // sub-menu, so that it doesn't clipped by the sub-menu being on top of
     // the indicator.
     z-index: 1;
+
+    // Since menu items get clipped often for sub-menu layout, the offset focus
+    // outlines get clipped as well. Inset them instead so that they're fully
+    // visible to work around this.
+    outline-offset: outline.$outline-width * -1;
 
     // This pseudo-element is used to create the underline for current and
     // hovered/focussed menu item links.
