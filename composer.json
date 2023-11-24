@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "drupal/ambientimpact_base": "5.x-dev@dev",
+    "drupal/ambientimpact_base": "5.x-dev@dev || 6.x-dev@dev",
     "kartsims/easysvg": "^1.0"
   }
 }

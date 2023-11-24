@@ -38,6 +38,6 @@
   },
   "dependencies": {
     "ambientimpact-drupal-modules": "workspace:^6 || ^7",
-    "drupal-ambientimpact-base": "workspace:^5"
+    "drupal-ambientimpact-base": "workspace:^5 || ^6"
   }
 }
