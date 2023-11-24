@@ -51,7 +51,7 @@ Then, in your root ```composer.json```, add the following to the
 ```
 
 Then, in your project's root, run ```composer require
-"drupal/ambientimpact_site:5.x-dev@dev"``` to have Composer install the theme
+"drupal/ambientimpact_site:6.x-dev@dev"``` to have Composer install the theme
 and its required dependencies for you.
 
 ## Front-end assets
@@ -75,7 +75,7 @@ Once those are defined, add the following to the `"dependencies"` section of
 your top-level `package.json`:
 
 ```json
-"drupal-ambientimpact-site": "workspace:^5"
+"drupal-ambientimpact-site": "workspace:^6"
 ```
 
 Then run `yarn install` and let Yarn do the rest.
@@ -135,3 +135,7 @@ The following major version bumps indicate breaking changes:
 * 4.x - Refactored to use [Sass modules](https://sass-lang.com/blog/the-module-system-is-launched); all development is now against this and will no longer compile using the old ```@import``` directive.
 
 * 5.x - Front-end package manager is now [Yarn](https://yarnpkg.com/); front-end build process ported to [Webpack](https://webpack.js.org/).
+
+* 6.x:
+
+  * Increase required version of [`ambientimpact_base`](https://github.com/Ambient-Impact/drupal-ambientimpact-base) from 5.x to 6.x.

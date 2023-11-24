@@ -1,6 +1,6 @@
 {
   "name": "drupal-ambientimpact-site",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "license": "GPL-2.0-or-later",
   "repository": "github:Ambient-Impact/drupal-ambientimpact-site",
   "scripts": {
@@ -38,6 +38,6 @@
   },
   "dependencies": {
     "ambientimpact-drupal-modules": "workspace:^6 || ^7",
-    "drupal-ambientimpact-base": "workspace:^5"
+    "drupal-ambientimpact-base": "workspace:^6"
   }
 }
