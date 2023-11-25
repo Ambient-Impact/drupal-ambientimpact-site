@@ -37,7 +37,9 @@
     "webpack-remove-empty-scripts": "^1.0.1"
   },
   "dependencies": {
-    "ambientimpact-drupal-modules": "workspace:^6 || ^7",
-    "drupal-ambientimpact-base": "workspace:^6"
+    "drupal-ambientimpact-base": "workspace:^6",
+    "drupal-ambientimpact-core": "workspace:^1",
+    "drupal-ambientimpact-icon": "workspace:^1",
+    "drupal-ambientimpact-ux": "workspace:^1"
   }
 }

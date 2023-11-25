@@ -17,9 +17,12 @@ work-in-progress. Stable releases may be provided at a later date.
 
 ## Drupal dependencies
 
-* Several [```ambientimpact_*``` modules](https://github.com/Ambient-Impact/drupal-modules) must be present.
+Before attempting to install this, you must add the Composer repositories as
+described in the installation instructions for these dependencies:
 
 * The [`ambientimpact_base` theme](https://github.com/Ambient-Impact/drupal-ambientimpact-base) is required. Follow the installation instructions for that before requiring this theme.
+
+* The [`ambientimpact_core`](https://github.com/Ambient-Impact/drupal-ambientimpact-core), [`ambientimpact_icon`](https://github.com/Ambient-Impact/drupal-ambientimpact-icon), and [`ambientimpact_ux`](https://github.com/Ambient-Impact/drupal-ambientimpact-ux) modules.
 
 ## Front-end dependencies
 
@@ -139,3 +142,5 @@ The following major version bumps indicate breaking changes:
 * 6.x:
 
   * Increase required version of [`ambientimpact_base`](https://github.com/Ambient-Impact/drupal-ambientimpact-base) from 5.x to 6.x.
+
+  * Switched to the standalone [`ambientimpact_core`](https://github.com/Ambient-Impact/drupal-ambientimpact-core), [`ambientimpact_icon`](https://github.com/Ambient-Impact/drupal-ambientimpact-icon), and [`ambientimpact_ux`](https://github.com/Ambient-Impact/drupal-ambientimpact-ux) modules.
