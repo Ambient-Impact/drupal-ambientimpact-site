@@ -9,7 +9,7 @@ work-in-progress. Stable releases may be provided at a later date.
 
 # Requirements
 
-* [Drupal 9](https://www.drupal.org/download) ([Drupal 8 is end-of-life](https://www.drupal.org/psa-2021-11-30))
+* [Drupal 9.5 or 10](https://www.drupal.org/download)
 
 * PHP 8
 
@@ -144,3 +144,5 @@ The following major version bumps indicate breaking changes:
   * Increase required version of [`ambientimpact_base`](https://github.com/Ambient-Impact/drupal-ambientimpact-base) from 5.x to 6.x.
 
   * Switched to the standalone [`ambientimpact_core`](https://github.com/Ambient-Impact/drupal-ambientimpact-core), [`ambientimpact_icon`](https://github.com/Ambient-Impact/drupal-ambientimpact-icon), and [`ambientimpact_ux`](https://github.com/Ambient-Impact/drupal-ambientimpact-ux) modules.
+
+  * Requires Drupal 9.5 or [Drupal 10](https://www.drupal.org/project/drupal/releases/10.0.0).

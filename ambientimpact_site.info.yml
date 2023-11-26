@@ -4,7 +4,8 @@ type: theme
 base theme: ambientimpact_base
 package: Ambient.Impact
 screenshot: images/screenshot.png
-core_version_requirement: ^9
+core_version_requirement: ^9.5 || ^10.0
+php: 8.0
 
 dependencies:
   - ambientimpact_core:ambientimpact_core

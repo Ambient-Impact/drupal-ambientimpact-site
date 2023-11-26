@@ -11,6 +11,8 @@
     }
   ],
   "require": {
+    "php": "^8.0",
+    "drupal/core": "^9.5 || ^10.0",
     "drupal/ambientimpact_base": "6.x-dev@dev",
     "drupal/ambientimpact_core": "1.x-dev@dev || 2.x-dev@dev",
     "drupal/ambientimpact_icon": "1.x-dev@dev",
