@@ -54,7 +54,7 @@ Then, in your root ```composer.json```, add the following to the
 ```
 
 Then, in your project's root, run ```composer require
-"drupal/ambientimpact_site:6.x-dev@dev"``` to have Composer install the theme
+"drupal/ambientimpact_site:^6.0@dev"``` to have Composer install the theme
 and its required dependencies for you.
 
 ## Front-end assets
