@@ -251,20 +251,21 @@ $indicator-thickness: 0.2em;
 
     // This helps the white menu item text colour feel a bit more contrasty
     // against the orange background.
-    //
-    // For whatever reason, 1px blur via the filter property looks more like 2px
-    // blur when used as a text-shadow in both Firefox and Chrome, so ¯\_(ツ)_/¯
+
+    --shadow-colour: hsla(0, 0%, 0%, 0.5);
+
     @include colour.on-dark-scheme {
-
       --shadow-colour: hsla(0, 0%, 0%, 0.8);
+    }
 
-      text-shadow: 0 0 2px var(--shadow-colour);
+    text-shadow: 0 0 2px var(--shadow-colour);
 
-      .ambientimpact-icon__icon,
-      &::after {
-        filter: drop-shadow(0 0 1px var(--shadow-colour));
-      }
-
+    .ambientimpact-icon__icon,
+    &::after {
+      // For whatever reason, 1px blur via the filter property looks more like
+      // 2px blur when used as a text-shadow in both Firefox and Chrome, so
+      // ¯\_(ツ)_/¯
+      filter: drop-shadow(0 0 1px var(--shadow-colour));
     }
 
     // This pseudo-element is used to create the underline for current and
