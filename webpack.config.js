@@ -1,17 +1,23 @@
-'use strict';
+import Encore from '@symfony/webpack-encore';
+import { glob } from 'glob';
+import * as path from 'node:path';
 
-const autoprefixer = require('autoprefixer');
-const baseThemeImporter = require(
-  'drupal-ambientimpact-base/baseThemeImporter'
+// The remaining modules are CommonJS only. Because of this, they must be
+// import()ed and destructured like so to behave similarly to ESM imports.
+const { default: autoprefixer } = await import('autoprefixer');
+const { default: baseThemeImporter } = await import(
+  'drupal-ambientimpact-base/baseThemeImporter',
 );
-const componentPaths = require('drupal-ambientimpact-core/componentPaths');
-const easingGradients = require('postcss-easing-gradients');
-const Encore = require('@symfony/webpack-encore');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
-const glob = require('glob');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const path = require('path');
-const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
+const { default: componentPaths } = await import(
+  'drupal-ambientimpact-core/componentPaths',
+);
+const { default: easingGradients } = await import('postcss-easing-gradients');
+const { default: FaviconsWebpackPlugin } = await import(
+  'favicons-webpack-plugin',
+);
+const { default: RemoveEmptyScriptsPlugin } = await import(
+  'webpack-remove-empty-scripts',
+);
 
 const distPath = '.webpack-dist';
 
@@ -32,25 +38,36 @@ const outputToSourcePaths = true;
  * This uses the 'glob' package to automagically build the array of entry
  * points, as there are a lot of them spread out over many components.
  *
- * @return {Array}
+ * @return {Object.<string, string>}
  *
  * @see https://www.npmjs.com/package/glob
  */
 function getGlobbedEntries() {
 
-  return glob.sync(
-    // This specifically only searches for SCSS files that aren't partials, i.e.
-    // do not start with '_'.
-    `./!(${distPath})/**/!(_)*.scss`
-  ).reduce(function(entries, currentPath) {
+  /**
+   * Entries to be returned.
+   *
+   * @type {Object.<string, string>}
+   *
+   * @see Encore#addEntries()
+   *   Explains expected format.
+   */
+  let entries = {};
 
-      const parsed = path.parse(currentPath);
+  const results = glob.sync(
+    `./!(${distPath})/**/!(_)*.scss`,
+  );
 
-      entries[`${parsed.dir}/${parsed.name}`] = currentPath;
+  for (const result of results) {
 
-      return entries;
+    const parsed = path.parse(result);
 
-  }, {});
+    // Note the leading './'
+    entries[`./${parsed.dir}/${parsed.name}`] = `./${result}`;
+
+  }
+
+  return entries;
 
 };
 
@@ -59,8 +76,10 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
   Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
 
-Encore
-.setOutputPath(path.resolve(__dirname, (outputToSourcePaths ? '.' : distPath)))
+Encore.setOutputPath(path.resolve(
+  path.dirname(new URL(import.meta.url).pathname),
+  (outputToSourcePaths ? '.' : distPath)
+))
 
 // Encore will complain if the public path doesn't start with a slash.
 // Unfortunately, it doesn't seem Webpack's automatic public path works here.
@@ -95,6 +114,8 @@ Encore
 
 // Clean out any previously built files in case of source files being removed or
 // renamed.
+//
+// @see https://github.com/johnagan/clean-webpack-plugin
 .cleanupOutputBeforeBuild(['**/*.css', '**/*.css.map'])
 
 .enableSourceMaps(!Encore.isProduction())
@@ -194,4 +215,4 @@ Encore
   },
 })
 
-module.exports = Encore.getWebpackConfig();
+export default Encore.getWebpackConfig();
