@@ -268,6 +268,7 @@ $title-link-active-colour-on-dark: auto;
 }
 
 @include breakpoint.on('<=project-title-height-constraint') {
+
   .node--type-project {
 
     position: relative;
@@ -289,7 +290,9 @@ $title-link-active-colour-on-dark: auto;
       z-index: list.index($stacking-order, sentinel);
 
     }
+
   }
+
 }
 
 // Title element z-index set above the top peek shadow but below the node

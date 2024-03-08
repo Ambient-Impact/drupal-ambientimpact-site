@@ -212,8 +212,9 @@ function ambientimpact_site_preprocess_field(
       $svgAttributes['data-scroll-proxy-sentinel-container'] =
         '.node--type-project';
 
-      $variables['items'][0]['content']['#attached']['library'][] =
-        'ambientimpact_ux/component.scroll_proxy';
+      $variables['items'][0]['content']['#attached'][
+        'library'
+      ][] = 'ambientimpact_ux/component.scroll_proxy';
 
     }
 
