@@ -15,6 +15,8 @@ work-in-progress. Stable releases may be provided at a later date.
 
 * [Composer](https://getcomposer.org/)
 
+* [Yarn](https://yarnpkg.com/) 3 or 4
+
 ## Drupal dependencies
 
 Before attempting to install this, you must add the Composer repositories as
