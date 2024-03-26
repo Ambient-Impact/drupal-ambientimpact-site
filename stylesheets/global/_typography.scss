@@ -95,16 +95,19 @@
   }
 }
 
-@include content.area {
-  h2 {
+// Note that we exclude .node__title as those have their own styles and layout.
+.region-content {
+
+  h2:not(.node__title) {
     @include heading-underline;
   }
 
   @include typography-headings.headings {
-    &:not(.code-highlighted__heading) {
+    &:not(.node__title):not(.code-highlighted__heading) {
       margin-bottom: content.$item-vertical-spacing-small;
     }
   }
+
 }
 
 .block-views > h2 {
