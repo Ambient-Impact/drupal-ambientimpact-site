@@ -9,7 +9,7 @@ work-in-progress. Stable releases may be provided at a later date.
 
 # Requirements
 
-* [Drupal 9.5 or 10](https://www.drupal.org/download)
+* [10](https://www.drupal.org/download)
 
 * PHP 8
 
@@ -61,7 +61,7 @@ In your root `composer.json`, add the following to the `"repositories"` section:
 ### Installing
 
 Once you've completed all of the above, run `composer require
-"drupal/ambientimpact_site:^6.0@dev"` in the root of your project to have
+"drupal/ambientimpact_site:^7.0@dev"` in the root of your project to have
 Composer install this and its required dependencies for you.
 
 ## Front-end assets
@@ -85,7 +85,7 @@ Once those are defined, add the following to the `"dependencies"` section of
 your top-level `package.json`:
 
 ```json
-"drupal-ambientimpact-site": "workspace:^6"
+"drupal-ambientimpact-site": "workspace:^7"
 ```
 
 Then run `yarn install` and let Yarn do the rest.
@@ -153,3 +153,9 @@ The following major version bumps indicate breaking changes:
   * Switched to the standalone [`ambientimpact_core`](https://github.com/Ambient-Impact/drupal-ambientimpact-core), [`ambientimpact_icon`](https://github.com/Ambient-Impact/drupal-ambientimpact-icon), and [`ambientimpact_ux`](https://github.com/Ambient-Impact/drupal-ambientimpact-ux) modules.
 
   * Requires Drupal 9.5 or [Drupal 10](https://www.drupal.org/project/drupal/releases/10.0.0).
+
+* 7.x:
+
+  * Requires Drupal 10.
+
+  * Increase required version of [`ambientimpact_base`](https://github.com/Ambient-Impact/drupal-ambientimpact-base) from 6.x to 7.x.
