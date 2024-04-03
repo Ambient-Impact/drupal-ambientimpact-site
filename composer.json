@@ -17,6 +17,6 @@
     "drupal/ambientimpact_core": "^1.0@dev || ^2.0@dev",
     "drupal/ambientimpact_icon": "^1.0@dev",
     "drupal/ambientimpact_ux": "^1.0@dev",
-    "kartsims/easysvg": "^1.0"
+    "kartsims/easysvg": "^2.5"
   }
 }
