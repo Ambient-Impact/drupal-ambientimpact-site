@@ -23,7 +23,7 @@
   "extra": {
     "patches": {
       "kartsims/easysvg": {
-        "Support spaces and line breaks by greendrake · Pull Request #37: https://github.com/kartsims/easysvg/pull/37": "https://raw.githubusercontent.com/Ambient-Impact/drupal-ambientimpact-site/7.x/patches/kartsims/easysvg/pull-request-37-support-spaces-and-line-breaks.patch"
+        "Support spaces and line breaks by greendrake · Pull Request #37: https://github.com/kartsims/easysvg/pull/37": "https://raw.githubusercontent.com/Ambient-Impact/drupal-ambientimpact-site/24634bb2572518c8cb5840732666ff998a9d4e96/patches/kartsims/easysvg/pull-request-37-support-spaces-and-line-breaks.patch"
       }
     }
   }
