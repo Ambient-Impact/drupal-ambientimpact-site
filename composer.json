@@ -23,7 +23,7 @@
   "extra": {
     "patches": {
       "kartsims/easysvg": {
-        "Handle if glyph has no d attribute: https://github.com/kartsims/easysvg/pull/34": "https://raw.githubusercontent.com/Ambient-Impact/drupal-ambientimpact-site/7.x/patches/kartsims/easysvg/pull-request-34-handle-if-glyph-has-no-d-attribute.patch"
+        "Support spaces and line breaks by greendrake · Pull Request #37: https://github.com/kartsims/easysvg/pull/37": "https://raw.githubusercontent.com/Ambient-Impact/drupal-ambientimpact-site/7.x/patches/kartsims/easysvg/pull-request-37-support-spaces-and-line-breaks.patch"
       }
     }
   }

@@ -143,3 +143,5 @@ The following major version bumps indicate breaking changes:
   * Increase required version of [`ambientimpact_base`](https://github.com/Ambient-Impact/drupal-ambientimpact-base) from 6.x to 7.x.
 
   * Removed `nvm` section and `.nvmrc` file as Node.js is stable enough nowadays to no longer warrant this.
+
+  * Upgraded [`kartsims/easysvg`](https://github.com/kartsims/easysvg) from 1.0 to 2.5.
