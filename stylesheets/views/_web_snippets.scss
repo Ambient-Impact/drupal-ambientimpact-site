@@ -8,10 +8,14 @@
 
 // @todo Remove fallbacks when flexbox with gap properties is well supported.
 
+.view-web-snippets__links-list.view-web-snippets__links-list { // Specificity.
+
+  @include list.unlisted;
+
+}
+
 .view-web-snippets {
   &__links-list {
-
-    @include list.unlisted;
 
     // If flexbox with gap properties is not supported, we have to contain the
     // floated label and items.
