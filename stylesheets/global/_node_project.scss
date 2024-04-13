@@ -79,7 +79,9 @@ $title-link-active-colour-on-dark: auto;
   'project-title-height-constraint': 30em
 ));
 
-.page-node-type-project:not(.page-node-edit) .page-title,
+// .page-title needs to have higher specificity than ./_typography.scss to
+//  override margin-bottom set there.
+.page-node-type-project:not(.page-node-edit) .region-content .page-title,
 .node--type-project .node__title {
   color: field-media.$background-colour-on-light;
 
