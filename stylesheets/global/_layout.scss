@@ -57,12 +57,3 @@ header[role='banner'] {
   // This places the overlay over most elements, including the admin toolbar.
   @include z-index.get('modal');
 }
-
-// This ensures any positioned items in the main content don't end up above
-// things such as the sticky/Headroom-enabled primary menu, e.g. contextual link
-// triggers.
-main[role='main'] {
-  position: relative;
-
-  @include z-index.get(page-main);
-}
