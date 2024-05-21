@@ -4,6 +4,7 @@
 
 @use 'sass:color';
 @use 'sass/helpers/colour';
+@use 'sass/helpers/z-index';
 @use 'sass/variables/motion';
 
 // This provides styles for the 'compact' Paragraph view mode, which is
@@ -118,10 +119,7 @@ $compact-max-height: 7em;
 
         margin-left: -50vw;
 
-        // @todo Should we use the z-index function for this, or does it matter
-        // since the parent is position: relative and thus creates its own
-        // stacking context?
-        z-index: 100;
+        @include z-index.get(page-main);
 
         background-image: $gradient-light;
 
