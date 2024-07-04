@@ -45,4 +45,3 @@ services:
   dependencies:
     - ambientimpact_core/framework
     - ambientimpact_site/reveal
-    - ambientimpact_ux/component.content_visibility
