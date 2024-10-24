@@ -7,13 +7,11 @@ global-styling:
 
 global-scripts:
   js:
-    javascript/fonts.js: { attributes: { defer: true } }
     javascript/global.js: { attributes: { defer: true } }
   dependencies:
     # Required for the :focus-within polyfill.
     - ambientimpact_core/ally.js
     - ambientimpact_core/framework
-    - ambientimpact_ux/component.font
     - ambientimpact_ux/component.pointer_type
 
 menu_primary:

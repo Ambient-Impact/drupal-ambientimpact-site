@@ -17,33 +17,21 @@
   --text-decoration-thickness: 0.13em;
 }
 
-// This attempts to mimic the Furore font spacing, weight, and size using the
-// default system font stack, to minimize the amount of shifting that occurs
-// if/when Furore loads and is applied. Note that this is based on Roboto, but
-// should work similarly with the other fonts in the system font stack.
 #{typography-headings.$h1to6},
 %heading,
 .region-primary-menu .menu,
 .region-primary-menu .menu-overflow__toggle {
-  // Furore only has uppercase, so use that.
+
+  font-family: Furore, typography-config.$font-stack;
+
+  // Reset the font-weight back to normal.
+  font-weight: typography-config.$font-weight-normal;
+
+  letter-spacing: 0.1em;
+
+  // Furore only has uppercase, so this keeps the swap a bit more consistent
+  // when it loads.
   text-transform: uppercase;
-
-  // Set letter spacing to try and match the line length of Furore, before it
-  // has loaded. This is done so avoid as much layout shifting as possible. This
-  // assumes the default system font stack are the fallback fonts.
-  letter-spacing: 0.166em;
-
-  // Increase the weight to better match Furore, if/when it loads.
-  font-weight: 700;
-
-  .font-loaded-furore & {
-    font-family: Furore, typography-config.$font-stack;
-
-    letter-spacing: 0.1em;
-
-    // Reset the font-weight back to normal.
-    font-weight: typography-config.$font-weight-normal;
-  }
 
 }
 
