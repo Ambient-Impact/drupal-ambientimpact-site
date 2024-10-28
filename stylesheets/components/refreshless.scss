@@ -1,0 +1,10 @@
+// -----------------------------------------------------------------------------
+//   RefreshLess component stylesheet
+// -----------------------------------------------------------------------------
+
+// @see https://www.drupal.org/project/refreshless
+
+// Configure colours.
+@use '../variables/colours';
+// Output RefreshLess styles based on our colours.
+@use 'base:components/refreshless';

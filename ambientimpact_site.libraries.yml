@@ -30,6 +30,11 @@ menu_primary:
     - ambientimpact_ux/component.menu_overflow
     - ambientimpact_ux/component.overlay
 
+refreshless:
+  css:
+    theme:
+      stylesheets/components/refreshless.css: {}
+
 reveal:
   js:
     javascript/reveal.js: { attributes: { defer: true } }

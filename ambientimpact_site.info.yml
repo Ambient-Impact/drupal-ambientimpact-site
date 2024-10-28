@@ -31,3 +31,8 @@ regions:
 libraries:
   - ambientimpact_site/global-styling
   - ambientimpact_site/global-scripts
+
+libraries-extend:
+
+  refreshless_turbo/refreshless:
+    - ambientimpact_site/refreshless
