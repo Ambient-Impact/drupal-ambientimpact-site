@@ -52,6 +52,24 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryDropDown', function(
       // attach the menu drop-down component.
       $menus.one('menuOverflowAttached.' + eventNamespace, function(event) {
         aiMenuDropDown.attach(this);
+      })
+      .one('menuOverflowDetached.' + eventNamespace, function(event) {
+
+        aiMenuDropDown.detach(this);
+
+        // $primaryMenuRegion.off([
+        //   'headroomUnpin.' + eventNamespace,
+        //   'menuDropDownOpened.' + eventNamespace,
+        //   'menuDropDownAllClosed.' + eventNamespace,
+        // ].join(' '));
+        $primaryMenuRegion.removeClass(regionHasMenuOpenClass);
+
+        $menus.off([
+          // Just in case these haven't been triggered yet.
+          'menuOverflowAttached.' + eventNamespace,
+          'menuOverflowDetached.' + eventNamespace,
+        ].join(' '));
+
       });
 
       $primaryMenuRegion
@@ -109,23 +127,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryDropDown', function(
     },
     function(context, settings, trigger) {
 
-      let data = this.siteThemeMenuPrimaryOverflow;
-
-      data.$primaryMenuRegion.off([
-        'headroomUnpin.' + eventNamespace,
-        'menuDropDownOpened.' + eventNamespace,
-        'menuDropDownAllClosed.' + eventNamespace,
-      ].join(' '))
-      .removeClass(regionHasMenuOpenClass);
-
-      data.$menus.off([
-        // Just in case this hasn't been triggered yet.
-        'menuOverflowAttached.' + eventNamespace,
-      ].join(' '))
-      .one('menuOverflowDetached.' + eventNamespace, function(event) {
-        aiMenuDropDown.detach(this);
-      });
-
+      // Detaching is handled in event subscribers added during attach.
       delete this.siteThemeMenuPrimaryOverflow;
 
     }
