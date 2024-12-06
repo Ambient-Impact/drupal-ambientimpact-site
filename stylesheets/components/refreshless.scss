@@ -7,4 +7,4 @@
 // Configure colours.
 @use '../variables/colours';
 // Output RefreshLess styles based on our colours.
-@use 'base:components/refreshless';
+@use 'base:components/refreshless/progress_bar';
