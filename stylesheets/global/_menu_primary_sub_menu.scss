@@ -356,11 +356,11 @@ $item-reveal-stagger-interval: 40ms;
       }
     }
 
-    // When the menu is in all overflow mode, hide sub-menus of the overflow
-    // menu, as they don't look great at the moment with the staggered reveal.
+    // Hide sub-menus of the overflow menu, as they don't look great at the
+    // moment with the staggered reveal.
     //
     // @todo Remove this when collapsible sub-menus are implemented.
-    &--all-overflow .menu-overflow__menu .menu {
+    &--overflow-enhanced .menu-overflow__menu .menu {
       display: none;
     }
 
