@@ -64,7 +64,7 @@ class HeadingTextToSvg implements ContainerInjectionInterface {
 
     // Set the font and font size. Note that if you change the font size, you'll
     // have to recalculate a bunch of magic numbers farther down.
-    $svg->setFont($theme->getPath() . '/fonts/furore/furore.svg', 100);
+    $svg->setFont($theme->getPath() . '/fonts/furore/furore-nbsp-fix.svg', 100);
 
     // Generate the <path> definition for the provided text.
     //

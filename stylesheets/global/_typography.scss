@@ -49,12 +49,6 @@
     }
   }
 
-  .nbsp {
-    // Furore displays odd characters instead of a non-breaking space, so use
-    // the default font stack for these instead.
-    font-family: typography-config.$font-stack;
-  }
-
 }
 
 // Awkward nesting to apply vertical spacing against previous for all heading
