@@ -5,6 +5,7 @@ use Drupal\Core\Url;
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Template\Attribute;
 use Symfony\Component\DomCrawler\Crawler;
+use Drupal\ambientimpact_site\HeadingFuroreAlter;
 use Drupal\ambientimpact_site\HeadingTextToSvg;
 
 /**
@@ -123,10 +124,7 @@ function ambientimpact_site_preprocess_field__field_web_tags(
 /**
  * Prepares variables for field templates.
  *
- * This transliterates titles from various entities (primarily intended for
- * nodes, but others work too) to ASCII-only to avoid characters with accents,
- * as the Furore font does not support those and the browser would fall back to
- * another font, which would look out of place.
+ * Transliterates titlen fields from Unicode to US-ASCII for the Furore font.
  *
  * This generates SVG elements containing paths of project node titles while
  * preserving the title text for assistive software such as screen readers.
@@ -141,6 +139,9 @@ function ambientimpact_site_preprocess_field__field_web_tags(
  * @see https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Language%21language.api.php/group/transliteration
  *   Documentation and example of how to transliterate.
  *
+ * @see \Drupal\ambientimpact_site\HeadingFuroreAlter::transliterate()
+ *   Class and method to transliterate Furore.
+ *
  * @see \Drupal\ambientimpact_site\HeadingTextToSvg::generate()
  *   Class and method that generates the title SVGs.
  *
@@ -153,11 +154,9 @@ function ambientimpact_site_preprocess_field(
 ): void {
 
   if ($variables['field_name'] === 'title') {
-    // Get the current language code.
-    $langCode = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
-    // Instantiate the transliteration class.
-    $transliteration = \Drupal::transliteration();
+    /** @var \Drupal\ambientimpact_site\HeadingFuroreAlter $headingAlter */
+    $headingAlter = \Drupal::classResolver(HeadingFuroreAlter::class);
 
     foreach ($variables['items'] as $key => &$item) {
       // Don't do anything to an item if the item structure is not what we're
@@ -167,10 +166,11 @@ function ambientimpact_site_preprocess_field(
         continue;
       }
 
-      $item['content']['#context']['value'] =
-        $transliteration->transliterate(
-          $item['content']['#context']['value'], $langCode
-        );
+      $item['content']['#context']['value'] = $headingAlter->transliterate(
+        $item['content']['#context']['value'],
+        $variables['element']['#language'],
+      );
+
     }
   }
 
