@@ -35,22 +35,6 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryOverflow', function(
         aiMenuOverflow.attach($menus[i]);
       }
 
-      // Force an update if the Furore font load event is triggered as it's used
-      // for the menu items.
-      $(document).on('fontloaded.' + eventNamespace, function(
-        event, fontMachineName
-      ) {
-
-        if (fontMachineName !== 'furore') {
-          return;
-        }
-
-        for (let i = $menus.length - 1; i >= 0; i--) {
-          $menus[i].aiMenuOverflow.update(true);
-        }
-
-      });
-
       /**
        * Data object for less duplicate code in detach.
        *
@@ -62,8 +46,6 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryOverflow', function(
 
     },
     function(context, settings, trigger) {
-
-      $(document).off('fontloaded.' + eventNamespace);
 
       let data = this.siteThemeMenuPrimaryOverflow;
 

@@ -13,13 +13,10 @@ $path: '../../fonts';
   font-style:   normal;
   font-display: fallback;
 
-  src:  url('#{$path}/furore/furore.eot');
-  src:  url('#{$path}/furore/furore.eot?#iefix')
-          format('embedded-opentype'),
-        url('#{$path}/furore/furore.woff')
+  src:  url('#{$path}/furore/furore-nbsp-fix.woff')
           format('woff'),
-        url('#{$path}/furore/furore.ttf')
+        url('#{$path}/furore/furore-nbsp-fix.ttf')
           format('truetype'),
-        url('#{$path}/furore/furore.svg#furoreregular')
+        url('#{$path}/furore/furore-nbsp-fix.svg#Furore')
           format('svg');
 }

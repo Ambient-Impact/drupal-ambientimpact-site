@@ -393,11 +393,6 @@ $title-link-active-colour-on-dark: auto;
   }
 }
 
-.font-loaded-furore .layout-container .node--type-project .node__title :link {
-  // Undo _typography.scss
-  padding-bottom: 0;
-}
-
 .node--type-project .node__content {
   position: relative;
 
