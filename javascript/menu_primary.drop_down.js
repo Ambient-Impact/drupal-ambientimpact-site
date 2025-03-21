@@ -57,12 +57,13 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryDropDown', function(
 
         aiMenuDropDown.detach(this);
 
-        // $primaryMenuRegion.off([
-        //   'headroomUnpin.' + eventNamespace,
-        //   'menuDropDownOpened.' + eventNamespace,
-        //   'menuDropDownAllClosed.' + eventNamespace,
-        // ].join(' '));
-        $primaryMenuRegion.removeClass(regionHasMenuOpenClass);
+        $primaryMenuRegion
+        .off([
+          'headroomUnpin.' + eventNamespace,
+          'menuDropDownOpened.' + eventNamespace,
+          'menuDropDownAllClosed.' + eventNamespace,
+        ].join(' '))
+        .removeClass(regionHasMenuOpenClass);
 
         $menus.off([
           // Just in case these haven't been triggered yet.
