@@ -47,7 +47,8 @@
     // var(--feature) [feature-end]
     var(--full) [full-end];
 
-  > * {
+  // This has zero specificity, making it easy to override.
+  :where(& > *) {
     grid-column: content;
   }
 
