@@ -3,8 +3,8 @@
 // -----------------------------------------------------------------------------
 
 @use 'headroom';
+@use 'sass/helpers/colour';
 @use 'sass:list';
-@use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
 @use '../variables/general' as *;
 
 ///
@@ -14,18 +14,6 @@ $stacking-order: header-top-shadow, region-header, site-name;
 
 header[role='banner'] {
   position: relative;
-
-  // This adds a shadow behind the top edge of the navigation bar. See
-  // _navigation.scss for the bottom half of the shadow. This is done to allow
-  // the top shadow to not overlap the site name, but appear underneath it, so
-  // that it appears the site name is part of the same sheet as the navigation
-  // bar.
-  &::after {
-    @include horizontal-bleed-background.top-peek-shadow(
-      $z-index: list.index($stacking-order, header-top-shadow),
-      $depth:   $full-bleed-panel-shadow-depth
-    );
-  }
 
   // This syncs up the site header with the menu bar Headroom behaviour, so
   // quick scrolling near the top won't show them failing to overlap.

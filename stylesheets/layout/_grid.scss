@@ -1,0 +1,73 @@
+// -----------------------------------------------------------------------------
+//   Site layout - Grid
+// -----------------------------------------------------------------------------
+
+// @see https://ryanmulligan.dev/blog/layout-breakouts/
+//   Adapted from this blog post.
+
+@use 'config' as layout-config; // Configure layout.
+@use 'sass:math';
+
+.layout-container {
+
+  max-width: none;
+
+  margin-left: unset;
+  margin-right: unset;
+
+  padding-left: unset;
+  padding-right: unset;
+
+  --gap: #{math.div(layout-config.$gap, 2)};
+  --full: minmax(var(--gap), 1fr);
+  --content: min(
+    #{layout-config.$no-sidebars-max-width},
+    100% - var(--gap) * 4
+  );
+  --popout: #{math.div(layout-config.$gap, 2)};
+  // --feature: minmax(0, 5rem);
+
+  display: grid;
+
+  grid-template-columns:
+    [full-start] var(--full)
+    // [feature-start] var(--feature)
+    [popout-start] var(--popout)
+    [content-start] var(--content) [content-end]
+    var(--popout) [popout-end]
+    // var(--feature) [feature-end]
+    var(--full) [full-end];
+
+  > * {
+    grid-column: content;
+  }
+
+}
+
+@supports (grid-template-columns: subgrid) {
+
+  .region-primary-menu {
+
+    grid-column: full;
+
+    display: grid;
+
+    grid-template-columns: subgrid;
+
+    .block {
+
+      grid-column: full;
+
+      display: grid;
+
+      grid-template-columns: subgrid;
+
+      > .menu {
+        grid-column: popout;
+      }
+
+    }
+
+  }
+
+}

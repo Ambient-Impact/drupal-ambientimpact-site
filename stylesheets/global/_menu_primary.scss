@@ -5,7 +5,7 @@
 @use 'layout_scrollbar' as layout-scrollbar;
 @use 'sass:list';
 @use 'sass/helpers/breakpoint';
-@use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
+@use 'sass/helpers/colour';
 @use '../variables/colours';
 
 ///
@@ -23,32 +23,34 @@ $font-size-large: 110%;
 ///
 $background-colour: colours.$ambientimpact-orange;
 
+///
+/// Header shadow on light backgrounds.
+///
+$shadow-on-light: 0 2px 3px rgba(0, 0, 0, 0.5);
+
+///
+/// Header shadow on dark backgrounds.
+///
+$shadow-on-dark: 0 2px 3px rgba(0, 0, 0, 0.8);
+
 @include breakpoint.add((
   // At which height to start using $font-size-large.
   'menu-primary-font-size-large': breakpoint.get-value('height-small')
 ));
 
 .region-primary-menu {
-  ///
-  /// The local stacking order of elements; later in the list is higher.
-  ///
-  $local-stacking-order: background, content;
 
   margin-top:     0;
   margin-bottom:  3em;
 
-  @include horizontal-bleed-background.set(
-    $colour:  $background-colour,
-    $z-index: list.index($local-stacking-order, background),
-    // Don't use the topmost shadow, as that would show on top of the site
-    // title. See _header.scss for the topmost shadow.
-    $shadow:  (false, true, true)
+  @include colour.set(
+    $background: $background-colour,
   );
 
-  &::before {
+  box-shadow: $shadow-on-light;
 
-    @include layout-scrollbar.scroll-block-horizontal-bleed-background;
-
+  @include colour.on-dark-scheme {
+    box-shadow: $shadow-on-dark;
   }
 
   &.headroom {
@@ -65,12 +67,11 @@ $background-colour: colours.$ambientimpact-orange;
     // Override base, as this cuts off the right side of the menu. D:
     max-width:  none;
 
+    // Remove browser default and Classy margins.
     margin-top:     0;
     margin-bottom:  0;
-
-    // See _menu_primary_item.scss for margin-left and margin-right.
-
-    z-index:    list.index($local-stacking-order, content);
+    margin-left:    0;
+    margin-right:   0;
 
     // This allows the menu items to scroll horizontally when the menu has not
     // been enhanced with the overflow functionality or that fails to correctly
