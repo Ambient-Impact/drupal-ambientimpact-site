@@ -27,25 +27,21 @@
   padding-left: unset;
   padding-right: unset;
 
-  --gap: #{math.div(layout-config.$gap, 2)};
-  --full: minmax(var(--gap), 1fr);
-  --content: min(
+  --grid-column-full: minmax(0, 1fr);
+  --grid-content-column: min(
     #{layout-config.$no-sidebars-max-width},
-    100% - var(--gap) * 4
+    100% - var(--layout-gutter) * 2
   );
-  --popout: #{math.div(layout-config.$gap, 2)};
-  // --feature: minmax(0, 5rem);
+  --grid-gutter-column: var(--layout-gutter);
 
   display: grid;
 
   grid-template-columns:
-    [full-start] var(--full)
-    // [feature-start] var(--feature)
-    [popout-start] var(--popout)
-    [content-start] var(--content) [content-end]
-    var(--popout) [popout-end]
-    // var(--feature) [feature-end]
-    var(--full) [full-end];
+    [full-start] var(--grid-column-full)
+    [gutter-start] var(--grid-gutter-column)
+    [content-start] var(--grid-content-column) [content-end]
+    var(--grid-gutter-column) [gutter-end]
+    var(--grid-column-full) [full-end];
 
   // This has zero specificity, making it easy to override.
   :where(& > *) {
@@ -91,7 +87,7 @@
     grid-column: full;
 
     > .menu {
-      grid-column: popout;
+      grid-column: gutter;
     }
 
   }

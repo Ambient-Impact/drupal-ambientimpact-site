@@ -23,17 +23,19 @@ $foreground-colour: colour.get-contrasting(
   $foreground-on-dark:  colour.$foreground-on-dark
 );
 
-///
-/// Primary menu item horizontal padding.
-///
-/// @require {variable} layout-config.$gutter
-///
-$padding-x: layout-config.$gutter;
+:root {
 
-///
-/// Primary menu item vertical padding.
-///
-$padding-y: general.$general-spacing * 0.75;
+  ///
+  /// Primary menu item horizontal padding.
+  ///
+  --primary-menu-item-horizontal-padding: var(--layout-gutter);
+
+  ///
+  /// Primary menu item vertical padding.
+  ///
+  --primary-menu-item-vertical-padding: calc(var(--general-spacing) * 0.75);
+
+}
 
 ///
 /// Primary menu item indicator thickness, used to indicate active menu item.
@@ -213,7 +215,9 @@ $indicator-thickness: 0.2em;
 
     display:  block;
 
-    padding:  $padding-y $padding-x;
+    padding:
+      var(--primary-menu-item-vertical-padding)
+      var(--primary-menu-item-horizontal-padding);
 
     @include colours;
 
@@ -284,8 +288,8 @@ $indicator-thickness: 0.2em;
       // Primary (top level) item indicators. These are horizontal lines beneath
       // the text of the menu item text.
       &::after {
-        left:     $padding-x;
-        right:    $padding-x;
+        left:     var(--primary-menu-item-horizontal-padding);
+        right:    var(--primary-menu-item-horizontal-padding);
         bottom:   0;
 
         height:   $indicator-thickness;
@@ -323,8 +327,8 @@ $indicator-thickness: 0.2em;
       // lines to the left (in LTR) or to the right (in RTL) of the menu item
       // text.
       &::after {
-        top:      $padding-y;
-        bottom:   $padding-y;
+        top:      var(--primary-menu-item-vertical-padding);
+        bottom:   var(--primary-menu-item-vertical-padding);
 
         width:    $indicator-thickness;
 
