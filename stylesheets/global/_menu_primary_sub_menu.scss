@@ -263,8 +263,9 @@ $item-reveal-stagger-interval: 40ms;
           // bottom is to match the clip-path Y coordinates.
           top:      -1px;
           bottom:   1px;
-          left:     -1px;
-          right:    -1px;
+          // These should be zero to avoid phantom horizontal scrollbars.
+          left:     0;
+          right:    0;
 
           z-index:  list.index($local-stacking-order, background);
 
