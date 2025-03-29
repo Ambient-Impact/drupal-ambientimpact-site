@@ -23,40 +23,148 @@ $font-size-large: 110%;
 ///
 $background-colour: colours.$ambientimpact-orange;
 
-///
-/// Header shadow on light backgrounds.
-///
-$shadow-on-light: 0 2px 3px rgba(0, 0, 0, 0.5);
-
-///
-/// Header shadow on dark backgrounds.
-///
-$shadow-on-dark: 0 2px 3px rgba(0, 0, 0, 0.8);
-
 @include breakpoint.add((
   // At which height to start using $font-size-large.
   'menu-primary-font-size-large': breakpoint.get-value('height-small')
 ));
 
+:root {
+
+  ///
+  /// Primary menu top shadow colour on light backgrounds.
+  ///
+  --primary-menu-shadow-top-colour: rgba(0, 0, 0, 0.5);
+
+  ///
+  /// Primary menu bottom shadow colour on light backgrounds.
+  ///
+  --primary-menu-shadow-bottom-colour: rgba(0, 0, 0, 0.5);
+
+  @include colour.on-dark-scheme {
+
+    ///
+    /// Primary menu top shadow colour on dark backgrounds.
+    ///
+    --primary-menu-shadow-top-colour: rgba(0, 0, 0, 1);
+
+    ///
+    /// Primary menu bottom shadow colour on dark backgrounds.
+    ///
+    --primary-menu-shadow-bottom-colour: rgba(0, 0, 0, 0.8);
+
+  }
+
+  ///
+  /// Primary menu top shadow.
+  ///
+  /// Note the spread value which attempts to keep the shadow consistent past
+  /// the viewport edge instead of dropping off prematurely.
+  ///
+  --primary-menu-shadow-top: 0 0 3px 2px var(
+    --primary-menu-shadow-top-colour
+  );
+
+  ///
+  /// Primary menu bottom shadow.
+  ///
+  /// Note the spread value which attempts to keep the shadow consistent past
+  /// the viewport edge instead of dropping off prematurely.
+  ///
+  --primary-menu-shadow-bottom: 0 1px 3px 2px var(
+    --primary-menu-shadow-bottom-colour
+  );
+
+  ///
+  /// Primary menu shadow elements thickness.
+  ///
+  --primary-menu-shadow-element-thickness: 1rem;
+
+  ///
+  /// Primary menu shadow clip overflow amount.
+  ///
+  /// This is added to the side (top or bottom) clip to ensure the shadow is
+  /// visible only on that edge.
+  ///
+  --primary-menu-shadow-clip-overflow: 1rem;
+
+  ///
+  /// Primary menu top shadow clip path.
+  ///
+  --primary-menu-shadow-top-clip: polygon(
+    0     calc(var(--primary-menu-shadow-clip-overflow) * -1),
+    100%  calc(var(--primary-menu-shadow-clip-overflow) * -1),
+    100%  100%,
+    0     100%
+  );
+
+  ///
+  /// Primary menu bottom shadow clip path.
+  ///
+  --primary-menu-shadow-bottom-clip: polygon(
+    0     0,
+    100%  0,
+    100%  calc(100% + var(--primary-menu-shadow-clip-overflow)),
+    0     calc(100% + var(--primary-menu-shadow-clip-overflow))
+  );
+
+}
+
 .region-primary-menu {
+
+  ///
+  /// The local stacking order of elements; later in the list is higher.
+  ///
+  $local-stacking-order: shadow, content;
 
   margin-top:     0;
   margin-bottom:  3em;
 
-  @include colour.set(
-    $background: $background-colour,
-  );
+  // Background colour is applied to this rather than the region so we can
+  // reliably layer it above the shadow.
+  .block {
 
-  box-shadow: $shadow-on-light;
+    z-index: list.index($local-stacking-order, content);
 
-  @include colour.on-dark-scheme {
-    box-shadow: $shadow-on-dark;
+    @include colour.set(
+      $background: $background-colour,
+    );
+
   }
 
-  &.headroom {
-    // Make sure we're sticky if Headroom is active, as the horizontal-
-    // bleed-background overrides it.
-    position: sticky;
+  // Shadow is applied to this instead of the region so that it can be sized
+  // independently and transitioned to 0 opacity when the menu bar is unpinned
+  // by Headroom.
+  &::after {
+
+    content: '';
+
+    position: absolute;
+
+    z-index: list.index($local-stacking-order, shadow);
+
+    bottom:   0;
+    left:     0;
+    right:    0;
+
+    height: var(--primary-menu-shadow-element-thickness);
+
+    // Clip the shadow so it only extends out from the bottom and not to the
+    // sides in case this doesn't extend the full viewport width for any reason.
+    clip-path: var(--primary-menu-shadow-bottom-clip);
+
+    box-shadow: var(--primary-menu-shadow-bottom);
+
+    transition-property:        opacity;
+    transition-duration:        200ms;
+    // Opacity transitions look more natural with linear easing.
+    transition-timing-function: linear;
+
+  }
+
+  &.headroom--unpinned {
+    &::after {
+      opacity: 0;
+    }
   }
 
   .block > .menu {

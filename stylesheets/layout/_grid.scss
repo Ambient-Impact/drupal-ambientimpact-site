@@ -46,6 +46,7 @@
 
 @supports (grid-template-columns: subgrid) {
 
+  header[role='banner'],
   .region-primary-menu {
 
     grid-column: full;
@@ -54,18 +55,27 @@
 
     grid-template-columns: subgrid;
 
-    .block {
+  }
 
-      grid-column: full;
+  header[role='banner'] .region-header,
+  .region-primary-menu .block {
 
-      display: grid;
+    display: grid;
 
-      grid-template-columns: subgrid;
+    grid-template-columns: subgrid;
 
-      > .menu {
-        grid-column: popout;
-      }
+  }
 
+  header[role='banner'] .region-header {
+    grid-column: content;
+  }
+
+  .region-primary-menu .block {
+
+    grid-column: full;
+
+    > .menu {
+      grid-column: popout;
     }
 
   }

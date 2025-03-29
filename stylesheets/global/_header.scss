@@ -10,7 +10,7 @@
 ///
 /// Header stacking order. Later in the list means a higher z-index.
 ///
-$stacking-order: header-top-shadow, region-header, site-name;
+$stacking-order: menu-top-shadow, region-header, site-name;
 
 header[role='banner'] {
   position: relative;
@@ -39,4 +39,32 @@ header[role='banner'] {
     position: relative;
     z-index:  list.index($stacking-order, region-header);
   }
+
+  &::after {
+
+    content: '';
+
+    position: absolute;
+
+    z-index: list.index($stacking-order, menu-top-shadow);
+
+    top:    100%;
+    left:   0;
+    right:  0;
+
+    height: var(--primary-menu-shadow-element-thickness);
+
+    // Clip the shadow so it only extends out from the top and not to the sides
+    // in case this doesn't extend the full viewport width for any reason.
+    clip-path: var(--primary-menu-shadow-top-clip);
+
+    box-shadow: var(--primary-menu-shadow-top);
+
+    transition-property:        opacity;
+    transition-duration:        200ms;
+    // Opacity transitions look more natural with linear easing.
+    transition-timing-function: linear;
+
+  }
+
 }
