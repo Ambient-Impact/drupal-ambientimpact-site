@@ -7,6 +7,15 @@
 
 @use 'config' as layout-config; // Configure layout.
 @use 'sass:math';
+@use 'scroll_blocker' as scroll-blocker;
+
+:root {
+  --layout-grid-scrollbar-shift: 0;
+}
+
+@include scroll-blocker.on-scroll-blocked {
+  --layout-grid-scrollbar-shift: calc(var(--scrollbar-gutter) * -1);
+}
 
 .layout-container {
 
@@ -54,6 +63,12 @@
     display: grid;
 
     grid-template-columns: subgrid;
+
+    // This extends these full width elements to take up scrollbar space when
+    // scrollblocking is on, if the scrollbars take up space, i.e. are not
+    // floating scrollbars. Note that most browsers only show scrollbars on the
+    // right side, even in RTL mode.
+    margin-right: var(--layout-grid-scrollbar-shift);
 
   }
 
