@@ -2,7 +2,6 @@
 //   Taxonomy tags
 // -----------------------------------------------------------------------------
 
-@use 'base:components/tags_list' as *;
 @use 'sass/helpers/layout';
 @use 'sass/helpers/selector';
 
@@ -57,16 +56,4 @@
 
   }
 
-}
-
-// Tags views.
-.view-tags,
-.view-web-tags {
-  .view-content {
-    @extend %tags-list;
-
-    .views-field {
-      @extend %tags-list__item;
-    }
-  }
 }

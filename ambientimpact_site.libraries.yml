@@ -56,6 +56,11 @@ services:
     - ambientimpact_core/framework
     - ambientimpact_site/reveal
 
+view_tags_list:
+  css:
+    theme:
+      stylesheets/views/tags_list.css: {}
+
 web_snippets_links:
   css:
     theme:

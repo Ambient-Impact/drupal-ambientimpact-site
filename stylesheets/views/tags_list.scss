@@ -1,0 +1,20 @@
+// -----------------------------------------------------------------------------
+//   Views - Tags lists
+// -----------------------------------------------------------------------------
+
+@use 'base:components/tags_list' as *;
+
+.view-tags,
+.view-web-tags {
+
+  .view-content {
+
+    @extend %tags-list;
+
+    .views-field {
+      @extend %tags-list__item;
+    }
+
+  }
+
+}

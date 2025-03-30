@@ -259,6 +259,29 @@ function ambientimpact_site_preprocess_field(
 }
 
 /**
+ * Prepares variables for view templates.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *
+ *   - view: The ViewExecutable object.
+ */
+function ambientimpact_site_preprocess_views_view(array &$variables): void {
+
+  if (
+    $variables['view']->id() === 'tags' ||
+    $variables['view']->id() === 'web_tags'
+  ) {
+
+    $variables['#attached'][
+      'library'
+    ][] = 'ambientimpact_site/view_tags_list';
+
+  }
+
+}
+
+/**
  * Preprocess variables for web snippets links.
  */
 function ambientimpact_site_preprocess_web_snippets_links(
