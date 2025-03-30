@@ -34,5 +34,8 @@ libraries:
 
 libraries-extend:
 
+  ambientimpact_base/overlay:
+    - ambientimpact_site/overlay
+
   refreshless_turbo/refreshless:
     - ambientimpact_site/refreshless

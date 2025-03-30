@@ -32,6 +32,11 @@ menu_primary:
     - ambientimpact_ux/component.menu_overflow
     - ambientimpact_ux/component.overlay
 
+overlay:
+  css:
+    theme:
+      stylesheets/components/overlay.css: {}
+
 refreshless:
   css:
     theme:
