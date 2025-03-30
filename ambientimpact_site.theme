@@ -262,6 +262,38 @@ function ambientimpact_site_preprocess_field(
     $variables['items'] = \array_slice($variables['items'], 0, 2);
   }
 
+  if (
+    // Image fields.
+    $variables['field_type'] === 'image' ||
+    // Entity reference fields that reference media entities.
+    $variables['field_type'] === 'entity_reference' &&
+    $variables['element'][
+      '#items'
+    ]->getFieldDefinition()->getItemDefinition()->getSetting(
+      'target_type',
+    ) === 'media'
+  ) {
+
+    $variables['#attached']['library'][] = 'ambientimpact_site/field_media';
+
+  }
+
+}
+
+/**
+ * Prepares variables for node templates.
+ *
+ * For some reason, ambientimpact_site_preprocess_node__project() does not work
+ * so we have to use an if statement.
+ */
+function ambientimpact_site_preprocess_node(array &$variables): void {
+
+  if ($variables['node']->getType() === 'project') {
+
+    $variables['#attached']['library'][] = 'ambientimpact_site/node_project';
+
+  }
+
 }
 
 /**

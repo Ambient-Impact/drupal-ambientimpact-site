@@ -1,0 +1,89 @@
+// -----------------------------------------------------------------------------
+//   Media field stylesheet
+// -----------------------------------------------------------------------------
+
+// @todo Split project media styles to separate stylesheet.
+
+@use 'base:layout/vertical_spacing' as vertical-spacing;
+@use 'base:components/field_media' as base-field-media;
+@use '_field_media' as field-media;
+@use '../layout/scrollbar' as layout-scrollbar;
+@use 'link/link.colour' as link-colour;
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass/helpers/colour';
+@use 'sass/helpers/layout';
+@use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
+@use 'sass/variables/general';
+
+.field--type-image:not(.form-wrapper),
+.field--entity-reference-type-media:not(.field--name-field-project-media) {
+  @include field-media.media-field;
+}
+
+// This undoes some of the properties of the field-media.media-field mixin to
+// avoid nesting two instances of the mixin. When a media entity is in an
+// entity reference field, we only want the styles to apply to the entity
+// reference field.
+.field--type-entity-reference .field--type-image:not(.form-wrapper) {
+
+  &::before {
+    display: none;
+  }
+
+  margin-top:     0;
+  margin-bottom:  0;
+  padding-top:    0;
+  padding-bottom: 0;
+
+}
+
+// The project media field is a special case that adds a two column layout when
+// space allows and accounts for the SVG node titles.
+.field--name-field-project-media {
+
+  // Don't use the topmost shadow, as that would show on top of the node
+  // title. See _node_project.scss for the topmost shadow.
+  @include field-media.media-field($use-top-shadow: false);
+
+  margin-top: 0;
+  padding:    calc(var(--field-item-gap) / 2) 0;
+
+  @include layout.use-grid {
+    padding-top:    var(--field-item-gap);
+    padding-bottom: var(--field-item-gap);
+  }
+
+  // Remove field item spacing, since we use CSS grid below.
+  @include vertical-spacing.against-previous(
+    '.field__item',
+    $spacing-small: 0,
+    $spacing-large: 0
+  );
+
+  .field__item {
+    padding: calc(var(--field-item-gap) / 2) 0;
+  }
+
+  // If available, use CSS grid to lay out the project images in a two column
+  // grid.
+  @include layout.use-grid {
+    .field__items {
+      display:                grid;
+      grid-template-columns:  1fr 1fr;
+      grid-gap:               var(--field-item-gap);
+    }
+
+    .field__item {
+      padding-top:    0;
+      padding-bottom: 0;
+
+      // Odd last items span the whole row, since we know we have exactly two
+      // columns.
+      &:nth-child(odd):last-child {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
+}
