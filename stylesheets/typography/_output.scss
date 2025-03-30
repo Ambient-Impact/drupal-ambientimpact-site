@@ -1,9 +1,8 @@
 // -----------------------------------------------------------------------------
-//   Typography partial
+//   Typography - Output
 // -----------------------------------------------------------------------------
 
-@use '../variables/typography'; // Configure typography.
-@use 'base:typography/config' as typography-config;
+@use 'config' as typography-config; // Configure typography.
 @use 'base:typography/headings' as typography-headings;
 @use 'base:global/content';
 @use 'base:layout/vertical_spacing' as vertical-spacing;

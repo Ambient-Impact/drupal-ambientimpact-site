@@ -2,9 +2,8 @@
 //   Announcements
 // -----------------------------------------------------------------------------
 
-@use '../variables/typography'; // Configure typography.
-@use '../global/typography' as global-typography; // Provides %heading selector.
-@use 'base:typography/config' as typography-config;
+@use '../typography/config' as typography-config; // Configure typography.
+@use '../typography/output' as global-typography; // Provides %heading selector.
 @use 'base:typography/headings' as typography-headings;
 
 .block-views .view-announcements .view-content {

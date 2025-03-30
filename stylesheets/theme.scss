@@ -4,9 +4,11 @@
 
 @use 'variables';
 
-@use 'base:base';
-
+@use 'typography';
 @use 'layout';
+@use 'base:elements' as base-elements;
+@use 'base:components' as base-components;
+@use 'base:forms' as base-forms;
 @use 'global';
 @use 'content';
 @use 'views';

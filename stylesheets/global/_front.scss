@@ -3,8 +3,7 @@
 // -----------------------------------------------------------------------------
 
 @use 'base:layout/vertical_spacing' as vertical-spacing;
-@use '../variables/typography'; // Configure typography.
-@use 'base:typography/config' as typography-config;
+@use '../typography/config' as typography-config; // Configure typography.
 @use 'sass/variables/general';
 
 .path-frontpage .region-content {

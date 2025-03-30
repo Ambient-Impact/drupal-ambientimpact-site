@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-//   Typography variables
+//   Typography - Configuration
 // -----------------------------------------------------------------------------
 
 @use 'base:typography/config' with (
@@ -9,3 +9,7 @@
 @use 'base:typography/headings' with (
   $heading-font-sizes: (1.5em, 1.35em, 1.2em, 1em, 1em, 1em),
 );
+
+// Forward the base typography configuration to expose its public members as
+// part of this config.
+@forward 'base:typography/config';

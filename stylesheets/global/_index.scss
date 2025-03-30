@@ -1,5 +1,4 @@
-@use 'fonts';
-@use 'typography';
+@use 'base:global' as base-global;
 @use 'header';
 @use 'site_branding';
 @use 'menu_primary';
