@@ -10,7 +10,12 @@
 @use 'scroll_blocker' as scroll-blocker;
 
 :root {
+
+  // Base theme does not yet set this, but we use it for our grid.
+  --layout-max-width: #{layout-config.$no-sidebars-max-width};
+
   --layout-grid-scrollbar-shift: 0;
+
 }
 
 @include scroll-blocker.on-scroll-blocked {
@@ -19,26 +24,46 @@
 
 .layout-container {
 
+  // Unset various values from the base theme so that we can stretch this the
+  // full viewport width.
   max-width: none;
 
-  margin-left: unset;
+  margin-left:  unset;
   margin-right: unset;
 
-  padding-left: unset;
-  padding-right: unset;
+  padding-left:   unset;
+  padding-right:  unset;
 
+  ///
+  /// The full width column.
+  ///
+  /// This defines just the space that exceeds the content and gutter columns,
+  /// starting from zero if narrower than or equal to the above.
+  ///
   --grid-column-full: minmax(0, 1fr);
+
+  ///
+  /// The content column.
+  ///
+  /// This defines the flexible width of the content column.
+  ///
   --grid-content-column: min(
-    #{layout-config.$no-sidebars-max-width},
+    var(--layout-max-width),
     100% - var(--layout-gutter) * 2
   );
+
+  ///
+  /// The gutter column.
+  ///
+  /// This is a fixed width set to the layout gutter value.
+  ///
   --grid-gutter-column: var(--layout-gutter);
 
   display: grid;
 
   grid-template-columns:
-    [full-start] var(--grid-column-full)
-    [gutter-start] var(--grid-gutter-column)
+    [full-start]    var(--grid-column-full)
+    [gutter-start]  var(--grid-gutter-column)
     [content-start] var(--grid-content-column) [content-end]
     var(--grid-gutter-column) [gutter-end]
     var(--grid-column-full) [full-end];
