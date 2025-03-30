@@ -42,6 +42,11 @@ overlay:
     theme:
       stylesheets/components/overlay.css: {}
 
+paragraph_compact:
+  css:
+    theme:
+      stylesheets/components/paragraph_compact.css: {}
+
 refreshless:
   css:
     theme:

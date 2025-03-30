@@ -1,7 +1,8 @@
 // -----------------------------------------------------------------------------
-//   Paragraph entity styles
+//   Paragraph entity in compact view mode styles
 // -----------------------------------------------------------------------------
 
+@use '../variables/colours'; // Configure colours.
 @use 'sass:color';
 @use 'sass/helpers/colour';
 @use 'sass/helpers/z-index';

@@ -265,6 +265,17 @@ function ambientimpact_site_preprocess_field(
 }
 
 /**
+ * Prepares variables for paragraph templates in compact view mode.
+ */
+function ambientimpact_site_preprocess_paragraph__compact(
+  array &$variables,
+): void {
+
+  $variables['#attached']['library'][] = 'ambientimpact_site/paragraph_compact';
+
+}
+
+/**
  * Prepares variables for view templates.
  *
  * @param array $variables
