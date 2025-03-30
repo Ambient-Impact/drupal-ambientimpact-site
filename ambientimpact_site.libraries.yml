@@ -55,3 +55,8 @@ services:
   dependencies:
     - ambientimpact_core/framework
     - ambientimpact_site/reveal
+
+web_snippets_links:
+  css:
+    theme:
+      stylesheets/components/web_snippets_links.css: {}

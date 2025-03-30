@@ -259,6 +259,19 @@ function ambientimpact_site_preprocess_field(
 }
 
 /**
+ * Preprocess variables for web snippets links.
+ */
+function ambientimpact_site_preprocess_web_snippets_links(
+  array &$variables,
+): void {
+
+  $variables['#attached'][
+    'library'
+  ][] = 'ambientimpact_site/web_snippets_links';
+
+}
+
+/**
  * Prepares variables for views field templates.
  *
  * Default template: views-view-field.html.twig.
