@@ -4,12 +4,6 @@
 
 @use 'sass/helpers/z-index';
 
-html {
-  // This prevents any of our full width bleed effects causing horizontal scroll
-  // bars or scrolling/panning.
-  overflow-x: hidden;
-}
-
 header[role='banner'] {
   @include z-index.get(page-floating);
 }
