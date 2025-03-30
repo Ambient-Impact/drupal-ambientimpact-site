@@ -2,7 +2,7 @@ global-styling:
   css:
     theme:
       stylesheets/theme.css: {}
-      stylesheets/global/scrollbar.css: {}
+      stylesheets/components/scrollbar.css: {}
   dependencies:
     - ambientimpact_base/layout_properties
     - ambientimpact_ux/component.material.ripple
