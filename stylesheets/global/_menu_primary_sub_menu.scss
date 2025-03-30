@@ -270,6 +270,13 @@ $item-reveal-stagger-interval: 40ms;
           z-index:  list.index($local-stacking-order, background);
 
           background-color: menu-primary.$background-colour;
+
+          // Shadows don't affect layout and should not result in phantom
+          // horizontal scrolling in modern browsers so we can use that to our
+          // advantage to try and catch any rounding errors where a pixel of
+          // the contents sometimes peeks through.
+          box-shadow: 0 0 0 1px menu-primary.$background-colour;
+
         }
       }
 
