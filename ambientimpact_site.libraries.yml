@@ -16,6 +16,11 @@ global-scripts:
     - ambientimpact_core/framework
     - ambientimpact_ux/component.pointer_type
 
+field_web_tags:
+  css:
+    theme:
+      stylesheets/components/field_web_tags.css: {}
+
 menu_primary:
   js:
     javascript/menu_primary.drop_down.js: { attributes: { defer: true } }

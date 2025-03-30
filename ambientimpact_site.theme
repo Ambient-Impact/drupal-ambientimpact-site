@@ -100,12 +100,16 @@ function ambientimpact_site_preprocess_field__field_source_link(
 /**
  * Prepares variables for field_web_tags templates.
  *
- * This wraps the text in an icon.
+ * This wraps the text in an icon and attaches libraries.
  */
 function ambientimpact_site_preprocess_field__field_web_tags(
-  array &$variables, string $hook
+  array &$variables,
 ): void {
+
+  $variables['#attached']['library'][] = 'ambientimpact_site/field_web_tags';
+
   foreach ($variables['items'] as $key => &$item) {
+
     // Don't do anything to an item if the #title is not a string, which could
     // indicate modification by a module that we're not expecting.
     if (gettype($item['content']['#title']) !== 'string') {
@@ -118,7 +122,9 @@ function ambientimpact_site_preprocess_field__field_web_tags(
       '#bundle'   => 'core',
       '#text'     => $item['content']['#title'],
     ];
+
   }
+
 }
 
 /**
