@@ -1,4 +1,5 @@
 @use 'config';
+@use '../variables/colours'; // Configure colours.
 @use 'base:typography' as base-typography;
 @use 'fonts';
 @use 'output';
