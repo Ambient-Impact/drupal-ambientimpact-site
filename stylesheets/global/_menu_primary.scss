@@ -2,7 +2,7 @@
 //   Primary site menu
 // -----------------------------------------------------------------------------
 
-@use 'layout_scrollbar' as layout-scrollbar;
+@use '../layout/scrollbar' as layout-scrollbar;
 @use 'sass:list';
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/colour';
