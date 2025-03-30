@@ -2,11 +2,9 @@
 //   Ambient.Impact - Site theme - Master stylesheet
 // -----------------------------------------------------------------------------
 
-@use 'variables';
-
 @use 'typography';
 @use 'layout';
-@use 'base:elements' as base-elements;
+@use 'elements';
 @use 'base:components' as base-components;
 @use 'base:forms' as base-forms;
 @use 'global';

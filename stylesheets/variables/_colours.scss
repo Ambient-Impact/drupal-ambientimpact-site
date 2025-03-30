@@ -29,18 +29,3 @@ colour.$foreground-on-light: hsl(0, 0%, 30%);
 /// This is set to a very dark grey but not pure black.
 ///
 colour.$background-dark: hsl(0, 0%, 10%);
-
-///
-/// Link colour on dark backgrounds when not highlighted/activated.
-///
-/// This overrides the default value of invert-lightness(link-var.$base-colour)
-/// which washes out Ambient.Impact orange a bit too much, while making it a
-/// little too bright.
-///
-$normal-colour-on-dark: color.adjust(
-  material-colour.$primary, $lightness: 10%
-);
-
-@use 'link/link.var' as link-var with (
-  $normal-colour-on-dark: $normal-colour-on-dark,
-);
