@@ -47,7 +47,7 @@
   ///
   /// This defines the flexible width of the content column.
   ///
-  --grid-content-column: min(
+  --grid-column-content: min(
     var(--layout-max-width),
     100% - var(--layout-gutter) * 2
   );
@@ -57,15 +57,15 @@
   ///
   /// This is a fixed width set to the layout gutter value.
   ///
-  --grid-gutter-column: var(--layout-gutter);
+  --grid-column-gutter: var(--layout-gutter);
 
   display: grid;
 
   grid-template-columns:
     [full-start]    var(--grid-column-full)
-    [gutter-start]  var(--grid-gutter-column)
-    [content-start] var(--grid-content-column) [content-end]
-    var(--grid-gutter-column) [gutter-end]
+    [gutter-start]  var(--grid-column-gutter)
+    [content-start] var(--grid-column-content) [content-end]
+    var(--grid-column-gutter) [gutter-end]
     var(--grid-column-full) [full-end];
 
   // This has zero specificity, making it easy to override.
