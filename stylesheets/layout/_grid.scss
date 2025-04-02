@@ -111,7 +111,8 @@
 
     grid-column: full;
 
-    > .menu {
+    > .menu,
+    > .contextual {
       grid-column: gutter;
     }
 
