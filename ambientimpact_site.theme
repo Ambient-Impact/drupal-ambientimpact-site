@@ -318,13 +318,22 @@ function ambientimpact_site_preprocess_paragraph__compact(
 function ambientimpact_site_preprocess_views_view(array &$variables): void {
 
   if (
-    $variables['view']->id() === 'tags' ||
-    $variables['view']->id() === 'web_tags'
+    (
+      $variables['id'] === 'portfolio' ||
+      $variables['id'] === 'web_snippets'
+    ) && $variables['display_id'] === 'block_front_page'
   ) {
 
-    $variables['#attached'][
-      'library'
-    ][] = 'ambientimpact_site/view_tags_list';
+    $variables['#attached']['library'][] = 'ambientimpact_site/view_front';
+
+  }
+
+  if (
+    $variables['id'] === 'tags' ||
+    $variables['id'] === 'web_tags'
+  ) {
+
+    $variables['#attached']['library'][] = 'ambientimpact_site/view_tags_list';
 
   }
 
