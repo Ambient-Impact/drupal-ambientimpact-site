@@ -6,23 +6,23 @@
 @use '../typography/config' as typography-config; // Configure typography.
 @use 'sass/variables/general';
 
-.path-frontpage .region-content {
-  .block-views {
+.region-content {
+
+  * + .block-views {
+    // This adds some spacing between the views blocks and any preceding
+    // elements. We're using vertical-spacing rather than against-previous as
+    // the latter would be overkill here.
+    @include vertical-spacing.vertical-spacing;
+  }
+
+  .block-views .more-link {
+    font-weight: typography-config.$font-weight-strong;
+    // text-transform: uppercase;
+    text-align: center;
+
     * + & {
-      // This adds some spacing between the views blocks and any preceding
-      // elements. We're using vertical-spacing rather than
-      // against-previous as the latter would be overkill here.
-      @include vertical-spacing.vertical-spacing;
-    }
-
-    .more-link {
-      font-weight: typography-config.$font-weight-strong;
-      // text-transform: uppercase;
-      text-align: center;
-
-      * + & {
-        margin-top: general.$general-spacing;
-      }
+      margin-top: general.$general-spacing;
     }
   }
+
 }
