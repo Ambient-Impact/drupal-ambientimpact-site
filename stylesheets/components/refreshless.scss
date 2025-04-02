@@ -4,7 +4,15 @@
 
 // @see https://www.drupal.org/project/refreshless
 
+@use 'sass:color';
 // Configure colours.
 @use '../variables/colours';
 // Output RefreshLess styles based on our colours.
-@use 'base:components/refreshless/progress_bar';
+@use 'base:components/refreshless/progress_bar' with (
+  // The default colour scaling oversaturates the filled colour on light
+  // backgrounds, making it clash with the rest of the colour scheme. This
+  // desaturates it instead.
+  $colour-filled-on-light: color.scale(
+    colours.$ambientimpact-orange, $lightness: 35%, $saturation: -30%,
+  ),
+);
