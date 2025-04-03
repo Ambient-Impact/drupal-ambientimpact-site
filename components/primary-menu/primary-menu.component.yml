@@ -11,6 +11,7 @@ libraryOverrides:
     - ambientimpact_core/framework
     - ambientimpact_icon/component.icon
     - ambientimpact_ux/component.headroom
+    - ambientimpact_ux/component.material.ripple
     - ambientimpact_ux/component.menu_drop_down
     - ambientimpact_ux/component.menu_overflow
     - ambientimpact_ux/component.overlay
