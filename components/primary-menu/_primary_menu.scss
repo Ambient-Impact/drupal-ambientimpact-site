@@ -232,7 +232,7 @@ $background-colour: colours.$ambientimpact-orange;
   }
 }
 
-.region-primary-menu-overlay {
+.layout-container > .region-primary-menu-overlay { // Specificity.
   // Remove the max-width set in base:global/_layout.scss so that this correctly
   // covers the whole page width.
   max-width: none;
