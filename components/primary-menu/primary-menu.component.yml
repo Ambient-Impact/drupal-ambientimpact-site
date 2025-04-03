@@ -1,0 +1,22 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json
+name: Primary menu
+description: Menu bar for the Ambient.Impact theme.
+props:
+  type: object
+  additionalProperties: false
+  properties: {}
+libraryOverrides:
+  dependencies:
+    - ambientimpact_core/component.fastdom
+    - ambientimpact_core/framework
+    - ambientimpact_icon/component.icon
+    - ambientimpact_ux/component.headroom
+    - ambientimpact_ux/component.menu_drop_down
+    - ambientimpact_ux/component.menu_overflow
+    - ambientimpact_ux/component.overlay
+  js:
+    primary-menu.drop-down.js: { attributes: { defer: true } }
+    primary-menu.headroom.js: { attributes: { defer: true } }
+    primary-menu.overflow.js: { attributes: { defer: true } }
+    primary-menu.overlay.js: { attributes: { defer: true } }
+    primary-menu.stagger.js: { attributes: { defer: true } }

@@ -485,7 +485,11 @@ function ambientimpact_site_preprocess_image_caption_formatter(
 function ambientimpact_site_preprocess_menu(array &$variables): void {
 
   if ($variables['menu_name'] === 'main') {
-    $variables['#attached']['library'][] = 'ambientimpact_site/menu_primary';
+
+    $variables['#attached'][
+      'library'
+    ][] = 'core/components.ambientimpact_site--primary-menu';
+
   }
 
 }

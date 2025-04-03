@@ -2,11 +2,11 @@
 //   Primary site menu
 // -----------------------------------------------------------------------------
 
-@use '../layout/scrollbar' as layout-scrollbar;
+@use '../../stylesheets/layout/scrollbar' as layout-scrollbar;
 @use 'sass:list';
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/colour';
-@use '../variables/colours';
+@use '../../stylesheets/variables/colours';
 
 ///
 /// Primary menu item font size when large font size breakpoint doesn't match.

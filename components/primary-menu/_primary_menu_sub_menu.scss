@@ -4,7 +4,7 @@
 
 @use 'material.common/material.general' as material-general;
 @use 'material.common/material.shadow' as material-shadow;
-@use 'menu_primary' as menu-primary;
+@use 'primary_menu' as menu-primary;
 @use 'sass:list';
 @use 'sass/helpers/selector';
 @use 'sass/variables/motion';
@@ -159,8 +159,8 @@ $item-reveal-stagger-interval: 40ms;
     }
 
     // This staggers the menu item reveal transitions based on the custom
-    // property set in menu_primary.js so that the items appear to fall into
-    // place from last to first.
+    // property set in primary-menu.stagger.js so that the items appear to fall
+    // into place from last to first.
     transition-delay: calc(
       (var(--menu-item-reveal-transition-delay, 0) - 1) *
       #{$item-reveal-stagger-interval}

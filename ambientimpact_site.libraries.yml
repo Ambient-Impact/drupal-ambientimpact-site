@@ -26,22 +26,6 @@ field_web_tags:
     theme:
       stylesheets/components/field_web_tags.css: {}
 
-menu_primary:
-  js:
-    javascript/menu_primary.drop_down.js: { attributes: { defer: true } }
-    javascript/menu_primary.headroom.js: { attributes: { defer: true } }
-    javascript/menu_primary.overflow.js: { attributes: { defer: true } }
-    javascript/menu_primary.overlay.js: { attributes: { defer: true } }
-    javascript/menu_primary.stagger.js: { attributes: { defer: true } }
-  dependencies:
-    - ambientimpact_core/component.fastdom
-    - ambientimpact_core/framework
-    - ambientimpact_icon/component.icon
-    - ambientimpact_ux/component.headroom
-    - ambientimpact_ux/component.menu_drop_down
-    - ambientimpact_ux/component.menu_overflow
-    - ambientimpact_ux/component.overlay
-
 node_project:
   css:
     theme:
