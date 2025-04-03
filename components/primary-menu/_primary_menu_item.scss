@@ -2,6 +2,7 @@
 //   Primary site menu - menu items
 // -----------------------------------------------------------------------------
 
+@use '../../stylesheets/variables/colours'; // Configure colours.
 @use 'base:components/menu';
 @use 'base:layout/config' as layout-config;
 @use 'icon';
@@ -46,11 +47,22 @@ $indicator-thickness: 0.2em;
 /// Set primary menu item colours.
 ///
 @mixin colours {
+
   @include link-colour.set(
     $background:      menu-primary.$background-colour,
     $normal-on-dark:  $foreground-colour,
     $highlight-on-dark:   $foreground-colour
   );
+
+  // These are needed to set the material ripple colour correctly based on the
+  // background colour. The link-colour above does not use colour.set() but
+  // sets the colours directly.
+  @include colour.set($background: menu-primary.$background-colour);
+
+  @include colour.on-dark-scheme {
+    @include colour.set($background: menu-primary.$background-colour);
+  }
+
 }
 
 ///
