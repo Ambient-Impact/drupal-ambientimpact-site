@@ -11,12 +11,12 @@
       "package.json",
       "webpack.config.mjs",
       "components/**/*.scss",
-      "**/stylesheets/**/*.scss",
+      "stylesheets/**/*.scss",
       "images/icons/*.{png,svg}"
     ],
     "output": [
       "components/**/*.css",
-      "**/stylesheets/**/*.css",
+      "stylesheets/**/*.css",
       "images/icons/generated/*"
     ]
   },
