@@ -47,13 +47,6 @@ refreshless:
     theme:
       stylesheets/components/refreshless.css: {}
 
-services:
-  js:
-    javascript/services.js: { attributes: { defer: true } }
-  dependencies:
-    - ambientimpact_core/framework
-    - core/components.ambientimpact_site--reveal-event
-
 view_front:
   css:
     theme:

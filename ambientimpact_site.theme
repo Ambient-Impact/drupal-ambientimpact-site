@@ -11,7 +11,7 @@ use Drupal\ambientimpact_site\HeadingTextToSvg;
 /**
  * Prepares variables for HTML document templates.
  *
- * This attaches the 'ambientimpact_site/services' library to the Services page.
+ * This attaches the services component to the Services page.
  *
  * @todo Rework this so that we don't have to check the path, but rather attach
  *   this to a specific render array or the filter process result of the node?
@@ -27,7 +27,11 @@ function ambientimpact_site_preprocess_html(array &$variables): void {
   );
 
   if ($aliasedPath === '/web/services') {
-    $variables['#attached']['library'][] = 'ambientimpact_site/services';
+
+    $variables['#attached'][
+      'library'
+    ][] = 'core/components.ambientimpact_site--services';
+
   }
 
 }

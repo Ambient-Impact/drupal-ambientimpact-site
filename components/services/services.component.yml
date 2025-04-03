@@ -1,0 +1,13 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json
+name: Reveal
+description: Reveal animations for the Ambient.Impact theme.
+props:
+  type: object
+  additionalProperties: false
+  properties: {}
+libraryOverrides:
+  js:
+    services.js: { attributes: { defer: true } }
+  dependencies:
+    - ambientimpact_core/framework
+    - core/components.ambientimpact_site--reveal-event
