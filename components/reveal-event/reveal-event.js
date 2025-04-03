@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-//   Ambient.Impact - Site theme - Reveal
+//   Ambient.Impact - Site theme - Reveal event
 // -----------------------------------------------------------------------------
 
 // The primary purpose of this is to trigger a 'siteRevealed' event when CSS

@@ -6,6 +6,7 @@ global-styling:
   dependencies:
     - ambientimpact_base/layout_properties
     - ambientimpact_ux/component.material.ripple
+    - core/components.ambientimpact_site--reveal
 
 global-scripts:
   js:
@@ -46,19 +47,12 @@ refreshless:
     theme:
       stylesheets/components/refreshless.css: {}
 
-reveal:
-  js:
-    javascript/reveal.js: { attributes: { defer: true } }
-  dependencies:
-    - ambientimpact_core/framework
-    - ambientimpact_core/component.fastdom
-
 services:
   js:
     javascript/services.js: { attributes: { defer: true } }
   dependencies:
     - ambientimpact_core/framework
-    - ambientimpact_site/reveal
+    - core/components.ambientimpact_site--reveal-event
 
 view_front:
   css:

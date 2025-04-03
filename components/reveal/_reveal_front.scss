@@ -2,7 +2,7 @@
 //   Reveal animations for the front page
 // -----------------------------------------------------------------------------
 
-@use 'reveal';
+@use '_reveal';
 @use 'sass/variables/motion';
 
 // This builds upon the reveal animations in _reveal.scss to animate all the
