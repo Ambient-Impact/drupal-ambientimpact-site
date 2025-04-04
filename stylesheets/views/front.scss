@@ -16,13 +16,15 @@
   }
 
   .block-views .more-link {
+
     font-weight: typography-config.$font-weight-strong;
     // text-transform: uppercase;
     text-align: center;
 
-    * + & {
-      margin-top: general.$general-spacing;
-    }
+  }
+
+  .block-views * + .more-link {
+    margin-top: general.$general-spacing;
   }
 
 }
