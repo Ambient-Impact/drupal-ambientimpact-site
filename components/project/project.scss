@@ -6,7 +6,7 @@
 @use '../../stylesheets/layout/breakpoints' as layout-breakpoints;
 @use '../../stylesheets/layout/scrollbar' as layout-scrollbar;
 @use '../../stylesheets/variables/colours'; // Configure colours.
-@use '../field-media/_field_media' as field-media;
+@use '../field-media';
 @use 'link/link.colour' as link-colour;
 @use 'material.common/material.shadow' as material-shadow;
 @use 'sass:color';
