@@ -278,7 +278,9 @@ function ambientimpact_site_preprocess_field(
     ) === 'media'
   ) {
 
-    $variables['#attached']['library'][] = 'ambientimpact_site/field_media';
+    $variables['#attached'][
+      'library'
+    ][] = 'core/components.ambientimpact_site--field-media';
 
   }
 
@@ -294,7 +296,9 @@ function ambientimpact_site_preprocess_node(array &$variables): void {
 
   if ($variables['node']->getType() === 'project') {
 
-    $variables['#attached']['library'][] = 'ambientimpact_site/node_project';
+    $variables['#attached'][
+      'library'
+    ][] = 'core/components.ambientimpact_site--project';
 
   }
 

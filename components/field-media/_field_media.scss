@@ -3,8 +3,8 @@
 // -----------------------------------------------------------------------------
 
 @use 'base:components/field_media' as field-media; // @todo This also outputs.
-@use '../layout/scrollbar' as layout-scrollbar;
-@use '../variables/colours'; // Configure colours.
+@use '../../stylesheets/layout/scrollbar' as layout-scrollbar;
+@use '../../stylesheets/variables/colours'; // Configure colours.
 @use 'link/link.colour' as link-colour;
 @use 'sass:list';
 @use 'sass/helpers/colour';

@@ -17,20 +17,10 @@ global-scripts:
     - ambientimpact_core/framework
     - ambientimpact_ux/component.pointer_type
 
-field_media:
-  css:
-    theme:
-      stylesheets/components/field_media.css: {}
-
 field_web_tags:
   css:
     theme:
       stylesheets/components/field_web_tags.css: {}
-
-node_project:
-  css:
-    theme:
-      stylesheets/components/node_project.css: {}
 
 overlay:
   css:
