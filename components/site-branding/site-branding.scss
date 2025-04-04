@@ -2,15 +2,16 @@
 //   Site branding
 // -----------------------------------------------------------------------------
 
-@use 'base:layout/config' as layout-config;
-@use 'header';
+@use '../../stylesheets/layout/config' as layout-config;
+@use '../header';
 @use 'material.common/material.shadow' as material-shadow;
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass/helpers/breakpoint';
 @use 'sass/helpers/hide';
-@use '../variables/colours';
-@use '../variables/general' as *;
+@use '../../stylesheets/layout/breakpoints';
+@use '../../stylesheets/variables/colours';
+@use '../../stylesheets/variables/general' as *;
 
 ///
 /// The site name <svg> width, in pixels.

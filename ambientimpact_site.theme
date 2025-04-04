@@ -37,6 +37,19 @@ function ambientimpact_site_preprocess_html(array &$variables): void {
 }
 
 /**
+ * Prepares variables for the 'system_branding_block' block template.
+ */
+function ambientimpact_site_preprocess_block__system_branding_block(
+  array &$variables,
+): void {
+
+  $variables['#attached'][
+    'library'
+  ][] = 'core/components.ambientimpact_site--site-branding';
+
+}
+
+/**
  * Prepares variables for field_project_link templates.
  *
  * This sets the link text to contain the title of the parent node if the link
@@ -312,6 +325,17 @@ function ambientimpact_site_preprocess_paragraph__compact(
 ): void {
 
   $variables['#attached']['library'][] = 'ambientimpact_site/paragraph_compact';
+
+}
+
+/**
+ * Prepares variables for the header region template.
+ */
+function ambientimpact_site_preprocess_region__header(array &$variables): void {
+
+  $variables['#attached'][
+    'library'
+  ][] = 'core/components.ambientimpact_site--header';
 
 }
 

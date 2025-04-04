@@ -1,0 +1,8 @@
+// -----------------------------------------------------------------------------
+//   Site header shared
+// -----------------------------------------------------------------------------
+
+///
+/// Header stacking order. Later in the list means a higher z-index.
+///
+$stacking-order: menu-top-shadow, region-header, site-name;

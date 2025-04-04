@@ -1,0 +1,10 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/10.1.x/core/modules/sdc/src/metadata.schema.json
+name: Header
+description: Site header styles.
+props:
+  type: object
+  additionalProperties: false
+  properties: {}
+libraryOverrides:
+  dependencies:
+    - core/components.ambientimpact_site--primary-menu

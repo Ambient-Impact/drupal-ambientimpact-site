@@ -3,14 +3,10 @@
 // -----------------------------------------------------------------------------
 
 @use 'headroom';
+@use '_header' as *;
 @use 'sass/helpers/colour';
 @use 'sass:list';
-@use '../variables/general' as *;
-
-///
-/// Header stacking order. Later in the list means a higher z-index.
-///
-$stacking-order: menu-top-shadow, region-header, site-name;
+@use '../../stylesheets/variables/general' as *;
 
 header[role='banner'] {
   position: relative;
