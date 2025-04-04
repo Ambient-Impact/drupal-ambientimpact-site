@@ -5,6 +5,7 @@
 @use '../layout/config' as layout-config;
 @use '../layout/breakpoints' as layout-breakpoints;
 @use '../layout/scrollbar' as layout-scrollbar;
+@use '../variables/colours'; // Configure colours.
 @use '_field_media' as field-media;
 @use 'link/link.colour' as link-colour;
 @use 'material.common/material.shadow' as material-shadow;
