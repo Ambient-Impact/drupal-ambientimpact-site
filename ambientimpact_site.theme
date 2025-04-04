@@ -340,6 +340,17 @@ function ambientimpact_site_preprocess_region__header(array &$variables): void {
 }
 
 /**
+ * Prepares variables for the footer region template.
+ */
+function ambientimpact_site_preprocess_region__footer(array &$variables): void {
+
+  $variables['#attached'][
+    'library'
+  ][] = 'core/components.ambientimpact_site--footer';
+
+}
+
+/**
  * Prepares variables for view templates.
  *
  * @param array $variables

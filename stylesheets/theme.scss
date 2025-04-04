@@ -7,5 +7,5 @@
 @use 'elements';
 @use 'base:components' as base-components;
 @use 'base:forms' as base-forms;
-@use 'global';
+@use 'base:global' as base-global;
 @use 'content';
