@@ -17,7 +17,8 @@
 @use 'sass/patterns/horizontal_bleed_background' as horizontal-bleed-background;
 @use 'sass/variables/general';
 
-.field--type-image:not(.form-wrapper),
+.field--type-image:not(.field--name-field-media-image),
+.media:not(.media--embedded) > .field--type-image,
 .field--entity-reference-type-media:not(.field--name-field-project-media) {
   @include field-media.media-field;
 }
@@ -26,7 +27,10 @@
 // avoid nesting two instances of the mixin. When a media entity is in an
 // entity reference field, we only want the styles to apply to the entity
 // reference field.
-.field--type-entity-reference .field--type-image:not(.form-wrapper) {
+//
+// Note specificity of ".media:not(.media--embedded) >" here to be greater than
+// the above.
+.field--type-entity-reference .media:not(.media--embedded) > .field--type-image {
 
   &::before {
     display: none;

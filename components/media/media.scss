@@ -1,0 +1,23 @@
+// -----------------------------------------------------------------------------
+//   Media entity stylesheet
+// -----------------------------------------------------------------------------
+
+@use 'sass/helpers/colour';
+
+.media--light-colour-scheme-only {
+
+  @include colour.on-dark-scheme {
+    display: none;
+  }
+
+}
+
+.media--dark-colour-scheme-only {
+
+  display: none;
+
+  @include colour.on-dark-scheme {
+    display: revert;
+  }
+
+}

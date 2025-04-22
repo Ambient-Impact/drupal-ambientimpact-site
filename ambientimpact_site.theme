@@ -300,6 +300,56 @@ function ambientimpact_site_preprocess_field(
 }
 
 /**
+ * Prepares variables for media entity templates.
+ *
+ * This adds modifier classes:
+ *
+ * - .media--embedded: Added if the media entity is embedded via the filter.
+ *
+ * - .media--light-colour-scheme-only: If the media entity is set to only
+ *   display in light colour scheme.
+ *
+ * - .media--dark-colour-scheme-only: If the media entity is set to only
+ *   display in dark colour scheme.
+ *
+ * @see \template_preprocess_media()
+ */
+function ambientimpact_site_preprocess_media(array &$variables): void {
+
+  $variables['#attached'][
+    'library'
+  ][] = 'core/components.ambientimpact_site--media';
+
+  if (
+    isset($variables['elements']['#embed']) &&
+    $variables['elements']['#embed'] === true
+  ) {
+    $variables['attributes']['class'][] = 'media--embedded';
+  }
+
+  $media = $variables['elements']['#media'];
+
+  if ($media->hasField('field_colour_scheme') === false) {
+    return;
+  }
+
+  $field = $media->get('field_colour_scheme');
+
+  if ($field->isEmpty() === true) {
+
+    return;
+
+  }
+
+  $variables['attributes']['class'][] = match ($field->getString()) {
+    'light_only'  => 'media--light-colour-scheme-only',
+    'dark_only'   => 'media--dark-colour-scheme-only',
+    default       => 'media--any-colour-scheme',
+  };
+
+}
+
+/**
  * Prepares variables for node templates.
  *
  * For some reason, ambientimpact_site_preprocess_node__project() does not work
