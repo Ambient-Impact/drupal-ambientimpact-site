@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\ambientimpact_site;
 
 use Drupal\ambientimpact_core\Utility\AttributeHelper;
@@ -132,7 +134,7 @@ class HeadingTextToSvg implements ContainerInjectionInterface {
 
     // Add attributes.
     foreach ($attributes as $name => $value) {
-      $svg->addAttribute($name, $value);
+      $svg->addAttribute($name, (string) $value);
     }
 
     // Add the bleed path. This creates a rectangle whose top edge is flush with
