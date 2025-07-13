@@ -116,6 +116,14 @@ $background-colour: colours.$ambientimpact-orange;
   ///
   $local-stacking-order: shadow, content;
 
+  // This is necessary to keep the drop shadow element positioned correctly when
+  // Headroom is not attached, so that it doesn't flash in the wrong position
+  // briefly in some situations, e.g. during RefreshLess cache rendering or if
+  // JavaScript completely breaks.
+  &:not(.headroom) {
+    position: relative;
+  }
+
   margin-top:     0;
   margin-bottom:  3em;
 
