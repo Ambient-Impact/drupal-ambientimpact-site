@@ -35,6 +35,15 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryOverflow', function(
         aiMenuOverflow.attach($menus[i]);
       }
 
+      // The overflow measure shadow should not be cached by RefreshLess as it
+      // can multiply and cause all sorts of weird breakages.
+      //
+      // @todo Remove this if/when we can reliably detach when delaying using
+      //   FastDom before RefreshLess caches the page.
+      $menus.siblings('.menu--overflow-measure-shadow').attr(
+        'data-refreshless-temporary', true,
+      );
+
       /**
        * Data object for less duplicate code in detach.
        *
