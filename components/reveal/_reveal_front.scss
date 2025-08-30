@@ -215,6 +215,7 @@ $site-revealed:
     // are complete.
     .layout-container::before {
       animation-name:  reveal-overlay;
+      z-index: var(--content-reveal-overlay-z-index);
     }
     // This prevents keyboard focus to content elements that haven't faded into
     // view yet.

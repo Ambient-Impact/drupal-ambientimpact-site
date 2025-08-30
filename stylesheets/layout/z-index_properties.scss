@@ -1,0 +1,110 @@
+// -----------------------------------------------------------------------------
+//   Site layout - Global z-index custom properties
+// -----------------------------------------------------------------------------
+
+@use 'sass/helpers/z-index';
+
+// Note that while the order they're declared here doesn't matter, these are
+// sorted from highest to lowest for clarity.
+:root {
+
+  ///
+  /// RefreshLess page transition overlay z-index.
+  ///
+  /// @todo This is ugly and should be fixed as part of a z-index manager
+  ///   refactor.
+  ///
+  --refreshless-page-transition-overlay-z-index: #{z-index.get(modal) + 5};
+
+  ///
+  /// Tooltip z-index.
+  ///
+  /// @todo This is ugly and should be fixed as part of a z-index manager
+  ///   refactor.
+  ///
+  --tooltip-z-index: #{z-index.get(modal) + 4};
+
+  ///
+  /// PhotoSwipe z-index.
+  ///
+  --photoswipe-z-index: #{z-index.get(modal)};
+
+  ///
+  /// JavaScript-powered overlay z-index.
+  ///
+  --overlay-z-index: #{z-index.get(modal)};
+
+  ///
+  /// Drupal admin UI z-index.
+  ///
+  /// This is used for the Navigation sidebar and open tray on mobile.
+  ///
+  --drupal-admin-z-index: #{z-index.get(toolbar)};
+
+  ///
+  /// Drupal admin top bar z-index.
+  ///
+  /// @todo When z-index is refactored, stop using 'admin' since that's for in-
+  ///  page elements.
+  ///
+  --drupal-admin-z-index-admin-toolbar-control-bar: #{z-index.get(admin)};
+
+  ///
+  /// Drupal admin overlay z-index.
+  ///
+  /// @todo When z-index is refactored, stop using 'admin' since that's for in-
+  ///  page elements.
+  ///
+  --drupal-admin-z-index-overlay: #{z-index.get(admin)};
+
+  ///
+  /// Site reveal animation overlay.
+  ///
+  --site-reveal-overlay-z-index: #{z-index.get(floating-above)};
+
+  ///
+  /// The skip to main content link z-index.
+  ///
+  --skip-link-z-index: #{z-index.get(floating-above)};
+
+  ///
+  /// Primary menu z-index with Headroom when not at the top.
+  ///
+  --primary-menu-headroom-not-top-z-index: #{z-index.get(floating-above)};
+
+  ///
+  /// Header overlay z-index, both CSS-only and when enhanced by JavaScript.
+  ///
+  --header-overlay-z-index: #{z-index.get(floating-below)};
+
+  ///
+  /// Header elements z-index.
+  ///
+  /// In compact mode, this is both the <header> element and the primary menu
+  /// region. Outside of compact mode, this is only the primary menu region.
+  ///
+  --header-z-index: #{z-index.get(page-floating)};
+
+  ///
+  /// Primary menu z-index.
+  ///
+  --primary-menu-z-index: #{z-index.get(page-floating)};
+
+  ///
+  /// Primary menu overlay z-index.
+  ///
+  --primary-menu-overlay-z-index: #{z-index.get(page-floating)};
+
+  ///
+  /// Content reveal overlay z-index.
+  ///
+  /// Mainly used for the front page reveal.
+  ///
+  --content-reveal-overlay-z-index: #{z-index.get(page-floating)};
+
+  ///
+  /// Project node z-index.
+  ///
+  --node-project-z-index: #{z-index.get(page-main)};
+
+}

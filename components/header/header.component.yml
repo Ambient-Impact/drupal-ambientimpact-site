@@ -7,4 +7,5 @@ props:
   properties: {}
 libraryOverrides:
   dependencies:
+    - ambientimpact_site/layout_z-index_properties
     - core/components.ambientimpact_site--primary-menu

@@ -175,6 +175,27 @@ $background-colour: colours.$ambientimpact-orange;
     }
   }
 
+  &,
+  // Headroom post-0.9.4 only adds top/not-top classes once the user actually
+  // scrolls so we need to account for it being initialized but not having added
+  // those classes yet. It also does not trigger those callbacks, so we cannot
+  // use those to add the classes ourselves manually.
+  //
+  // @see https://github.com/WickyNilliams/headroom.js/issues/354
+  &.headroom:not(.headroom--top):not(.headroom--not-top) {
+    z-index: var(--primary-menu-z-index);
+  }
+
+  // When Headroom is not at the top, increase the z-index. We don't do this
+  // when we're at the top as that will cause the menu bar to be on top of full
+  // viewport stuff but offset downwards because of the site title. Note that we
+  // have to use the :not() selector as Headroom can be slow to add the
+  // .headroom--not-top class and this may cause content to show on top of the
+  // menu bar, especially on mobile where the connection may be slower.
+  &:not(.headroom--top) {
+    z-index: var(--primary-menu-headroom-not-top-z-index);
+  }
+
   .block > .menu {
     position:   relative;
 
@@ -244,4 +265,8 @@ $background-colour: colours.$ambientimpact-orange;
   // Remove the max-width set in base:global/_layout.scss so that this correctly
   // covers the whole page width.
   max-width: none;
+}
+
+.overlay.region-primary-menu-overlay { // Specificity.
+  z-index: var(--primary-menu-overlay-z-index);
 }

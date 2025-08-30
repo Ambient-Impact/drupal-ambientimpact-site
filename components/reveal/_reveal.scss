@@ -285,8 +285,14 @@ body:not(.maintenance-page) .region-highlighted::before {
   }
 }
 body:not(.maintenance-page) .region-highlighted::before {
+
   @supports (pointer-events: none) {
+
     animation-name:   reveal-overlay;
     animation-delay:  $overlay-animation-delay;
+
+    z-index: var(--site-reveal-overlay-z-index);
+
   }
+
 }

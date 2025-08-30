@@ -34,8 +34,17 @@ libraries:
 
 libraries-extend:
 
+  ambientimpact_base/tooltip:
+    - ambientimpact_site/layout_z-index_properties
+
   ambientimpact_base/overlay:
     - ambientimpact_site/overlay
+
+  ambientimpact_base/photoswipe:
+    - ambientimpact_site/layout_z-index_properties
+
+  ambientimpact_base/skip_link:
+    - ambientimpact_site/layout_z-index_properties
 
   refreshless_turbo/refreshless:
     - ambientimpact_site/refreshless

@@ -9,6 +9,9 @@
 @use '../../stylesheets/variables/general' as *;
 
 header[role='banner'] {
+
+  z-index: var(--header-z-index);
+
   position: relative;
 
   // This syncs up the site header with the menu bar Headroom behaviour, so

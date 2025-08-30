@@ -22,6 +22,11 @@ field_web_tags:
     theme:
       stylesheets/components/field_web_tags.css: {}
 
+layout_z-index_properties:
+  css:
+    theme:
+      stylesheets/layout/z-index_properties.css: {}
+
 overlay:
   css:
     theme:

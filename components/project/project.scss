@@ -82,8 +82,12 @@ $title-link-active-colour-on-dark: auto;
 ));
 
 .node--type-project {
+
   // Required to contain z-index stacking contexts.
   position: relative;
+
+  z-index: var(--node-project-z-index);
+
 }
 
 // .page-title needs to have higher specificity than ./_typography.scss to

@@ -5,3 +5,6 @@ props:
   type: object
   additionalProperties: false
   properties: {}
+libraryOverrides:
+  dependencies:
+    - ambientimpact_site/layout_z-index_properties
