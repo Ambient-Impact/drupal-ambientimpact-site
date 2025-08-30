@@ -5,3 +5,6 @@ props:
   type: object
   additionalProperties: false
   properties: {}
+libraryOverrides:
+  dependencies:
+    - core/components.ambientimpact_site--header

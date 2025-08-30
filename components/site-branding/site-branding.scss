@@ -3,7 +3,6 @@
 // -----------------------------------------------------------------------------
 
 @use '../../stylesheets/layout/config' as layout-config;
-@use '../header';
 @use 'material.common/material.shadow' as material-shadow;
 @use 'sass:list';
 @use 'sass:math';
@@ -54,7 +53,7 @@ $site-name-height: 83.997;
 
   position: relative;
 
-  z-index: list.index(header.$stacking-order, site-name);
+  z-index: var(--header-site-name-z-index);
 
   // Since the title is an SVG, we have to use CSS filters to get a drop drop
   // shadow that matches the title lettering outlines.
