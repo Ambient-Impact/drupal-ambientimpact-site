@@ -16,6 +16,7 @@ libraryOverrides:
     - ambientimpact_ux/component.menu_overflow
     - ambientimpact_ux/component.overlay
     - ambientimpact_site/layout_z-index_properties
+    - core/once
   js:
     primary-menu.drop-down.js: { attributes: { defer: true } }
     primary-menu.headroom.js: { attributes: { defer: true } }

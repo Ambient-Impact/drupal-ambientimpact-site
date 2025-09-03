@@ -81,6 +81,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryStagger', function(
     'AmbientImpactSiteThemeMenuPrimaryStagger',
     'ambientimpact-site-theme-menu-primary-stagger',
     '.layout-container',
+    ['unload', 'refreshless:cached-snapshot'],
     function(context, settings) {
 
       /**
@@ -120,11 +121,11 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryStagger', function(
 
       let layoutContainer = this;
 
-      data.$menus.off('menuOverflowAttached.' + eventNamespace);
+      data?.$menus.off('menuOverflowAttached.' + eventNamespace);
 
       fastdom.mutate(function() {
 
-        data.$menus.children('.menu-item--expanded').each(function() {
+        data?.$menus.children('.menu-item--expanded').each(function() {
           removeCustomProperties(this);
         });
 

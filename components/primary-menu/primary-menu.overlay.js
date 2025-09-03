@@ -27,6 +27,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryOverlay', function(
     'AmbientImpactSiteThemeMenuPrimaryOverlay',
     'ambientimpact-site-theme-menu-primary-overlay',
     '.layout-container',
+    ['unload', 'refreshless:cached-snapshot'],
     function(context, settings) {
 
       /**
@@ -77,9 +78,9 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryOverlay', function(
 
       let data = this.siteThemeMenuPrimaryOverlay;
 
-      data.$overlay[0].aiOverlay.destroy();
+      data?.$overlay[0].aiOverlay.destroy();
 
-      data.$primaryMenuRegion.off([
+      data?.$primaryMenuRegion.off([
         'menuDropDownOpened.' + eventNamespace,
         'menuDropDownAllClosed.' + eventNamespace,
       ].join(' '));
@@ -89,6 +90,30 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryOverlay', function(
     }
 
   );
+
+  // Remove any cached overlay when restoring from RefreshLess cache.
+  $(once(
+    'primary-menu-overlay-cache-restore',
+    'html',
+  )).on(`refreshless:before-render.${eventNamespace}`, async (event) => {
+
+    // Don't attempt to to do anything if this is not a cached snapshot being
+    // rendered.
+    if (event.detail.isCachedSnapshot === false) {
+      return;
+    }
+
+    const context = event.detail.newBody;
+
+    await event.detail.delay(async (resolve, reject) => {
+
+      $(context).find(`.${overlayBaseClass}`).remove();
+
+      resolve();
+
+    });
+
+  });
 
 });
 });

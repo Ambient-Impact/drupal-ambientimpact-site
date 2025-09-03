@@ -30,6 +30,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryDropDown', function(
     'AmbientImpactSiteThemeMenuPrimaryDropDown',
     'ambientimpact-site-theme-menu-primary-drop-down',
     '.layout-container',
+    ['unload', 'refreshless:cached-snapshot'],
     function(context, settings) {
 
       /**

@@ -20,6 +20,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryOverflow', function(
     'AmbientImpactSiteThemeMenuPrimaryOverflow',
     'ambientimpact-site-theme-menu-primary-overflow',
     '.layout-container',
+    ['unload', 'refreshless:cached-snapshot'],
     function(context, settings) {
 
       /**
@@ -57,6 +58,10 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryOverflow', function(
     function(context, settings, trigger) {
 
       let data = this.siteThemeMenuPrimaryOverflow;
+
+      if (typeof data === 'undefined') {
+        return;
+      }
 
       for (let i = 0; i < data.$menus.length; i++) {
         aiMenuOverflow.detach(data.$menus[i]);

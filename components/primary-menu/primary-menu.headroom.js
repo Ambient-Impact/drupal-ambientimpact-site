@@ -20,6 +20,7 @@ AmbientImpact.addComponent('siteThemeMenuPrimaryHeadroom', function(
     'AmbientImpactSiteThemeMenuPrimaryHeadroom',
     'ambientimpact-site-theme-menu-primary-headroom',
     '.layout-container',
+    ['unload', 'refreshless:cached-snapshot'],
     function(context, settings) {
 
       /**
