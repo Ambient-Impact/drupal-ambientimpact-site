@@ -224,6 +224,19 @@ body:not(.maintenance-page) .site-name {
   @media (prefers-reduced-motion: reduce) {
     animation: none;
   }
+
+}
+
+html[data-refreshless-page-transition-state]:not([data-refreshless-page-transition-state='initial']) body:not(.maintenance-page):not(.path-frontpage) {
+
+  .site-name,
+  .region-primary-menu .block,
+  .region-primary-menu .block > .menu:not(.menu--overflow-measure-shadow) {
+    // Remove the animation delay when RefreshLess takes over page transitions.
+    // If we don't remove this, there will be an awkward half a second where animations have not started yet.
+    animation-delay: 0s;
+  }
+
 }
 
 body:not(.maintenance-page) .region-primary-menu .block {
