@@ -293,6 +293,12 @@ body:not(.maintenance-page) .region-highlighted::before {
 
     z-index: var(--site-reveal-overlay-z-index);
 
+    // Remove the animation entirely when RefreshLess takes over page
+    // transitions so that this doesn't play when page content is swapped in.
+    html[data-refreshless-page-transition-state]:not([data-refreshless-page-transition-state='initial']) & {
+      animation-name: none;
+    }
+
   }
 
 }
