@@ -36,6 +36,23 @@ function ambientimpact_site_preprocess_html(array &$variables): void {
 
   }
 
+  // Only allow back/forward restoration from cache, but not for previews that
+  // get swapped out for fresh content as these currently result in header and
+  // menu animations being triggered twice.
+  //
+  // @todo Remove this when we can set it in RefreshLess via config.
+  //
+  // @todo Figure out how we can allow preview rendering and not trigger a
+  //  second animation? Page morphing perhaps?
+  $variables['#attached']['html_head'][] = [[
+    '#type'       => 'html_tag',
+    '#tag'        => 'meta',
+    '#attributes' => [
+      'name'        => 'turbo-cache-control',
+      'content'     => 'no-preview',
+    ],
+  ], 'refreshless_turbo_cache'];
+
 }
 
 /**
