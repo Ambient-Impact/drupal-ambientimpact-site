@@ -22,19 +22,19 @@ use Drupal\ambientimpact_site\HeadingTextToSvg;
  */
 function ambientimpact_site_preprocess_html(array &$variables): void {
 
-  $unaliasedPath = \Drupal::service('path.current')->getPath();
+  // $unaliasedPath = \Drupal::service('path.current')->getPath();
 
-  $aliasedPath = \Drupal::service('path_alias.manager')->getAliasByPath(
-    $unaliasedPath
-  );
+  // $aliasedPath = \Drupal::service('path_alias.manager')->getAliasByPath(
+  //   $unaliasedPath
+  // );
 
-  if ($aliasedPath === '/web/services') {
+  // if ($aliasedPath === '/web/services') {
 
-    $variables['#attached'][
-      'library'
-    ][] = 'core/components.ambientimpact_site--services';
+  //   $variables['#attached'][
+  //     'library'
+  //   ][] = 'core/components.ambientimpact_site--services';
 
-  }
+  // }
 
   // Only allow back/forward restoration from cache, but not for previews that
   // get swapped out for fresh content as these currently result in header and
