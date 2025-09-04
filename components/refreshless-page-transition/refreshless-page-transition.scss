@@ -1,0 +1,25 @@
+// -----------------------------------------------------------------------------
+//   RefreshLess page transition component component
+// -----------------------------------------------------------------------------
+
+// @see https://www.drupal.org/project/refreshless
+
+// Configure colours.
+@use '../../stylesheets/variables/colours';
+@use 'sass/helpers/colour';
+
+:root {
+
+  --refreshless-page-transition-overlay-background-colour: #{
+    colour.$background-light
+  };
+
+  @include colour.on-dark-scheme {
+
+    --refreshless-page-transition-overlay-background-colour: #{
+      colour.$background-dark
+    };
+
+  }
+
+}
