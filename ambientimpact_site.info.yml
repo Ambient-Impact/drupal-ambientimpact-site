@@ -46,5 +46,8 @@ libraries-extend:
   ambientimpact_base/skip_link:
     - ambientimpact_site/layout_z-index_properties
 
-  refreshless_turbo/refreshless:
-    - ambientimpact_site/refreshless
+  core/components.refreshless--progress-bar:
+    - ambientimpact_site/layout_z-index_properties
+    - ambientimpact_site/refreshless-progress-bar
+    # Causes LibraryDiscoverParser to run out of memory on Drupal 10.5.x:
+    # - core/components.ambientimpact_site--progress-bar

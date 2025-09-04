@@ -9,6 +9,14 @@
 :root {
 
   ///
+  /// RefreshLess progress bar z-index.
+  ///
+  /// @todo This is ugly and should be fixed as part of a z-index manager
+  ///   refactor.
+  ///
+  --refreshless-progress-bar-z-index: #{z-index.get(modal) + 6};
+
+  ///
   /// RefreshLess page transition overlay z-index.
   ///
   /// @todo This is ugly and should be fixed as part of a z-index manager

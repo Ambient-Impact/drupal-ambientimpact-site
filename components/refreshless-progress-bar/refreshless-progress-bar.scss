@@ -1,12 +1,12 @@
 // -----------------------------------------------------------------------------
-//   RefreshLess component stylesheet
+//   RefreshLess progress bar component
 // -----------------------------------------------------------------------------
 
 // @see https://www.drupal.org/project/refreshless
 
 @use 'sass:color';
 // Configure colours.
-@use '../variables/colours';
+@use '../../stylesheets/variables/colours';
 // Output RefreshLess styles based on our colours.
 @use 'base:components/refreshless/progress_bar' with (
   // The default colour scaling oversaturates the filled colour on light

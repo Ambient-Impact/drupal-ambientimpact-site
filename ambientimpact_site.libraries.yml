@@ -37,10 +37,14 @@ paragraph_compact:
     theme:
       stylesheets/components/paragraph_compact.css: {}
 
-refreshless:
   css:
     theme:
-      stylesheets/components/refreshless.css: {}
+# Required because libraries-extend a component with our own component causes
+# LibraryDiscoverParser to run out of memory on Drupal 10.5.x
+refreshless-progress-bar:
+  css:
+    theme:
+      components/refreshless-progress-bar/refreshless-progress-bar.css: {}
 
 view_front:
   css:
