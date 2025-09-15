@@ -7,6 +7,7 @@
 @use '../../stylesheets/layout/scrollbar' as layout-scrollbar;
 @use '../../stylesheets/variables/colours'; // Configure colours.
 @use '../field-media';
+@use 'base:helpers/gradient';
 @use 'link/link.colour' as link-colour;
 @use 'material.common/material.shadow' as material-shadow;
 @use 'sass:color';
@@ -441,10 +442,18 @@ $title-link-active-colour-on-dark: auto;
 .field--name-field-project-media::before {
   @include colour.on-dark-scheme {
 
-    background-image: linear-gradient(
+    $start-colour: gradient.prep-eased-colour(
       $title-link-normal-colour-on-dark,
+    );
+
+    $end-colour: gradient.prep-eased-colour(
+      field-media.$background-colour-on-dark,
+    );
+
+    background-image: linear-gradient(
+      $start-colour,
       motion.$easing-decelerate,
-      field-media.$background-colour-on-dark
+      $end-colour,
     );
 
     background-repeat:  no-repeat;
