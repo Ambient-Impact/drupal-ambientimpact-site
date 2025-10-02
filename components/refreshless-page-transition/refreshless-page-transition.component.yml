@@ -1,5 +1,5 @@
 $schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/v1/metadata.schema.json
-name: RefreshLess page transitions
+name: RefreshLess page transition
 description: RefreshLess page transition styles.
 props:
   type: object

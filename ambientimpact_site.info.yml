@@ -49,11 +49,13 @@ libraries-extend:
   core/components.refreshless--page-transition:
     - ambientimpact_site/layout_z-index_properties
     - ambientimpact_site/refreshless-page-transition
-    # Causes LibraryDiscoverParser to run out of memory on Drupal 10.5.x:
+    # Causes LibraryDiscoverParser to run out of memory on Drupal 10.5.x &
+    # 11.2.x:
     # - core/components.ambientimpact_site--refreshless-page-transition
 
   core/components.refreshless--progress-bar:
     - ambientimpact_site/layout_z-index_properties
     - ambientimpact_site/refreshless-progress-bar
-    # Causes LibraryDiscoverParser to run out of memory on Drupal 10.5.x:
+    # Causes LibraryDiscoverParser to run out of memory on Drupal 10.5.x &
+    # 11.2.x:
     # - core/components.ambientimpact_site--progress-bar

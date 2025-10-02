@@ -38,14 +38,14 @@ paragraph_compact:
       stylesheets/components/paragraph_compact.css: {}
 
 # Required because libraries-extend a component with our own component causes
-# LibraryDiscoverParser to run out of memory on Drupal 10.5.x
+# LibraryDiscoverParser to run out of memory on Drupal 10.5.x & 11.2.x.
 refreshless-page-transition:
   css:
     theme:
       components/refreshless-page-transition/refreshless-page-transition.css: {}
 
 # Required because libraries-extend a component with our own component causes
-# LibraryDiscoverParser to run out of memory on Drupal 10.5.x
+# LibraryDiscoverParser to run out of memory on Drupal 10.5.x & 11.2.x.
 refreshless-progress-bar:
   css:
     theme:
