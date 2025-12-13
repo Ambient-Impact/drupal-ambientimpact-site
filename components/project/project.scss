@@ -406,7 +406,8 @@ $title-link-active-colour-on-dark: auto;
   z-index: list.index($stacking-order, content);
 
   // Remove the top margin on node content.
-  margin-top: 0;
+  --node-section-spacing: 0;
+
 }
 
 // This re-orders the content region to place the local tasks block above the
