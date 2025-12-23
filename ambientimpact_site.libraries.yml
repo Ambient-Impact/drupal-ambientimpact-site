@@ -7,6 +7,7 @@ global-styling:
     - ambientimpact_base/layout_properties
     - ambientimpact_ux/component.material.ripple
     - core/components.ambientimpact_site--reveal
+    - core/components.ambientimpact_site--print
 
 global-scripts:
   js:

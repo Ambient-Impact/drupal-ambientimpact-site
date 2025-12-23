@@ -1,0 +1,24 @@
+// -----------------------------------------------------------------------------
+//   Site print styles
+// -----------------------------------------------------------------------------
+
+// Remove mostly navigational/decorative regions, blocks, and components.
+header[role='banner'],
+.region-primary-menu,
+.region-breadcrumb,
+.block-local-tasks-block,
+footer[role='contentinfo'],
+.to-top {
+  display: none !important;
+}
+
+// This displays the link href in brackets after the link text since you can't
+// hover over a link or open it on a piece of pager. ;)
+:any-link::after {
+  content: ' (' attr(href) ')';
+}
+
+// Do the same for abbreviations.
+abbr[title]::after {
+  content: ' (' attr(title) ')';
+}
